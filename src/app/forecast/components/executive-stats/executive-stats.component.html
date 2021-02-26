@@ -1,0 +1,29 @@
+<div class="custom-dimension">
+  <mat-tab-group headerPosition="above" class="m-0" #chartTabs>
+    <mat-tab label="Days"> </mat-tab>
+    <mat-tab label="Probabilities"> </mat-tab>
+    <mat-tab label="ARVE/URVE"> </mat-tab>
+    <mat-tab label="COR"> </mat-tab>
+    <mat-tab label="Revenue"> </mat-tab>
+  </mat-tab-group>
+  
+  <div class="bg-white h-80vh p-16 " [hidden]="chartTabs.selectedIndex !== 0">
+    <canvas id="daysChart" class="chart-dimension"></canvas>
+  </div>
+
+  <div class="bg-white h-80vh p-16 " [hidden]="chartTabs.selectedIndex !== 1">
+    <canvas id="probabilitiesChart" class="chart-dimension"></canvas>
+  </div>
+
+  <div class="bg-white h-80vh p-16 " [hidden]="chartTabs.selectedIndex !== 2">
+    <canvas id="arveUrveChart" class="chart-dimension"></canvas>
+  </div>
+
+  <div class="bg-white h-80vh p-16 " [hidden]="chartTabs.selectedIndex !== 3">
+    <canvas id="corChart" class="chart-dimension"></canvas>
+  </div>
+  
+  <div class="bg-white h-80vh p-16 " [hidden]="chartTabs.selectedIndex !== 4">
+    <canvas id="revenueChart" class="chart-dimension"></canvas>
+  </div>
+</div>

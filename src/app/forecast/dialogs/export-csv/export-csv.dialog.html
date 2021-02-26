@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>CSV Export</h2>
+
+<mat-checkbox class="all" color="primary" [(ngModel)]="allMonths.checked" [(indeterminate)]="allMonths.indeterminate" (change)="checkAll()">All Months</mat-checkbox>
+<div class="checkbox-section">
+	<mat-checkbox *ngFor="let month of months" color="primary" [(ngModel)]="month.checked" (change)="checkMonth()">{{ month.time | date: 'MMMM yyyy' }}</mat-checkbox>
+</div>
+
+<mat-dialog-actions>
+	<button mat-button mat-dialog-close [mat-dialog-close]="false">Cancel</button>
+	<button mat-button [mat-dialog-close]="getExportMonths()" [disabled]="getExportMonths().length == 0">Export</button>
+</mat-dialog-actions>

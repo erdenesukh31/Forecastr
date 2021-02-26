@@ -1,0 +1,66 @@
+<div class="executive-container">
+  <div class="period-container">
+    
+    <mat-form-field class="period-component" appearance="outline">
+      <mat-label>Period Start Month</mat-label>
+      
+      <mat-select [(ngModel)]="period.from">
+        <ng-container *ngFor="let r of availableMonths">
+          <mat-option [value]="r.id">{{ r.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    
+    </mat-form-field>
+    
+    <mat-form-field class="period-component" appearance="outline">
+      <mat-label>Period End Month</mat-label>
+      
+      <mat-select [(ngModel)]="period.to">
+        <ng-container *ngFor="let r of availableMonths">
+          <mat-option [value]="r.id">{{ r.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    
+    </mat-form-field>
+    
+    <button class="period-component" mat-raised-button color="primary" (click)="showPeriod()">
+      <mat-icon>search</mat-icon> Show Period
+    </button>
+<!--
+    <button class="period-download" mat-raised-button color="primary" (click)="downloadCSV()">
+      <mat-icon>insert_drive_file</mat-icon> Export Period as CSV
+    </button>
+  -->
+    <button *ngIf="isMSLLevelRole('MSL')" class="executive-btn" mat-raised-button color="primary" (click)="openDialog()">
+      <mat-icon>insert_chart</mat-icon> KPI Overview
+    </button>
+  </div>
+
+  <div class="executive-view-container">
+    <h3 *ngIf="months.length > 0">
+      Period {{ months[0].name }} - {{ months[months.length - 1].name }}
+    </h3>
+    <mat-card class="w-100 m-0i">
+      <app-executive-summary summary="period"></app-executive-summary>
+    </mat-card>
+  </div>
+
+  <div class="executive-view-container">
+    <app-executive-stats></app-executive-stats>
+  </div>
+
+  <!-- <div class="executive-view-container">
+    <h3>Months</h3>
+    <mat-tab-group>
+      <mat-tab label= "{{months[0].name}}">
+      
+      </mat-tab>
+      <mat-tab *ngFor="let month of months" label="{{ month.name }}">
+        <ng-template matTabContent>
+          <app-executive-detail [month]="month"></app-executive-detail>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div> -->
+  
+</div>

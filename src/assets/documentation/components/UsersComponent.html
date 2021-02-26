@@ -1,0 +1,1507 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>UsersComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/components/users/users.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Component for admin user-list</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-admin-users</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>../../admin.component.scss,<br>./users.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./users.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#levels">levels</a>
+                            </li>
+                            <li>
+                                <a href="#levelSubscription">levelSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#roles">roles</a>
+                            </li>
+                            <li>
+                                <a href="#roleSubscription">roleSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#sort">sort</a>
+                            </li>
+                            <li>
+                                <a href="#user">user</a>
+                            </li>
+                            <li>
+                                <a href="#userSubscription">userSubscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addNewUser">addNewUser</a>
+                            </li>
+                            <li>
+                                <a href="#getLevel">getLevel</a>
+                            </li>
+                            <li>
+                                <a href="#getRole">getRole</a>
+                            </li>
+                            <li>
+                                <a href="#getTeamlead">getTeamlead</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openUserDialog">openUserDialog</a>
+                            </li>
+                            <li>
+                                <a href="#setUserActiveState">setUserActiveState</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialog: MatDialog, userService: <a href="../injectables/UserService.html">UserService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/admin/components/users/users.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>constructor to init user datasource</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addNewUser"></a>
+                    <span class="name">
+                        <b>
+                            addNewUser
+                        </b>
+                        <a href="#addNewUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addNewUser()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>open add user dialog</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLevel"></a>
+                    <span class="name">
+                        <b>
+                            getLevel
+                        </b>
+                        <a href="#getLevel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getLevel(levelId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:147</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>returns user level</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>levelId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRole"></a>
+                    <span class="name">
+                        <b>
+                            getRole
+                        </b>
+                        <a href="#getRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRole(roleId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>returns user role</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>roleId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTeamlead"></a>
+                    <span class="name">
+                        <b>
+                            getTeamlead
+                        </b>
+                        <a href="#getTeamlead"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTeamlead(parentId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>returns teamlead name</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>parentId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:99</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Unsubscribe services when component gets destroyed</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>init method to load users + roles</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openUserDialog"></a>
+                    <span class="name">
+                        <b>
+                            openUserDialog
+                        </b>
+                        <a href="#openUserDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openUserDialog(user: <a href="../classes/User.html">User</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:116</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>open update user dialog</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserActiveState"></a>
+                    <span class="name">
+                        <b>
+                            setUserActiveState
+                        </b>
+                        <a href="#setUserActiveState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserActiveState(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, active: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/admin/components/users/users.component.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Update user active state</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>active</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="levels"></a>
+                        <span class="name">
+                            <b>
+                            levels</b>
+                            <a href="#levels"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/Level.html" target="_self" >Level[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/admin/components/users/users.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Defined levels</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="levelSubscription"></a>
+                        <span class="name">
+                            <b>
+                            levelSubscription</b>
+                            <a href="#levelSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/admin/components/users/users.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>level update subscription</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="roles"></a>
+                        <span class="name">
+                            <b>
+                            roles</b>
+                            <a href="#roles"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/Role.html" target="_self" >Role[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/admin/components/users/users.component.ts:27</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Defined roles</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="roleSubscription"></a>
+                        <span class="name">
+                            <b>
+                            roleSubscription</b>
+                            <a href="#roleSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/admin/components/users/users.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>role update subscription</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sort"></a>
+                        <span class="name">
+                            <b>
+                            sort</b>
+                            <a href="#sort"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatSort</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(MatSort)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/admin/components/users/users.component.ts:22</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>sort for angular material table</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="user"></a>
+                        <span class="name">
+                            <b>
+                            user</b>
+                            <a href="#user"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >MatTableDataSource&lt;User&gt;</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/admin/components/users/users.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>User array as MatTableDataSource (needed for auto updates on table)</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userSubscription"></a>
+                        <span class="name">
+                            <b>
+                            userSubscription</b>
+                            <a href="#userSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/admin/components/users/users.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>user update subscription</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy, ViewChild } from &#x27;@angular/core&#x27;;
+import { User } from &#x27;../../../core/interfaces/user&#x27;;
+import { UserService } from &#x27;../../../core/services/users/user.service&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { MatTableDataSource, MatDialog, MatSort } from &#x27;@angular/material&#x27;;
+import { AddUserDialog } from &#x27;./add-user-dialog.component&#x27;;
+import { Role } from &#x27;../../../core/interfaces/role&#x27;;
+import { Level } from &#x27;../../../core/interfaces/level&#x27;;
+
+/**
+ * Component for admin user-list
+ */
+@Component({
+  selector: &#x27;app-admin-users&#x27;,
+  templateUrl: &#x27;./users.component.html&#x27;,
+  styleUrls: [&#x27;../../admin.component.scss&#x27;, &#x27;./users.component.scss&#x27;]
+})
+export class UsersComponent implements OnInit, OnDestroy {
+  /**
+   * sort for angular material table
+   */
+  @ViewChild(MatSort) sort: MatSort;
+
+  /**
+   * Defined roles
+   */
+  roles: Role[];
+
+  /**
+   * Defined levels
+   */
+  levels: Level[];
+
+  /**
+   * User array as MatTableDataSource (needed for auto updates on table)
+   */
+  user: MatTableDataSource&lt;User&gt;;
+
+  /**
+   * user update subscription
+   */
+  userSubscription: Subscription;
+
+  /**
+   * role update subscription
+   */
+  roleSubscription: Subscription;
+
+  /**
+   * level update subscription
+   */
+  levelSubscription: Subscription;
+
+  /**
+   * constructor to init user datasource
+   * @param dialog
+   * @param userService
+   */
+  constructor(
+    private dialog: MatDialog,
+    private userService: UserService,
+  ) {
+    this.user &#x3D; new MatTableDataSource([]);
+  }
+
+  /**
+   * init method to load users + roles
+   */
+  ngOnInit(): void {
+    this.userService.initializeAllUser();
+    this.userService.initializeRoles();
+    this.userService.initializeLevels();
+
+    this.userSubscription &#x3D; this.userService.allUsers$
+      .subscribe((user: User[]) &#x3D;&gt; {
+        this.user &#x3D; new MatTableDataSource(user);
+        this.user.sort &#x3D; this.sort;
+      });
+
+    this.roleSubscription &#x3D; this.userService.roles$
+      .subscribe((roles: Role[]) &#x3D;&gt; {
+        this.roles &#x3D; roles;
+      });
+
+    this.roleSubscription &#x3D; this.userService.roles$
+      .subscribe((roles: Role[]) &#x3D;&gt; {
+        this.roles &#x3D; roles;
+      });
+
+    this.levelSubscription &#x3D; this.userService.levels$
+      .subscribe((levels: Level[]) &#x3D;&gt; {
+        this.levels &#x3D; levels;
+      });
+  }
+
+  /**
+   * Unsubscribe services when component gets destroyed
+   */
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.roleSubscription.unsubscribe();
+    this.levelSubscription.unsubscribe();
+  }
+
+  /**
+   * open add user dialog
+   */
+  addNewUser(): void {
+    this.openUserDialog(new User());
+  }
+
+  /**
+   * open update user dialog
+   * @param user
+   */
+  openUserDialog(user: User): void {
+    let dialogRef: any &#x3D; this.dialog.open(AddUserDialog, { height: &#x27;auto&#x27;, width: &#x27;50vw&#x27;, data: user });
+
+    dialogRef.afterClosed().subscribe((u: User | boolean) &#x3D;&gt; {
+      if (u) {
+        this.userService.setUser(&lt;User&gt;u);
+      }
+    });
+  }
+
+  /**
+   * Update user active state
+   * @param id
+   * @param active
+   */
+  setUserActiveState(id: number, active: boolean): void {
+    this.userService.setUserActiveState(id, active);
+  }
+
+  /**
+   * returns user role
+   * @param roleId
+   */
+  getRole(roleId: number): string {
+    return this.roles.find((r: Role) &#x3D;&gt; r.roleId &#x3D;&#x3D;&#x3D; roleId) ? this.roles.find((r: any) &#x3D;&gt; r.roleId &#x3D;&#x3D;&#x3D; roleId).description : &#x27;-&#x27;;
+  }
+
+  /**
+   * returns user level
+   * @param levelId
+   */
+  getLevel(levelId: number): string {
+    return this.levels.find((l: Level) &#x3D;&gt; l.levelId &#x3D;&#x3D;&#x3D; levelId) ? this.levels.find((l: Level) &#x3D;&gt; l.levelId &#x3D;&#x3D;&#x3D; levelId).name : &#x27;-&#x27;;
+  }
+
+  /**
+   * returns teamlead name
+   * @param parentId
+   */
+  getTeamlead(parentId: number): string {
+    let parent: User &#x3D; this.user.data.find((u: User) &#x3D;&gt; u.id &#x3D;&#x3D;&#x3D; parentId);
+    return parent ? (parent.lastName + &#x27;, &#x27; + parent.firstName) : &#x27;&#x27;;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;table mat-table matSort [dataSource]&#x3D;&quot;user&quot;&gt;
+  &lt;ng-container matColumnDef&#x3D;&quot;active&quot;&gt;
+    &lt;th mat-header-cell mat-sort-header *matHeaderCellDef&gt;&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot; class&#x3D;&quot;flag-button&quot;&gt;
+      &lt;mat-slide-toggle color&#x3D;&quot;primary&quot; [checked]&#x3D;&quot;user.active&quot; [(ngModel)]&#x3D;&quot;user.active&quot; (change)&#x3D;&quot;setUserActiveState(user.id, user.active)&quot;&gt;&lt;/mat-slide-toggle&gt;
+    &lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container matColumnDef&#x3D;&quot;globalId&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Capgemini ID&lt;/th&gt;
+    &lt;td mat-cell  *matCellDef&#x3D;&quot;let user&quot;&gt;{{user.globalId}}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;lastName&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Name&lt;/th&gt;
+    &lt;td mat-cell  *matCellDef&#x3D;&quot;let user&quot;&gt;{{user.lastName}}, {{user.firstName}}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;email&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Email&lt;/th&gt;
+    &lt;td mat-cell  *matCellDef&#x3D;&quot;let user&quot;&gt;{{ user.email }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;fte&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;FTE&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot;&gt;{{ user.fte }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;roleId&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Role&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot;&gt;{{ getRole(user.roleId) }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;levelId&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Level&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot;&gt;{{ getLevel(user.levelId) }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;parentId&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Teamlead&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot;&gt;{{ getTeamlead(user.parentId) }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container  matColumnDef&#x3D;&quot;admin&quot;&gt;
+    &lt;th mat-header-cell  mat-sort-header *matHeaderCellDef&gt;Permissions&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot;&gt;{{ user.admin ? &#x27;Administrator&#x27; : &#x27;-&#x27; }}&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-container matColumnDef&#x3D;&quot;edit&quot;&gt;
+    &lt;th mat-header-cell *matHeaderCellDef class&#x3D;&quot;action-button&quot;&gt;&lt;/th&gt;
+    &lt;td mat-cell *matCellDef&#x3D;&quot;let user&quot; class&#x3D;&quot;action-button&quot; (click)&#x3D;&quot;openUserDialog(user)&quot;&gt;&lt;mat-icon&gt;edit&lt;/mat-icon&gt;&lt;/td&gt;
+  &lt;/ng-container&gt;
+
+  &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;[ &#x27;active&#x27;, &#x27;globalId&#x27;, &#x27;lastName&#x27;, &#x27;email&#x27;, &#x27;fte&#x27;, &#x27;roleId&#x27;, &#x27;levelId&#x27;, &#x27;parentId&#x27;, &#x27;admin&#x27;, &#x27;edit&#x27;]&quot;&gt;&lt;/tr&gt;
+  &lt;tr mat-row  *matRowDef&#x3D;&quot;let row; columns: [ &#x27;active&#x27;, &#x27;globalId&#x27;, &#x27;lastName&#x27;, &#x27;email&#x27;, &#x27;fte&#x27;, &#x27;roleId&#x27;, &#x27;levelId&#x27;, &#x27;parentId&#x27;, &#x27;admin&#x27;,&#x27;edit&#x27;];&quot; &gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;div class&#x3D;&quot;button-row&quot;&gt;
+  &lt;button mat-raised-button (click)&#x3D;&quot;addNewUser()&quot; color&#x3D;&quot;primary&quot;&gt;
+    &lt;mat-icon&gt;person_add&lt;/mat-icon&gt; Add User
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>../../admin.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../assets/styles/variables.scss&#x27;;
+
+.mat-sidenav-container{
+	background: transparent;
+	margin: 0 10px;
+}
+
+.mat-drawer {
+	display: none;
+	background: transparent;
+	width: 50px;
+	border-right-width: 0px;
+}
+
+.nav-button-container {
+	margin: 4px 0;
+
+	.mat-icon-button {
+		width: 50px;
+		height: 50px;
+		margin-bottom: 10px;
+		padding: 0;
+
+		&amp;.active, &amp;.active .mat-icon {
+			color: map-get($font-colors, blue);
+		}
+	}
+
+	.mat-icon {
+		width: 1em;
+		height: 1em;
+		line-height: 1rem;
+		font-size: 2rem;
+	}
+}
+
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+	padding-left: 0;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+	padding-right: 0;
+}
+
+.action-button {
+	width: 50px;
+	text-align: center;
+}
+
+.flag-button {
+	width: 70px;
+	text-align: center;
+}
+
+.button-row {
+	margin: 10px;
+}
+
+.mat-form-field {
+	margin: 5px 0;
+}
+
+tr.mat-row.inactive td {
+	color: map-get($font-colors, grey-label);
+
+	.flag-inactive {
+		background: map-get($font-colors, red);
+		color: map-get($font-colors, white);
+		padding: 3px 6px;
+		border-radius: 4px;
+	}
+}
+
+.mat-table tr.mat-row:last-child td {
+	border-bottom: 0;
+}</code></pre>
+                <p class="comment">
+                    <code>./users.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../assets/styles/variables.scss&#x27;;
+
+.form-field-toggle {
+  margin: 10px;
+}
+
+
+.accordion-header {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 24px;
+  color: map-get($font-colors, grey-dark);
+  margin-right: 8px;
+
+  div {
+    display: flex;
+    flex-grow: 1;
+    width: 0;
+    margin-right: 16px;
+
+    &amp;:last-child {
+      flex-grow: 2;
+      text-align: center;
+    }
+
+    span {
+      flex: 1;
+      word-break: break-word;
+    }
+  }
+}
+
+.mat-accordion .mat-expansion-panel {
+  border-radius: 0;
+
+  .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+    width: 0;
+    line-height: 15px;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .mat-expansion-panel-header-description {
+    text-align: center; 
+    flex-grow: 2;
+  }
+
+  .mat-cell, .mat-header-cell {
+    flex: 1;
+    color: map-get($font-colors, grey-dark);
+  }
+}
+
+.mat-raised-button{
+    margin-top: 20px;
+}
+
+.button-margin {
+  margin: 10px,
+}
+
+.clicked {
+  background-color: #f9fafb;
+}
+
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+	padding-right: 5;
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><table mat-table matSort [dataSource]="user">  <ng-container matColumnDef="active">    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>    <td mat-cell *matCellDef="let user" class="flag-button">      <mat-slide-toggle color="primary" [checked]="user.active" [(ngModel)]="user.active" (change)="setUserActiveState(user.id, user.active)"></mat-slide-toggle>    </td>  </ng-container>  <ng-container matColumnDef="globalId">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Capgemini ID</th>    <td mat-cell  *matCellDef="let user">{{user.globalId}}</td>  </ng-container>  <ng-container  matColumnDef="lastName">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>    <td mat-cell  *matCellDef="let user">{{user.lastName}}, {{user.firstName}}</td>  </ng-container>  <ng-container  matColumnDef="email">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Email</th>    <td mat-cell  *matCellDef="let user">{{ user.email }}</td>  </ng-container>  <ng-container  matColumnDef="fte">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>FTE</th>    <td mat-cell *matCellDef="let user">{{ user.fte }}</td>  </ng-container>  <ng-container  matColumnDef="roleId">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Role</th>    <td mat-cell *matCellDef="let user">{{ getRole(user.roleId) }}</td>  </ng-container>  <ng-container  matColumnDef="levelId">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Level</th>    <td mat-cell *matCellDef="let user">{{ getLevel(user.levelId) }}</td>  </ng-container>  <ng-container  matColumnDef="parentId">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Teamlead</th>    <td mat-cell *matCellDef="let user">{{ getTeamlead(user.parentId) }}</td>  </ng-container>  <ng-container  matColumnDef="admin">    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Permissions</th>    <td mat-cell *matCellDef="let user">{{ user.admin ? \'Administrator\' : \'-\' }}</td>  </ng-container>  <ng-container matColumnDef="edit">    <th mat-header-cell *matHeaderCellDef class="action-button"></th>    <td mat-cell *matCellDef="let user" class="action-button" (click)="openUserDialog(user)"><mat-icon>edit</mat-icon></td>  </ng-container>  <tr mat-header-row *matHeaderRowDef="[ \'active\', \'globalId\', \'lastName\', \'email\', \'fte\', \'roleId\', \'levelId\', \'parentId\', \'admin\', \'edit\']"></tr>  <tr mat-row  *matRowDef="let row; columns: [ \'active\', \'globalId\', \'lastName\', \'email\', \'fte\', \'roleId\', \'levelId\', \'parentId\', \'admin\',\'edit\'];" ></tr></table><div class="button-row">  <button mat-raised-button (click)="addNewUser()" color="primary">    <mat-icon>person_add</mat-icon> Add User  </button></div></div>'
+    var COMPONENTS = [{'name': 'AddMonthDialog', 'selector': ''},{'name': 'AddProjectDialog', 'selector': ''},{'name': 'AddUserDialog', 'selector': ''},{'name': 'AdminComponent', 'selector': 'public-admin'},{'name': 'AppComponent', 'selector': 'public-root'},{'name': 'CSVExportDialog', 'selector': ''},{'name': 'DashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'FcEntryComponent', 'selector': 'app-fc-entry'},{'name': 'FcEntrySummaryComponent', 'selector': 'app-fc-entry-summary'},{'name': 'FcProjectComponent', 'selector': 'app-fc-project'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'ForecastComponent', 'selector': 'public-forecast'},{'name': 'GetStarted', 'selector': ''},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'IndividualComponent', 'selector': 'app-individual'},{'name': 'LoginComponent', 'selector': ''},{'name': 'MonthsComponent', 'selector': 'app-admin-months'},{'name': 'ProjectsComponent', 'selector': 'app-admin-projects'},{'name': 'RemoveProjectDialog', 'selector': ''},{'name': 'TeamComponent', 'selector': 'app-team'},{'name': 'TeamleadMonthComponent', 'selector': 'app-teamlead-month'},{'name': 'TeamleadSummaryComponent', 'selector': 'app-teamlead-summary'},{'name': 'TeamsComponent', 'selector': 'app-admin-teams'},{'name': 'UsersComponent', 'selector': 'app-admin-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'UsersComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UsersComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

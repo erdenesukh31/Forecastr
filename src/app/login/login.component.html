@@ -1,0 +1,40 @@
+
+<div class="login-container">
+  <div layout="row" layout-align="center">
+    
+    <mat-card>
+      <mat-card-title>
+        <div>
+          <img class="logo" src="{{'assets/img/cap_logo_p.png'}}">
+        </div>
+       
+      </mat-card-title>
+
+      <mat-card-content>
+        <form layout="column" class="pad" (ngSubmit)="login()" #loginForm="ngForm" [formGroup]="loginFormGroup">
+          <mat-error *ngIf="formSubmitError">{{formSubmitError}}</mat-error>
+          <mat-error *ngIf="isEmailFieldEmpty">{{emailInvalidError}}</mat-error>
+          <br>
+          <mat-form-field flex>
+            <mat-label>E-mail</mat-label>
+            <input matInput type="text" placeholder="Email" [formControl]="loginEmail" name="email" required>
+          </mat-form-field>
+          
+          <mat-form-field flex>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" [formControl]="loginPassword" name="password" required>
+          </mat-form-field>
+
+          <button class="login-button" mat-raised-button color="primary" type="submit" [disabled]="!loginFormGroup.valid || loginActive">Login</button>
+          <a class="reset-link" (click)="resetPassword()">Forgot your password?</a>
+        </form>
+        
+        <div class="spinner-container" [ngClass]="{'active': loginActive}">
+          <mat-progress-spinner
+            class="progress-spinner" color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

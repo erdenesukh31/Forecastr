@@ -1,0 +1,27 @@
+<button mat-stroked-button class="mat-primary-reversed" color="primary" (click)="exportCSV()">
+    <mat-icon>insert_drive_file</mat-icon> Export CSV
+</button>
+<table mat-table matSort [dataSource]="users">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>
+        <td mat-cell  *matCellDef="let user">{{user.lastName}}, {{user.firstName}}</td>
+    </ng-container>
+    <ng-container matColumnDef="team">
+        <th mat-header-cell  mat-sort-header *matHeaderCellDef>Team</th>
+        <td mat-cell  *matCellDef="let user">{{getTeam(user)}}</td>
+    </ng-container>
+    <ng-container matColumnDef="corp">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Corp Id</th>
+        <td mat-cell *matCellDef="let user">{{user.globalId}}</td>
+    </ng-container>
+    <ng-container  matColumnDef="{{month.name}}"  *ngFor="let month of months">
+        <th mat-header-cell  mat-sort-header *matHeaderCellDef>{{month.name}}</th>
+        <td mat-cell  *matCellDef="let user" [ngClass]="{
+            'goodUt' : getMonthARVEFromPerson(month,user) >= 80,
+            'medUt' : getMonthARVEFromPerson(month,user) < 80 && getMonthARVEFromPerson(month,user) >= 60,
+            'badUt' : getMonthARVEFromPerson(month,user) < 60
+        }" >{{getMonthARVEFromPerson(month,user)}} % ({{getMonthFTEFromPerson(month,user)}} FTE)</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row  *matRowDef="let row; columns: columnsToDisplay" ></tr>
+</table>

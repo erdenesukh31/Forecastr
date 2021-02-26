@@ -1,0 +1,57 @@
+{
+  "buttons": {
+    "cancel": "Cancel",
+    "addItem": "Add item",
+    "search": "Search",
+    "submit": "Submit",
+    "editItem": "Edit item",
+    "deleteItem": "Delete item",
+    "save": "Save",
+    "clean": "Clear",
+    "close": "Close"
+  },
+  "LIKE": "LIKE",
+  "example description": "Example Description",
+  "header": {
+    "EN": "English",
+    "title": "BetterForecasting",
+    "error": "LOGIN ERROR",
+    "ES": "Spanish"
+  },
+  "description": "Description",
+  "ERROR": "ERROR",
+  "CLOSE": "CLOSE",
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "title": "Login",
+    "username": "Username",
+    "errorMsg": "Wrong username or password!"
+  },
+  "logout": "Logout", 
+  "showUser": "Show User", 
+  "switchRole": "Switch Role", 
+  "SHARE": "SHARE",
+  "home": "Home",
+  "example": "Example", 
+
+  "fcentry": {
+    "forecast": "Forecast", 
+    "summary": "Summary", 
+    "period": "Forecast period", 
+    "workDays": "Working days", 
+    "chooseProject": "Choose a project", 
+    "projects": "Projects", 
+    "addProject": "Add Project",
+    "projectDays": "Days", 
+    "probability": "Probability", 
+    "comment": "Comment", 
+    "leaveComment": "Leave a comment",
+    "plannedVacationDays": "Planned vacation days",
+    "plannedTrainingDays": "Planned training days",
+    "plannedBusinessDevelopmentDays": "Planned Business Development days",
+    "plannedNonBillableDays": "Non billable days", 
+    "arve": "ARVE", 
+    "urve": "URVE"
+  }
+}

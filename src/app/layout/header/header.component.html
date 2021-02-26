@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title" routerLink="showHome()" aria-label="Home">
+      <img class="logo" src="{{'assets/img/cap_logo_p.png'}}">
+     
+    </span>
+    <span class="browser-info" *ngIf="!supportedBrowser"><mat-icon class="icon">feedback</mat-icon>Browser information: In order to get the best results from Capgemini Forecastr, it's recommended to use Google Chrome or Microsoft Edge.</span>
+    <span flex></span>
+    <span class="user">{{user.firstName}} {{user.lastName}} <ng-container *ngIf="getRole()">({{getRole()}})</ng-container></span>
+
+    <button mat-icon-button *ngIf="isAdmin()" routerLink="/admin" title="Admin Dashboard">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="isLogged()" (click)="openStepper()" title="Info">
+      <mat-icon>import_contacts</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="isLogged()" (click)="openFAQ()" title="FAQ">
+      <mat-icon>live_help</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="isLogged()" (click)="sendMail()" title="Feedback">
+        <mat-icon>chat</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="isLogged()" (click)="openOrganization()" title="Enterprise Structure">
+      <mat-icon>domain</mat-icon>
+    </button>    
+    <button mat-icon-button *ngIf="isLogged()" (click)="logout()" title="Logout">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

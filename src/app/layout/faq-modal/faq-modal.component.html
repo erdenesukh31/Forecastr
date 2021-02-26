@@ -1,0 +1,26 @@
+<mat-card class="back">
+  <div class="fix" layout="row">
+    <h1 class="title">FAQ</h1>
+    <span flex></span>
+    <button mat-icon-button (click)="onNoClick()" title="Close FAQ" class="mat-icon-close">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <div class="content">
+     
+    <mat-accordion displayMode="flat" multi>
+      <mat-expansion-panel *ngFor="let item of fd;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              <div [innerHTML]="item.question"></div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div [innerHTML]="item.answer | safeHtml" class="panel-content">
+           
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</mat-card>

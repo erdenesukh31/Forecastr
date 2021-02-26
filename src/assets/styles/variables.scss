@@ -1,0 +1,32 @@
+$font-size: 12px;
+
+$font-colors: (
+	black: rgba(0, 0, 0, 0.87), // #000000
+	grey: #666666, // #ECECEC
+	grey-label: rgba(0, 0, 0, 0.6),
+	grey-dark: rgba(0, 0, 0, 0.5), // #666666
+	grey-light: rgba(0, 0, 0, 0.38), // #F3F3F3
+	grey-super-light: rgba(0, 0, 0, 0.16),
+  white: #FFFFFF,
+	blue: #0070AD,
+	red: #FF304D,
+  deep-purple: #2B0A3D, 
+  purple: #7D38BA, 
+  green: #95E616
+);
+
+$border-colors: (
+	light: rgba(0, 0, 0, 0.06),
+	medium: rgba(0, 0, 0, 0.12)
+);
+
+$bg-colors: (
+	primary: #F1F5F8, //#F3F3F3,
+	secondary: rgba(43, 10, 61, 0.85),
+	white: #FFFFFF,
+	light: rgba(0, 0, 0, 0.02),
+	summary: rgb(249,250,251), 
+	warning: #FFCC00,
+	error: #FF304D,
+	successful: #95E616,
+);

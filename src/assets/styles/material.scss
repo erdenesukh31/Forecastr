@@ -1,0 +1,412 @@
+
+@import '~@covalent/core/theming/all-theme';
+@import '~@angular/material/theming';
+@import './variables.scss';
+
+// Define a custom typography config that overrides the font-family
+// or any typography level.
+$typography: mat-typography-config(
+  $font-family: 'Verdana, sans-serif',
+  $headline: mat-typography-level(32px, 48px, 700),
+);
+
+@include mat-core(
+  $typography
+); // $typography is an **optional** argument for the mat-core
+
+$mat-cap-blue: (
+  light: map-get($font-colors, blue),
+  normal: map-get($font-colors, blue),
+  dark: map-get($font-colors, blue),
+  contrast: (
+    light: map-get($font-colors, white),
+    normal: map-get($font-colors, white),
+    dark: map-get($font-colors, white)
+  )
+);
+
+@mixin custom-theme($config) {
+  html {
+    font-family: Ubuntu, Roboto, monospace;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .mat-expansion-panel {
+    .mat-expansion-panel-content {
+      display: flow-root;
+      content: "";
+      clear: both;
+    }
+  }
+  .mat-expansion-panel.mat-expanded {
+    .mat-expansion-panel-content {
+      display: block;
+      // content: "";
+      // clear: both;
+    }
+  }
+
+  .mat-card .mat-card-content {
+    
+    font-size: $font-size;
+  }
+
+  .mat-raised-button.mat-primary, .mat-stroked-button.mat-primary-reversed {
+    height: 36px;
+    padding: 0 20px;
+    border-radius: 18px;
+    font-size: $font-size;
+    font-weight: bold;
+    box-shadow: none;
+  }
+
+  .mat-table {
+    width: 100%;
+    background-color: transparent;
+
+    .mat-cell, .mat-header-cell, .mat-footer-cell {
+      font-size: $font-size;
+      line-height: 1.3em;
+    }
+
+    tr.mat-header-row {
+      height: 38px;
+    }
+    
+    tr.mat-row {
+      height: 44px;
+    }
+
+    tr.mat-row:last-child .mat-cell, tr.mat-header-row .mat-header-cell {
+      border-bottom-width: 2px;
+    }
+
+    tr.mat-footer-row {
+      height: 80px;
+    }
+
+    .mat-footer-row {
+      .total {
+        font-weight: bold;
+      }
+      
+      .note {
+        display: block;
+        font-weight: 100;
+        color: map-get($font-colors, grey-label);
+      }
+    }
+  }
+
+  .mat-chip-list {
+    .mat-chip-list-wrapper {
+      flex-direction: column;
+      align-items: flex-end;
+      margin: 0;
+    }
+
+    .mat-chip.mat-standard-chip {
+      width: 100%;
+      margin: 4px 0;
+      padding: 20px 45px 20px 15px;
+      font-size: 1.2em;
+      color: map-get($font-colors, blue);
+      background-color: map-get($font-colors, white);
+      border: none;
+      border-radius: 0;
+      
+      &::after {
+        content: "";
+        background: url(../img/capgemini-shape.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+        opacity: 0.8;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;   
+      }
+      &:hover::after {
+        opacity: .8;
+      }
+    
+      .mat-icon {
+        color: map-get($font-colors, blue);
+        padding: 0;
+        padding-right: 5px;
+      }
+    }
+  }
+
+  .mat-datepicker-toggle {
+    .mat-icon-button, .mat-datepicker-toggle-default-icon, .mat-button-ripple  {
+      width: 26px !important;
+      height: 26px;
+    }
+  }
+
+  .summary-box.individual {
+    .mat-chip-list .mat-chip-list-wrapper {
+      flex-direction: row;
+      margin-bottom: 10px;
+  
+      .mat-chip.mat-standard-chip {
+        width: 49%;
+        padding: 20px 30px 20px 10px;
+  
+        &:nth-child(odd) {
+          margin-right: 1%;
+        }
+        &:nth-child(even) {
+          margin-left: 1%;
+        }
+      }
+    }
+  }
+
+  .mat-toolbar.mat-toolbar-multiple-rows {
+    min-height: 50px;
+  }
+
+  .mat-toolbar .mat-toolbar-row, .mat-toolbar .mat-toolbar-single-row {
+    height: 50px;
+    padding: 0 20px;
+  }
+
+  .mat-dialog-title {
+    font-size: 1.25rem;
+  }
+
+  .mat-card-title {
+    font-family: Ubuntu, Roboto, monospace;
+    font-size: 1.8em!important;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+
+  input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+  }
+
+  .mat-accordion .mat-expansion-panel {
+    box-shadow: 
+      0px 0px 1px -2px rgba(0, 0, 0, 0.2), 
+      0px 0px 1px -2px rgba(0, 0, 0, 0.14), 
+      0px 0px 1px 0px rgba(0, 0, 0, 0.12)
+  }
+
+  .mat-button-toggle-appearance-standard .mat-button-toggle-button {
+    height: 100%;
+    min-height: initial;
+
+    .mat-button-toggle-label-content {
+      padding: 0 3px;
+      line-height: 19px;
+    }
+
+  }
+
+  .mat-button-toggle-group {
+    .mat-button-toggle-checked {
+      background-color: map-get($font-colors, blue);
+      color: map-get($font-colors, white);
+  
+      &.mat-button-toggle-disabled {
+        background-color: map-get($font-colors, grey-light) !important;
+      }
+    }
+  }
+  .mat-button-toggle.mat-button-toggle-checked .mat-button-toggle-focus-overlay {
+    border-bottom: solid 48px;
+  }
+
+  .mat-slide-toggle.mat-checked.mat-disabled {
+    .mat-slide-toggle-bar {
+      background-color: map-get($font-colors, grey-light);
+    }
+    .mat-slide-toggle-thumb {
+      background-color: map-get($font-colors, black);
+    }
+  }
+
+  .mat-slide-toggle .mat-slide-toggle-content {
+    white-space: normal;
+  }
+
+
+  .mat-expansion-panel .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+  }
+
+  .mat-tab-group {
+    margin: 15px 0 10px 0;
+    background-color: map-get($bg-colors, white);
+  	box-shadow: 0 4px 8px 2px map-get($border-colors, light);
+    border-radius: 0;
+  
+    .mat-tab-label {
+      min-width: 100px;
+      padding: 0 10px;
+      opacity: 1;
+      font-size: 1.1rem;
+      color: map-get($font-colors, grey-dark);
+  
+      &.mat-tab-label-active {
+        font-weight: bold;
+        color: map-get($font-colors, blue);
+      }
+    }
+  
+    .mat-tab-body-wrapper {
+      .mat-tab-body.mat-tab-body-active {
+        overflow-y: hidden;
+        .mat-tab-body-content {
+          overflow: hidden;
+        }
+      }
+      button {
+        mat-icon.material-icons.mat-icon {
+          width: 20px;
+          height: 22px;
+          font-size: 18px;
+          
+        }
+
+        &[disabled] .mat-icon {
+          color: map-get($font-colors, grey-light) !important;
+        }
+  
+        &.mat-stroked-button mat-icon.material-icons.mat-icon {
+          color: map-get($font-colors, blue);
+        }
+  
+        &.mat-raised-button mat-icon.material-icons.mat-icon {
+          color: map-get($font-colors, white);
+        }
+      }
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+      .mat-icon.icon-locked {
+        color: map-get($font-colors, blue);
+      }
+    }
+  }
+
+  .app-content.admin .mat-tab-header {
+    border-bottom: 0;
+  }
+
+  .executive-container {
+
+    .mat-tab-body-wrapper {
+      margin: 16px;
+    }
+
+    .mat-expansion-panel-header {
+      padding: 0 24px 0 24px;
+    }
+    .mat-expansion-panel {
+      .mat-expansion-panel-header-title {
+        padding-left: 0;
+        margin-right: 0;
+      }
+      .mat-expansion-panel-header-description {
+        margin-right: 20px;
+      }
+    }
+  } 
+
+
+  .mat-form-field {
+    width: 100%;
+    font-size: $font-size;
+  }
+
+  mat-form-field.mat-form-field-appearance-outline {
+    .mat-form-field-infix {
+      line-height: 1.2em;
+      padding: 0.8em 0 0.8em 0;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      position: relative;
+      margin: 0;
+      padding: 0.2em 0.5em 0;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+
+      .mat-form-field-flex {
+        padding: 0 0.5em;
+      }
+    }
+
+    .mat-form-field-label {
+      margin-left: 0.2em;
+    }
+
+    .mat-form-field-outline-start, .mat-form-field-outline-end {
+      border-radius: 0;
+    }
+  }
+
+  .mat-checkbox {
+    .mat-checkbox-layout {
+      width: 100%;
+    }
+    .mat-checkbox-inner-container {
+      margin-left: 0;
+    }
+  }
+
+  tfoot td.mat-footer-cell {
+    border-bottom: 0;
+  }
+
+  .mat-tooltip {
+    white-space: pre-line;
+    max-width: 200px !important;
+  }
+}
+
+
+
+.getSartedStepper-no-padding-dialog .mat-dialog-container {
+  padding: 0px;
+  background-color: #f1f5f8;
+}
+.getSartedStepper  .mat-horizontal-content-container {
+  padding: 0px;
+  background-color: #f1f5f8;
+}
+
+.getSartedStepper .mat-step-label {
+  display: none;
+}
+
+.getSartedStepper .mat-horizontal-stepper-header-container {
+  background: #f1f5f8;
+  color: white;
+
+}
+
+//$primary: mat-palette($mat-light-blue, 600, 100, 900);
+$primary: mat-palette($mat-cap-blue, normal, light, dark);
+$accent: mat-palette($mat-orange, 800, 100, 900);
+$warn: mat-palette($mat-red, 600, 100, 900);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include custom-theme($theme);

@@ -1,0 +1,78 @@
+<div class="loading-overlay" [ngClass]="{'hide': fcLoaded}"></div>
+
+<div class="spinner-container" [ngClass]="{'active': loadingActive}">
+    <mat-progress-spinner class="progress-spinner" color="primary" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div class="settings-row" [ngClass]="{'teamview': !singleView}" layout="row" layout-fill>
+  <div flex="40">
+    <mat-form-field appearance="outline">
+      <mat-label>Grade</mat-label>
+      <mat-select placeholder="Grade" [(ngModel)]="forecast.gradeId" [disabled]="fcIsLocked() || !hasLeadRole() "  (selectionChange)="settingsUpdate()">
+        <mat-option *ngFor="let g of grades" [value]="g.gradeId">{{g.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div flex="60" class="padding" layout-fill>
+    <mat-slider thumbLabel color="primary" min="0" max="100" step="2.5" [(ngModel)]="fteSliderValue" (change)="fteSliderValueUpdate()" class="slider" [disabled]="fcIsLocked()"></mat-slider>
+    <span class="slider-text">{{fteValue()}}% FTE</span>
+  </div>
+
+  <div flex="20" *ngIf="hasLeadRole()">
+    <mat-slide-toggle [(ngModel)]="forecast.isRelevant" color="primary" [disabled]="fcIsLocked()" (change)="settingsUpdate()">ARVE / URVE Relevance</mat-slide-toggle>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="project-list" [ngClass]="{'height-fix': !singleView && hasMSLRole()}">
+    <app-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor"></app-fc-project>
+</div>
+
+<div class="multi-view-box" *ngIf="!singleView">
+  <mat-form-field appearance="outline">
+    <mat-label>Comments</mat-label>
+    <textarea matInput [(ngModel)]="forecast.comment" name="comment" placeholder="Leave a comment" maxLength="500"
+      [disabled]="fcIsLocked()" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
+      cdkAutosizeMaxRows="6"></textarea>
+  </mat-form-field>
+
+  <div class="summary-warning error" *ngIf="totalDays() > forecast.totalDays">
+    <mat-icon class="icon">error</mat-icon>
+    It is not possible to assign more than <strong>{{forecast.totalDays | number: '1.0-2': 'de'}} days</strong> for this month!<br>
+    There are currently <strong>{{totalDays() | number: '1.0-2': 'de'}} days</strong> assigned.
+  </div>
+</div>
+
+<div class="button-row">
+  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()"
+    color="primary" (click)="addProjectToForecast()">
+    <mat-icon>playlist_add</mat-icon> Add Project
+  </button>
+
+  <button mat-stroked-button *ngIf="singleView && !fcIsLocked()" class="mat-primary-reversed align-right"
+  (click)="copyData()">
+    <mat-icon>content_copy</mat-icon> Copy Data
+  </button>
+  
+  <button mat-stroked-button *ngIf="!singleView && !fcIsLocked()" class="mat-primary-reversed align-right"
+    (click)="submitForecast()" [disabled]="totalDays() > forecast.totalDays  || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+    <mat-icon>lock</mat-icon> Submit
+  </button>
+
+  <button mat-stroked-button *ngIf="!singleView && !fcIsLocked()" class="mat-primary-reversed align-right"
+    (click)="saveForecast()" [disabled]="totalDays() > forecast.totalDays  || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+    <mat-icon>save</mat-icon> Save
+  </button>
+
+  <button mat-stroked-button *ngIf="!singleView && fcIsLocked() && hasUnlockPermission(2)" class="mat-primary-reversed align-right"
+    (click)="unlockForecast()">
+    <mat-icon>lock_open</mat-icon> Unlock
+  </button>
+
+  <button mat-stroked-button *ngIf="!singleView && !fcIsLocked()" class="mat-primary-reversed align-right" [disabled]="!fcLockedBySub()"
+    (click)="unlockForecast()">
+    <mat-icon>lock_open</mat-icon> Unlock for User
+  </button>
+</div>

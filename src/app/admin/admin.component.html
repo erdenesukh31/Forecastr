@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<mat-sidenav-container>
+
+	<mat-sidenav mode="side" opened>
+		<div class ="nav-button-container">
+			<button mat-icon-button title="ForeCasts" class="active">
+					<mat-icon [inline]="true">date_range</mat-icon>
+			</button>
+
+			<button mat-icon-button title="Settings">
+					<mat-icon [inline]="true">settings</mat-icon>
+			</button>
+		</div>
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+		<div class="app-content admin">
+			<h1>Admin Dashboard</h1>
+			<mat-tab-group>
+				<mat-tab label="Users">
+					<app-admin-users></app-admin-users>
+				</mat-tab>
+				<mat-tab label="Practices">
+					<app-admin-teams></app-admin-teams>
+				</mat-tab>
+				<mat-tab label="Projects">
+					<app-admin-projects></app-admin-projects>
+				</mat-tab>
+				<mat-tab label="Months">
+					<app-admin-months></app-admin-months>
+				</mat-tab>
+			</mat-tab-group>
+		</div>
+	</mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<app-footer></app-footer>

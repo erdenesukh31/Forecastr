@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Project Request</h2>
+<mat-dialog-content>Send a e-mail with following project code and name.</mat-dialog-content>
+<br>
+<mat-form-field>
+  <input matInput placeholder="project code" [(ngModel)]="data.code">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="project name" [(ngModel)]="data.name">
+</mat-form-field>
+<mat-form-field>
+<textarea matInput [(ngModel)]="data.comment"  name="comment"  maxLength="200"
+        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="6" placeholder="leave a comment"></textarea>
+</mat-form-field>
+<mat-dialog-actions>
+  <button mat-button  mat-dialog-close cdkFocusInitial [mat-dialog-close]="false">cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="true" (click)="openEmail()">submit </button>
+</mat-dialog-actions>

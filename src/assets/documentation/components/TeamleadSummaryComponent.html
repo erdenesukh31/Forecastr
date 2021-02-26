@@ -1,0 +1,1447 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>TeamleadSummaryComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>teamlead summary component</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-teamlead-summary</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./teamlead-summary.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./teamlead-summary.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#fcEntries">fcEntries</a>
+                            </li>
+                            <li>
+                                <a href="#fcSubscription">fcSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#months">months</a>
+                            </li>
+                            <li>
+                                <a href="#monthSubscription">monthSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#projects">projects</a>
+                            </li>
+                            <li>
+                                <a href="#projectSubscription">projectSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#summaryData">summaryData</a>
+                            </li>
+                            <li>
+                                <a href="#summaryProjects">summaryProjects</a>
+                            </li>
+                            <li>
+                                <a href="#team">team</a>
+                            </li>
+                            <li>
+                                <a href="#teamSubscription">teamSubscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#downloadFile">downloadFile</a>
+                            </li>
+                            <li>
+                                <a href="#exportPeriodForecastToCSV">exportPeriodForecastToCSV</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openCSVExportModal">openCSVExportModal</a>
+                            </li>
+                            <li>
+                                <a href="#percentageValue">percentageValue</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#month">month</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(datePipe: <a href="https://angular.io/api/common/DatePipe" target="_blank">DatePipe</a>, dialog: MatDialog, utilitiesService: <a href="../injectables/UtilitiesService.html">UtilitiesService</a>, forecastService: <a href="../injectables/ForecastService.html">ForecastService</a>, teamForecastService: <a href="../injectables/TeamForecastService.html">TeamForecastService</a>, userService: <a href="../injectables/UserService.html">UserService</a>, pageState: <a href="../injectables/PageStateService.html">PageStateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>constructor for teamlead-summary component</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>datePipe</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/DatePipe" target="_blank" >DatePipe</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>utilitiesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UtilitiesService.html" target="_self" >UtilitiesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>forecastService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ForecastService.html" target="_self" >ForecastService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>teamForecastService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TeamForecastService.html" target="_self" >TeamForecastService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>pageState</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PageStateService.html" target="_self" >PageStateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="month"></a>
+                        <b>month</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Month.html" target="_self" >Month</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:32</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>month (received as input)</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadFile"></a>
+                    <span class="name">
+                        <b>
+                            downloadFile
+                        </b>
+                        <a href="#downloadFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>downloadFile(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, period: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:164</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Download csv file with team forecast data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>period</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="exportPeriodForecastToCSV"></a>
+                    <span class="name">
+                        <b>
+                            exportPeriodForecastToCSV
+                        </b>
+                        <a href="#exportPeriodForecastToCSV"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>exportPeriodForecastToCSV(csvExportMonths)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="133"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:133</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Export forecasts for team for the selected months</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>csvExportMonths</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Unsubscribe services when component gets destroyed</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:76</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Init summaryDays
+Subscribe to Utilities
+Calc Total workingDays
+Subscribe forecast at ForecastService for updates</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openCSVExportModal"></a>
+                    <span class="name">
+                        <b>
+                            openCSVExportModal
+                        </b>
+                        <a href="#openCSVExportModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openCSVExportModal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:120</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="percentageValue"></a>
+                    <span class="name">
+                        <b>
+                            percentageValue
+                        </b>
+                        <a href="#percentageValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>percentageValue(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:116</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Return for giving VALUE percentage value.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fcEntries"></a>
+                        <span class="name">
+                            <b>
+                            fcEntries</b>
+                            <a href="#fcEntries"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>FcEntry[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fcSubscription"></a>
+                        <span class="name">
+                            <b>
+                            fcSubscription</b>
+                            <a href="#fcSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="months"></a>
+                        <span class="name">
+                            <b>
+                            months</b>
+                            <a href="#months"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Month.html" target="_self" >Month[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="monthSubscription"></a>
+                        <span class="name">
+                            <b>
+                            monthSubscription</b>
+                            <a href="#monthSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:51</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projects"></a>
+                        <span class="name">
+                            <b>
+                            projects</b>
+                            <a href="#projects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projectSubscription"></a>
+                        <span class="name">
+                            <b>
+                            projectSubscription</b>
+                            <a href="#projectSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:50</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="summaryData"></a>
+                        <span class="name">
+                            <b>
+                            summaryData</b>
+                            <a href="#summaryData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/SummaryData.html" target="_self" >SummaryData</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>contains summary-data (calculated in teamlead-summary service)</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="summaryProjects"></a>
+                        <span class="name">
+                            <b>
+                            summaryProjects</b>
+                            <a href="#summaryProjects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatTableDataSource&lt;SummaryDataProject&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>provides summary-data projects in &#39;MatTableDataSource&#39; format</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="team"></a>
+                        <span class="name">
+                            <b>
+                            team</b>
+                            <a href="#team"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >User[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamSubscription"></a>
+                        <span class="name">
+                            <b>
+                            teamSubscription</b>
+                            <a href="#teamSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, OnChanges, OnDestroy, Inject } from &quot;@angular/core&quot;;
+import { DatePipe } from &#x27;@angular/common&#x27;;
+import { MatTableDataSource, MatDialog, MAT_DIALOG_DATA } from &quot;@angular/material&quot;;
+
+import { UtilitiesService } from &quot;../../../core/services/utilities/utilities.service&quot;;
+import { ForecastService } from &quot;../../../core/services/forecasts/forecast.service&quot;;
+import { UserService } from &quot;../../../core/services/users/user.service&quot;;
+
+import { FcEntry } from &quot;../../../core/interfaces/fcEntry&quot;;
+import { Project } from &quot;../../../core/interfaces/project&quot;;
+import { Month } from &quot;../../../core/interfaces/month&quot;;
+import { User } from &quot;../../../core/interfaces/user&quot;;
+import { SummaryData, SummaryDataProject } from &#x27;../../../core/interfaces/summaryData&#x27;;
+
+import { Export } from &quot;../../../core/interfaces/exportCSV/export&quot;;
+import { TeamForecastService } from &quot;../../../core/services/team-forecasts/team-forecasts.service&quot;;
+import { Subscription } from &quot;rxjs&quot;;
+import { PageStateService } from &quot;../../../core/shared/page-state.service&quot;;
+
+/**
+ * teamlead summary component
+ */
+@Component({
+  selector: &quot;app-teamlead-summary&quot;,
+  templateUrl: &quot;./teamlead-summary.component.html&quot;,
+  styleUrls: [&quot;./teamlead-summary.component.scss&quot;]
+})
+export class TeamleadSummaryComponent implements OnInit, OnDestroy {
+  /**
+   * month (received as input)
+   */
+  @Input(&#x27;month&#x27;) month: Month;
+
+  fcEntries: FcEntry[];
+  projects: Project[] &#x3D; [];
+  months: Month[] &#x3D; [];
+  team: User[] &#x3D; [];
+
+  /**
+   * contains summary-data (calculated in teamlead-summary service)
+   */
+  summaryData: SummaryData;
+
+  /**
+   * provides summary-data projects in &#x27;MatTableDataSource&#x27; format
+   */
+  summaryProjects: MatTableDataSource&lt;SummaryDataProject&gt;;
+
+  fcSubscription: Subscription;
+  projectSubscription: Subscription;
+  monthSubscription: Subscription;
+  teamSubscription: Subscription;
+
+  /**
+   * constructor for teamlead-summary component
+   */
+  constructor(
+    private datePipe: DatePipe,
+    private dialog: MatDialog,
+    private utilitiesService: UtilitiesService,
+    private forecastService: ForecastService,
+    private teamForecastService: TeamForecastService,
+    private userService: UserService,
+    private pageState: PageStateService,
+  ) {
+    this.fcEntries &#x3D; [];
+    this.summaryProjects &#x3D; new MatTableDataSource([]);
+  }
+
+  /**
+   * Init summaryDays
+   * Subscribe to Utilities
+   * Calc Total workingDays
+   * Subscribe forecast at ForecastService for updates
+   */
+  ngOnInit(): void {
+    this.teamSubscription &#x3D; this.userService.team$
+      .subscribe((team: User[]) &#x3D;&gt; {
+        this.team &#x3D; team;
+      });
+
+    this.projectSubscription &#x3D; this.utilitiesService.projects$
+      .subscribe((projects: Project[]) &#x3D;&gt; {
+        this.projects &#x3D; projects;
+        this.summaryData &#x3D; this.teamForecastService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), this.team);
+        this.summaryProjects &#x3D; new MatTableDataSource(this.summaryData.days);
+      });
+
+    this.monthSubscription &#x3D; this.utilitiesService.months$
+      .subscribe((months: Month[]) &#x3D;&gt; {
+        this.months &#x3D; months;
+      });
+
+    this.fcSubscription &#x3D; this.forecastService.forecasts$
+      .subscribe((forecasts: FcEntry[]) &#x3D;&gt; {
+        let userIds: number[] &#x3D; this.team.map((u: User) &#x3D;&gt; u.id);
+        this.fcEntries &#x3D; forecasts.filter((fc: FcEntry) &#x3D;&gt; fc.monthId &#x3D;&#x3D;&#x3D; this.month.id &amp;&amp; userIds.indexOf(fc.userId) &gt;&#x3D; 0);
+        this.summaryData &#x3D; this.teamForecastService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), this.team);
+        this.summaryProjects &#x3D; new MatTableDataSource(this.summaryData.days);
+      });
+  }
+
+  /**
+   * Unsubscribe services when component gets destroyed
+   */
+  ngOnDestroy(): void {
+    this.fcSubscription.unsubscribe();
+    this.projectSubscription.unsubscribe();
+    this.teamSubscription.unsubscribe();
+  }
+
+  /**
+   * Return for giving VALUE percentage value.
+   * @param value
+   */
+  percentageValue(value: number): number {
+    return parseFloat((value * 100).toFixed(0));
+  }
+
+  openCSVExportModal(): void {
+    let dialogRef: any &#x3D; this.dialog.open(CSVExportDialog, { width: &#x27;30vw&#x27;, maxHeight: &#x27;80vh&#x27;, data: { months: this.months.filter((m: Month) &#x3D;&gt; m.active &#x3D;&#x3D;&#x3D; true) }});
+
+    dialogRef.afterClosed().subscribe((csvExportMonths: Month[]) &#x3D;&gt; {
+      if(csvExportMonths) {
+        this.exportPeriodForecastToCSV(csvExportMonths);
+      }
+    });
+  }
+
+  /**
+   * Export forecasts for team for the selected months
+   */
+  exportPeriodForecastToCSV(csvExportMonths): void {
+    this.pageState.showSpinner();
+    let openRequests: number &#x3D; csvExportMonths.length;
+    let csvExportItems: Export[] &#x3D; [];
+
+    this.utilitiesService.getMonths().forEach((month: Month) &#x3D;&gt; {
+      if (csvExportMonths.indexOf(month.id) &gt;&#x3D; 0) {
+        this.forecastService.getMonthlyForecasts(month.id).then((fcEntries: FcEntry[]) &#x3D;&gt; {
+          openRequests--;
+          csvExportItems.push(this.teamForecastService.getMonthlyExportData(fcEntries, this.team, month.id, parseInt(month.workingdays, 10)));
+
+          if (openRequests &#x3D;&#x3D;&#x3D; 0) {
+            csvExportItems.sort((a, b) &#x3D;&gt;
+              (this.months.find((m: Month) &#x3D;&gt; m.id &#x3D;&#x3D;&#x3D; a.monthId).time &gt; this.months.find((m: Month) &#x3D;&gt; m.id &#x3D;&#x3D;&#x3D; b.monthId).time) ? 1 : -1
+            );
+
+            this.teamForecastService.getPeriodForecast(csvExportItems)
+              .subscribe((data: any) &#x3D;&gt; {
+                this.pageState.hideSpinner();
+                this.downloadFile(data, &#x27;Period&#x27;);
+              });
+          }
+        });
+      }
+    });
+  }
+
+  /**
+   * Download csv file with team forecast data
+   * @param data
+   */
+  downloadFile(data: any, period: string): void {
+    const blob: Blob &#x3D; new Blob([data], { type: &#x27;text/csv&#x27; });
+    const filename: string &#x3D; this.datePipe.transform(new Date(), &#x27;yyyyMMdd&#x27;) + &#x27;-Forecast-&#x27; + period + &#x27;.csv&#x27;;
+
+    if (window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      const url: string &#x3D; window.URL.createObjectURL(blob);
+
+      let a: HTMLAnchorElement &#x3D; document.createElement(&#x27;a&#x27;);
+      a.href &#x3D; url;
+      a.download &#x3D; filename;
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
+  }
+}
+
+/**
+ * Component for CSV-Export Dialog
+ */
+@Component({
+  templateUrl: &#x27;./csv-export-dialog.html&#x27;,
+  styleUrls: [&quot;./csv-export-dialog.scss&quot;]
+}) export class CSVExportDialog {
+  /**
+   * month list
+   */
+  months: Month[];
+
+  /**
+   * ids of months which should be exported in csv
+   * default: id of current month
+   */
+  allMonths: {
+    checked: boolean,
+    indeterminate: boolean,
+  };
+
+  /**
+   * initializes global variables
+   * @param data
+   */
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    this.allMonths &#x3D; { checked: false, indeterminate: false };
+    this.months &#x3D; data.months;
+  }
+
+  /**
+   * updates allMonths checkbox if individual month is selected/deselected
+   */
+  checkMonth(): void {
+    if (this.months.filter((m: Month) &#x3D;&gt; m.checked).length &#x3D;&#x3D;&#x3D; this.months.length) {
+	    this.allMonths &#x3D; { checked: true, indeterminate: false };
+    } else if (this.months.filter((m: Month) &#x3D;&gt; m.checked).length &gt; 0) {
+      this.allMonths &#x3D; { checked: false, indeterminate: true };
+    } else {
+      this.allMonths &#x3D; { checked: false, indeterminate: false };
+    }
+  }
+
+  /**
+   * Checks/unchecks all months when allMonths checkbox is used
+   */
+  checkAll(): void {
+    if (this.allMonths.checked) {
+      this.months.forEach((m: Month) &#x3D;&gt; { m.checked &#x3D; true; });
+    } else {
+      this.months.forEach((m: Month) &#x3D;&gt; { m.checked &#x3D; false; });
+    }
+  }
+
+  /**
+   * returns IDs of selected months
+   */
+  getExportMonths(): number[] {
+    return this.months.filter((m: Month) &#x3D;&gt; m.checked).map((m: Month) &#x3D;&gt; m.id);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-card class&#x3D;&quot;summary-box&quot;&gt;
+  &lt;mat-card-title&gt;
+    Summary {{month.name}}
+  &lt;/mat-card-title&gt;
+
+  &lt;mat-card-content&gt;
+    &lt;table mat-table [dataSource]&#x3D;&quot;summaryProjects&quot;&gt;
+      &lt;ng-container matColumnDef&#x3D;&quot;name&quot;&gt;
+        &lt;th mat-header-cell *matHeaderCellDef&gt;Project name&lt;/th&gt;
+        &lt;td mat-cell *matCellDef&#x3D;&quot;let project&quot;&gt;{{ project.title }}&lt;/td&gt;
+        &lt;td mat-footer-cell *matFooterCellDef&gt;
+          Billable days&lt;br&gt;
+          Non-billable days&lt;br&gt;
+          &lt;span class&#x3D;&quot;note&quot;&gt;Expected working days&lt;/span&gt;
+        &lt;/td&gt;
+      &lt;/ng-container&gt;
+
+      &lt;ng-container matColumnDef&#x3D;&quot;days&quot;&gt;
+        &lt;th mat-header-cell *matHeaderCellDef&gt;Days&lt;/th&gt;
+        &lt;td mat-cell *matCellDef&#x3D;&quot;let project&quot;&gt;{{ project.days }}&lt;/td&gt;
+        &lt;td mat-footer-cell *matFooterCellDef&gt;
+          {{summaryData.billableDays}}&lt;br&gt;
+          {{summaryData.nonbillableDays}}&lt;br&gt;
+          &lt;span class&#x3D;&quot;note&quot;&gt;{{ summaryData.workingDays }}&lt;/span&gt;
+        &lt;/td&gt;
+      &lt;/ng-container&gt;
+      &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;[&#x27;name&#x27;, &#x27;days&#x27;]&quot;&gt;&lt;/tr&gt;
+      &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: [&#x27;name&#x27;, &#x27;days&#x27;]&quot;&gt;&lt;/tr&gt;
+      &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;[&#x27;name&#x27;, &#x27;days&#x27;]&quot;&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+
+		&lt;div class&#x3D;&quot;card-section&quot;&gt;
+      &lt;mat-chip-list&gt;
+        &lt;mat-chip&gt;&lt;mat-icon&gt;timeline&lt;/mat-icon&gt;ARVE {{percentageValue(summaryData.arve)}}%&lt;/mat-chip&gt;
+        &lt;mat-chip&gt;&lt;mat-icon&gt;timeline&lt;/mat-icon&gt;URVE {{percentageValue(summaryData.urve)}}%&lt;/mat-chip&gt;
+        &lt;mat-chip&gt;&lt;mat-icon&gt;trending_up&lt;/mat-icon&gt;ROS € {{summaryData.revenue | number:&#x27;&#x27;:&#x27;de&#x27; }}&lt;/mat-chip&gt;
+      &lt;/mat-chip-list&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;card-section&quot;&gt;
+      &lt;button mat-stroked-button class&#x3D;&quot;mat-primary-reversed&quot; (click)&#x3D;&quot;openCSVExportModal()&quot;&gt;
+        &lt;mat-icon&gt;insert_drive_file&lt;/mat-icon&gt;CSV Export
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/mat-card-content&gt;
+&lt;/mat-card&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./teamlead-summary.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.mat-stroked-button {
+	margin: 5px;
+	margin-left: 0;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card class="summary-box">  <mat-card-title>    Summary {{month.name}}  </mat-card-title>  <mat-card-content>    <table mat-table [dataSource]="summaryProjects">      <ng-container matColumnDef="name">        <th mat-header-cell *matHeaderCellDef>Project name</th>        <td mat-cell *matCellDef="let project">{{ project.title }}</td>        <td mat-footer-cell *matFooterCellDef>          Billable days<br>          Non-billable days<br>          <span class="note">Expected working days</span>        </td>      </ng-container>      <ng-container matColumnDef="days">        <th mat-header-cell *matHeaderCellDef>Days</th>        <td mat-cell *matCellDef="let project">{{ project.days }}</td>        <td mat-footer-cell *matFooterCellDef>          {{summaryData.billableDays}}<br>          {{summaryData.nonbillableDays}}<br>          <span class="note">{{ summaryData.workingDays }}</span>        </td>      </ng-container>      <tr mat-header-row *matHeaderRowDef="[\'name\', \'days\']"></tr>      <tr mat-row *matRowDef="let row; columns: [\'name\', \'days\']"></tr>      <tr mat-footer-row *matFooterRowDef="[\'name\', \'days\']"></tr>    </table>		<div class="card-section">      <mat-chip-list>        <mat-chip><mat-icon>timeline</mat-icon>ARVE {{percentageValue(summaryData.arve)}}%</mat-chip>        <mat-chip><mat-icon>timeline</mat-icon>URVE {{percentageValue(summaryData.urve)}}%</mat-chip>        <mat-chip><mat-icon>trending_up</mat-icon>ROS € {{summaryData.revenue | number:\'\':\'de\' }}</mat-chip>      </mat-chip-list>    </div>    <div class="card-section">      <button mat-stroked-button class="mat-primary-reversed" (click)="openCSVExportModal()">        <mat-icon>insert_drive_file</mat-icon>CSV Export      </button>    </div>  </mat-card-content></mat-card></div>'
+    var COMPONENTS = [{'name': 'AddMonthDialog', 'selector': ''},{'name': 'AddProjectDialog', 'selector': ''},{'name': 'AddUserDialog', 'selector': ''},{'name': 'AdminComponent', 'selector': 'public-admin'},{'name': 'AppComponent', 'selector': 'public-root'},{'name': 'CSVExportDialog', 'selector': ''},{'name': 'DashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'FcEntryComponent', 'selector': 'app-fc-entry'},{'name': 'FcEntrySummaryComponent', 'selector': 'app-fc-entry-summary'},{'name': 'FcProjectComponent', 'selector': 'app-fc-project'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'ForecastComponent', 'selector': 'public-forecast'},{'name': 'GetStarted', 'selector': ''},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'IndividualComponent', 'selector': 'app-individual'},{'name': 'LoginComponent', 'selector': ''},{'name': 'MonthsComponent', 'selector': 'app-admin-months'},{'name': 'ProjectsComponent', 'selector': 'app-admin-projects'},{'name': 'RemoveProjectDialog', 'selector': ''},{'name': 'TeamComponent', 'selector': 'app-team'},{'name': 'TeamleadMonthComponent', 'selector': 'app-teamlead-month'},{'name': 'TeamleadSummaryComponent', 'selector': 'app-teamlead-summary'},{'name': 'TeamsComponent', 'selector': 'app-admin-teams'},{'name': 'UsersComponent', 'selector': 'app-admin-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TeamleadSummaryComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TeamleadSummaryComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

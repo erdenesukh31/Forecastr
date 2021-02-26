@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{data.team.name ? data.team.name : 'New Team'}}</h2>
+<div class="dialog-content" [formGroup]="teamForm">
+	<mat-form-field appearance="outline">
+		<mat-label>Name</mat-label>
+		<input type="text" matInput formControlName="name">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Teamlead</mat-label>
+		<mat-select name="teamLeadId" formControlName="teamLeadId">
+			<mat-option *ngFor="let u of data.user" [value]="u.id">{{u.lastName}}, {{u.firstName}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
+<mat-dialog-actions>
+	<button mat-button (click)="onNoClick()">Cancel</button>
+	<button mat-button (click)="onSaveClick()" [disabled]="!teamForm.valid">Save</button>
+</mat-dialog-actions>

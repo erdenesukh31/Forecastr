@@ -1,0 +1,1018 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>TeamForecastService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/core/services/team-forecasts/team-forecasts.service.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>team forecast service</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#projects">projects</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getEmptyData">getEmptyData</a>
+                            </li>
+                            <li>
+                                <a href="#getMonthlyExportData">getMonthlyExportData</a>
+                            </li>
+                            <li>
+                                <a href="#getMonthlyForecast">getMonthlyForecast</a>
+                            </li>
+                            <li>
+                                <a href="#getPeriodForecast">getPeriodForecast</a>
+                            </li>
+                            <li>
+                                <a href="#getSummaryData">getSummaryData</a>
+                            </li>
+                            <li>
+                                <a href="#getTeamForecast">getTeamForecast</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, BO: <a href="../injectables/BusinessOperationsService.html">BusinessOperationsService</a>, utilitiesService: <a href="../injectables/UtilitiesService.html">UtilitiesService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:25</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>constructor for team-forecast service</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>BO</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/BusinessOperationsService.html" target="_self" >BusinessOperationsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>utilitiesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UtilitiesService.html" target="_self" >UtilitiesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEmptyData"></a>
+                    <span class="name">
+                        <b>
+                            getEmptyData
+                        </b>
+                        <a href="#getEmptyData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getEmptyData()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="218"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:218</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>inits the summarydata-projects with empty data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>SummaryDataProject[]</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMonthlyExportData"></a>
+                    <span class="name">
+                        <b>
+                            getMonthlyExportData
+                        </b>
+                        <a href="#getMonthlyExportData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMonthlyExportData(fcEntries: FcEntry[], user: <a href="../classes/User.html">User[]</a>, monthId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, workingDays: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="168"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:168</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the export data for one months in the exact format the backend needs them to generate a csv file</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fcEntries</td>
+                                    <td>
+                                            <code>FcEntry[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>monthId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>workingDays</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Export.html" target="_self" >Export</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMonthlyForecast"></a>
+                    <span class="name">
+                        <b>
+                            getMonthlyForecast
+                        </b>
+                        <a href="#getMonthlyForecast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getMonthlyForecast(exportValues: <a href="../classes/Export.html">Export</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns an observable of the monthly forecast data for one team
+Used for csv export</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>exportValues</td>
+                                    <td>
+                                                <code><a href="../classes/Export.html" target="_self" >Export</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Export.html" target="_self" >Observable&lt;Export&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPeriodForecast"></a>
+                    <span class="name">
+                        <b>
+                            getPeriodForecast
+                        </b>
+                        <a href="#getPeriodForecast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPeriodForecast(exportValues: <a href="../classes/Export.html">Export[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:77</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns an observable of the period forecast data for one team
+Used for csv export</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>exportValues</td>
+                                    <td>
+                                                <code><a href="../classes/Export.html" target="_self" >Export[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Export.html" target="_self" >Observable&lt;Export[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSummaryData"></a>
+                    <span class="name">
+                        <b>
+                            getSummaryData
+                        </b>
+                        <a href="#getSummaryData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSummaryData(fcEntries: FcEntry[], workingDays: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, team: <a href="../classes/User.html">User[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>reutrns the summarydata to the provided forecast-entries</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fcEntries</td>
+                                    <td>
+                                            <code>FcEntry[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>workingDays</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>team</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/SummaryData.html" target="_self" >SummaryData</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTeamForecast"></a>
+                    <span class="name">
+                        <b>
+                            getTeamForecast
+                        </b>
+                        <a href="#getTeamForecast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTeamForecast(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, monthId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:51</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get the TeamForecast from the Backend for giving userId &amp; monthId</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>monthId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;FcEntry[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projects"></a>
+                        <span class="name">
+                            <b>
+                            projects</b>
+                            <a href="#projects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/core/services/team-forecasts/team-forecasts.service.ts:25</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>contains all projects</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+
+import { FcProject } from &#x27;../../interfaces/fcProject&#x27;;
+import { Project } from &#x27;../../interfaces/project&#x27;;
+import { FcEntry } from &#x27;../../interfaces/fcEntry&#x27;;
+import { SummaryData, SummaryDataProject } from &#x27;../../interfaces/summaryData&#x27;;
+import { BusinessOperationsService } from &#x27;../../shared/business-operations.service&#x27;;
+import { UtilitiesService } from &#x27;../utilities/utilities.service&#x27;;
+import { Export } from &#x27;../../interfaces/exportCSV/export&#x27;;
+import { User } from &#x27;../../interfaces/user&#x27;;
+import { Entry } from &#x27;../../interfaces/exportCSV/entry&#x27;;
+
+/**
+ * team forecast service
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class TeamForecastService {
+  /**
+   * contains all projects
+   */
+  projects: Project[];
+
+  /**
+   * constructor for team-forecast service
+   * 
+   * @param http
+   * @param BO
+   * @param utilitiesService
+   */
+  constructor(
+    private http: HttpClient,
+    private BO: BusinessOperationsService,
+    private utilitiesService: UtilitiesService,
+  ) {
+    this.utilitiesService.projects$
+      .subscribe((projects: Project[]) &#x3D;&gt; {
+        this.projects &#x3D; projects;
+      });
+  }
+
+  /**
+   * Get the TeamForecast from the Backend for giving userId &amp; monthId
+   * 
+   * @param userId
+   * @param monthId
+   */
+  getTeamForecast(userId: number, monthId: number): Observable&lt;FcEntry[]&gt; {
+    return this.http
+      .get&lt;FcEntry[]&gt;(this.BO.teamForecast(userId, monthId));
+  }
+
+  /**
+   * Returns an observable of the monthly forecast data for one team
+   * Used for csv export
+   * 
+   * @param exportValues
+   */
+  getMonthlyForecast(exportValues: Export): Observable&lt;Export&gt; {
+    const httpOptions: object &#x3D; {
+      responseType:  &#x27;blob&#x27; as &#x27;json&#x27;,
+    };
+
+    return this.http
+      .post&lt;Export&gt;(this.BO.monthlyForecast(), exportValues, httpOptions);
+  }
+
+  /**
+   * Returns an observable of the period forecast data for one team
+   * Used for csv export
+   * 
+   * @param exportValues
+   */
+  getPeriodForecast(exportValues: Export[]): Observable&lt;Export[]&gt; {
+    const httpOptions: object &#x3D; {
+      responseType:  &#x27;blob&#x27; as &#x27;json&#x27;,
+    };
+
+    return this.http
+      .post&lt;Export[]&gt;(this.BO.periodForecast(), exportValues, httpOptions);
+  }
+
+  /**
+   * reutrns the summarydata to the provided forecast-entries
+   * 
+   * @param fcEntries
+   * @param workingDays
+   * @param team
+   */
+	getSummaryData(fcEntries: FcEntry[], workingDays: number, team: User[]): SummaryData {
+    let summaryData: SummaryData &#x3D; {
+			days: this.getEmptyData(),
+			revenue: 0,
+      workingDays: 0,
+      billableDays: 0,
+      nonbillableDays: 0,
+			arve: 0,
+			urve: 0,
+    };
+
+    team.forEach((user: User) &#x3D;&gt; {
+      summaryData.workingDays +&#x3D; user.fte ? (user.fte * workingDays) : workingDays;
+    });
+
+    if (fcEntries.length &#x3D;&#x3D;&#x3D; 0) {
+      return summaryData;
+    }
+
+    if (this.projects.length &gt; 0) {
+      fcEntries.forEach((fcEntry: FcEntry) &#x3D;&gt; {
+
+        if (fcEntry.projects) {
+          fcEntry.projects.forEach((fcProject: FcProject) &#x3D;&gt; {
+            summaryData.revenue +&#x3D; (fcProject.cor &amp;&amp; fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;
+            let project: Project &#x3D; this.projects.find((p: Project) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; fcProject.projectId);
+
+            summaryData.days
+              .filter((sd: SummaryDataProject) &#x3D;&gt; sd.type &#x3D;&#x3D;&#x3D; (project ? project.projectType : 0))
+              .forEach((sd: SummaryDataProject) &#x3D;&gt; {
+                sd.days +&#x3D; (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
+            });
+
+            if (fcProject.billable) {
+              summaryData.billableDays +&#x3D; (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
+            } else {
+              summaryData.nonbillableDays +&#x3D; (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
+            }
+          });
+        }
+      });
+    }
+
+    let totalDays: number &#x3D; 0;
+    summaryData.days.forEach((sd: SummaryDataProject) &#x3D;&gt; {
+      totalDays &#x3D; totalDays + sd.days;
+    });
+
+    summaryData.arve &#x3D; 0;
+    summaryData.urve &#x3D; 0;
+    let teamsize: number &#x3D; 0;
+    team.forEach((u: User) &#x3D;&gt; {
+      teamsize +&#x3D; (u.fte ? u.fte : 1);
+
+      let fcEntry: FcEntry &#x3D; fcEntries.find((fc: FcEntry) &#x3D;&gt; fc.userId &#x3D;&#x3D;&#x3D; u.id);
+      if (fcEntry) {
+        summaryData.arve +&#x3D; fcEntry.arve ? (fcEntry.arve * (u.fte ? u.fte : 1)) : 0;
+        summaryData.urve +&#x3D; fcEntry.urve ? (fcEntry.urve * (u.fte ? u.fte : 1)) : 0;
+      }
+    });
+
+    summaryData.arve /&#x3D; teamsize;
+    summaryData.urve /&#x3D; teamsize;
+
+    return summaryData;
+  }
+
+  /**
+   * Returns the export data for one months in the exact format the backend needs them to generate a csv file
+   * 
+   * @param fcEntries
+   * @param user
+   * @param monthId
+   * @param workingDays
+   */
+	getMonthlyExportData(fcEntries: FcEntry[], user: User[], monthId: number, workingDays: number): Export {
+		let csvExportItem: Export &#x3D; new Export();
+    csvExportItem.monthId &#x3D; monthId;
+
+    user.forEach((u: User) &#x3D;&gt; {
+      let temp: Entry &#x3D; new Entry();
+      temp.urve &#x3D; 0;
+      temp.arve &#x3D; 0;
+      temp.workingDays &#x3D; 0;
+      temp.ros &#x3D; 0;
+
+			let userForecast: FcEntry &#x3D; fcEntries.find((fc: FcEntry) &#x3D;&gt; fc.userId &#x3D;&#x3D;&#x3D; u.id);
+
+			temp.name &#x3D; u.firstName + &#x27; &#x27; + u.lastName;
+			if (userForecast) {
+				temp.urve &#x3D; parseFloat((userForecast.urve * 100).toFixed(0));
+				temp.arve &#x3D; parseFloat((userForecast.arve * 100).toFixed(0));
+        
+        if(userForecast.projects.length &gt; 0) {
+  				temp.workingDays &#x3D; userForecast.projects
+  					.map((p: FcProject) &#x3D;&gt; (p.plannedProjectDays ? p.plannedProjectDays : 0))
+  					.reduce((pSum: number, a: number) &#x3D;&gt; pSum + a);
+  				temp.ros &#x3D; userForecast.projects
+  					.map((p: FcProject) &#x3D;&gt; ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0)))
+            .reduce((pSum: number, a: number) &#x3D;&gt; pSum + a);
+        }
+      }
+			
+			csvExportItem.employeeEntry.push(temp);
+    });
+  
+		let summaryData: SummaryData &#x3D; this.getSummaryData(fcEntries, workingDays, user);
+		csvExportItem.summary.projectDays &#x3D; summaryData.days.find((sd: SummaryDataProject) &#x3D;&gt; sd.type &#x3D;&#x3D;&#x3D; 0).days;
+		csvExportItem.summary.businessDevelopmentDays &#x3D; summaryData.days.find((sd: SummaryDataProject) &#x3D;&gt; sd.type &#x3D;&#x3D;&#x3D; 1).days;
+		csvExportItem.summary.trainingDays &#x3D; summaryData.days.find((sd: SummaryDataProject) &#x3D;&gt; sd.type &#x3D;&#x3D;&#x3D; 2).days;
+    csvExportItem.summary.vacationDays &#x3D; summaryData.days.find((sd: SummaryDataProject) &#x3D;&gt; sd.type &#x3D;&#x3D;&#x3D; 3).days;
+    csvExportItem.summary.billableDays &#x3D; summaryData.billableDays;
+		csvExportItem.summary.nonbillableDays &#x3D; summaryData.nonbillableDays;
+
+		csvExportItem.summary.totalWorkingDays &#x3D; summaryData.workingDays;
+		csvExportItem.summary.arve &#x3D; parseInt((summaryData.arve * 100).toFixed(0), 10);
+		csvExportItem.summary.urve &#x3D; parseInt((summaryData.urve * 100).toFixed(0), 10);
+    csvExportItem.summary.ros &#x3D; summaryData.revenue;
+
+		return csvExportItem;
+	}
+
+	/**
+   * inits the summarydata-projects with empty data
+   */
+  getEmptyData(): SummaryDataProject[] {
+    return [
+      { title: &#x27;Project days&#x27;, days: 0, type: 0 },
+      { title: &#x27;Business development days&#x27;, days: 0, type: 1 },
+      { title: &#x27;Training days&#x27;, days: 0, type: 2 },
+      { title: &#x27;Vacation days&#x27;, days: 0, type: 3 },
+    ];
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'TeamForecastService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

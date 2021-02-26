@@ -1,0 +1,36 @@
+
+.mat-row td.mat-cell, .mat-header-row th.mat-header-cell {
+  text-align: end;
+  width: 100px;
+
+  &:first-child {
+    text-align: center;
+    padding-left: 24px;
+  }
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0px !important;
+}
+
+.mat-stroked-button {
+	margin: 5px;
+	margin-left: 0;
+}
+
+.button-rows {
+	display: flex;
+	.button-row {
+    width: 50%
+  }
+}
+
+.mat-cell, .mat-footer-cell {
+  display:flex !important;
+  justify-content:flex-end!important;
+}
+
+.mat-header-cell {
+  justify-content: flex-end;
+}
+

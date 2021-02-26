@@ -1,0 +1,32 @@
+.fix {
+  display: flex;
+  color: #ffffff;
+  background-color: #0070ad;
+  height: 50px;
+  padding: 0px;
+  padding-left: 24px;
+  padding-right: 24px;
+  line-height: 3.3;
+}
+
+.fix .title {
+  color: #fff;
+  padding-left: 14px;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.white {
+  color: #ffffff;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+.p-0 {
+  padding: 0 !important;
+}

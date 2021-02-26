@@ -1,0 +1,394 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Variables</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#environment" title="src/environments/environment.prod.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.prod.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.ts"><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#getStartedData" title="src/app/layout/getStartedModal/getStartedData.ts"><b>getStartedData</b>&nbsp;&nbsp;&nbsp;(src/.../getStartedData.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/environments/environment.prod.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="environment"></a>
+                        <span class="name">
+                            <b>
+                            environment</b>
+                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>literal type</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+  production: true,
+  version: &#x27;prod&#x27;,
+  api: &#x27;http://10.40.10.210/forecastr-api/api/v1/&#x27;,
+  security: &#x27;jwt&#x27;,
+  authPath: &#x27;auth&#x27;,
+  usersPath: &#x27;users&#x27;,
+  utilsPath: &#x27;utilities&#x27;,
+  projectsPath: &#x27;projects&#x27;,
+  monthsPath: &#x27;months&#x27;,
+  rolePath: &#x27;roles&#x27;,
+  levelPath: &#x27;levels&#x27;,
+  forecastsPath: &#x27;forecasts&#x27;,
+  teamPath: &#x27;team&#x27;,
+  roles: {
+    css: 1,
+    pdl: 2,
+    pl: 3,
+    msl: 4,
+    fc: 5,
+    admin: 100,
+  },
+}</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Define global environment variables for prod version</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+    <h3>src/environments/environment.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="environment"></a>
+                        <span class="name">
+                            <b>
+                            environment</b>
+                            <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>literal type</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+  production: false,
+  version: &#x27;dev&#x27;,
+  api: &#x27;http://10.40.10.210/forecastr-api/api/v1/&#x27;,
+  security: &#x27;jwt&#x27;,
+  authPath: &#x27;auth&#x27;,
+  usersPath: &#x27;users&#x27;,
+  utilsPath: &#x27;utilities&#x27;,
+  projectsPath: &#x27;projects&#x27;,
+  monthsPath: &#x27;months&#x27;,
+  rolePath: &#x27;roles&#x27;,
+  levelPath: &#x27;levels&#x27;,
+  forecastsPath: &#x27;forecasts&#x27;,
+  teamPath: &#x27;team&#x27;,
+  roles: {
+    css: 1,
+    pdl: 2,
+    pl: 3,
+    msl: 4,
+    fc: 5,
+    admin: 100,
+  },
+}</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Define global environment variables</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+    <h3>src/app/layout/getStartedModal/getStartedData.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getStartedData"></a>
+                        <span class="name">
+                            <b>
+                            getStartedData</b>
+                            <a href="#getStartedData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+
+    &quot;css&quot;:[
+        {
+            &quot;title&quot;:&quot;Get Started&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;&lt;span&gt;The following steps will help you get started on how to create your utilization forecast for the upcoming months.&lt;/span&gt;&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;0_css.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Select a month&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;&lt;span&gt;Choose the month for which the forecast will be created.&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;1_css.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Forecast default projects&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Fill-in the number of &lt;strong&gt;Vacation &lt;/strong&gt;and&lt;strong&gt; Training&lt;/strong&gt; days you have planned for the selected month, as well as the forecast probability.&lt;/p&gt;&lt;br&gt;
+            &lt;p&gt;Forecast Probabilities:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Firm&lt;/strong&gt;: I am sure I will part of this event.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Named Likely&lt;/strong&gt;: I know the event, but it hasn&amp;rsquo;t been confirmed yet.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Unnamed&lt;/strong&gt;: I don&amp;rsquo;t know the event, or if it will take place.&lt;/li&gt;
+            &lt;/ul&gt;&#x60;,
+            &quot;image&quot;: &quot;2_css.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Forecast client projects&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Use the &lt;strong&gt;Add Project &lt;/strong&gt;button to forecast additional client projects. Fill-in the number of project days, mark if a project is billable or not, and choose the forecast probability accordingly.&lt;/p&gt;&lt;br&gt;
+            &lt;p&gt;Forecast Probabilities:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Firm&lt;/strong&gt;: I am sure I will be on this project;&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Named Likely&lt;/strong&gt;: I know the opportunity, but the contract hasn&amp;rsquo;t been signed yet;&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Unnamed&lt;/strong&gt;: I don&amp;rsquo;t know on which project I will be working.&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;&lt;strong&gt;Hint:&lt;/strong&gt; Quickly navigate through the fields by only using the keyboard. E.g. use &lt;strong&gt;Tab &lt;/strong&gt;to jump from one field to another and &lt;strong&gt;Space &lt;/strong&gt;to select or deselect a choice field.&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;3_css.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Review the forecast summary&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Review the summary panel before you &lt;strong&gt;Save &lt;/strong&gt;your forecast entries.&amp;nbsp;&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;ARVE&lt;/strong&gt;: The percentage workload of an employee on externally billable projects.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;URVE&lt;/strong&gt;: The percentage utilization of an employee on both internal and external projects (vacation days are deducted beforehand from the possible working days).
+            &lt;/li&gt;
+            &lt;/ul&gt;&#x60;,
+            &quot;image&quot;: &quot;4_css.png&quot;
+        },
+    ],
+
+    &quot;pdl&quot; :[
+        {
+            &quot;title&quot;:&quot;Get Started&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;&lt;span lang&#x3D;&quot;EN-US&quot;&gt;The following steps will help you get started on how to create the utilization forecast for yourself or for your team, for the upcoming months.&lt;/span&gt;&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;0_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Select a month&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Choose the month for which the forecast will be created.&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;1_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Forecast default projects&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Fill-in the number of &lt;strong&gt;Vacation &lt;/strong&gt;and&lt;strong&gt; Training&lt;/strong&gt; days you have planned for the selected month, as well as the forecast probability.&lt;/p&gt;&lt;br&gt;
+            &lt;p&gt;Forecast Probabilities:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Firm&lt;/strong&gt;: I am sure I will part of this event.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Named Likely&lt;/strong&gt;: I know the event, but it hasn&amp;rsquo;t been confirmed yet.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Unnamed&lt;/strong&gt;: I don&amp;rsquo;t know the event, or if it will take place.&lt;/li&gt;
+            &lt;/ul&gt;&#x60;,
+            &quot;image&quot;: &quot;2_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Forecast client projects&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Use the &lt;strong&gt;Add Project &lt;/strong&gt;button to forecast additional client projects. Fill-in the number of project days, mark if a project is billable or not, fill-in the Charge Out Rate (COR), mark if a project is external or internal revenue, and choose the forecast probability accordingly.&lt;/p&gt;&lt;br&gt;
+            &lt;p&gt;Forecast Probabilities:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;Firm&lt;/strong&gt;: I am sure I will be on this project.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Named Likely&lt;/strong&gt;: I know the opportunity, but the contract hasn&amp;rsquo;t been signed yet.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;Unnamed&lt;/strong&gt;: I don&amp;rsquo;t know on which project I will be working.&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;&lt;strong&gt;Hint:&lt;/strong&gt; Quickly navigate through the fields by only using the keyboard. E.g. use &lt;strong&gt;Tab &lt;/strong&gt;to jump from one field to another and &lt;strong&gt;Space &lt;/strong&gt;to select or deselect a choice field.&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;3_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Review the forecast summary&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Review the summary panel before you &lt;strong&gt;Save &lt;/strong&gt;your forecast entries. &lt;br /&gt;&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;&lt;strong&gt;ARVE&lt;/strong&gt;: The percentage workload of an employee on externally billable projects.&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;URVE&lt;/strong&gt;: The percentage utilization of an employee on both internal and external projects (vacation days are deducted beforehand from the possible working days).&lt;/li&gt;
+            &lt;/ul&gt;&#x60;,
+            &quot;image&quot;: &quot;4_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Select the team view&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Switch between your individual view and the team view using the upper-right corner toggle buttons.&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;5_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Review and update the team forecast&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Expand and update your team&amp;rsquo;s utilization forecast. Fill-in the COR, mark if a project is external or internal revenue, and &lt;strong&gt;Submit&lt;/strong&gt; the forecast for each team member individually.&lt;/p&gt;&lt;br&gt; &lt;p&gt; Once a forecast is submitted, it becomes &lt;strong&gt;locked&lt;/strong&gt; and cannot be updated by the team member. Locked forecast entries can easily be unlocked using the &lt;strong&gt;Unlock &lt;/strong&gt;button.&lt;/p&gt;&#x60;,
+            &quot;image&quot;: &quot;6_pdl.png&quot;
+        },
+        {
+            &quot;title&quot;:&quot;Review the team forecast summary&quot;,
+            &quot;html&quot;: &#x60;&lt;p&gt;Review the summary panel before you &lt;strong&gt;Export &lt;/strong&gt;your team&amp;rsquo;s forecast entries. &lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li&gt;
+            &lt;strong&gt;ARVE&lt;/strong&gt;: The average workload of all team members on externally billable projects.
+            &lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;URVE&lt;/strong&gt;: The average utilization of all team members on both internal and external projects (vacation days are deducted beforehand from the possible working days).&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;ROS&lt;/strong&gt;: Revenue Own Staff.&lt;/li&gt;
+            &lt;/ul&gt;&#x60;,
+            &quot;image&quot;: &quot;7_pdl.png&quot;
+        },
+       
+        
+    ]
+}</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Data for getStarted</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

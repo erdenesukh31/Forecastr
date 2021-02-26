@@ -1,0 +1,86 @@
+<mat-card class="summary-box individual">
+	<mat-card-title>
+		Summary {{month.name}}
+	</mat-card-title>
+
+	<mat-card-content>
+		<div class="card-section days">
+			<table mat-table [dataSource]="summaryData">
+				<ng-container matColumnDef="title">
+					<th mat-header-cell *matHeaderCellDef>Name</th>
+					<td mat-cell *matCellDef="let element">{{ element.title }} </td>
+					<!-- <td mat-footer-cell *matFooterCellDef>
+						<span class="remaining">Expected days</span>
+					</td> -->
+				</ng-container>
+				<ng-container matColumnDef="days">
+					<th mat-header-cell *matHeaderCellDef>Days</th>
+					<td mat-cell *matCellDef="let element">{{ element.days | number: '1.0-2':'de' }}</td>
+					<!-- <td mat-footer-cell *matFooterCellDef>
+						<span class="remaining">(forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays))</span>
+					</td> -->
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="['title', 'days']"></tr>
+				<tr mat-row *matRowDef="let row; columns: ['title', 'days']"></tr>
+				<!-- <tr mat-footer-row *matFooterRowDef="['title', 'days']"></tr> -->
+			</table>
+		</div>
+
+		<div>
+			<mat-form-field appearance="outline">
+			<mat-label>Comments</mat-label>
+			<textarea matInput [(ngModel)]="forecast.comment" (blur)="commentUpdate()" name="comment" [disabled]="fcIsLocked()" maxLength="500"
+				cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="6" placeholder="Leave a comment"></textarea>
+			</mat-form-field>
+		</div>
+
+		<div class="card-section">
+			<mat-chip-list>
+				<mat-chip><mat-icon>timeline</mat-icon>ARVE {{percentageValue(forecast.arve)}}%</mat-chip>
+				<mat-chip><mat-icon>timeline</mat-icon>URVE {{percentageValue(forecast.urve)}}%</mat-chip>
+			</mat-chip-list>
+		</div>
+		<br>
+		<br>
+		<div class="card-section" *ngIf="fcIsLocked()">
+			<div class="summary-warning">
+				<mat-icon class="icon">check_circle</mat-icon>
+				<strong>Your forecast has been successfully submitted. </strong>
+				<ng-container *ngIf="!hasLeadRole()">Ask your team lead if you have to make further changes.</ng-container>
+				<ng-container *ngIf="remainingDays > 0"> 
+					{{remainingDays}} remaining days have been added to 100528772 - Bench Time_non-client_APPS automatically.
+				</ng-container>
+			</div>
+
+			<button mat-stroked-button *ngIf="hasPracticeLeadRole() && fcIsLocked()" class="mat-primary-reversed align-right"
+				(click)="unlockForecast()" [disabled]="(forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays">
+				<mat-icon>lock_open</mat-icon> Unlock
+			</button>
+		</div>
+
+		<button mat-stroked-button class="mat-primary-reversed" 
+			*ngIf="!fcIsLocked()" (click)="saveForecast()" [disabled]="((forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays) || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+			<mat-icon>save</mat-icon> Save
+		</button>
+
+		<button mat-stroked-button class="mat-primary-reversed align-right"
+			*ngIf="!fcIsLocked()" (click)="submitForecast(forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays))" [disabled]="((forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays) || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+			<mat-icon>lock</mat-icon> Submit
+		</button>
+		
+		<div *ngIf="((forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays) || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+			<ng-container>
+			  <mat-error >{{errorMessage(hasProjectInputFocus,!isProjectInputValid,!isCorValueBiggerThanZero)}}</mat-error>
+			</ng-container>
+		  </div>
+
+		<div class="card-section button-row" *ngIf="!fcIsLocked()">
+			<div class="summary-warning error" *ngIf="(forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays">
+				<mat-icon class="icon">warning</mat-icon>
+				It is not possible to assign more than <strong>{{forecast.totalDays}} days</strong> for this month!<br>
+				There are currently <strong>{{(forecast.billableDays + forecast.nonbillableDays)}} days</strong> assigned.
+			</div>
+		</div>
+
+	</mat-card-content>
+</mat-card>

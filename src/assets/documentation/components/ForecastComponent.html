@@ -1,0 +1,1141 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ForecastComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/forecast/forecast.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>forecast component</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>public-forecast</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./forecast.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./forecast.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#error">error</a>
+                            </li>
+                            <li>
+                                <a href="#openRequests">openRequests</a>
+                            </li>
+                            <li>
+                                <a href="#page">page</a>
+                            </li>
+                            <li>
+                                <a href="#spinnerActive">spinnerActive</a>
+                            </li>
+                            <li>
+                                <a href="#spinnerSubscription">spinnerSubscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkRequests">checkRequests</a>
+                            </li>
+                            <li>
+                                <a href="#goToPage">goToPage</a>
+                            </li>
+                            <li>
+                                <a href="#isTeamlead">isTeamlead</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, snackBar: MatSnackBar, authService: <a href="../injectables/AuthService.html">AuthService</a>, userService: <a href="../injectables/UserService.html">UserService</a>, utilitiesService: <a href="../injectables/UtilitiesService.html">UtilitiesService</a>, pageState: <a href="../injectables/PageStateService.html">PageStateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/forecast/forecast.component.ts:27</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>forecast-component constructor</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>utilitiesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UtilitiesService.html" target="_self" >UtilitiesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>pageState</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PageStateService.html" target="_self" >PageStateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkRequests"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            checkRequests
+                        </b>
+                        <a href="#checkRequests"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkRequests(req: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="98"
+                            class="link-to-prism">src/app/forecast/forecast.component.ts:98</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>req</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToPage"></a>
+                    <span class="name">
+                        <b>
+                            goToPage
+                        </b>
+                        <a href="#goToPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToPage(page: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">src/app/forecast/forecast.component.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opens other page</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>page</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTeamlead"></a>
+                    <span class="name">
+                        <b>
+                            isTeamlead
+                        </b>
+                        <a href="#isTeamlead"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isTeamlead()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">src/app/forecast/forecast.component.ts:135</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns true if user fulfills certain role criteria
+Otherwise: false</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">src/app/forecast/forecast.component.ts:117</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Unsubscribes services when component gets destroyed</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/app/forecast/forecast.component.ts:48</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Redirects to specific page if it is defined in url
+Initializes utility data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="error"></a>
+                        <span class="name">
+                            <b>
+                            error</b>
+                            <a href="#error"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/forecast/forecast.component.ts:25</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="openRequests"></a>
+                        <span class="name">
+                            <b>
+                            openRequests</b>
+                            <a href="#openRequests"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/forecast/forecast.component.ts:24</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="page"></a>
+                        <span class="name">
+                            <b>
+                            page</b>
+                            <a href="#page"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;individual&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/forecast/forecast.component.ts:23</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>contains string of currently active page</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="spinnerActive"></a>
+                        <span class="name">
+                            <b>
+                            spinnerActive</b>
+                            <a href="#spinnerActive"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/forecast/forecast.component.ts:26</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="spinnerSubscription"></a>
+                        <span class="name">
+                            <b>
+                            spinnerSubscription</b>
+                            <a href="#spinnerSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/forecast/forecast.component.ts:27</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AuthService } from &#x27;../core/security/auth.service&#x27;;
+import { UtilitiesService } from &#x27;../core/services/utilities/utilities.service&#x27;;
+import { PageStateService } from &#x27;../core/shared/page-state.service&#x27;;
+import { UserService } from &#x27;../core/services/users/user.service&#x27;;
+import { Subscription, BehaviorSubject } from &#x27;rxjs&#x27;;
+import { environment as env } from &#x27;../../environments/environment&#x27;;
+import { MatSnackBar } from &#x27;@angular/material&#x27;;
+
+/**
+ * forecast component
+ */
+@Component({
+  selector: &#x27;public-forecast&#x27;,
+  templateUrl: &#x27;./forecast.component.html&#x27;,
+  styleUrls: [&#x27;./forecast.component.scss&#x27;],
+})
+export class ForecastComponent implements OnInit, OnDestroy {
+  /**
+   * contains string of currently active page
+   */
+  page: string &#x3D; &#x27;individual&#x27;;
+  openRequests: string[] &#x3D; [];
+  error: string[] &#x3D; [];
+  spinnerActive: boolean;
+  spinnerSubscription: Subscription;
+
+  /**
+   * forecast-component constructor
+   */
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private userService: UserService,
+    private utilitiesService: UtilitiesService,
+    private pageState: PageStateService,
+  ) {
+    this.spinnerActive &#x3D; true;
+    
+  }
+
+  /**
+   * Redirects to specific page if it is defined in url
+   * Initializes utility data
+   */
+  ngOnInit(): void {
+    //this.utilitiesService.initializeUtilities();
+    
+    this.openRequests &#x3D; [&#x27;months&#x27;, &#x27;projects&#x27;, &#x27;probabilities&#x27;, &#x27;user&#x27;];
+    this.utilitiesService.initMonths().then(() &#x3D;&gt; {
+      this.checkRequests(&#x27;months&#x27;);
+    }).catch(() &#x3D;&gt; {
+      this.error.push(&#x27;Error loading months.&#x27;);
+      this.checkRequests(&#x27;months&#x27;);
+    });
+
+    this.utilitiesService.initProjects().then(() &#x3D;&gt; {
+      this.checkRequests(&#x27;projects&#x27;);
+    }).catch(() &#x3D;&gt; {
+      this.error.push(&#x27;Error loading projects.&#x27;);
+      this.checkRequests(&#x27;projects&#x27;);
+    });
+    
+
+    this.utilitiesService.initProbabilities().then(() &#x3D;&gt; {
+      this.checkRequests(&#x27;probabilities&#x27;);
+    }).catch(() &#x3D;&gt; {
+      this.error.push(&#x27;Error loading probabilities.&#x27;);
+      this.checkRequests(&#x27;probabilities&#x27;);
+    });
+
+    this.userService.initUser().then(() &#x3D;&gt; {
+      this.checkRequests(&#x27;user&#x27;);
+    }).catch(() &#x3D;&gt; {
+      this.error.push(&#x27;Error loading user.&#x27;);
+      this.checkRequests(&#x27;user&#x27;);
+    });
+
+    let params: string[] &#x3D; this.router.url.substr(1).split(&#x27;/&#x27;);
+    if (params.length &gt;&#x3D; 2) {
+      if (params[1] &#x3D;&#x3D;&#x3D; &#x27;team&#x27;) {
+        this.page &#x3D; &#x27;team&#x27;;
+      } else {
+        this.page &#x3D; &#x27;individual&#x27;;
+      }
+    } else {
+      this.goToPage(&#x27;individual&#x27;);
+    }
+
+    this.spinnerSubscription &#x3D; this.pageState.spinner$
+      .subscribe((spinner: boolean) &#x3D;&gt; {
+        this.spinnerActive &#x3D; spinner;
+      });
+  }
+
+  private checkRequests(req: string): void {
+    this.openRequests &#x3D; this.openRequests.filter((r: string) &#x3D;&gt; r !&#x3D;&#x3D; req);
+
+    if (this.openRequests.length &#x3D;&#x3D;&#x3D; 0) {
+      if (this.error.length) {
+        this.error.forEach((e: string) &#x3D;&gt; {
+          this.snackBar.open(e, &#x27;OK&#x27;, { duration: 30000, });
+        });
+
+      } else {
+        this.pageState.setForecastrReady();
+        this.pageState.hideSpinner();
+      }
+    }
+  }
+
+  /**
+   * Unsubscribes services when component gets destroyed
+   */
+  ngOnDestroy(): void {
+    this.spinnerSubscription.unsubscribe();
+  }
+
+  /**
+   * Opens other page
+   * @param page
+   */
+  goToPage(page: string): void {
+    this.page &#x3D; page;
+    this.router.navigate([&#x27;/forecast/&#x27; + page + &#x27;/active&#x27;]);
+  }
+
+  /**
+   * Returns true if user fulfills certain role criteria
+   * Otherwise: false
+   * @param role
+   */
+  isTeamlead(): boolean {
+    return this.authService.hasRole(env.roles.pdl);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;progress-spinner-overlay&quot; [ngClass]&#x3D;&quot;{&#x27;active&#x27;: spinnerActive}&quot;&gt;
+	&lt;mat-progress-spinner class&#x3D;&quot;progress-spinner&quot; color&#x3D;&quot;primary&quot; mode&#x3D;&quot;indeterminate&quot;&gt;&lt;/mat-progress-spinner&gt;
+&lt;/div&gt;
+
+&lt;app-header&gt;&lt;/app-header&gt;
+
+&lt;mat-sidenav-container&gt;
+
+	&lt;mat-sidenav mode&#x3D;&quot;side&quot; opened&gt;
+		&lt;div class &#x3D;&quot;nav-button-container&quot;&gt;
+			&lt;button mat-icon-button title&#x3D;&quot;ForeCasts&quot; class&#x3D;&quot;active&quot;&gt;
+					&lt;mat-icon [inline]&#x3D;&quot;true&quot;&gt;date_range&lt;/mat-icon&gt;
+			&lt;/button&gt;
+
+			&lt;button mat-icon-button title&#x3D;&quot;Settings&quot;&gt;
+					&lt;mat-icon [inline]&#x3D;&quot;true&quot;&gt;settings&lt;/mat-icon&gt;
+			&lt;/button&gt;
+		&lt;/div&gt;
+	&lt;/mat-sidenav&gt;
+
+	&lt;mat-sidenav-content&gt;
+		&lt;div class&#x3D;&quot;app-content&quot;&gt;
+			&lt;div class&#x3D;&quot;role-header&quot;&gt;
+				&lt;h1&gt;Monthly Forecast&lt;/h1&gt;
+
+				&lt;div class&#x3D;&quot;switch-role-toggle&quot; *ngIf&#x3D;&quot;isTeamlead()&quot;&gt;
+					&lt;mat-button-toggle-group appearance&#x3D;&quot;legacy&quot; aria-label&#x3D;&quot;Role&quot; #group&#x3D;&quot;matButtonToggleGroup&quot;
+						[value]&#x3D;&quot;page&quot; (change)&#x3D;&quot;goToPage(group.value)&quot;&gt;
+						&lt;mat-button-toggle value&#x3D;&quot;individual&quot;&gt;&lt;mat-icon&gt;person&lt;/mat-icon&gt; Me&lt;/mat-button-toggle&gt;
+						&lt;mat-button-toggle value&#x3D;&quot;team&quot;&gt;&lt;mat-icon&gt;supervisor_account&lt;/mat-icon&gt; Team&lt;/mat-button-toggle&gt;
+					&lt;/mat-button-toggle-group&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+
+			&lt;router-outlet&gt;&lt;/router-outlet&gt;
+		&lt;/div&gt;
+	&lt;/mat-sidenav-content&gt;
+
+&lt;/mat-sidenav-container&gt;
+
+&lt;app-footer&gt;&lt;/app-footer&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./forecast.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../assets/styles/variables.scss&#x27;;
+
+.role-header {
+	position: relative;
+	height: 37px;
+	margin: 0;
+
+	h1 {
+		line-height: 37px;
+		font-size: 1.8em;
+		margin: 0;
+	}
+
+	.mat-button-toggle-group {
+		background-color: map-get($font-colors, white);
+		font-size: 1.1em;
+		border-radius: 4px;
+	}
+
+	.mat-button-toggle {
+		background-color: map-get($font-colors, white);
+		color: map-get($font-colors, blue);
+		width: 120px;
+		.mat-icon {
+			color: map-get($font-colors, blue);
+		}
+
+		&amp;:hover {
+			background-color: map-get($bg-colors, light);
+		}
+	}
+
+	.mat-button-toggle-checked, .mat-button-toggle-checked .mat-icon {
+		background-color: map-get($font-colors, blue);
+		color: map-get($font-colors, white);
+
+		&amp;:hover {
+			background-color: map-get($font-colors, blue);
+		}
+	}
+
+	.switch-role-toggle {
+		position: absolute;
+		right: 0;
+		top: 0;
+		height: 34px;
+		line-height: 34px;
+		border-radius: 0;
+	}
+}
+
+.progress-spinner-overlay {
+	display: none;
+	position: fixed;
+	z-index: 10000;
+	width: 100%;
+	height: 100%;
+	background: map-get($font-colors, white);
+	opacity: 0.5;
+
+	&amp;.active {
+		display: block;
+	}
+}
+.progress-spinner {
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -50px;
+}
+
+.mat-sidenav-container{
+	min-width: 700px;
+	background: transparent;
+	margin: 0 10px;
+}
+
+.mat-drawer {
+	display: none;
+	background: transparent;
+	width: 50px;
+	border-right-width: 0px;
+}
+
+.nav-button-container {
+	margin: 4px 0;
+
+	.mat-icon-button {
+		width: 50px;
+		height: 50px;
+		margin-bottom: 10px;
+		padding: 0;
+
+		&amp;.active, &amp;.active .mat-icon {
+			color: map-get($font-colors, blue);
+		}
+	}
+
+	.mat-icon {
+		width: 1em;
+		height: 1em;
+		line-height: 1em;
+		font-size: 2em;
+	}
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="progress-spinner-overlay" [ngClass]="{\'active\': spinnerActive}">	<mat-progress-spinner class="progress-spinner" color="primary" mode="indeterminate"></mat-progress-spinner></div><app-header></app-header><mat-sidenav-container>	<mat-sidenav mode="side" opened>		<div class ="nav-button-container">			<button mat-icon-button title="ForeCasts" class="active">					<mat-icon [inline]="true">date_range</mat-icon>			</button>			<button mat-icon-button title="Settings">					<mat-icon [inline]="true">settings</mat-icon>			</button>		</div>	</mat-sidenav>	<mat-sidenav-content>		<div class="app-content">			<div class="role-header">				<h1>Monthly Forecast</h1>				<div class="switch-role-toggle" *ngIf="isTeamlead()">					<mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup"						[value]="page" (change)="goToPage(group.value)">						<mat-button-toggle value="individual"><mat-icon>person</mat-icon> Me</mat-button-toggle>						<mat-button-toggle value="team"><mat-icon>supervisor_account</mat-icon> Team</mat-button-toggle>					</mat-button-toggle-group>				</div>			</div>			<router-outlet></router-outlet>		</div>	</mat-sidenav-content></mat-sidenav-container><app-footer></app-footer></div>'
+    var COMPONENTS = [{'name': 'AddMonthDialog', 'selector': ''},{'name': 'AddProjectDialog', 'selector': ''},{'name': 'AddUserDialog', 'selector': ''},{'name': 'AdminComponent', 'selector': 'public-admin'},{'name': 'AppComponent', 'selector': 'public-root'},{'name': 'CSVExportDialog', 'selector': ''},{'name': 'DashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'FcEntryComponent', 'selector': 'app-fc-entry'},{'name': 'FcEntrySummaryComponent', 'selector': 'app-fc-entry-summary'},{'name': 'FcProjectComponent', 'selector': 'app-fc-project'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'ForecastComponent', 'selector': 'public-forecast'},{'name': 'GetStarted', 'selector': ''},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'IndividualComponent', 'selector': 'app-individual'},{'name': 'LoginComponent', 'selector': ''},{'name': 'MonthsComponent', 'selector': 'app-admin-months'},{'name': 'ProjectsComponent', 'selector': 'app-admin-projects'},{'name': 'RemoveProjectDialog', 'selector': ''},{'name': 'TeamComponent', 'selector': 'app-team'},{'name': 'TeamleadMonthComponent', 'selector': 'app-teamlead-month'},{'name': 'TeamleadSummaryComponent', 'selector': 'app-teamlead-summary'},{'name': 'TeamsComponent', 'selector': 'app-admin-teams'},{'name': 'UsersComponent', 'selector': 'app-admin-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ForecastComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ForecastComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

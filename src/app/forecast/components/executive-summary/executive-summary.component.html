@@ -1,0 +1,73 @@
+<div class="">
+  <table mat-table [dataSource]="probabilitySource">
+    <ng-container class="first" cdkColumnDef="probabilityId" >
+      <mat-header-cell *cdkHeaderCellDef> Probability </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>Total</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="total" layout-align="end center" >
+      <mat-header-cell *cdkHeaderCellDef> Project Days </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.billableDays + element.nonBillableDays | number:'1.0-0':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>{{probabilitySummary.billableDays + probabilitySummary.nonBillableDays | number:'1.0-0':'de'}}</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="billableDays" >
+      <mat-header-cell *cdkHeaderCellDef> Billable  Days </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.billableDays | number:'1.0-0':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>{{probabilitySummary.billableDays | number:'1.0-0':'de'}}</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="vacationDays" >
+      <mat-header-cell *cdkHeaderCellDef> Vacation days </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.vacationDays | number:'1.0-0':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>{{probabilitySummary.vacationDays | number:'1.0-0':'de'}}</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="workingDays" >
+      <mat-header-cell *cdkHeaderCellDef> Paid Days </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.paidDays | number:'1.0-0':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>{{probabilitySummary.paidDays | number:'1.0-0':'de'}}</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="cor" >
+      <mat-header-cell *cdkHeaderCellDef> COR </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> € {{element.cor | number:'1.2-2':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef> € {{probabilitySummary.cor | number:'1.2-2':'de'}}</mat-footer-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="ros" >
+      <mat-header-cell *cdkHeaderCellDef> ROS </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> € {{element.revenue | number:'1.2-2':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef> € {{probabilitySummary.revenue | number:'1.2-2':'de'}}</mat-footer-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="int" >
+      <mat-header-cell *cdkHeaderCellDef> Int. R. </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> € {{element.internalRevenue | number:'1.2-2':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef> € {{probabilitySummary.internalRevenue | number:'1.2-2':'de'}}</mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="ext" >
+      <mat-header-cell *cdkHeaderCellDef> Ext. R. </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> € {{element.externalRevenue | number:'1.2-2':'de'}} </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef> € {{probabilitySummary.externalRevenue | number:'1.2-2':'de'}}</mat-footer-cell>
+    </ng-container>
+
+    
+    <ng-container cdkColumnDef="arve" >
+      <mat-header-cell *cdkHeaderCellDef> ARVE </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.arve * 100 | number: '1.1-1':'de'}}% </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef> {{probabilitySummary.arve * 100 | number: '1.1-1':'de'}}% </mat-footer-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="urve" >
+      <mat-header-cell *cdkHeaderCellDef> URVE </mat-header-cell>
+      <mat-cell *cdkCellDef="let element"> {{element.urve * 100 | number: '1.1-1':'de'}}% </mat-cell>
+      <mat-footer-cell *cdkFooterCellDef>{{probabilitySummary.urve * 100 | number: '1.1-1':'de'}}% </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *cdkFooterRowDef="displayedColumns"></mat-footer-row>
+  </table>
+
+  <div layout="row" layout-wrap>
+    <button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary" (click)="exportCSV()">
+      <mat-icon>insert_drive_file</mat-icon> Export CSV
+    </button>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{data.project.name ? data.project.name : 'New Project'}}</h2>
+<div class="dialog-content" [formGroup]="projectForm">
+	<mat-form-field appearance="outline">
+		<mat-label>Code</mat-label>
+		<input type="text" matInput formControlName="code">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Name</mat-label>
+		<input type="text" matInput formControlName="name">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Is project mandatory?</mat-label>
+		<mat-select name="project-mandatory" formControlName="mandatory">
+			<mat-option value='N'>Not Mandatory</mat-option>
+			<mat-option value='Y'>Mandatory</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Project-Type</mat-label>
+		<mat-select name="project-type" formControlName="projectType" (selectionChange)="onProjectTypeUpdate()">
+			<mat-option [value]='projectTypes.default'>Default</mat-option>
+			<mat-option [value]='projectTypes.nonbillable'>Non-billable / No COR</mat-option>
+			<mat-option [value]='projectTypes.businessdays'>Special Type - Business Development Days</mat-option>
+			<mat-option [value]='projectTypes.trainingdays'>Special Type - Training</mat-option>
+			<mat-option [value]='projectTypes.vacationdays'>Special Type - Vacation</mat-option>
+			<mat-option [value]='projectTypes.benchdays'>Special Type - Bench-Time</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Is project default billable?</mat-label>
+		<mat-select name="project-billable" formControlName="billable">
+			<mat-option [value]='true'>Billable</mat-option>
+			<mat-option [value]='false'>Non-billable</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
+<mat-dialog-actions>
+	<button mat-button (click)="onNoClick()">Cancel</button>
+	<button mat-button (click)="onSaveClick()" [disabled]="!projectForm.valid">Save</button>
+</mat-dialog-actions>

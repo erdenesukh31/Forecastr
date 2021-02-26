@@ -1,0 +1,109 @@
+<div class="progress-spinner-overlay" [ngClass]="{ active: spinnerActive }">
+  <mat-progress-spinner class="progress-spinner" color="primary" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<app-header></app-header>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <div class="nav-button-container">
+      <button mat-icon-button title="ForeCasts" class="active">
+        <mat-icon [inline]="true">date_range</mat-icon>
+      </button>
+
+      <button mat-icon-button title="Settings">
+        <mat-icon [inline]="true">settings</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="app-content">
+
+
+      <div *ngIf="!isExecutive()" class="role-header">
+        <h1>Monthly Forecast</h1>
+
+        <div *ngIf="hasLeadRole()">
+          <button *ngIf="isPractice()" mat-raised-button class="dashboard-button practice-dashboard"
+            (click)="openDashboard()">
+            <mat-icon>insert_chart</mat-icon> KPI Overview
+          </button>
+          <button *ngIf="!isPractice()" mat-raised-button class="dashboard-button pdl-dashboard"
+            (click)="openDashboard()">
+            <mat-icon>insert_chart</mat-icon> KPI Overview
+          </button>
+        </div>
+
+
+
+        <div class="switch-role-toggle" *ngIf="hasLeadRole()">
+          <mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="page"
+            (change)="goToPage(group.value)">
+
+            <mat-button-toggle value="individual">
+              <mat-icon>person</mat-icon> Me
+            </mat-button-toggle>
+            <mat-button-toggle value="team">
+              <mat-icon>supervisor_account</mat-icon> Team
+            </mat-button-toggle>
+            <mat-button-toggle value="practice" *ngIf="isPractice()">
+              <mat-icon>supervisor_account</mat-icon> Practice
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <div *ngIf="isMSLLevelRole('HOP') || isMSLLevelRole('SM') || isMSLLevelRole('SMCSS')" class="role-header">
+        <button mat-raised-button color="primary" (click)="openDashboard()">
+          <mat-icon>insert_chart</mat-icon> KPI Overview
+        </button>
+        <div class="switch-role-toggle" *ngIf="hasLeadRole()">
+          <mat-button-toggle-group class="sm-hop-button-toggle-group" appearance="legacy" aria-label="Role"
+            #group="matButtonToggleGroup" [value]="page" (change)="goToPage(group.value)">
+            <mat-button-toggle *ngIf="isMSLLevelRole('SM') || isMSLLevelRole('SMCSS') || isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="practices">
+              <mat-icon>supervisor_account</mat-icon> Practices
+            </mat-button-toggle>
+            <mat-button-toggle *ngIf="isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="head-of-practices">
+              <mat-icon>grid_on</mat-icon> Overview
+            </mat-button-toggle>
+            <mat-button-toggle *ngIf="isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="individual">
+              <mat-icon>person</mat-icon> Me
+            </mat-button-toggle>
+            <mat-button-toggle *ngIf="mslHasPractice()" class="sm-hop-button-toggle" value="practice">
+              <mat-icon>supervisor_account</mat-icon> Practice
+            </mat-button-toggle>
+            <mat-button-toggle *ngIf="isMSLLevelRole('SM') || isMSLLevelRole('SMCSS')" class="sm-hop-button-toggle"
+              value="staffing">
+              <mat-icon>grid_on</mat-icon> Overview
+            </mat-button-toggle>
+            <mat-button-toggle *ngIf="isMSLLevelRole('SMCSS')" class="sm-hop-button-toggle" value="individual">
+              <mat-icon>person</mat-icon> Me
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <div *ngIf="isFinancialController()" class="role-header">
+        <div class="switch-role-toggle">
+          <mat-button-toggle-group class="sm-hop-button-toggle-group" appearance="legacy" aria-label="Role"
+            #group="matButtonToggleGroup" [value]="page" (change)="goToPage(group.value)">
+            <mat-button-toggle class="sm-hop-button-toggle" value="financial-controller">
+              <mat-icon>grid_on</mat-icon> Overview
+            </mat-button-toggle>
+            <mat-button-toggle class="sm-hop-button-toggle" value="practices">
+              <mat-icon>supervisor_account</mat-icon> Practices
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <div *ngIf="isMSLLevelRole('MSL')" class="role-header">
+        <h1>Forecast Summary</h1>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<app-footer></app-footer>

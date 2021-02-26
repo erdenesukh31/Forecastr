@@ -1,0 +1,121 @@
+@import "../../../../assets/styles/variables.scss";
+
+.role-header {
+  position: relative;
+  height: 37px;
+  margin: 0;
+
+  h1 {
+    line-height: 37px;
+    font-size: 1.8em;
+    margin: 0;
+  }
+
+  .mat-button-toggle-group {
+    background-color: map-get($font-colors, white);
+    font-size: 1.1em;
+    border-radius: 4px;
+  }
+
+  .mat-button-toggle {
+    background-color: map-get($font-colors, white);
+    color: map-get($font-colors, blue);
+    border-right: 1px solid #0070ad;
+    width: 120px;
+
+    .mat-icon {
+      color: map-get($font-colors, blue);
+    }
+
+    &:hover {
+      background-color: map-get($bg-colors, light);
+    }
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  .mat-button-toggle-checked,
+  .mat-button-toggle-checked .mat-icon {
+    background-color: map-get($font-colors, blue);
+    color: map-get($font-colors, white);
+
+    &:hover {
+      background-color: map-get($font-colors, blue);
+    }
+  }
+
+  .switch-role-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 0;
+  }
+}
+
+.executive-view-container {
+  margin-top: 30px;
+  padding: 0;
+  background: transparent;
+}
+
+.period-container {
+  width: 100%;
+}
+
+.period-component {
+  display: inline-flex;
+  margin: 0 5px;
+
+  &.mat-form-field {
+    width: 200px;
+  }
+  &.mat-raised-button {
+    margin-top: 4px;
+    bottom: 4px;
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.period-download {
+  margin-top: 4px;
+  bottom: 4px;
+}
+
+.executive-btn {
+  margin-top: 4px;
+  right: 20px;
+  position: absolute;
+}
+
+.mat-icon {
+  font-size: 18px;
+  color: #fff !important;
+}
+
+.powerbi-report,
+.powerbi-report > div {
+  margin: 30px 0 10px;
+  border: 0;
+  width: 100%;
+  min-height: 500px;
+
+  box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.06);
+}
+
+.m-16p {
+  margin: 16px;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.p-16p {
+  padding: 16px;
+}

@@ -1,0 +1,44 @@
+@import '../../../../assets/styles/variables.scss';
+
+.mat-raised-button.mat-primary, .mat-stroked-button.mat-primary-reversed {
+	margin-left: 5px;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+
+
+.card-section.days {
+	display: flex;
+	
+	.summary-table {
+		flex: auto;
+		padding: 12px;
+
+		.column-days{
+			padding-top: 8px;
+			padding-left: 12px;
+
+			.note {
+				color: map-get($font-colors, blue);
+				font-weight: bolder;
+				font-size: 12px;
+			}
+			.remaining {
+				font-weight: bolder;
+			}
+		}
+	}
+}
+
+.mat-divider{
+	border-top-width: 1px;
+	border-top-style: dashed;
+	border-top-color: black;
+  }
+
+.mat-error{
+	padding: 10px;
+}  

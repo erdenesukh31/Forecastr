@@ -1,0 +1,1902 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Forecastr documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Forecastr documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>FcProjectComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/forecast/components/fc-project/fc-project.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>forecast-entry component</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-fc-project</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./fc-project.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./fc-project.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#availableProbabilities">availableProbabilities</a>
+                            </li>
+                            <li>
+                                <a href="#availableProjects">availableProjects</a>
+                            </li>
+                            <li>
+                                <a href="#filteredProjects">filteredProjects</a>
+                            </li>
+                            <li>
+                                <a href="#projectControl">projectControl</a>
+                            </li>
+                            <li>
+                                <a href="#projectForm">projectForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilter">applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#callDataUpdate">callDataUpdate</a>
+                            </li>
+                            <li>
+                                <a href="#clearProjectId">clearProjectId</a>
+                            </li>
+                            <li>
+                                <a href="#displayFn">displayFn</a>
+                            </li>
+                            <li>
+                                <a href="#hasCORValue">hasCORValue</a>
+                            </li>
+                            <li>
+                                <a href="#history">history</a>
+                            </li>
+                            <li>
+                                <a href="#isFixedInternal">isFixedInternal</a>
+                            </li>
+                            <li>
+                                <a href="#isMandatory">isMandatory</a>
+                            </li>
+                            <li>
+                                <a href="#isTeamlead">isTeamlead</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#projectName">projectName</a>
+                            </li>
+                            <li>
+                                <a href="#removeProjectFromForecast">removeProjectFromForecast</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#forecast">forecast</a>
+                            </li>
+                            <li>
+                                <a href="#index">index</a>
+                            </li>
+                            <li>
+                                <a href="#lastEditor">lastEditor</a>
+                            </li>
+                            <li>
+                                <a href="#monthId">monthId</a>
+                            </li>
+                            <li>
+                                <a href="#project">project</a>
+                            </li>
+                            <li>
+                                <a href="#userId">userId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialog: MatDialog, fb: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, authService: <a href="../injectables/AuthService.html">AuthService</a>, utilitiesService: <a href="../injectables/UtilitiesService.html">UtilitiesService</a>, forecastService: <a href="../injectables/ForecastService.html">ForecastService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>forecast-entry component constructor</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>utilitiesService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UtilitiesService.html" target="_self" >UtilitiesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>forecastService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ForecastService.html" target="_self" >ForecastService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="forecast"></a>
+                        <b>forecast</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/FcEntry.html" target="_self" >FcEntry</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="index"></a>
+                        <b>index</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="lastEditor"></a>
+                        <b>lastEditor</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="monthId"></a>
+                        <b>monthId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="project"></a>
+                        <b>project</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/FcProject.html" target="_self" >FcProject</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userId"></a>
+                        <b>userId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <b>
+                            applyFilter
+                        </b>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="callDataUpdate"></a>
+                    <span class="name">
+                        <b>
+                            callDataUpdate
+                        </b>
+                        <a href="#callDataUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>callDataUpdate()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:103</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes updated data to the summary</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearProjectId"></a>
+                    <span class="name">
+                        <b>
+                            clearProjectId
+                        </b>
+                        <a href="#clearProjectId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearProjectId()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes projectId when Autocomplete panel is opened</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayFn"></a>
+                    <span class="name">
+                        <b>
+                            displayFn
+                        </b>
+                        <a href="#displayFn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displayFn(projectId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>projectId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasCORValue"></a>
+                    <span class="name">
+                        <b>
+                            hasCORValue
+                        </b>
+                        <a href="#hasCORValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hasCORValue(cor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:162</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tests if a COR value has already been entered</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>cor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="history"></a>
+                    <span class="name">
+                        <b>
+                            history
+                        </b>
+                        <a href="#history"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>history(attribute: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:120</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loads the history data of a specific forecast</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>attribute</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>index</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string | boolean</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFixedInternal"></a>
+                    <span class="name">
+                        <b>
+                            isFixedInternal
+                        </b>
+                        <a href="#isFixedInternal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isFixedInternal(projectId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="182"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:182</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tests if a project is automatically set as internal</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>projectId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isMandatory"></a>
+                    <span class="name">
+                        <b>
+                            isMandatory
+                        </b>
+                        <a href="#isMandatory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isMandatory(projectId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="174"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:174</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tests if a project is mandatory</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>projectId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTeamlead"></a>
+                    <span class="name">
+                        <b>
+                            isTeamlead
+                        </b>
+                        <a href="#isTeamlead"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isTeamlead()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns whether the logged in user has role teamlead</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Initializes forecast entry component.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="projectName"></a>
+                    <span class="name">
+                        <b>
+                            projectName
+                        </b>
+                        <a href="#projectName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>projectName(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:142</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the name of a project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeProjectFromForecast"></a>
+                    <span class="name">
+                        <b>
+                            removeProjectFromForecast
+                        </b>
+                        <a href="#removeProjectFromForecast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeProjectFromForecast(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes a project from the forecast.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>index</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availableProbabilities"></a>
+                        <span class="name">
+                            <b>
+                            availableProbabilities</b>
+                            <a href="#availableProbabilities"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/Probability.html" target="_self" >Probability[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availableProjects"></a>
+                        <span class="name">
+                            <b>
+                            availableProjects</b>
+                            <a href="#availableProjects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filteredProjects"></a>
+                        <span class="name">
+                            <b>
+                            filteredProjects</b>
+                            <a href="#filteredProjects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projectControl"></a>
+                        <span class="name">
+                            <b>
+                            projectControl</b>
+                            <a href="#projectControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormControl" target="_blank" >FormControl</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projectForm"></a>
+                        <span class="name">
+                            <b>
+                            projectForm</b>
+                            <a href="#projectForm"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/forecast/components/fc-project/fc-project.component.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, OnDestroy } from &quot;@angular/core&quot;;
+import { MatDialog } from &#x27;@angular/material&#x27;;
+import { formatDate } from &#x27;@angular/common&#x27;;
+
+import { ForecastService } from &quot;../../../core/services/forecasts/forecast.service&quot;;
+import { UtilitiesService } from &quot;../../../core/services/utilities/utilities.service&quot;;
+
+import { FcEntry } from &quot;../../../core/interfaces/fcEntry&quot;;
+import { FcProject } from &quot;../../../core/interfaces/fcProject&quot;;
+import { Project } from &quot;../../../core/interfaces/project&quot;;
+import { Probability } from &quot;../../../core/interfaces/Probability&quot;;
+import { AuthService } from &quot;../../../core/security/auth.service&quot;;
+import { Subscription } from &quot;rxjs&quot;;
+import { FormGroup, FormBuilder, Validators, FormControl } from &quot;@angular/forms&quot;;
+
+/**
+ * Component for Remove-Project Dialog
+ */
+@Component({ templateUrl: &#x27;./remove-project-dialog.html&#x27; })
+export class RemoveProjectDialog {}
+
+/**
+ * forecast-entry component
+ */
+@Component({
+  selector: &quot;app-fc-project&quot;,
+  templateUrl: &quot;./fc-project.component.html&quot;,
+  styleUrls: [&quot;./fc-project.component.scss&quot;]
+})
+export class FcProjectComponent implements OnInit {
+	@Input(&#x27;forecast&#x27;) forecast: FcEntry;
+  @Input(&#x27;project&#x27;) project: FcProject;
+	@Input(&#x27;index&#x27;) i: number;
+	@Input(&#x27;monthId&#x27;) monthId: number;
+  @Input(&#x27;userId&#x27;) userId: number;
+  @Input(&#x27;lastEditor&#x27;) lastEditor: string;
+
+	projectForm: FormGroup;
+  availableProbabilities: Probability[] &#x3D; [];
+	availableProjects: Project[] &#x3D; [];
+	filteredProjects: Project[] &#x3D; [];
+	projectControl: FormControl &#x3D; new FormControl();
+
+  /**
+   * forecast-entry component constructor
+   * @param dialog
+   * @param authService
+   * @param utilitiesService
+   * @param forecastService
+   */
+  constructor(
+		private dialog: MatDialog,
+		private fb: FormBuilder,
+    private authService: AuthService,
+    private utilitiesService: UtilitiesService,
+		private forecastService: ForecastService,
+  ) { }
+
+  /**
+   * Initializes forecast entry component.
+   */
+  ngOnInit(): void {
+    this.projectControl &#x3D; this.fb.control({value: this.project.projectId, disabled: this.forecast.locked }, Validators.required);
+    this.availableProjects &#x3D; this.utilitiesService.getProjects();
+    this.filteredProjects &#x3D; this.availableProjects;
+    this.availableProbabilities &#x3D; this.utilitiesService.getProbabilities();
+	}
+
+	applyFilter(value: string): void {
+		const filteredValue: string &#x3D; value.toLowerCase();
+    this.filteredProjects &#x3D; this.availableProjects.filter((p: Project) &#x3D;&gt; p.name.toLowerCase().includes(filteredValue));
+	}
+
+	displayFn(projectId?: number): string {
+		return projectId ? this.projectName(projectId) : &#x27;&#x27;;
+  }
+	
+	/**
+   * Removes a project from the forecast.
+   * 
+   * @param index
+   */
+  removeProjectFromForecast(index: number): void {
+    let dialogRef: any &#x3D; this.dialog.open(RemoveProjectDialog, {});
+
+    dialogRef.afterClosed().subscribe((remove: boolean) &#x3D;&gt; {
+      if (remove &#x3D;&#x3D;&#x3D; true) {
+        this.forecastService.removeProject(this.monthId, this.userId, index);
+      }
+    });
+  }
+
+  /**
+   * Removes projectId when Autocomplete panel is opened
+   */
+  clearProjectId(): void {
+    this.project.projectId &#x3D; undefined;
+  }
+
+  /**
+   * Passes updated data to the summary
+   */
+  callDataUpdate(): void {
+    if (this.project.projectId !&#x3D;&#x3D; this.projectControl.value) {
+      this.project.projectId &#x3D; this.projectControl.value;
+
+      let project: Project &#x3D; this.availableProjects.find((p: Project) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; this.project.projectId);
+      this.project.billable &#x3D; (project &amp;&amp; project.billable) ? project.billable : true;
+
+      this.forecastService.setForecast(this.forecast);
+    }
+  }
+
+  /**
+   * Loads the history data of a specific forecast
+   * 
+   * @param attribute
+   * @param index
+   */
+  history(attribute: string, index: number): string | boolean {
+    if (this.forecast.history &amp;&amp; this.forecast.history.length &gt; 0 &amp;&amp; this.forecast.history[0].projects.length &gt; index) {
+      if (attribute &#x3D;&#x3D;&#x3D; &#x27;days&#x27; &amp;&amp; this.forecast.history[0].projects[index].plannedProjectDays) {
+        return this.lastEditor + &#x27;: &#x27; + this.forecast.history[0].projects[index].plannedProjectDays + &#x27; days&#x27;;
+
+      } else if (attribute &#x3D;&#x3D;&#x3D; &#x27;cor&#x27; &amp;&amp; this.forecast.history[0].projects[index].cor) {
+        return this.lastEditor + &#x27;: € &#x27; + this.forecast.history[0].projects[index].cor;
+
+      } else if (attribute &#x3D;&#x3D;&#x3D; &#x27;probabilityId&#x27;) {
+        return this.lastEditor + &#x27;: &#x27; + this.availableProbabilities
+          .find((p: Probability) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; this.forecast.history[0].projects[index].probabilityId).name;
+
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns the name of a project.
+   * @param id
+   */
+  projectName(id: number): string {
+    let project: Project &#x3D; this.availableProjects.find((p: Project) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; id);
+    return project ? project.name : &#x27;&#x27;;
+  }
+
+  /**
+   * Returns whether the logged in user has role teamlead
+   */
+  isTeamlead(): boolean {
+    if (this.authService.getRole() &#x3D;&#x3D;&#x3D; &#x27;teamlead&#x27;) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Tests if a COR value has already been entered
+   * @param cor
+   */
+  hasCORValue(cor: number): boolean {
+    if (typeof cor !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Tests if a project is mandatory
+   * @param projectId
+   */
+  isMandatory(projectId: number): boolean {
+    return this.availableProjects.find((p: Project) &#x3D;&gt; p.mandatory &#x3D;&#x3D;&#x3D; &#x27;Y&#x27; &amp;&amp; p.id &#x3D;&#x3D;&#x3D; projectId) ? true : false;
+  }
+
+  /**
+   * Tests if a project is automatically set as internal
+   * @param projectId
+   */
+  isFixedInternal(projectId: number): boolean {
+    return this.availableProjects.find((p: Project) &#x3D;&gt; p.projectType &gt; 0 &amp;&amp; p.id &#x3D;&#x3D;&#x3D; projectId) ? true : false;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;form class&#x3D;&quot;project-form&quot;&gt;
+	&lt;mat-card class&#x3D;&quot;project-container&quot; id&#x3D;&quot;project-{{monthId}}-{{i}}&quot;&gt;
+		&lt;mat-card-content class&#x3D;&quot;project&quot;&gt;
+			&lt;div layout&#x3D;&quot;row&quot; layout-fill&gt;
+
+				&lt;div [attr.flex]&#x3D;&quot;isTeamlead() ? 35 : 50&quot; class&#x3D;&quot;project-element&quot;&gt;
+					&lt;ng-container *ngIf&#x3D;&quot;!isMandatory(project.projectId)&quot;&gt;
+						&lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;no-padding&quot; id&#x3D;&quot;projectId-{{monthId}}-{{i}}&quot;&gt;
+							&lt;input type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Project&quot; matInput [formControl]&#x3D;&quot;projectControl&quot; [matAutocomplete]&#x3D;&quot;auto&quot; (ngModelChange)&#x3D;&quot;applyFilter($event)&quot;&gt;
+							&lt;mat-label&gt;Project&lt;/mat-label&gt;
+						&lt;/mat-form-field&gt;
+						
+						&lt;mat-autocomplete #auto&#x3D;&quot;matAutocomplete&quot; autoActiveFirstOption [displayWith]&#x3D;&quot;displayFn.bind(this)&quot; (opened)&#x3D;&quot;clearProjectId()&quot; (closed)&#x3D;&quot;callDataUpdate()&quot;&gt;
+							&lt;ng-container *ngFor&#x3D;&quot;let p of filteredProjects&quot;&gt;
+								&lt;mat-option *ngIf&#x3D;&quot;!isMandatory(p.id)&quot; [value]&#x3D;&quot;p.id&quot;&gt;{{p.name}}&lt;/mat-option&gt;
+							&lt;/ng-container&gt;
+						&lt;/mat-autocomplete&gt;
+					&lt;/ng-container&gt;
+					
+					&lt;div class&#x3D;&quot;mat-form-field-clone&quot; [ngClass]&#x3D;&quot;{&#x27;not-locked&#x27;: !forecast.locked}&quot; *ngIf&#x3D;&quot;isMandatory(project.projectId)&quot;&gt;
+						&lt;input type&#x3D;&quot;text&quot; disabled value&#x3D;&quot;{{projectName(project.projectId)}}&quot; /&gt;
+						&lt;span class&#x3D;&quot;label&quot;&gt;Default Project&lt;/span&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div flex&#x3D;&quot;15&quot; class&#x3D;&quot;project-element&quot;&gt;
+					&lt;mat-form-field appearance&#x3D;&quot;outline&quot; matTooltip&#x3D;&quot;{{history(&#x27;days&#x27;, i)}}&quot; matTooltipPosition&#x3D;&quot;above&quot;
+						matTooltipDisabled&#x3D;&quot;{{!history(&#x27;days&#x27;, i)}}&quot;&gt;
+						&lt;mat-label&gt;{{ (project.billable ? &#x27;Days (Billable)&#x27; : &#x27;Days (Non-Billable)&#x27;) }}&lt;/mat-label&gt;
+
+						&lt;input type&#x3D;&quot;number&quot; matInput name&#x3D;&quot;plannedProjectDays-{{monthId}}-{{i}}&quot; [(ngModel)]&#x3D;&quot;project.plannedProjectDays&quot;
+							required min&#x3D;&quot;0&quot; (ngModelChange)&#x3D;&quot;callDataUpdate()&quot; [disabled]&#x3D;&quot;forecast.locked&quot;/&gt;
+						
+						&lt;mat-slide-toggle color&#x3D;&quot;primary&quot; name&#x3D;&quot;billable-{{monthId}}-{{i}}&quot; *ngIf&#x3D;&quot;!isFixedInternal(project.projectId)&quot;
+							[(ngModel)]&#x3D;&quot;project.billable&quot; (change)&#x3D;&quot;callDataUpdate()&quot; [disabled]&#x3D;&quot;forecast.locked&quot;&gt;
+						&lt;/mat-slide-toggle&gt;
+					&lt;/mat-form-field&gt;
+				&lt;/div&gt;
+
+				&lt;div flex&#x3D;&quot;15&quot; *ngIf&#x3D;&quot;isTeamlead()&quot; class&#x3D;&quot;project-element&quot;&gt;
+					&lt;mat-form-field appearance&#x3D;&quot;outline&quot; matTooltip&#x3D;&quot;{{history(&#x27;cor&#x27;, i)}}&quot; matTooltipPosition&#x3D;&quot;above&quot; matTooltipDisabled&#x3D;&quot;{{!history(&#x27;cor&#x27;, i)}}&quot;&gt;
+						&lt;mat-label&gt;{{(hasCORValue(project.cor)) ? ((project.externalRevenue) ? &#x27;COR (External Revenue)&#x27; : &#x27;COR (Internal Revenue)&#x27;) : &#x27;COR&#x27;}}&lt;/mat-label&gt;
+
+						&lt;input matInput type&#x3D;&quot;number&quot; name&#x3D;&quot;cor-{{monthId}}-{{i}}&quot; [(ngModel)]&#x3D;&quot;project.cor&quot;
+							[disabled]&#x3D;&quot;isFixedInternal(project.projectId) || forecast.locked&quot; required min&#x3D;&quot;0&quot; (ngModelChange)&#x3D;&quot;callDataUpdate()&quot; /&gt;
+						
+						&lt;mat-slide-toggle color&#x3D;&quot;primary&quot; name&#x3D;&quot;revenue-{{monthId}}-{{i}}&quot; *ngIf&#x3D;&quot;!isFixedInternal(project.projectId)&quot;
+							[(ngModel)]&#x3D;&quot;project.externalRevenue&quot; (change)&#x3D;&quot;callDataUpdate()&quot; [disabled]&#x3D;&quot;forecast.locked&quot;&gt;
+						&lt;/mat-slide-toggle&gt;
+					&lt;/mat-form-field&gt;
+				&lt;/div&gt;
+
+				&lt;div flex&#x3D;&quot;35&quot; class&#x3D;&quot;project-element&quot;&gt;
+					&lt;mat-button-toggle-group name&#x3D;&quot;probabilityId-{{monthId}}-{{i}}&quot; [(ngModel)]&#x3D;&quot;project.probabilityId&quot; required
+						(ngModelChange)&#x3D;&quot;callDataUpdate()&quot; [disabled]&#x3D;&quot;forecast.locked&quot;
+						matTooltip&#x3D;&quot;{{history(&#x27;probabilityId&#x27;, i)}}&quot; matTooltipPosition&#x3D;&quot;above&quot; matTooltipDisabled&#x3D;&quot;{{!history(&#x27;probabilityId&#x27;, i)}}&quot;&gt;
+						&lt;mat-button-toggle *ngFor&#x3D;&quot;let p of availableProbabilities&quot; [value]&#x3D;&quot;p.id&quot;&gt;{{p.name}}&lt;/mat-button-toggle&gt;
+					&lt;/mat-button-toggle-group&gt;
+				&lt;/div&gt;
+
+				&lt;button mat-icon-button class&#x3D;&quot;delete-entry&quot; [disabled]&#x3D;&quot;isMandatory(project.projectId) || forecast.locked&quot; (click)&#x3D;&quot;removeProjectFromForecast(i)&quot;&gt;
+					&lt;mat-icon [ngClass]&#x3D;&quot;{&#x27;icon--delete&#x27;: !(isMandatory(project.projectId) || forecast.locked)}&quot;&gt;delete&lt;/mat-icon&gt;
+					&lt;mat-icon *ngIf&#x3D;&quot;isMandatory(project.projectId) || forecast.locked&quot; class&#x3D;&quot;icon--block&quot;&gt;block&lt;/mat-icon&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+
+		&lt;/mat-card-content&gt;
+	&lt;/mat-card&gt;
+
+	&lt;div *ngIf&#x3D;&quot;project.errors&quot;&gt;
+			&lt;ng-container *ngFor&#x3D;&quot;let error of project.errors&quot;&gt;
+				&lt;mat-error&gt;{{error}}&lt;/mat-error&gt;
+			&lt;/ng-container&gt;
+	&lt;/div&gt;
+&lt;/form&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./fc-project.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &#x27;../../../../assets/styles/variables.scss&#x27;;
+
+.project-container {
+	margin: 0;
+	margin-right: 40px;
+	border: 0;
+	
+	.project {
+		min-height: 60px;
+		padding: 0;
+
+		.project-form {
+			padding-right: 50px;
+		}
+
+		.project-element {
+			padding: 0 5px;
+			padding-top: 1.1em;
+		}
+		
+		.delete-entry {
+			position: absolute;
+			margin: 0;
+			top: 36px;
+			right: -37px;
+		
+			transform: translate(0, -50%);
+
+			.mat-icon {
+				position: absolute;
+				top: 50%;
+				right: 50%;
+				width: auto;
+				height: auto;
+				font-size: 20px;
+				margin-top: -12px;
+				margin-right: -10px;
+
+				&amp;.icon--delete {
+					font-size: 26px;
+					margin-right: -13px;
+				}
+
+				&amp;.icon--block {
+					font-size: 30px;
+					margin-right: -15px;
+				}
+			}
+
+			&amp;[disabled] .mat-icon {
+				color: map-get($font-colors, grey-super-light) !important;
+			}
+		}
+	}
+}
+.mat-error {
+	padding: 2px 5px;
+}
+
+.mat-option {
+	height: 40px;
+	line-height: 40px;
+	font-size: $font-size;
+}
+
+.multi-view-box {
+	padding: 10px 5px 0;
+}
+
+.mat-form-field-wrapper {
+	padding-bottom: 0;
+
+	&amp;.mat-form-field-appearance-outline {
+		margin: 0;
+		margin-right: 20px;
+	}
+}
+
+.mat-form-field-outline {
+	margin: 0;
+	margin-right: 20px;
+}
+
+.mat-button-toggle-group {
+	margin: .25em 0;
+	width: 100%;
+	height: 38px;
+	border-radius: 0;
+
+	.mat-button-toggle {
+		width: 33.33%;
+		white-space: normal;
+	}
+}
+
+.mat-form-field .mat-slide-toggle {
+	padding: 1px 0 0 1px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: map-get($font-colors, white);
+	z-index: 10;
+}
+
+.form-element.mat-slide-toggle {
+	height: 45px;
+	margin: 0.25em 0;
+}
+
+
+.mat-form-field-clone {
+	display: flex;
+	width: 100%;
+	margin: .25em 0;
+
+	input {
+		width: 100%;
+		border-radius: 0;
+		border: 1px solid map-get($border-colors, light);
+		font-family: inherit;
+		font-size: 1rem;
+		line-height: 1.2em;
+		padding: 1.2em 0.50em 0.8em;
+		color: map-get($font-colors, grey-light);
+		background-color: transparent;
+	}
+
+	.label {
+		position: absolute;
+		top: 12px;
+		font-size: 0.75rem;
+		line-height: 11px;
+		color: map-get($font-colors, grey-label);
+		margin-left: 5px;
+		padding: 0 5px;
+		background: map-get($font-colors, white);
+	}
+
+	&amp;.not-locked input {
+		color: map-get($font-colors, black);
+		border-color: map-get($border-colors, medium);
+	}
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><form class="project-form">	<mat-card class="project-container" id="project-{{monthId}}-{{i}}">		<mat-card-content class="project">			<div layout="row" layout-fill>				<div [attr.flex]="isTeamlead() ? 35 : 50" class="project-element">					<ng-container *ngIf="!isMandatory(project.projectId)">						<mat-form-field appearance="outline" class="no-padding" id="projectId-{{monthId}}-{{i}}">							<input type="text" placeholder="Project" matInput [formControl]="projectControl" [matAutocomplete]="auto" (ngModelChange)="applyFilter($event)">							<mat-label>Project</mat-label>						</mat-form-field>												<mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption [displayWith]="displayFn.bind(this)" (opened)="clearProjectId()" (closed)="callDataUpdate()">							<ng-container *ngFor="let p of filteredProjects">								<mat-option *ngIf="!isMandatory(p.id)" [value]="p.id">{{p.name}}</mat-option>							</ng-container>						</mat-autocomplete>					</ng-container>										<div class="mat-form-field-clone" [ngClass]="{\'not-locked\': !forecast.locked}" *ngIf="isMandatory(project.projectId)">						<input type="text" disabled value="{{projectName(project.projectId)}}" />						<span class="label">Default Project</span>					</div>				</div>				<div flex="15" class="project-element">					<mat-form-field appearance="outline" matTooltip="{{history(\'days\', i)}}" matTooltipPosition="above"						matTooltipDisabled="{{!history(\'days\', i)}}">						<mat-label>{{ (project.billable ? \'Days (Billable)\' : \'Days (Non-Billable)\') }}</mat-label>						<input type="number" matInput name="plannedProjectDays-{{monthId}}-{{i}}" [(ngModel)]="project.plannedProjectDays"							required min="0" (ngModelChange)="callDataUpdate()" [disabled]="forecast.locked"/>												<mat-slide-toggle color="primary" name="billable-{{monthId}}-{{i}}" *ngIf="!isFixedInternal(project.projectId)"							[(ngModel)]="project.billable" (change)="callDataUpdate()" [disabled]="forecast.locked">						</mat-slide-toggle>					</mat-form-field>				</div>				<div flex="15" *ngIf="isTeamlead()" class="project-element">					<mat-form-field appearance="outline" matTooltip="{{history(\'cor\', i)}}" matTooltipPosition="above" matTooltipDisabled="{{!history(\'cor\', i)}}">						<mat-label>{{(hasCORValue(project.cor)) ? ((project.externalRevenue) ? \'COR (External Revenue)\' : \'COR (Internal Revenue)\') : \'COR\'}}</mat-label>						<input matInput type="number" name="cor-{{monthId}}-{{i}}" [(ngModel)]="project.cor"							[disabled]="isFixedInternal(project.projectId) || forecast.locked" required min="0" (ngModelChange)="callDataUpdate()" />												<mat-slide-toggle color="primary" name="revenue-{{monthId}}-{{i}}" *ngIf="!isFixedInternal(project.projectId)"							[(ngModel)]="project.externalRevenue" (change)="callDataUpdate()" [disabled]="forecast.locked">						</mat-slide-toggle>					</mat-form-field>				</div>				<div flex="35" class="project-element">					<mat-button-toggle-group name="probabilityId-{{monthId}}-{{i}}" [(ngModel)]="project.probabilityId" required						(ngModelChange)="callDataUpdate()" [disabled]="forecast.locked"						matTooltip="{{history(\'probabilityId\', i)}}" matTooltipPosition="above" matTooltipDisabled="{{!history(\'probabilityId\', i)}}">						<mat-button-toggle *ngFor="let p of availableProbabilities" [value]="p.id">{{p.name}}</mat-button-toggle>					</mat-button-toggle-group>				</div>				<button mat-icon-button class="delete-entry" [disabled]="isMandatory(project.projectId) || forecast.locked" (click)="removeProjectFromForecast(i)">					<mat-icon [ngClass]="{\'icon--delete\': !(isMandatory(project.projectId) || forecast.locked)}">delete</mat-icon>					<mat-icon *ngIf="isMandatory(project.projectId) || forecast.locked" class="icon--block">block</mat-icon>				</button>			</div>		</mat-card-content>	</mat-card>	<div *ngIf="project.errors">			<ng-container *ngFor="let error of project.errors">				<mat-error>{{error}}</mat-error>			</ng-container>	</div></form></div>'
+    var COMPONENTS = [{'name': 'AddMonthDialog', 'selector': ''},{'name': 'AddProjectDialog', 'selector': ''},{'name': 'AddUserDialog', 'selector': ''},{'name': 'AdminComponent', 'selector': 'public-admin'},{'name': 'AppComponent', 'selector': 'public-root'},{'name': 'CSVExportDialog', 'selector': ''},{'name': 'DashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'FcEntryComponent', 'selector': 'app-fc-entry'},{'name': 'FcEntrySummaryComponent', 'selector': 'app-fc-entry-summary'},{'name': 'FcProjectComponent', 'selector': 'app-fc-project'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'ForecastComponent', 'selector': 'public-forecast'},{'name': 'GetStarted', 'selector': ''},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'IndividualComponent', 'selector': 'app-individual'},{'name': 'LoginComponent', 'selector': ''},{'name': 'MonthsComponent', 'selector': 'app-admin-months'},{'name': 'ProjectsComponent', 'selector': 'app-admin-projects'},{'name': 'RemoveProjectDialog', 'selector': ''},{'name': 'TeamComponent', 'selector': 'app-team'},{'name': 'TeamleadMonthComponent', 'selector': 'app-teamlead-month'},{'name': 'TeamleadSummaryComponent', 'selector': 'app-teamlead-summary'},{'name': 'TeamsComponent', 'selector': 'app-admin-teams'},{'name': 'UsersComponent', 'selector': 'app-admin-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FcProjectComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FcProjectComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

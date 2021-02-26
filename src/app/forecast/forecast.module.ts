@@ -1,0 +1,92 @@
+import { TranslateModule } from "@ngx-translate/core";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppRoutingModule } from "../app-routing.module";
+import { CommonModule } from "@angular/common";
+import { CoreModule } from "../core/core.module";
+import { LayoutModule } from "../layout/layout.module";
+import { MatDialogModule, MatBottomSheetModule } from "@angular/material";
+
+import { ForecastComponent } from "./forecast.component";
+import { IndividualComponent } from "./pages/individual/individual.component";
+import { TeamComponent } from "./pages/team/team.component";
+
+import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
+import { FcProjectComponent } from "./components/fc-project/fc-project.component";
+import { FcEntrySummaryComponent } from "./components/fc-entry-summary/fc-entry-summary.component";
+import { TeamleadSummaryComponent } from "./components/teamlead-summary/teamlead-summary.component";
+import { TeamleadMonthComponent } from "./components/teamlead-month/teamlead-month.component";
+import { PracticeComponent } from "./pages/practice/practice.component";
+
+import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
+import { ExportCsvDialog } from "./dialogs/export-csv/export-csv.dialog";
+import { ProjectRequestDialog } from "./dialogs/add-project/project-request.dialog";
+import { ExecutiveComponent } from "./pages/executive/executive.component";
+import { ExecutiveDetailComponent } from "./components/executive-detail/executive-detail.component";
+import { ExecutiveSummaryComponent } from "./components/executive-summary/executive-summary.component";
+
+import { NgxPowerBiModule } from "ngx-powerbi";
+import { ExecutiveFcEntryComponent } from "./dialogs/executive-fc-entry/executive-fc-entry.component";
+import { FcEntryDetailDialogComponent } from "./components/executive-detail/fc-entry-detail-dialog.component";
+import { ExecutiveChartComponent } from "./components/executive-chart/executive-chart.component";
+import { ExecutiveStatsComponent } from './components/executive-stats/executive-stats.component';
+
+import { StaffingComponent } from "./pages/staffing/staffing.component";
+import { StaffingOverviewComponent } from "./components/staffing-overview/staffing-overview.component";
+import { HeadOfPracticesComponent } from "./pages/head-of-practices/head-of-practices.component";
+import { PracticesComponent } from "./pages/practices/practices.component";
+import { FinancialControllerComponent } from "./pages/financial-controller/financial-controller.component";
+import { FinancialControllerOverviewComponent } from "./components/financial-controller-overview/financial-controller-overview.component";
+
+@NgModule({
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatBottomSheetModule,
+    CoreModule,
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    TranslateModule,
+    NgxPowerBiModule
+  ],
+  providers: [],
+  declarations: [
+    ForecastComponent,
+    IndividualComponent,
+    TeamComponent,
+    PracticeComponent,
+    FcEntryComponent,
+    FcProjectComponent,
+    FcEntrySummaryComponent,
+    TeamleadMonthComponent,
+    TeamleadSummaryComponent,
+    ExecutiveComponent,
+    ExecutiveDetailComponent,
+    ExecutiveSummaryComponent,
+    ConfirmMessageDialog,
+    ExportCsvDialog,
+    ProjectRequestDialog,
+    ExecutiveFcEntryComponent,
+    FcEntryDetailDialogComponent,
+    PracticesComponent,
+    ExecutiveChartComponent,
+    ExecutiveStatsComponent,
+    StaffingComponent,
+    StaffingOverviewComponent,
+    HeadOfPracticesComponent,
+    FinancialControllerComponent,
+    FinancialControllerOverviewComponent,
+  ],
+  entryComponents: [
+    ConfirmMessageDialog,
+    ExportCsvDialog,
+    ProjectRequestDialog,
+    ExecutiveFcEntryComponent,
+    FcEntryDetailDialogComponent,
+    ExecutiveChartComponent
+  ],
+  exports: []
+})
+export class ForecastModule {}

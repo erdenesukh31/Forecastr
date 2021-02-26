@@ -1,0 +1,85 @@
+@import '../../assets/styles/variables.scss';
+
+.mat-sidenav-container{
+	background: transparent;
+	margin: 0 10px;
+}
+
+.mat-drawer {
+	display: none;
+	background: transparent;
+	width: 50px;
+	border-right-width: 0px;
+}
+
+.nav-button-container {
+	margin: 4px 0;
+
+	.mat-icon-button {
+		width: 50px;
+		height: 50px;
+		margin-bottom: 10px;
+		padding: 0;
+
+		&.active, &.active .mat-icon {
+			color: map-get($font-colors, blue);
+		}
+	}
+
+	.mat-icon {
+		width: 1em;
+		height: 1em;
+		line-height: 1rem;
+		font-size: 2rem;
+	}
+}
+
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+	padding-left: 0;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+	padding-right: 0;
+}
+
+.action-button {
+	width: 50px;
+	text-align: center;
+}
+
+.flag-button {
+	width: 70px;
+	text-align: center;
+}
+
+.button-row {
+	margin: 50px;
+
+	.mat-raised-button {
+		position: fixed;
+		z-index: 100;
+		bottom: 32px;
+		right: 30px;
+		box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+	}
+}
+
+.mat-form-field {
+	margin: 5px 0;
+}
+
+tr.mat-row.inactive td {
+	color: map-get($font-colors, grey-label);
+
+	.flag-inactive {
+		background: map-get($font-colors, red);
+		color: map-get($font-colors, white);
+		padding: 3px 6px;
+		border-radius: 4px;
+	}
+}
+
+.mat-table tr.mat-row:last-child td {
+	border-bottom: 0;
+}

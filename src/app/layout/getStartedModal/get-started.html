@@ -1,0 +1,33 @@
+<!-- <p>What's your favorite animal?</p> -->
+
+<mat-horizontal-stepper labelPosition="bottom" class="getSartedStepper" linear>
+  <ng-template matStepperIcon="number" let-index="index">
+    {{index}}
+  </ng-template>
+  <ng-template matStepperIcon="edit" let-index="index">
+    {{index}}
+  </ng-template>
+
+  <mat-step *ngFor="let item of tutorialData; let last = last" [stepControl]="false">
+    <div layout="column">
+      <div flex="80" class="imageContainer">
+        <img class="image" src="{{ 'assets/img/steps/Step_'}}{{item.image}}" alt="Step 1">
+      </div>
+      
+      <div layout="row" class="content" flex="20">
+        <div flex="70">
+          <h1 class="title">{{item.title}}</h1>
+          <div [innerHTML]="item.html"></div>
+        </div>
+
+        <div class="button-container" flex="30">
+          <button *ngIf="!last" mat-stroked-button class="mat-primary-reversed next-button" matStepperNext>Next</button>
+          <button *ngIf="!last" mat-stroked-button class="mat-primary-reversed close-button" (click)="onNoClick()">Close</button>
+          <button *ngIf="last" mat-stroked-button class="mat-primary-reversed" (click)="onNoClick()">
+            <span class="green-text">Start</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,0 +1,33 @@
+<div class="staffing-view">
+    <div class="period-container">
+
+        <mat-form-field class="period-component" appearance="outline">
+            <mat-label>Period Start Month</mat-label>
+
+            <mat-select [(ngModel)]="period.from">
+                <ng-container *ngFor="let r of availableMonths">
+                    <mat-option [value]="r.id">{{ r.name }}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="period-component" appearance="outline">
+            <mat-label>Period End Month</mat-label>
+
+            <mat-select [(ngModel)]="period.to">
+                <ng-container *ngFor="let r of availableMonths">
+                    <mat-option [value]="r.id">{{ r.name }}</mat-option>
+                </ng-container>
+            </mat-select>
+
+        </mat-form-field>
+
+        <button class="period-component" mat-raised-button color="primary" (click)="showPeriod()">
+            <mat-icon>search</mat-icon> Show Period
+        </button>
+
+        <div class="staffing-view-container">
+            <app-staffing-overview [months]="months" [users]="users"></app-staffing-overview>
+        </div>
+    </div>
+</div>

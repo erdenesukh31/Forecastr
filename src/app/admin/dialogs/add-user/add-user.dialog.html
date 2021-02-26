@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>Add User</h2>
+<form [formGroup]="userForm" >
+  <div class="dialog-content" >
+    <mat-form-field appearance="outline">
+      <mat-label>Capgemini Global ID</mat-label>
+      <input matInput formControlName="globalId" type="number" required/>
+    </mat-form-field>
+
+   <mat-form-field appearance="outline">
+      <mat-label>Firstname</mat-label>
+      <input matInput formControlName="firstName"  type="text"  required/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lastname</mat-label>
+      <input matInput formControlName="lastName" type="text"  required />
+    </mat-form-field>
+
+    <mat-form-field  appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput type="text"  required />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!data.id" appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput type="password"  required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FTE</mat-label>
+      <input formControlName="fte"  matInput type="number" min="0" max="1"  required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a Role</mat-label>
+      <mat-select formControlName="roleId"  id="roleId" required (selectionChange)="roleUpdate()">
+        <ng-container *ngFor="let r of roles">
+          <mat-option [value]="r.roleId">{{r.name}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a Grade</mat-label>
+      <mat-select formControlName="gradeId"  id="gradeId" required>
+        <ng-container *ngFor="let g of grades">
+          <mat-option [value]="g.gradeId">{{g.name}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a Team</mat-label>
+      <mat-select formControlName="parentId"  id="parentId">
+        <mat-option [value]="null">-</mat-option>
+        <ng-container *ngFor="let t of getTeamleads()">
+          <mat-option *ngIf="t.id !== data.id" [value]="t.id">{{t.lastName}}, {{t.firstName}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="sd" placeholder="Start Date" formControlName="startDate" (click)="sd.open()">
+      <mat-datepicker #sd startView="year" disabled="false" (closed)="datepickerClosed(true)"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="ed" placeholder="End Date" formControlName="endDate" (click)="ed.open()">
+      <mat-datepicker #ed startView="year" disabled="false" (closed)="datepickerClosed(false)"></mat-datepicker>
+    </mat-form-field>
+
+    <div class="form-field-toggle">
+      <mat-slide-toggle formControlName="admin" name="admin" color="primary">Administrator</mat-slide-toggle>
+    </div>
+  </div>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onSaveClick()" [disabled]="userForm.invalid">Save</button>
+  </mat-dialog-actions>
+</form>

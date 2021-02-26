@@ -1,0 +1,63 @@
+.back{
+    background-color: #f1f5f8;
+    margin: 0px;
+    height: 100%;
+}
+
+h1 {
+    color: #ffff;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    padding: 15px;
+}
+
+.mat-icon-close {
+    float: right;
+    margin: 8px;
+    mat-icon {
+        color: #ffff;
+    }
+}
+
+h3 {
+    color: #0070ad;
+    margin-top: 20px;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.content {
+    height: 90%;
+    margin: 0;
+    max-height: 85vh;
+
+}
+
+.fix {
+    background-color: #0070ad;
+    height: 10%;
+    padding: 0px;
+}
+
+.mat-expansion-panel-header-title{
+    color: rgba(0,0,0,0.75);
+}
+
+.panel-content {
+    margin-left: 10px;
+    color: rgba(0,0,0,0.60);
+
+}
+
+img {
+    max-width: 50vw;
+}
+.ff {
+    max-width: 50vw;
+}
+
+.image {
+    max-width: 50vw;
+}

@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{data.month.name ? data.month.name : 'New Month'}}</h2>
+<div class="dialog-content" [formGroup]="monthForm" >
+
+	<mat-form-field appearance="outline">
+		<mat-label>Name</mat-label>
+		<input type="text" matInput formControlName="name">
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Working days</mat-label>
+		<input type="number" matInput formControlName="workingdays">
+	</mat-form-field>
+
+	<mat-form-field>
+		<input matInput [matDatepicker]="dp" placeholder="Month" formControlName="time" disabled (click)="dp.open()">
+		<mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+		<mat-datepicker #dp startView="year" disabled="false" (monthSelected)="chosenMonthHandler($event, dp)" (closed)="datepickerClosed()"></mat-datepicker>
+	</mat-form-field>
+
+</div>
+<mat-dialog-actions>
+	<button mat-button (click)="onNoClick()">Cancel</button>
+	<button mat-button (click)="onSaveClick()" [disabled]="!monthForm.valid">Save</button>
+</mat-dialog-actions>

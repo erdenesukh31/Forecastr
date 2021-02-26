@@ -1,0 +1,67 @@
+<table mat-table matSort [dataSource]="projects">
+
+	<ng-container matColumnDef="active">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+		<td mat-cell *matCellDef="let project" class="flag-button">
+			<mat-slide-toggle color="primary" [checked]="project.active" [(ngModel)]="project.active" (change)="setProjectActiveState(project.id, project.active)"></mat-slide-toggle>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="code">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef>Code</th>
+		<td mat-cell *matCellDef="let project">{{ project.code }}</td>
+	</ng-container>
+	
+	<ng-container matColumnDef="name">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+		<td mat-cell *matCellDef="let project">{{ project.name }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="mandatory">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef>Mandatory</th>
+		<td mat-cell *matCellDef="let project">
+			<ng-container [ngSwitch]="project.mandatory">
+				<ng-container *ngSwitchCase="'Y'">Mandatory</ng-container>
+				<ng-container *ngSwitchCase="'N'">Not Mandatory</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="billable">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef>Billable</th>
+		<td mat-cell *matCellDef="let project">
+			<ng-container [ngSwitch]="project.billable">
+				<ng-container *ngSwitchCase="true">Billable</ng-container>
+				<ng-container *ngSwitchCase="false">Non-billable</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="projectType">
+		<th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>
+		<td mat-cell *matCellDef="let project">
+			<ng-container [ngSwitch]="project.projectType">
+				<ng-container *ngSwitchCase="0">Default</ng-container>
+				<ng-container *ngSwitchCase="5">Non-billable / No COR</ng-container>
+				<ng-container *ngSwitchCase="1">Business Development Days</ng-container>
+				<ng-container *ngSwitchCase="2">Training</ng-container>
+				<ng-container *ngSwitchCase="3">Vacation</ng-container>
+				<ng-container *ngSwitchCase="4">Bench Time</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="edit">
+		<th mat-header-cell *matHeaderCellDef class="action-button"></th>
+		<td mat-cell *matCellDef="let project" class="action-button"><mat-icon *ngIf="project.active" (click)="updateProject(project.id)">edit</mat-icon></td>
+	</ng-container>
+	
+	<tr mat-header-row *matHeaderRowDef="['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit']"></tr>
+	<tr mat-row *matRowDef="let row; columns: ['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit'];" [ngClass]="{'inactive': (!row.active)}"></tr>
+</table>
+
+<div class="button-row">
+	<button mat-raised-button color="primary" (click)="addProject()">
+		<mat-icon>playlist_add</mat-icon> Add Project
+	</button>
+</div>

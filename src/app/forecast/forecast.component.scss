@@ -1,0 +1,145 @@
+@import "../../assets/styles/variables.scss";
+
+.role-header {
+  position: relative;
+  height: 37px;
+  margin: 20px 0px 30px 0px;
+
+  h1 {
+    line-height: 37px;
+    font-size: 1.8em;
+    margin: 0;
+  }
+
+  .mat-button-toggle-group {
+    background-color: map-get($font-colors, white);
+    font-size: 1.1em;
+    border-radius: 4px;
+  }
+
+  .mat-button-toggle {
+    background-color: map-get($font-colors, white);
+    color: map-get($font-colors, blue);
+    border-right: 1px solid #0070ad;
+    width: 120px;
+
+    .mat-icon {
+      color: map-get($font-colors, blue);
+    }
+
+    &:hover {
+      background-color: map-get($bg-colors, light);
+    }
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  .mat-button-toggle-checked,
+  .mat-button-toggle-checked .mat-icon {
+    background-color: map-get($font-colors, blue);
+    color: map-get($font-colors, white);
+
+    &:hover {
+      background-color: map-get($font-colors, blue);
+    }
+  }
+
+  .switch-role-toggle {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 0;
+  }
+
+  .dashboard-button {
+    position: absolute;
+    width: 180px;
+    top: 0;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 20px;
+    background-color: map-get($font-colors, blue);
+    color: map-get($font-colors, white);
+    box-shadow: 0px 1px 5px grey;
+
+    .mat-icon {
+      color: map-get($font-colors, white);
+    }
+  }
+
+  .practice-dashboard {
+    right: 375px;
+  }
+
+  .pdl-dashboard {
+    right: 250px;
+  }
+
+  .sm-hop-button-toggle-group {
+    right: 0px;
+  }
+
+  .sm-hop-button-toggle {
+    width: 140px;
+  }
+}
+
+.progress-spinner-overlay {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  background: map-get($font-colors, white);
+  opacity: 0.5;
+
+  &.active {
+    display: block;
+  }
+}
+.progress-spinner {
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
+.mat-sidenav-container {
+  min-width: 700px;
+  background: transparent;
+  margin: 0 10px;
+}
+
+.mat-drawer {
+  display: none;
+  background: transparent;
+  width: 50px;
+  border-right-width: 0px;
+}
+
+.nav-button-container {
+  margin: 4px 0;
+
+  .mat-icon-button {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 0;
+
+    &.active,
+    &.active .mat-icon {
+      color: map-get($font-colors, blue);
+    }
+  }
+
+  .mat-icon {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    font-size: 2em;
+  }
+}

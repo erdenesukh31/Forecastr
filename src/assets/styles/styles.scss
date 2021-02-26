@@ -1,0 +1,204 @@
+@import "./material.scss";
+@import "./variables.scss";
+
+@font-face {
+  font-family: Ubuntu;
+  src: url(../fonts/Ubuntu-Medium.ttf);
+}
+
+@font-face {
+  font-family: Ubuntu;
+  src: url(../fonts/Ubuntu-Light.ttf);
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: Ubuntu;
+  src: url(../fonts/Ubuntu-Regular.ttf);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: Ubuntu;
+  src: url(../fonts/Ubuntu-Bold.ttf);
+  font-weight: bold;
+}
+
+html,
+body {
+  background: map-get($bg-colors, primary) !important;
+  font-size: $font-size;
+}
+
+h1 {
+  font-size: 1.8em;
+  font-weight: 500;
+}
+
+.mat-drawer-content {
+  min-height: 200px;
+}
+
+.app-content {
+  margin: 0 10px 20px 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mat-stroked-button.mat-primary-reversed {
+  color: map-get($font-colors, blue);
+  border: 1px solid map-get($font-colors, blue);
+  background-color: map-get($font-colors, white);
+  min-width: 100px;
+  font-weight: bold;
+
+  &[disabled][disabled] {
+    border-color: map-get($font-colors, grey-light);
+    color: map-get($font-colors, grey-light);
+
+    .mat-icon {
+      color: map-get($font-colors, grey-light) !important;
+    }
+  }
+}
+
+.mat-card {
+  box-shadow: initial !important;
+  border-radius: 0 !important;
+
+  .mat-card-title {
+    margin-bottom: 0;
+    padding-top: 8px;
+    font-size: 1.5em;
+  }
+
+  .mat-card-content {
+    padding: 8px;
+  }
+}
+
+.tab-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.property-text-center {
+  text-align: center;
+}
+
+.justify-space-around {
+  justify-content: space-around;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-simple-snackbar-action {
+  color: map-get($font-colors, white) !important;
+}
+
+.mat-list-item .mat-form-field-type-mat-select .mat-form-field-infix {
+  padding-top: 0;
+}
+
+.mat-toolbar {
+  z-index: 2;
+}
+
+.mat-toolbar.mat-primary {
+  background: transparent;
+  color: map-get($font-colors, blue);
+}
+
+.mat-icon.material-icons {
+  color: map-get($font-colors, grey-light);
+}
+
+.mat-icon.material-icons:hover {
+  color: map-get($font-colors, blue);
+}
+
+.summary-box-container {
+  background-color: map-get($bg-colors, summary);
+}
+
+.summary-box {
+  background-color: transparent;
+  margin: 0;
+
+  .card-section {
+    margin: 6px 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .summary-value {
+    line-height: 30px;
+    font-size: 18px;
+  }
+}
+
+.summary-warning {
+  position: relative;
+  margin: 10px 0;
+  padding: 10px 10px 10px 50px;
+  background-color: map-get($bg-colors, successful);
+  color: map-get($font-colors, white);
+  border-radius: 0;
+  font-size: 1rem;
+  line-height: normal;
+
+  &.error {
+    background-color: map-get($bg-colors, error);
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+    left: 13px;
+    color: map-get($font-colors, white);
+
+    &:hover {
+      color: map-get($font-colors, white);
+    }
+  }
+}
+
+div.no-data {
+  margin: 20px;
+  h3 {
+    font-weight: normal;
+  }
+}
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0px;
+}
+
+.mat-dialog-container {
+  
+  overflow: hidden !important;
+}

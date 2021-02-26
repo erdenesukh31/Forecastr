@@ -1,0 +1,23 @@
+<mat-tab-group [selectedIndex]="activeMonth" (selectedIndexChange)="setTabActive($event)" scrollDirection="after" animationDuration="1000ms">
+	<mat-tab *ngFor="let month of months" id="{{month.id}}">
+		<ng-template mat-tab-label>
+			<mat-icon *ngIf="forecastState('edited', month.id)" class="icon-edited">radio_button_checked</mat-icon>
+			<mat-icon *ngIf="month.locked || forecastState('locked', month.id)" class="icon-locked">lock</mat-icon>
+			<mat-icon *ngIf="month.saved || forecastState('saved', month.id)">save</mat-icon>
+			{{month.name}}
+		</ng-template>
+		<ng-template matTabContent> <!-- matTabContent template for lazyloading-->
+			<div layout="row" layout-wrap>
+				<div flex="100" flex-gt-md="75">
+					<div class="forecast-container">
+						<app-fc-entry class="tab-container" [singleView]="true" [userId]="userId" [month]="month"></app-fc-entry>
+					</div>
+				</div>
+
+				<div flex="100" flex-gt-md="25" class="summary-box-container">
+					<app-fc-entry-summary [userId]="userId" [month]="month"></app-fc-entry-summary>
+				</div>
+			</div>
+		</ng-template>
+	</mat-tab>
+</mat-tab-group>

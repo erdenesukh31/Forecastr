@@ -1,0 +1,32 @@
+@import '../../../../assets/styles/variables.scss';
+
+.mat-expansion-panel {
+	.mat-expansion-panel-header {
+		height: 44px;
+		font-size: $font-size;
+	}
+
+	table {
+		box-shadow: none;
+	}
+
+	td.mat-cell {
+		padding: 0 16px;
+	}
+	
+	.mat-table tr.mat-row {
+		height: 40px;
+	}
+}
+
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+	line-height: 24px;
+}
+
+.mat-expansion-panel-header-description {
+	flex-direction: row-reverse;
+
+	.mat-icon {
+		padding: 0 10px;
+	}
+}

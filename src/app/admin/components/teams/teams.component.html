@@ -1,0 +1,29 @@
+<mat-accordion displayMode="flat" multi>
+  <mat-expansion-panel *ngFor="let team of teams">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{team.name}}
+      </mat-panel-title>
+      <mat-panel-description class="mat-row">
+        <mat-icon (click)="deleteTeam(team)">delete</mat-icon>
+        <mat-icon (click)="updateTeam(team)">edit</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <table mat-table [dataSource]="getTeamMembers(team.teamLeadId)" class="mat-elevation-z8">
+				<ng-container matColumnDef="name">
+					<td mat-cell *matCellDef="let user; let i = index"> {{user.lastName}}, {{user.firstName}} 
+            <ng-container *ngIf="i == 0">(Teamlead)</ng-container>
+          </td>
+				</ng-container>
+
+				<tr mat-row *matRowDef="let row; columns: ['name'];"></tr>
+			</table>
+	</mat-expansion-panel>
+</mat-accordion>
+
+<div class="button-row">
+  <button mat-raised-button color="primary" (click)="addTeam()">
+    <mat-icon>playlist_add</mat-icon> Add Team
+  </button>
+</div>
