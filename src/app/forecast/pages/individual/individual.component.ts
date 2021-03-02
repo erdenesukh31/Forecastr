@@ -79,7 +79,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
 								this.months = this.months.filter((m: Month) => new Date(m.time) >= todayMonth);
 				
 								if(this.months.length > 7) {
-									this.months = this.months.slice(0, 7);
+									this.months = this.months.slice(1, 7);
 								}
 				
 				let id: number = parseInt(this.route.snapshot.paramMap.get('id'), 10);
