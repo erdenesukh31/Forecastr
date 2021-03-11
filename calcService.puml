@@ -1,0 +1,53 @@
+@startuml
+class BasicSummary {
+    number: projectDays
+
+    number: billableDays
+
+    number: nonBillableDays
+
+    number: vacationDays
+
+    number: paidDays
+
+    number: corDays
+
+    number: internalDays
+
+    number: externalDays
+
+    number: cor
+
+    number: externalRevenue
+
+    number: internalRevenue
+
+    number: revenue
+
+    number: arve
+
+    number: urve
+
+    number: fte
+
+    number: headcount
+}
+
+class ForecastrSummary {
+
+    BasicSummary: summary
+    
+    SummaryType: summaryType
+
+    Map<number, ForecastrSummary>: subSummary
+}
+
+enum SummaryType {
+    PROBABILITY
+    PDL
+    PL
+    PRACTICE
+    GRADE
+    NONE
+}
+@enduml
