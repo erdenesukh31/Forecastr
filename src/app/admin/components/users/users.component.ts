@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   /**
    * sort for angular material table
    */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Defined roles

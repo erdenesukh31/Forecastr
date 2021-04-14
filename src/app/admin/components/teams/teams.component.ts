@@ -24,7 +24,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   /**
    * Sort variable for angular material table sort method
    */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   /**
    * team list

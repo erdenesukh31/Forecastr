@@ -18,7 +18,7 @@ export class MonthsComponent implements OnInit, OnDestroy {
   /**
    * Sort variable for angular material table sort method
    */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * available months

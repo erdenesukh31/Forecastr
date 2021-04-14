@@ -16,7 +16,7 @@ import { AddProjectDialog } from '../../dialogs/add-project/add-project.dialog';
   styleUrls: ['../../admin.component.scss', './projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * project list
