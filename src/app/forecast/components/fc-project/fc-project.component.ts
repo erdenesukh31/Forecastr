@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { ForecastService } from "../../../core/services/forecasts/forecast.service";
 import { UtilitiesService } from "../../../core/services/utilities.service";

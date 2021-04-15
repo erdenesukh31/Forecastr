@@ -9,9 +9,9 @@ import { UtilitiesService } from "../core/services/utilities.service";
 import { PageStateService } from "../core/shared/page-state.service";
 import { UserService } from "../core/services/user.service";
 import { Subscription } from "rxjs";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { environment as env } from "../../environments/environment";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {
   ExecutiveForecastsService,
   SummaryValues,

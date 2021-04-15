@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDatepicker, DateAdapter, NativeDateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { DateAdapter, NativeDateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 /**

@@ -11,7 +11,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { MonthsComponent } from './components/months/months.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AddMonthDialog } from './dialogs/add-month/add-month.dialog';
 import { AddProjectDialog } from './dialogs/add-project/add-project.dialog';
 import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
