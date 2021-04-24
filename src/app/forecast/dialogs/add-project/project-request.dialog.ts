@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ProjectRequest } from "../../../core/interfaces/projectRequest";
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../../../core/shared/business-operations.service';

@@ -1,6 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { Month } from "../../../core/interfaces/month";
-import { MAT_DIALOG_DATA } from "@angular/material";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 /**
  * Component for CSV-Export Dialog
