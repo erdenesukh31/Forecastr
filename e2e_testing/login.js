@@ -13,8 +13,10 @@ describe('basic tests', function () {
 
         browser.sleep(10000)
         expect(browser.getTitle()).toEqual("Capgemini Forecastr")
+        browser.sleep(5000)
 
     });
+
 
 }
 );
