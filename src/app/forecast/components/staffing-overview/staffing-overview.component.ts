@@ -17,7 +17,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
 
     @Input('months') months: Month[];
 
-    @Input('users') users: User[]; 
+    @Input('users') users: User[];
 
     /**
       * columns which are displayed
@@ -49,27 +49,27 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         let projectDays = 0;
         let totalDays = 0;
         let vacationDays = 0;
-        
-        for(let user of this.users) {
+
+        for (let user of this.users) {
             let forecast: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
                 return fc.monthId === month.id && fc.userId === user.id
             });
 
-            if(user.active) {
-                if(user.active.valueOf) {
-                    if(forecast) {
-                        if(forecast.isRelevant){
-                            if(forecast.projectDays) {
+            if (user.active) {
+                if (user.active.valueOf) {
+                    if (forecast) {
+                        if (forecast.isRelevant) {
+                            if (forecast.projectDays) {
                                 projectDays += forecast.projectDays;
                             }
-                            if(forecast.vacationDays) {
+                            if (forecast.vacationDays) {
                                 vacationDays += forecast.vacationDays;
                             }
-                            if(forecast.totalDays) {
+                            if (forecast.totalDays) {
                                 totalDays += forecast.totalDays;
                             }
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -81,14 +81,14 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     getTotalFTE(month: Month): string {
         let fte = 0;
 
-        for(let user of this.users) {
+        for (let user of this.users) {
             let forecast: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
                 return fc.monthId === month.id && fc.userId === user.id
             });
 
-            if(forecast) {
+            if (forecast) {
                 //if(forecast.isRelevant) {
-                    fte += forecast.fte;
+                fte += forecast.fte;
                 //}
             }
         }
@@ -97,7 +97,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     getTeam(user: User): String {
-        if(user.id === -1) {
+        if (user.id === -1) {
             return "";
         }
 
@@ -143,11 +143,25 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         return team.lastName + ", " + team.firstName + " (" + parentRole.shortcut + ")";
     }
 
+    getProjects(user: User): String {
+        if (user.id === -1) {
+            return "";
+        }
+        let userId = user.id;
+        let forecastr: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
+            return fc.userId === user.id
+        })
+        console.log(forecastr.projects)
+
+        return "projects";
+    }
+
     initStaffing(): void {
         this.columnsToDisplay = [];
         this.columnsToDisplay.push('name');
         this.columnsToDisplay.push('team');
         this.columnsToDisplay.push("corp");
+        this.columnsToDisplay.push("projects");
         for (let month of this.months) {
             this.columnsToDisplay.push(month.name);
         }
@@ -160,7 +174,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             user.fte = 0;
             this.users.unshift(user);
         }
-        
+
     }
 
     exportCSV(): void {
@@ -173,16 +187,16 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
 
         let teams = new Map<string, User[]>();
 
-        for(let u of this.users) {
-            if(u.id === -1) {
+        for (let u of this.users) {
+            if (u.id === -1) {
                 continue;
             }
 
             let team = this.getTeam(u);
             let teamContent: User[] = teams.get(team.toString());
 
-            if(teamContent === undefined) {
-                teams = teams.set(team.toString(), [ u ]);
+            if (teamContent === undefined) {
+                teams = teams.set(team.toString(), [u]);
             } else {
                 teamContent.push(u);
                 teams = teams.set(team.toString(), teamContent);
@@ -191,13 +205,13 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
 
         let teamNames = Array.from(teams.keys());
 
-        for(let team of teamNames) {
+        for (let team of teamNames) {
             body += team + lineEnding;
             body += header;
-            body += teams.get(team).map(u => u.lastName + ", " + u.firstName + ";" + 
-                team + ";" + 
+            body += teams.get(team).map(u => u.lastName + ", " + u.firstName + ";" +
+                team + ";" +
                 u.globalId.toString() + ";" +
-                this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 4, 100) + ";" + 
+                this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 4, 100) + ";" +
                     this.parseForCSV(this.getMonthFTEFromPerson(x, u), 0, 1)).join(";")).join(lineEnding);
             body += lineEnding + lineEnding;
         }
@@ -229,16 +243,16 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     parseForCSV(toParse: string, min: number, div: number): string {
-        if(toParse == "-") {
+        if (toParse == "-") {
             return "0";
         }
 
         let n = parseFloat(toParse) / div;
-        return n.toLocaleString("de",  { minimumFractionDigits: min } ).replace(".","");
+        return n.toLocaleString("de", { minimumFractionDigits: min }).replace(".", "");
     }
 
     getMonthFTEFromPerson(month: Month, user: User): string {
-        if(user.id === -1) {
+        if (user.id === -1) {
             return this.getTotalFTE(month);
         }
 
@@ -246,7 +260,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             return fc.monthId === month.id && fc.userId === user.id
         });
 
-        if(forecast) {
+        if (forecast) {
             return forecast.fte.toString();
         } else {
             return user.fte.toString();
@@ -254,7 +268,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     getMonthARVEFromPerson(month: Month, user: User): string {
-        if(user.id === -1) {
+        if (user.id === -1) {
             return this.getTotalARVE(month);
         }
 
