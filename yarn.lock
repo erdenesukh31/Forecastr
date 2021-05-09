@@ -7551,7 +7551,16 @@
   dependencies:
     "genfun" "^5.0.0"
 
-"protractor@~5.4.0":
+"protractor-junit-xml-plugin@^2.0.0":
+  "integrity" "sha512-E218WmeuWSt/HvjeO80E4frDBCN6Nz6zOyn8pZwEK+Qnbwhu5CzXirdxp8HjXx1FDOfLyIU9CaJ9UhZKuwzAsQ=="
+  "resolved" "https://registry.npmjs.org/protractor-junit-xml-plugin/-/protractor-junit-xml-plugin-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "protractor" "^5.4.2"
+    "xml2js-parser" "^1.1.1"
+    "xmlbuilder" "^12.0.0"
+
+"protractor@~5.4.0", "protractor@5.4.2":
   "integrity" "sha512-zlIj64Cr6IOWP7RwxVeD8O4UskLYPoyIcg0HboWJL9T79F1F0VWtKkGTr/9GN6BKL+/Q/GmM7C9kFVCfDbP5sA=="
   "resolved" "https://registry.npmjs.org/protractor/-/protractor-5.4.2.tgz"
   "version" "5.4.2"
@@ -8231,6 +8240,11 @@
   "version" "1.5.0"
   dependencies:
     "https-proxy-agent" "^2.2.1"
+
+"sax@^1.2.1":
+  "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="
+  "resolved" "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz"
+  "version" "1.2.4"
 
 "sax@^1.2.4":
   "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="
@@ -10028,6 +10042,13 @@
     "safe-buffer" "~5.1.0"
     "ultron" "~1.1.0"
 
+"xml2js-parser@^1.1.1":
+  "integrity" "sha1-kNw5+dhNA2rhD0Hm52apFVBETUQ="
+  "resolved" "https://registry.npmjs.org/xml2js-parser/-/xml2js-parser-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "sax" "^1.2.1"
+
 "xml2js@^0.4.17":
   "integrity" "sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q=="
   "resolved" "https://registry.npmjs.org/xml2js/-/xml2js-0.4.19.tgz"
@@ -10035,6 +10056,11 @@
   dependencies:
     "sax" ">=0.6.0"
     "xmlbuilder" "~9.0.1"
+
+"xmlbuilder@^12.0.0":
+  "integrity" "sha512-rRjf/JR+sEMqU2o6WEA+iR/YRIegH3P35eiQuCsT1YfZqOS+iu23azPq0igZjpBX+wa7D8gHd845kLPzow7IKg=="
+  "resolved" "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-12.0.1.tgz"
+  "version" "12.0.1"
 
 "xmlbuilder@~9.0.1":
   "integrity" "sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0="
