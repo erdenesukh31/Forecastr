@@ -145,19 +145,21 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
 
     getProjects(user: User): String {
         const projectIds = []
+        // let forecastr: FcEntry[] = []
         if (user.id === -1) {
             return "";
         }
-        console.log(user)
-        let userId = user.id;
-        let forecastr: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
-            return fc.userId === user.id
+        // console.log(user)
+        let userId = user.id
+        // for loop on the months
+        let forecastr: any = this.forecastService.forecasts.find((fc: FcEntry) => {
+            return (fc.userId === user.id)
         })
         // if (forecastr) { console.log(forecastr) }
         // forecastr.projects.map((project) => {
         //     projectIds.push(project.projectId)
         // })
-        // console.log(forecastr.projects)
+        console.log("forecastr", forecastr)
 
         return "projects";
     }
