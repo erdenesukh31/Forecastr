@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChange, SimpleChanges } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChange, SimpleChanges, AfterContentInit, AfterViewInit } from "@angular/core";
 
 import { User } from "../../../core/interfaces/user";
 import { Month } from "../../../core/interfaces/month";
@@ -7,6 +7,8 @@ import { ForecastService } from "../../../core/services/forecasts/forecast.servi
 import { UserService } from "../../../core/services/user.service";
 import { DatePipe } from "@angular/common";
 import { PageStateService } from "../../../core/shared/page-state.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-staffing-overview',
@@ -29,6 +31,8 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
      */
     forecasts: FcEntry[] = [];
 
+    // allForecast: FcEntry[] = [];
+
     /**
      * constructor for staffing-overview component
      *  @param forecastService
@@ -44,6 +48,32 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     ngOnInit(): void {
         this.initStaffing();
     }
+
+    // async ngAfterViewInit(): Promise<void> {
+    //     console.log(this.allForecast)
+    //     for (let month in this.months) {
+    //         for (let user in this.users) {
+    //             await this.allForecast.push(this.forecastService.forecasts.find((fc: FcEntry) => {
+    //                 return fc.monthId === this.months[month].id && fc.userId === this.users[user].id
+    //             }))
+
+    //         }
+    //     }
+    //     console.log("clear");
+    // }
+
+    // ngAfterViewInit(): void {
+    //     // console.log(this.allForecast)
+    //     // for (let month in this.months) {
+    //     //     for (let user in this.users) {
+    //     //         this.allForecast.push(this.forecastService.forecasts.find((fc: FcEntry) => {
+    //     //             return fc.monthId === this.months[month].id && fc.userId === this.users[user].id
+    //     //         }))
+
+    //     //     }
+    //     // }
+    //     console.log("clear");
+    // }
 
     getTotalARVE(month: Month): string {
         let projectDays = 0;
@@ -144,24 +174,55 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     getProjects(user: User): String {
-        const projectIds = []
-        // let forecastr: FcEntry[] = []
-        if (user.id === -1) {
-            return "";
-        }
-        // console.log(user)
-        let userId = user.id
-        // for loop on the months
-        let forecastr: any = this.forecastService.forecasts.find((fc: FcEntry) => {
-            return (fc.userId === user.id)
-        })
+        // const projectIds = []
+        // // let forecastr: FcEntry[] = []
+        // if (user.id === -1) {
+        //     return "";
+        // }
+        // // console.log(user)
+        // let userId = user.id
+        // // for loop on the months
+        // for (let month in this.months) {
+        //     console.log(this.months[month])
+        // }
+        // for (let month in months) {
+
+        //  }
+        // let forecastr: any = this.forecastService.forecasts.find((fc: FcEntry) => {
+        //     return (fc.userId === user.id)
+        // })
         // if (forecastr) { console.log(forecastr) }
         // forecastr.projects.map((project) => {
         //     projectIds.push(project.projectId)
         // })
-        console.log("forecastr", forecastr)
 
-        return "projects";
+        // console.log(this.forecasts);
+        // const jopa =(){
+        //     return console.log()
+        // }
+        // return function (): String { return "projects \n projects \n projects" }
+        // console.log(this.allForecast)
+
+        // dernier essai
+        // let projects: any = []
+        // for (let entry in this.allForecast) {
+        //     if (this.allForecast[entry]) {
+        //         if (this.allForecast[entry].userId === user.id) {
+        //             projects.push(this.allForecast[entry].projects)
+        //         }
+        //     }
+        // }
+        // console.log(projects)
+        // console.log("hello")
+        // let projects: any = []
+        // for (let month in this.months) {
+        //     let forecast: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
+        //         return fc.monthId === this.months[month].id && fc.userId === user.id
+        //     });
+        //     projects.push(forecast)
+        // }
+        // console.log(projects)
+        return "projects"
     }
 
     initStaffing(): void {
@@ -170,6 +231,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         this.columnsToDisplay.push('team');
         this.columnsToDisplay.push("corp");
         this.columnsToDisplay.push("projects");
+        console.log("init", this.months, this.users)
         for (let month of this.months) {
             this.columnsToDisplay.push(month.name);
         }
@@ -182,7 +244,6 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             user.fte = 0;
             this.users.unshift(user);
         }
-
     }
 
     exportCSV(): void {

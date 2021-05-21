@@ -16,7 +16,9 @@
     </ng-container>
     <ng-container matColumnDef="projects">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Projects</th>
-        <td mat-cell *matCellDef="let user">{{getProjects(user)}}</td>
+        <td mat-cell *matCellDef="let user"><button class="tooltip" #tooltip="matTooltip"
+                matTooltip="{{getProjects(user)}}" matTooltipPosition="right">Projects
+            </button></td>
     </ng-container>
     <ng-container matColumnDef="{{month.name}}" *ngFor="let month of months">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>{{month.name}}</th>
