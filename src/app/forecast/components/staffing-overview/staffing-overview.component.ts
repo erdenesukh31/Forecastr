@@ -9,6 +9,16 @@ import { DatePipe } from "@angular/common";
 import { PageStateService } from "../../../core/shared/page-state.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TooltipPosition } from '@angular/material/tooltip';
+import { Subscription } from "rxjs";
+import { Project } from "../../../core/interfaces/project";
+import { UtilitiesService } from "../../../core/services/utilities.service";
+import { parseHostBindings } from "@angular/compiler";
+
+interface ProjectHelper {
+    projectId: number;
+    days: number;
+    projectCode: String;
+}
 
 @Component({
     selector: 'app-staffing-overview',
@@ -31,6 +41,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
      */
     forecasts: FcEntry[] = [];
 
+    projects: Project[] = [];
     // allForecast: FcEntry[] = [];
 
     /**
@@ -42,6 +53,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         private userService: UserService,
         private datePipe: DatePipe,
         private pageState: PageStateService,
+        private utilityService: UtilitiesService
     ) {
     }
 
@@ -173,59 +185,66 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         return team.lastName + ", " + team.firstName + " (" + parentRole.shortcut + ")";
     }
 
-    getProjects(user: User): String {
-        // const projectIds = []
-        // // let forecastr: FcEntry[] = []
-        // if (user.id === -1) {
-        //     return "";
-        // }
-        // // console.log(user)
-        // let userId = user.id
-        // // for loop on the months
-        // for (let month in this.months) {
-        //     console.log(this.months[month])
-        // }
-        // for (let month in months) {
+    getProjectHelper(forecasts: FcEntry[]): ProjectHelper[] {
 
-        //  }
-        // let forecastr: any = this.forecastService.forecasts.find((fc: FcEntry) => {
-        //     return (fc.userId === user.id)
-        // })
-        // if (forecastr) { console.log(forecastr) }
-        // forecastr.projects.map((project) => {
-        //     projectIds.push(project.projectId)
-        // })
+        let projectHelpers: ProjectHelper[] = []
 
-        // console.log(this.forecasts);
-        // const jopa =(){
-        //     return console.log()
-        // }
-        // return function (): String { return "projects \n projects \n projects" }
-        // console.log(this.allForecast)
+        for (let fcEntry of forecasts) {
+            for (let project of fcEntry.projects) {
 
-        // dernier essai
-        // let projects: any = []
-        // for (let entry in this.allForecast) {
-        //     if (this.allForecast[entry]) {
-        //         if (this.allForecast[entry].userId === user.id) {
-        //             projects.push(this.allForecast[entry].projects)
-        //         }
-        //     }
-        // }
-        // console.log(projects)
-        // console.log("hello")
-        // let projects: any = []
-        // for (let month in this.months) {
-        //     let forecast: FcEntry = this.forecastService.forecasts.find((fc: FcEntry) => {
-        //         return fc.monthId === this.months[month].id && fc.userId === user.id
-        //     });
-        //     projects.push(forecast)
-        // }
-        // console.log(projects)
-        return "projects"
+                for (let projectHelper of projectHelpers) {
+                    if (projectHelper.projectId === project.projectId) {
+                        projectHelper.days += project.plannedProjectDays;
+                    }
+                    else{
+                        let projectHelperTemp : ProjectHelper;
+                        projectHelperTemp.days =  project.plannedProjectDays;
+                        projectHelperTemp.projectId = project.projectId;
+                        projectHelperTemp.projectCode = " ";
+                    }
+                }
+            }
+        }
+        return projectHelpers;
+    }
+
+    getProjects(user: User, viewColumn: String): String {
+
+        const projectIds = []
+        // let forecastr: FcEntry[] = []
+        if (user.id === -1) {
+            return "";
+        }
+        // console.log(user)
+        // console.log(this.months);
+        let userId = user.id
+        console.log(user);
+        // user -> forecats -> Forecast ENtries -> Project Entry -> Projects
+
+        let forecasts: FcEntry[] = [];
+        let forecast: FcEntry;
+
+        for (let month of this.months) {
+            forecast = this.forecastService.forecasts.find((fc: FcEntry) => {
+                return fc.monthId === month.id && fc.userId === user.id
+            });
+
+            if (forecast) {
+                forecasts.push(forecast);
+            }
+            //  forecast = null;
+        }
+
+        let forecastHelper = this.getProjectHelper(forecasts);
+        console.log(forecastHelper);
+
+        // sort days count, 0 days remove, high - low
+        return forecasts[0].projects[0].projectId + " "
     }
 
     initStaffing(): void {
+        this.projects = this.utilityService.getProjects();
+
         this.columnsToDisplay = [];
         this.columnsToDisplay.push('name');
         this.columnsToDisplay.push('team');
