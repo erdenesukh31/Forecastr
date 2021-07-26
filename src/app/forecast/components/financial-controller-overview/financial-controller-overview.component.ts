@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Month } from "../../../core/interfaces/month";
 import { FinancialControllerSummaryAPPS } from "../../../core/interfaces/financialAppsSummary";
 import { DatePipe } from "@angular/common";
+import { ProbabilitySummary } from "../../../core/interfaces/probabilitySummary";
 
 @Component({
   selector: 'app-financial-controller-overview',
@@ -35,6 +36,9 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   columnsToDisplay: String[] = [];
 
   @Input("financial") financialData: FinancialControllerSummaryAPPS[];
+  @Input("probabilitySummaries") probabilitySummaries: Map<number,ProbabilitySummary>;
+
+  
 
   constructor(
     private datePipe: DatePipe,
@@ -89,37 +93,38 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   mapKpiToValue(name: string, monthId: number): number {
     let entry = this.financialData.find((value: FinancialControllerSummaryAPPS) => value.monthId == monthId);
 
-    if (entry === undefined) {
+    if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
       return undefined;
     }
-
     switch (name) {
       case "arve":
-        return entry.arve * 100;
+        return this.probabilitySummaries.get(monthId).arve * 100;
       case "arvi":
-        return entry.arvi * 100;
+        //might needs to be multiplyed by 100
+        return -1;
       case "expectedRevenue":
-        return entry.expectedRevenue;
+        return -1;
       case "cor":
-        return entry.cor;
+        return this.probabilitySummaries.get(monthId).cor;
       case "btu":
-        return entry.btu;
+        return -1;
       case "avgVacation":
-        return entry.avgVacation;
+        return -1;
       case "ftecss":
-        return entry.fteCSS;
+        return -1;
       case "pror":
-        return entry.pror;
+        return -1;
       case "ROS":
-        return entry.ROS;
+        return this.probabilitySummaries.get(monthId).revenue;
       case "ROSint":
-        return entry.ROSint;
+        return this.probabilitySummaries.get(monthId).internalRevenue;
       case "ROSext":
-        return entry.ROSext;
+        return this.probabilitySummaries.get(monthId).externalRevenue;
       case "urve":
-        return entry.urve * 100;
+        return this.probabilitySummaries.get(monthId).urve *100;
       case "urvi":
-        return entry.urvi * 100;
+        //might needs to be multiplyed by 100
+        return -1;
       default:
         return undefined;
     }
