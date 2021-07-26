@@ -1,8 +1,18 @@
 <h3>{{this.monthName}}</h3>
 <h2 mat-dialog-title>{{this.lastName}}, {{this.firstName}}</h2>
 <mat-dialog-content>
-    <app-fc-entry class="tab-container" [userId]="userId" [singleView]="false" [month]="month" [months]="months" (monthChanged)="monthChanged($event)"></app-fc-entry>
+    <app-fc-entry class="tab-container" [userId]="userId" [singleView]="false" [month]="month"></app-fc-entry>
 </mat-dialog-content>
+<div class="button-row">
+    <button mat-stroked-button class="mat-primary-reversed" [disabled]="previousMonthDisabled"
+      (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon> Previous Month
+    </button>
+    <button mat-stroked-button class="mat-primary-reversed align-right" [disabled]="nextMonthDisabled"
+      (click)="nextMonth()">
+      Next Month <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
 <!-- <mat-dialog-actions>
 	<button mat-raised-button color="primary" mat-dialog-close tabindex="-1">Done</button>
 </mat-dialog-actions> -->
