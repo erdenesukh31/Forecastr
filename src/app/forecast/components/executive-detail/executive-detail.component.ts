@@ -35,6 +35,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
    * month (received as input)
    */
   @Input('month') month: Month;
+  @Input('months') months: Month[];
 
   /**
    * viewSwitch saves if the PL of PDL View is shown as Output
@@ -65,7 +66,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
   /**
    * months list
    */
-  months: Month[] = [];
+  // months: Month[] = [];
   
   /**
    * team member list
@@ -196,6 +197,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
       data:{
         userId: id,
         month: this.month,
+        months: this.months,
         firstName: firstName,
         lastName: lastName
       },

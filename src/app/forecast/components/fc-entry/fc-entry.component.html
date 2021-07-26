@@ -76,3 +76,13 @@
     <mat-icon>lock_open</mat-icon> Unlock for User
   </button>
 </div>
+<div class="button-row">
+  <button mat-stroked-button class="mat-primary-reversed" [disabled]="previousMonthDisabled"
+    (click)="previousMonth()">
+    <mat-icon>chevron_left</mat-icon> Previous Month
+  </button>
+  <button mat-stroked-button class="mat-primary-reversed align-right" [disabled]="nextMonthDisabled"
+    (click)="nextMonth()">
+    Next Month <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

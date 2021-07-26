@@ -10,9 +10,11 @@ import { Month } from '../../../core/interfaces/month';
 export class FcEntryDetailDialogComponent {
   userId: number;
   month: Month;
+  months: Month[];
   cancelButtonText = "Done";
   lastName: string;
   firstName: string;
+  monthName: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -20,6 +22,8 @@ export class FcEntryDetailDialogComponent {
     if (data) {
       this.userId = data.userId;
       this.month = data.month;
+      this.months = data.months;
+      this.monthName = data.month.name;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
     }
@@ -27,6 +31,11 @@ export class FcEntryDetailDialogComponent {
 
   onConfirmClick(): void {
     this.dialogRef.close(true);
+  }
+
+  monthChanged(event:number){
+    this.month = this.months.find( m=> m.id == event);
+    this.monthName = this.month.name;
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -38,15 +38,28 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   @Input('month') month: Month;
 
   /**
+   * list of all months (received as input)
+   */
+  @Input('months') months: Month[];
+
+  /**
    * singleView: true in 'individual'-view, false in 'teamlead'-view
    */
   @Input('singleView') singleView: boolean;
+
+    /**
+   * emit month changed event to parent view
+   */
+  @Output() monthChanged: EventEmitter<any> = new EventEmitter();
 
   /**
    * Contains the newest version of forecast
    */
   forecast: FcEntry;
   availableProjects: Project[] = [];
+
+  previousMonthDisabled: boolean;
+  nextMonthDisabled: boolean;
 
   /**
    * string that includes name + date of last edit
@@ -57,6 +70,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   fcLoaded: boolean = false;
   fcSubscription: Subscription;
   loadingActive: boolean = false;
+  currentMonthId: number;
 
   hasProjectInputFocus: boolean;
   isProjectInputValid: boolean;
@@ -75,7 +89,10 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dataSharingService: DataSharingService,
     
-  ) {}
+  ) {
+    this.nextMonthDisabled = true;
+    this.previousMonthDisabled = true;
+  }
 
   /**
    * Initializes forecast entry component.
@@ -86,64 +103,8 @@ export class FcEntryComponent implements OnInit, OnDestroy {
       this.loadingActive = true;
     }
 
-    this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
-
-        if (!this.forecast) {
-          this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
-            if (!res.showDialog || !res.suggestedData || !this.singleView) {
-              return;
-            }
-            /**
-             * For the next release in the future, the copy data functionality will be added
-             */
-
-            if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
-              let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-                data: {
-                  message: 'Copy data from last month submitted?',
-                  button: { cancel: 'No', submit: 'Yes' },
-                },
-              });
-
-              dialogRef.afterClosed().subscribe((add: boolean) => {
-                if (add === true) {
-                  this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
-                }
-              });
-            }
-          });
-
-        } else {
-          this.fcLoaded = true;
-          this.loadingActive = false;
-
-          if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
-            this.fteSliderValue = this.forecast.fte * 100;
-          }
-          else if(typeof this.userService.getUser(this.userId).fte !== 'undefined') {
-            this.fteSliderValue = this.userService.getUser(this.userId).fte * 100;
-            this.forecast.fte = this.userService.getUser(this.userId).fte;
-          }      
-          else {
-            this.fteSliderValue = 100;
-          }
-          if (this.forecast.history && this.forecast.history.length > 0 && this.forecast.history[0].createdAt) {
-            let date: string = formatDate(this.forecast.history[0].createdAt, 'dd.MM.yyyy', 'en');
-            this.lastEditor = 'Last updated from ' + this.forecast.history[0].changedBy + ', ' + date;
-          } else {
-            let date: string = formatDate(this.forecast.createdAt, 'dd.MM.yyyy', 'en');
-            this.lastEditor = 'Last updated from ' + this.forecast.changedBy + ', ' + date;
-          }
-
-          if(typeof this.forecast.gradeId === 'undefined') {
-            this.forecast.gradeId = this.userService.getUser(this.userId).gradeId; 
-          }
-          
-        }
-
-      });
+    this.currentMonthId = this.month.id;
+    this.subscribeForcasts();
 
     this.grades = this.userService.getGrades();
     this.availableProjects = this.utilitiesService.getProjects();
@@ -151,6 +112,78 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
     this.dataSharingService.isCorValueBiggerThanZero().subscribe(isBigger => this.isCorValueBiggerThanZero = isBigger);
+  }
+
+  subscribeForcasts():void {
+    this.fcSubscription = this.forecastService.forecasts$
+    .subscribe((forecasts: FcEntry[]) => {
+      this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.currentMonthId && fc.userId === this.userId);
+
+      if (!this.forecast) {
+        this.forecastService.loadForecast(this.userId, this.currentMonthId).then((res: any) => {
+          if (!res.showDialog || !res.suggestedData || !this.singleView) {
+            return;
+          }
+          /**
+           * For the next release in the future, the copy data functionality will be added
+           */
+
+          if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
+            let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+              data: {
+                message: 'Copy data from last month submitted?',
+                button: { cancel: 'No', submit: 'Yes' },
+              },
+            });
+
+            dialogRef.afterClosed().subscribe((add: boolean) => {
+              if (add === true) {
+                this.forecastService.addProjectsToForecast(this.userId, this.currentMonthId, res.suggestedData);
+              }
+            });
+          }
+        });
+
+      } else {
+        this.fcLoaded = true;
+        this.loadingActive = false;
+
+        if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
+          this.fteSliderValue = this.forecast.fte * 100;
+        }
+        else if(typeof this.userService.getUser(this.userId).fte !== 'undefined') {
+          this.fteSliderValue = this.userService.getUser(this.userId).fte * 100;
+          this.forecast.fte = this.userService.getUser(this.userId).fte;
+        }      
+        else {
+          this.fteSliderValue = 100;
+        }
+        if (this.forecast.history && this.forecast.history.length > 0 && this.forecast.history[0].createdAt) {
+          let date: string = formatDate(this.forecast.history[0].createdAt, 'dd.MM.yyyy', 'en');
+          this.lastEditor = 'Last updated from ' + this.forecast.history[0].changedBy + ', ' + date;
+        } else {
+          let date: string = formatDate(this.forecast.createdAt, 'dd.MM.yyyy', 'en');
+          this.lastEditor = 'Last updated from ' + this.forecast.changedBy + ', ' + date;
+        }
+
+        if(typeof this.forecast.gradeId === 'undefined') {
+          this.forecast.gradeId = this.userService.getUser(this.userId).gradeId; 
+        }
+        
+      }
+      if(this.currentMonthId + 1 <= this.months[this.months.length -1].id){
+        this.nextMonthDisabled = false;
+      }else{
+        this.nextMonthDisabled = true;
+      }
+      if(this.currentMonthId - 1 >= this.months[0].id){
+        this.previousMonthDisabled = false;
+      }else{
+        this.previousMonthDisabled = true;
+      }
+
+
+    });
   }
 
   /**
@@ -164,21 +197,21 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    * Saves forecast
    */
   saveForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.userId, false);
+    this.forecastService.saveForecast(this.currentMonthId, this.userId, false);
   }
 
   /**
    * Submits forecast (save + "locked: true")
    */
   submitForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.userId, true);
+    this.forecastService.saveForecast(this.currentMonthId, this.userId, true);
   }
 
   /**
    * Unlock a forecast
    */
   unlockForecast(): void {
-    this.forecastService.unlockForecast(this.month.id, this.userId);
+    this.forecastService.unlockForecast(this.currentMonthId, this.userId);
   }
 
   /**
@@ -190,14 +223,14 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    */
   addProjectToForecast(): void {
     this.forecastService.addProject(
-      this.month.id,
+      this.currentMonthId,
       this.userId,
       new FcProject(),
     );
 
     // Sets the focus to newly added project
     setTimeout(() => {
-      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
+      const el: any = document.querySelector('#project-' + this.currentMonthId + '-' + (this.forecast.projects.length - 1));
       el.querySelector('.mat-input-element').focus();
     }, 100);
   }
@@ -271,8 +304,24 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     });
   }
   copyData():void {
-    this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
-    this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
+    this.forecastService.loadForecast(this.userId, this.currentMonthId).then((res: any) => {
+    this.forecastService.addProjectsToForecast(this.userId, this.currentMonthId, res.suggestedData);
     });
+  }
+
+  previousMonth() :void{
+    if(this.currentMonthId - 1 >= this.months[0].id){
+      this.currentMonthId -= 1;
+      this.monthChanged.emit(this.currentMonthId);
+      this.subscribeForcasts();
+    }
+  }
+
+  nextMonth() :void{
+    if(this.currentMonthId + 1 <= this.months[this.months.length -1].id){
+      this.currentMonthId += 1;
+      this.monthChanged.emit(this.currentMonthId);
+      this.subscribeForcasts();
+    }
   }
 }
