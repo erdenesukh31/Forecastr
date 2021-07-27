@@ -14,10 +14,17 @@ import { Project } from "../../../core/interfaces/project";
 import { UtilitiesService } from "../../../core/services/utilities.service";
 import { parseHostBindings } from "@angular/compiler";
 
-interface ProjectHelper {
+class ProjectHelper {
     projectId: number;
     days: number;
     projectCode: String;
+
+    constructor() {
+        this.projectId = 0;
+        this.days = 0;
+        this.projectCode = undefined;
+    }
+
 }
 
 @Component({
@@ -44,6 +51,11 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     projects: Project[] = [];
     // allForecast: FcEntry[] = [];
 
+    projectHelpers: ProjectHelper[] = [];
+
+    forecastrSubscription: Subscription;
+
+    isPageReady: boolean = false;
     /**
      * constructor for staffing-overview component
      *  @param forecastService
@@ -58,7 +70,17 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     ngOnInit(): void {
+
         this.initStaffing();
+
+        // this.forecastrSubscription = this.pageState.forecastrReady$.subscribe(
+        //     (ready: boolean) => {
+        //       if (ready ) {
+        //         this.isPageReady = true;
+        //       }
+        //     }
+        //   );
+   
     }
 
     // async ngAfterViewInit(): Promise<void> {
@@ -188,42 +210,48 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     getProjectHelper(forecasts: FcEntry[]): ProjectHelper[] {
 
         let projectHelpers: ProjectHelper[] = []
+        console.log(forecasts);
+        var check: boolean = false;
+            for (let fcEntry of forecasts) {
+                for (let project of fcEntry.projects) {
+    
+                  let helper =  projectHelpers.find((helper: ProjectHelper) => {
+                        return helper.projectId === project.projectId;
+                    });
 
-        for (let fcEntry of forecasts) {
-            for (let project of fcEntry.projects) {
-
-                for (let projectHelper of projectHelpers) {
-                    if (projectHelper.projectId === project.projectId) {
-                        projectHelper.days += project.plannedProjectDays;
+                    if(helper)
+                    {
+                        helper.days += project.plannedProjectDays;
                     }
-                    else{
-                        let projectHelperTemp : ProjectHelper;
-                        projectHelperTemp.days =  project.plannedProjectDays;
-                        projectHelperTemp.projectId = project.projectId;
-                        projectHelperTemp.projectCode = " ";
+                    else
+                    {
+                        let projectTemp: Project = this.forecastService.projects.find((pro: Project) => {
+                            return pro.id === project.projectId 
+                        });
+
+                        let projectHelperTemp: ProjectHelper = new ProjectHelper;
+                                projectHelperTemp.days = project.plannedProjectDays;
+                                projectHelperTemp.projectId = project.projectId;
+                                projectHelperTemp.projectCode = projectTemp.name.split('-')[0];
+                                projectHelpers.push(projectHelperTemp);
                     }
                 }
             }
-        }
         return projectHelpers;
     }
 
     getProjects(user: User, viewColumn: String): String {
 
         const projectIds = []
-        // let forecastr: FcEntry[] = []
         if (user.id === -1) {
             return "";
         }
-        // console.log(user)
-        // console.log(this.months);
-        let userId = user.id
-        console.log(user);
-        // user -> forecats -> Forecast ENtries -> Project Entry -> Projects
 
         let forecasts: FcEntry[] = [];
+        let allforecast: FcEntry[] = [];
         let forecast: FcEntry;
 
+        //without month in params
         for (let month of this.months) {
             forecast = this.forecastService.forecasts.find((fc: FcEntry) => {
                 return fc.monthId === month.id && fc.userId === user.id
@@ -232,19 +260,61 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             if (forecast) {
                 forecasts.push(forecast);
             }
-            //  forecast = null;
+              forecast = null;
         }
 
-        let forecastHelper = this.getProjectHelper(forecasts);
-        console.log(forecastHelper);
+        if (forecast) {
+            forecasts.push(forecast);
+            console.log(forecast);
+        }
 
-        // sort days count, 0 days remove, high - low
-        return forecasts[0].projects[0].projectId + " "
+          let forecastHelpers = this.getProjectHelper(forecasts);
+    
+       if(viewColumn === "table")
+       {
+        return this.getProjectCode(forecastHelpers);
+       }
+       else
+       {
+        return this.getProjectCodes(forecastHelpers);
+       }
+    }
+
+    getProjectCode(forecastHelpers: ProjectHelper[]): String {
+
+        if (forecastHelpers.length <= 0) {
+            return "no project";
+        }
+
+        forecastHelpers.sort(function (a, b) {
+            return a.days - b.days;
+        }).reverse();
+
+        return forecastHelpers[0].projectCode.toString();
+    }
+
+    getProjectCodes(forecastHelpers: ProjectHelper[]): String {
+
+        if (forecastHelpers.length <= 0) {
+            return "no project";
+        }
+
+        forecastHelpers.sort(function (a, b) {
+            return a.days - b.days;
+        }).reverse();
+
+    let returnString = " ";
+
+        for (let helper of forecastHelpers) {
+            if(helper.days !== 0){
+                returnString += helper.projectCode + "\n";
+            }
+        }
+        return returnString;
     }
 
     initStaffing(): void {
         this.projects = this.utilityService.getProjects();
-
         this.columnsToDisplay = [];
         this.columnsToDisplay.push('name');
         this.columnsToDisplay.push('team');
