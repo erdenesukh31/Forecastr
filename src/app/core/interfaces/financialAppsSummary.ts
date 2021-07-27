@@ -1,14 +1,14 @@
 export class FinancialControllerSummaryAPPS {
     
-    ROS: number;
+    ros: number;
 
-    ROSint: number;
+    internalRevenue: number;
 
-    ROSext: number;
+    externalRevenue: number;
 
     avgVacation: number;
 
-    fteCSS: number;
+    fte: number;
 
     urve: number;
 
@@ -29,11 +29,11 @@ export class FinancialControllerSummaryAPPS {
     monthId: number;
 
     constructor() {
-        this.ROS = 0;
-        this.ROSint = 0,
-        this.ROSext = 0,
+        this.ros = 0;
+        this.internalRevenue = 0,
+        this.externalRevenue = 0,
         this.avgVacation = 0;
-        this.fteCSS = 0;
+        this.fte = 0;
         this.urve = 0;
         this.arve = 0;
         this.cor = 0;

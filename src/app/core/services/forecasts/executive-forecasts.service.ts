@@ -136,22 +136,20 @@ export class ExecutiveForecastsService {
     return promise;
   }
 
-  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      let financialData = [];
-      var i;  
-      for (i = monthIdFrom; i <= monthIdTo; i++) {
-        let financialMonth = new FinancialControllerSummaryAPPS();
-        financialMonth.monthId = i;
-        financialMonth.arve = 0.999999999;
-        financialMonth.urve = 0.878788888888;
-        financialMonth.arvi = 1;
-        financialData.push(financialMonth);
-      }
-      this.financialData$.next(financialData);
-      resolve();  
-    }/**, () => reject()**/);
+  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​
+    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​
+    this.http
+          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))
+          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​
+          console.log(financialSummary);
+          this.financialData$.next(financialSummary);
+          resolve(financialSummary);
+          }​​​​​​​​);
+        }​​​​​​​​);
+    return promise;
   }
+  
+  
 
   getGraphicData(): GraphicSummaryReport[] {
     return this.graphicData$.getValue();
