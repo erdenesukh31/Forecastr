@@ -252,4 +252,9 @@ export class BusinessOperationsService {
   staffingForecasts(monthId: number): string {
     return env.api + env.forecastsPath + '/' + env.executivePath + '/' + monthId;
   }
+
+  financialSummary(monthIdFrom: number, monthIdTo: number): string {
+    console.log(env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo);
+   return env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo;
+}
 }

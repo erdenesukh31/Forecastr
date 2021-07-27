@@ -15,7 +15,7 @@ import { ProbabilitySummary } from "../../../core/interfaces/probabilitySummary"
 })
 export class FinancialControllerComponent implements OnInit, OnDestroy {
 
-  financial: FinancialControllerSummaryAPPS[];
+  financial: FinancialControllerSummaryAPPS[] = [];
 
   probabilitySummaries: Map<number, ProbabilitySummary>;
 
@@ -53,9 +53,6 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
 
     this.porbabilitySummarySubscription = this.calculationService.probabilitySummaryPerMonth$.subscribe((probabilitySummaries: Map<number,ProbabilitySummary>) =>{
       this.probabilitySummaries = probabilitySummaries;
-      if(probabilitySummaries !== undefined && probabilitySummaries.size > 6){
-        this.pageState.hideSpinner();
-      }
     })
 
     this.monthSubscription = this.utilitiesService.months$.subscribe((months: Month[]) => {
@@ -71,7 +68,7 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
       if(this.months !== undefined && this.months.length > 0) {
         this.calculationService.init(this.months[0].id, this.months[this.months.length - 1].id);
         this.executiveService.initializeFinancialData(this.months[0].id, this.months[this.months.length - 1].id).then(() => {
-          this.pageState.showSpinner();
+          this.pageState.hideSpinner();
         });
       }
     });

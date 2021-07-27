@@ -96,24 +96,54 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
       return undefined;
     }
+    // if(name === "arve" && this.probabilitySummaries.get(monthId).arve * 100 !== entry.arve){
+    //   console.log(monthId)
+    //   console.log("arve")
+    //   console.log(this.probabilitySummaries.get(monthId).arve * 100, entry.arve)
+    // }
+    // if(name === "cor" && this.probabilitySummaries.get(monthId).cor !== entry.cor){
+    //   console.log(monthId)
+    //   console.log("cor")
+    //   console.log(this.probabilitySummaries.get(monthId).cor, entry.cor)
+    // }
+    // if(name === "ROS" && this.probabilitySummaries.get(monthId).revenue !== entry.ros){
+    //   console.log(monthId)
+    //   console.log("ROS")
+    //   console.log(this.probabilitySummaries.get(monthId).revenue, entry.ros)
+    // }
+    // if(name === "ROSint" && this.probabilitySummaries.get(monthId).internalRevenue !== entry.internalRevenue){
+    //   console.log(monthId)
+    //   console.log("ROSint")
+    //   console.log(this.probabilitySummaries.get(monthId).internalRevenue, entry.internalRevenue)
+    // }
+    // if(name === "ROSext" && this.probabilitySummaries.get(monthId).externalRevenue !== entry.externalRevenue){
+    //   console.log(monthId)
+    //   console.log("ROSext")
+    //   console.log(this.probabilitySummaries.get(monthId).externalRevenue, entry.externalRevenue)
+    // }
+    // if(name === "urve" && this.probabilitySummaries.get(monthId).urve !== entry.urve){
+    //   console.log(monthId)
+    //   console.log("urve")
+    //   console.log(this.probabilitySummaries.get(monthId).urve, entry.urve)
+    // }
     switch (name) {
       case "arve":
         return this.probabilitySummaries.get(monthId).arve * 100;
       case "arvi":
         //might needs to be multiplyed by 100
-        return -1;
+        return entry.arvi;
       case "expectedRevenue":
-        return -1;
+        return entry.expectedRevenue;
       case "cor":
         return this.probabilitySummaries.get(monthId).cor;
       case "btu":
-        return -1;
+        return entry.btu;
       case "avgVacation":
-        return -1;
+        return entry.avgVacation;
       case "ftecss":
-        return -1;
+        return entry.fte;
       case "pror":
-        return -1;
+        return entry.pror;
       case "ROS":
         return this.probabilitySummaries.get(monthId).revenue;
       case "ROSint":
@@ -124,7 +154,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
         return this.probabilitySummaries.get(monthId).urve *100;
       case "urvi":
         //might needs to be multiplyed by 100
-        return -1;
+        return entry.urvi;
       default:
         return undefined;
     }
