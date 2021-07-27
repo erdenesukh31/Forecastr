@@ -160,36 +160,6 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
       return undefined;
     }
-    // if(name === "arve" && this.probabilitySummaries.get(monthId).arve * 100 !== entry.arve){
-    //   console.log(monthId)
-    //   console.log("arve")
-    //   console.log(this.probabilitySummaries.get(monthId).arve * 100, entry.arve)
-    // }
-    // if(name === "cor" && this.probabilitySummaries.get(monthId).cor !== entry.cor){
-    //   console.log(monthId)
-    //   console.log("cor")
-    //   console.log(this.probabilitySummaries.get(monthId).cor, entry.cor)
-    // }
-    // if(name === "ROS" && this.probabilitySummaries.get(monthId).revenue !== entry.ros){
-    //   console.log(monthId)
-    //   console.log("ROS")
-    //   console.log(this.probabilitySummaries.get(monthId).revenue, entry.ros)
-    // }
-    // if(name === "ROSint" && this.probabilitySummaries.get(monthId).internalRevenue !== entry.internalRevenue){
-    //   console.log(monthId)
-    //   console.log("ROSint")
-    //   console.log(this.probabilitySummaries.get(monthId).internalRevenue, entry.internalRevenue)
-    // }
-    // if(name === "ROSext" && this.probabilitySummaries.get(monthId).externalRevenue !== entry.externalRevenue){
-    //   console.log(monthId)
-    //   console.log("ROSext")
-    //   console.log(this.probabilitySummaries.get(monthId).externalRevenue, entry.externalRevenue)
-    // }
-    // if(name === "urve" && this.probabilitySummaries.get(monthId).urve !== entry.urve){
-    //   console.log(monthId)
-    //   console.log("urve")
-    //   console.log(this.probabilitySummaries.get(monthId).urve, entry.urve)
-    // }
     switch (name) {
       case "arve":
         return this.probabilitySummaries.get(monthId).arve * 100;

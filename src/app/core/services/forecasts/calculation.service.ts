@@ -137,7 +137,6 @@ export class CalculationService {
 
           Array.from(summary.avgFTEPerGrade.keys()).forEach(key=>{
             summary.avgFTEPerGrade.get(key).getAverage();
-            console.log(summary.avgFTEPerGrade.get(key).average)
         })
           
 

@@ -141,7 +141,6 @@ export class ExecutiveForecastsService {
     this.http
           .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))
           .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​
-          console.log(financialSummary);
           this.financialData$.next(financialSummary);
           resolve(financialSummary);
           }​​​​​​​​);

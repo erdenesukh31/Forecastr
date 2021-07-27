@@ -254,7 +254,6 @@ export class BusinessOperationsService {
   }
 
   financialSummary(monthIdFrom: number, monthIdTo: number): string {
-    console.log(env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo);
    return env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo;
 }
 }
