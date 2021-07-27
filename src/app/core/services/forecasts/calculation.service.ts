@@ -22,10 +22,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CalculationService {
     probabilitySummary: ProbabilitySummary;
+    probabilitySummaryPerMonth: Map<number, ProbabilitySummary>;
     periodLength: number;
     periodMonths: Month[];
     probabilityForecasts: FcEntry[];
+    probabilityForecastsPerMonth: Map<number, FcEntry[]>;
     probabilitySummary$: BehaviorSubject<ProbabilitySummary>;
+    probabilitySummaryPerMonth$: BehaviorSubject<Map<number, ProbabilitySummary>>;
 
     constructor(
         private utilitiesService: UtilitiesService,
@@ -33,6 +36,7 @@ export class CalculationService {
         private executiveService: ExecutiveForecastsService
       ) {
           this.probabilitySummary = new ProbabilitySummary();
+          this.probabilitySummaryPerMonth = new Map();
 
           let probabilities = this.utilitiesService.getProbabilities();
           for(let probability of probabilities) {
@@ -43,9 +47,11 @@ export class CalculationService {
           }
 
           this.probabilityForecasts = [];
+          this.probabilityForecastsPerMonth = new Map<number, FcEntry[]>();
           this.periodMonths = [];
           this.periodLength = 0;
           this.probabilitySummary$ = new BehaviorSubject(this.probabilitySummary);
+          this.probabilitySummaryPerMonth$ = new BehaviorSubject(this.probabilitySummaryPerMonth);
       }
 
       isUserRelevant(monthId: number, userId: number): boolean {
@@ -67,6 +73,7 @@ export class CalculationService {
 
       init(from: number, to: number) {
           this.probabilityForecasts = [];
+          this.probabilityForecastsPerMonth = new Map<number, FcEntry[]>();
           let months = this.utilitiesService
             .getMonths()
             .filter((m: Month) => m.id >= from && m.id <= to);
@@ -75,12 +82,20 @@ export class CalculationService {
 
           for(let month of this.periodMonths) {
               this.executiveService.initializeProbabilityDetailValues(month.id).then((entries: FcEntry[]) => {
+                  this.probabilityForecastsPerMonth.set(month.id,entries);
                   this.probabilityForecasts = this.probabilityForecasts.concat(entries);
                   this.checkPeriodRequest();
+                  this.checkPeriodRequestPerMonth(month.id);
               }).catch(() => {
                   this.checkPeriodRequest();
+                  this.checkPeriodRequestPerMonth(month.id);
               });
           }
+      }
+
+      initProbabilitySummaryPerMonth(monthId :number): void {
+        this.probabilitySummaryPerMonth.set(monthId, this.calculateProbabilitySummary(this.probabilityForecastsPerMonth.get(monthId)));
+        this.probabilitySummaryPerMonth$.next(this.probabilitySummaryPerMonth);
       }
 
       initProbabilitySummary(): void {
@@ -242,6 +257,12 @@ export class CalculationService {
           summary.probabilites = records;
 
           return summary;
+      }
+
+      checkPeriodRequestPerMonth(monthId: number): void {
+        if(monthId > 0) {
+            this.initProbabilitySummaryPerMonth(monthId);
+        }
       }
 
       checkPeriodRequest(): void {

@@ -5,6 +5,8 @@ import { PageStateService } from '../../../core/shared/page-state.service';
 import { FinancialControllerSummaryAPPS } from "../../../core/interfaces/financialAppsSummary";
 import { Month } from '../../../core/interfaces/month';
 import { UtilitiesService } from "../../../core/services/utilities.service";
+import { CalculationService } from "../../../core/services/forecasts/calculation.service";
+import { ProbabilitySummary } from "../../../core/interfaces/probabilitySummary";
 
 @Component({
   selector: "app-financial-controller",
@@ -13,11 +15,15 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 })
 export class FinancialControllerComponent implements OnInit, OnDestroy {
 
-  financial: FinancialControllerSummaryAPPS[];
+  financial: FinancialControllerSummaryAPPS[] = [];
+
+  probabilitySummaries: Map<number, ProbabilitySummary>;
 
   months: Month[];
 
   financialSubscription: Subscription;
+
+  porbabilitySummarySubscription: Subscription;
 
   monthSubscription: Subscription;
 
@@ -25,6 +31,7 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
     private executiveService: ExecutiveForecastsService,
 		private pageState: PageStateService,
     private utilitiesService: UtilitiesService,
+    private calculationService: CalculationService
   ) {
   }
 
@@ -44,6 +51,10 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
       this.financial = financialData;
     });
 
+    this.porbabilitySummarySubscription = this.calculationService.probabilitySummaryPerMonth$.subscribe((probabilitySummaries: Map<number,ProbabilitySummary>) =>{
+      this.probabilitySummaries = probabilitySummaries;
+    })
+
     this.monthSubscription = this.utilitiesService.months$.subscribe((months: Month[]) => {
       this.months = months.filter((m: Month) => m.active === true);
       var today = new Date();
@@ -55,6 +66,7 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
       }
 
       if(this.months !== undefined && this.months.length > 0) {
+        this.calculationService.init(this.months[0].id, this.months[this.months.length - 1].id);
         this.executiveService.initializeFinancialData(this.months[0].id, this.months[this.months.length - 1].id).then(() => {
           this.pageState.hideSpinner();
         });
