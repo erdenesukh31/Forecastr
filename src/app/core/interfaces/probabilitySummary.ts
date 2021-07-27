@@ -50,5 +50,7 @@ export class ProbabilitySummary {
 		this.cor = 0;
         this.projectDays = 0;
         this.probabilites = [];
+		this.avgVacationDaysPerGrade = new Map();
+		this.avgFTEPerGrade = new Map();
     }
 }
