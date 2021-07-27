@@ -61,9 +61,9 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "arve":
         return "%";
       case "arvi":
-        return "%";
+        return "";
       case "expectedRevenue":
-        return "€";
+        return "";
       case "cor":
         return "€";
       case "btu":
@@ -83,7 +83,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return "%";
       case "urvi":
-        return "%";
+        return "";
       default:
         return undefined;
     }
@@ -96,41 +96,10 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
       return undefined;
     }
-    // if(name === "arve" && this.probabilitySummaries.get(monthId).arve * 100 !== entry.arve){
-    //   console.log(monthId)
-    //   console.log("arve")
-    //   console.log(this.probabilitySummaries.get(monthId).arve * 100, entry.arve)
-    // }
-    // if(name === "cor" && this.probabilitySummaries.get(monthId).cor !== entry.cor){
-    //   console.log(monthId)
-    //   console.log("cor")
-    //   console.log(this.probabilitySummaries.get(monthId).cor, entry.cor)
-    // }
-    // if(name === "ROS" && this.probabilitySummaries.get(monthId).revenue !== entry.ros){
-    //   console.log(monthId)
-    //   console.log("ROS")
-    //   console.log(this.probabilitySummaries.get(monthId).revenue, entry.ros)
-    // }
-    // if(name === "ROSint" && this.probabilitySummaries.get(monthId).internalRevenue !== entry.internalRevenue){
-    //   console.log(monthId)
-    //   console.log("ROSint")
-    //   console.log(this.probabilitySummaries.get(monthId).internalRevenue, entry.internalRevenue)
-    // }
-    // if(name === "ROSext" && this.probabilitySummaries.get(monthId).externalRevenue !== entry.externalRevenue){
-    //   console.log(monthId)
-    //   console.log("ROSext")
-    //   console.log(this.probabilitySummaries.get(monthId).externalRevenue, entry.externalRevenue)
-    // }
-    // if(name === "urve" && this.probabilitySummaries.get(monthId).urve !== entry.urve){
-    //   console.log(monthId)
-    //   console.log("urve")
-    //   console.log(this.probabilitySummaries.get(monthId).urve, entry.urve)
-    // }
     switch (name) {
       case "arve":
-        return this.probabilitySummaries.get(monthId).arve * 100;
+        return  this.probabilitySummaries.get(monthId).arve * 100;
       case "arvi":
-        //might needs to be multiplyed by 100
         return entry.arvi;
       case "expectedRevenue":
         return entry.expectedRevenue;
@@ -153,7 +122,6 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return this.probabilitySummaries.get(monthId).urve *100;
       case "urvi":
-        //might needs to be multiplyed by 100
         return entry.urvi;
       default:
         return undefined;
