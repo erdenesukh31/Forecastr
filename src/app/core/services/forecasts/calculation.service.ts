@@ -13,6 +13,7 @@ import { ProbabilitySummary } from '../../interfaces/probabilitySummary';
 import { ProbabilityRecord } from '../../interfaces/probabilityRecord';
 import { ExecutiveForecastsService } from '../forecasts/executive-forecasts.service';
 import { BehaviorSubject } from 'rxjs';
+import { PerGrade } from '../../interfaces/perGrade';
 
 /**
  * forecast service
@@ -130,6 +131,15 @@ export class CalculationService {
               summary = this.calculateFcProbabilitySummary(entry, summary);
           }
 
+          Array.from(summary.avgVacationDaysPerGrade.keys()).forEach(key=>{
+              summary.avgVacationDaysPerGrade.get(key).getAverage();
+          })
+
+          Array.from(summary.avgFTEPerGrade.keys()).forEach(key=>{
+            summary.avgFTEPerGrade.get(key).getAverage();
+        })
+          
+
           summary = this.summarize(summary);
           return summary;
       }
@@ -138,6 +148,18 @@ export class CalculationService {
           for(let projectEntry of entry.projects) {
               summary = this.calculateProjectEntryProbabilitySummary(projectEntry, summary, entry.isRelevant);
           }
+
+          if(!summary.avgVacationDaysPerGrade.has(entry.gradeId)){
+              summary.avgVacationDaysPerGrade.set(entry.gradeId, new PerGrade());
+          }
+          if(!summary.avgFTEPerGrade.has(entry.gradeId)){
+            summary.avgFTEPerGrade.set(entry.gradeId, new PerGrade());
+          }
+          summary.avgVacationDaysPerGrade.get(entry.gradeId).count += 1
+          summary.avgVacationDaysPerGrade.get(entry.gradeId).value += entry.vacationDays;
+
+          summary.avgFTEPerGrade.get(entry.gradeId).count += 1
+          summary.avgFTEPerGrade.get(entry.gradeId).value += entry.fte;
 
           let monthIndex = this.utilitiesService.getMonths().findIndex(x => x.id === entry.monthId);
           let month = this.utilitiesService.getMonths()[monthIndex];
