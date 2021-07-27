@@ -28,6 +28,15 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     "expectedRevenue",
   ];
 
+  grades: string[] = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ];
+
   @Input('months') months: Month[];
 
   /**
