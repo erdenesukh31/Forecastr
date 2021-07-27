@@ -137,6 +137,7 @@ export class CalculationService {
 
           Array.from(summary.avgFTEPerGrade.keys()).forEach(key=>{
             summary.avgFTEPerGrade.get(key).getAverage();
+            console.log(summary.avgFTEPerGrade.get(key).average)
         })
           
 
@@ -145,21 +146,22 @@ export class CalculationService {
       }
 
       calculateFcProbabilitySummary(entry: FcEntry, summary: ProbabilitySummary): ProbabilitySummary {
-          for(let projectEntry of entry.projects) {
-              summary = this.calculateProjectEntryProbabilitySummary(projectEntry, summary, entry.isRelevant);
-          }
-
           if(!summary.avgVacationDaysPerGrade.has(entry.gradeId)){
               summary.avgVacationDaysPerGrade.set(entry.gradeId, new PerGrade());
           }
           if(!summary.avgFTEPerGrade.has(entry.gradeId)){
             summary.avgFTEPerGrade.set(entry.gradeId, new PerGrade());
           }
-          summary.avgVacationDaysPerGrade.get(entry.gradeId).count += 1
-          summary.avgVacationDaysPerGrade.get(entry.gradeId).value += entry.vacationDays;
 
-          summary.avgFTEPerGrade.get(entry.gradeId).count += 1
+          for(let projectEntry of entry.projects) {
+              summary = this.calculateProjectEntryProbabilitySummary(projectEntry, summary, entry.isRelevant, entry.gradeId);
+          }
+
+
           summary.avgFTEPerGrade.get(entry.gradeId).value += entry.fte;
+
+          summary.avgVacationDaysPerGrade.get(entry.gradeId).users.add(entry.userId);
+          summary.avgFTEPerGrade.get(entry.gradeId).users.add(entry.userId);
 
           let monthIndex = this.utilitiesService.getMonths().findIndex(x => x.id === entry.monthId);
           let month = this.utilitiesService.getMonths()[monthIndex];
@@ -170,7 +172,7 @@ export class CalculationService {
           return summary;
       }
 
-      calculateProjectEntryProbabilitySummary(entry: FcProject, summary: ProbabilitySummary, isRelevant: boolean): ProbabilitySummary {
+      calculateProjectEntryProbabilitySummary(entry: FcProject, summary: ProbabilitySummary, isRelevant: boolean, gradeId: number): ProbabilitySummary {
           let recordIndex = summary.probabilites.findIndex(x => x.id === entry.probabilityId);
           
           if(recordIndex === undefined || recordIndex === -1) {
@@ -212,6 +214,7 @@ export class CalculationService {
             if(isRelevant) {
                 record.vacationDays += entry.plannedProjectDays;
                 summary.vacationDays += entry.plannedProjectDays;
+                summary.avgVacationDaysPerGrade.get(gradeId).value += entry.plannedProjectDays;
             }
         } else if(entry.projectType === 6) { //non billable
             if(!entry.billable) {

@@ -149,7 +149,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     if(kpi === "avgVacation")
       return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
     if(kpi === "ftecss")
-      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).count;
+      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average *100;
     return 0;
   }
 
