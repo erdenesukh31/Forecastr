@@ -1,4 +1,5 @@
 import { ProbabilityRecord } from "./probabilityRecord";
+import { PerGrade } from "./perGrade";
 
 export class ProbabilitySummary {
 
@@ -7,6 +8,10 @@ export class ProbabilitySummary {
 	billableDays: number;
 
 	vacationDays: number;
+
+	avgVacationDaysPerGrade: Map<number, PerGrade>;
+
+	avgFTEPerGrade: Map<number, PerGrade>;
 
 	paidDays: number;
 
