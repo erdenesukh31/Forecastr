@@ -32,7 +32,7 @@ class ProjectHelper {
     templateUrl: './staffing-overview.component.html',
     styleUrls: ['./staffing-overview.component.scss'],
 })
-export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChanges */ {
+export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input('months') months: Month[];
 
@@ -56,6 +56,8 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     forecastrSubscription: Subscription;
 
     isPageReady: boolean = false;
+
+     isFinished: boolean = false;
     /**
      * constructor for staffing-overview component
      *  @param forecastService
@@ -70,44 +72,20 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     }
 
     ngOnInit(): void {
+        this.pageState.forecastrReady$.subscribe((ready: boolean) => {
+            if (ready) {
+                this.initStaffing();
+            }
+        });
 
-        this.initStaffing();
-
-        // this.forecastrSubscription = this.pageState.forecastrReady$.subscribe(
-        //     (ready: boolean) => {
-        //       if (ready ) {
-        //         this.isPageReady = true;
-        //       }
-        //     }
-        //   );
-   
     }
-
-    // async ngAfterViewInit(): Promise<void> {
-    //     console.log(this.allForecast)
-    //     for (let month in this.months) {
-    //         for (let user in this.users) {
-    //             await this.allForecast.push(this.forecastService.forecasts.find((fc: FcEntry) => {
-    //                 return fc.monthId === this.months[month].id && fc.userId === this.users[user].id
-    //             }))
-
-    //         }
-    //     }
-    //     console.log("clear");
-    // }
-
-    // ngAfterViewInit(): void {
-    //     // console.log(this.allForecast)
-    //     // for (let month in this.months) {
-    //     //     for (let user in this.users) {
-    //     //         this.allForecast.push(this.forecastService.forecasts.find((fc: FcEntry) => {
-    //     //             return fc.monthId === this.months[month].id && fc.userId === this.users[user].id
-    //     //         }))
-
-    //     //     }
-    //     // }
-    //     console.log("clear");
-    // }
+    ngOnChanges(): void {
+        this.pageState.forecastrReady$.subscribe((ready: boolean) => {
+            if (ready) {
+                this.initStaffing();
+            }
+        });
+    }
 
     getTotalARVE(month: Month): string {
         let projectDays = 0;
@@ -210,33 +188,30 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
     getProjectHelper(forecasts: FcEntry[]): ProjectHelper[] {
 
         let projectHelpers: ProjectHelper[] = []
-        console.log(forecasts);
         var check: boolean = false;
-            for (let fcEntry of forecasts) {
-                for (let project of fcEntry.projects) {
-    
-                  let helper =  projectHelpers.find((helper: ProjectHelper) => {
-                        return helper.projectId === project.projectId;
+        for (let fcEntry of forecasts) {
+            for (let project of fcEntry.projects) {
+
+                let helper = projectHelpers.find((helper: ProjectHelper) => {
+                    return helper.projectId === project.projectId;
+                });
+
+                if (helper) {
+                    helper.days += project.plannedProjectDays;
+                }
+                else {
+                    let projectTemp: Project = this.forecastService.projects.find((pro: Project) => {
+                        return pro.id === project.projectId
                     });
 
-                    if(helper)
-                    {
-                        helper.days += project.plannedProjectDays;
-                    }
-                    else
-                    {
-                        let projectTemp: Project = this.forecastService.projects.find((pro: Project) => {
-                            return pro.id === project.projectId 
-                        });
-
-                        let projectHelperTemp: ProjectHelper = new ProjectHelper;
-                                projectHelperTemp.days = project.plannedProjectDays;
-                                projectHelperTemp.projectId = project.projectId;
-                                projectHelperTemp.projectCode = projectTemp.name.split('-')[0];
-                                projectHelpers.push(projectHelperTemp);
-                    }
+                    let projectHelperTemp: ProjectHelper = new ProjectHelper;
+                    projectHelperTemp.days = project.plannedProjectDays;
+                    projectHelperTemp.projectId = project.projectId;
+                    projectHelperTemp.projectCode = projectTemp.name.split('-')[0];
+                    projectHelpers.push(projectHelperTemp);
                 }
             }
+        }
         return projectHelpers;
     }
 
@@ -248,10 +223,8 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         }
 
         let forecasts: FcEntry[] = [];
-        let allforecast: FcEntry[] = [];
         let forecast: FcEntry;
 
-        //without month in params
         for (let month of this.months) {
             forecast = this.forecastService.forecasts.find((fc: FcEntry) => {
                 return fc.monthId === month.id && fc.userId === user.id
@@ -260,24 +233,21 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             if (forecast) {
                 forecasts.push(forecast);
             }
-              forecast = null;
+            forecast = null;
         }
 
         if (forecast) {
             forecasts.push(forecast);
-            console.log(forecast);
         }
 
-          let forecastHelpers = this.getProjectHelper(forecasts);
-    
-       if(viewColumn === "table")
-       {
-        return this.getProjectCode(forecastHelpers);
-       }
-       else
-       {
-        return this.getProjectCodes(forecastHelpers);
-       }
+        let forecastHelpers = this.getProjectHelper(forecasts);
+
+        if (viewColumn === "table") {
+            return this.getProjectCode(forecastHelpers);
+        }
+        else {
+            return this.getProjectCodes(forecastHelpers);
+        }
     }
 
     getProjectCode(forecastHelpers: ProjectHelper[]): String {
@@ -303,10 +273,10 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
             return a.days - b.days;
         }).reverse();
 
-    let returnString = " ";
+        let returnString = " ";
 
         for (let helper of forecastHelpers) {
-            if(helper.days !== 0){
+            if (helper.days !== 0) {
                 returnString += helper.projectCode + "\n";
             }
         }
@@ -320,10 +290,11 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy/**, OnChange
         this.columnsToDisplay.push('team');
         this.columnsToDisplay.push("corp");
         this.columnsToDisplay.push("projects");
-        console.log("init", this.months, this.users)
+
         for (let month of this.months) {
             this.columnsToDisplay.push(month.name);
         }
+
         if (!this.users.find((u: User) => u.id === -1)) {
             let user: User = new User();
             user.id = -1;

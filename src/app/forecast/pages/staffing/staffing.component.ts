@@ -67,6 +67,7 @@ export class StaffingComponent implements OnInit, OnDestroy {
    * initiates staffing view
    */
   initStaffingView(): void {
+
     this.monthSubscription = this.utilitiesService.months$.subscribe((months: Month[]) => {
       this.availableMonths = months;
       this.setDefaultPeriod();
