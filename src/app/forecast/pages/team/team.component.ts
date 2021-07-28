@@ -37,6 +37,8 @@ export class TeamComponent implements OnInit, OnDestroy {
 	 */
   activeMonth: number = 0;
 
+  step: number = -1;
+
   /**
 	 * team forecast-view component constructor
 	 */
@@ -133,4 +135,8 @@ export class TeamComponent implements OnInit, OnDestroy {
   forecastState(type: string, monthId: number): boolean {
 		return this.forecastService.checkForecastState(type, monthId, this.userId);
 	}
+
+  setStep(event : number){
+    this.step = event;
+  }
 }

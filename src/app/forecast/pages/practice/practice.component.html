@@ -6,7 +6,7 @@
           {{month.name}}
       </ng-template>
       <ng-template matTabContent> <!-- matTabContent for tab lazy loading -->
-        <app-teamlead-month [role]="'practice'" [month]="month"></app-teamlead-month>
+        <app-teamlead-month [role]="'practice'" [month]="month" [step]="step" (setStepEvent)=setStep($event)></app-teamlead-month>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

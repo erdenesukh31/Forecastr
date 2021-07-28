@@ -29,6 +29,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   months: Month[] = [];
   monthSubscription: Subscription;
   activeMonth: number = 0;
+  step: number = -1;
 
   constructor(
     private location: Location,
@@ -112,4 +113,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
   forecastState(type: string, monthId: number): boolean {
 		return this.forecastService.checkForecastState(type, monthId, this.userId);
 	}
+
+  setStep(event : number){
+    this.step = event;
+  }
 }

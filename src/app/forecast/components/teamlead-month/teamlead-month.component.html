@@ -1,77 +1,78 @@
-
-<div class="no-data" *ngIf="team.length == 0">
-  <h3>No user assigned.</h3>
-</div>
-
-<div layout="row" layout-wrap *ngIf="team.length > 0">
-  <div flex="100" flex-gt-md="75">
-    <div class="mat-row accordion-header">
-      <div>Name</div>
-      <div>
-        <span></span>
-        <span>Paid Days</span>
-        <span>Project Days</span>
-        <span>Billable Days</span>
-        <span>Vacation Days</span>
-        <span>Bench Time</span>
-        <span>Training Days</span>
-        <span>Business Development Days</span>
-        <span>ARVE</span>
-        <span>URVE</span>
-        <span>ROS</span>
-      </div>
-    </div>
-
-    <mat-accordion displayMode="flat" multi>
-      <mat-expansion-panel *ngFor="let u of team; let i = index" [expanded]="step === i" (opened)="setStep(i)">
-        <mat-expansion-panel-header *ngIf='working(u, month)'>
-          <mat-panel-title>
-            {{u.lastName}}, {{u.firstName}}
-          </mat-panel-title>
-          <mat-panel-description class="mat-row">
-              <span class="mat-cell">
-                <mat-icon *ngIf="forecastState('locked', u.id)" class="icon-locked"
-                matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
-                lock</mat-icon>
-                <ng-container *ngIf="forecastState('locked-sub', u.id)">
-                  <mat-icon class="icon-locked-sublevel"
-                  matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
-                    lock_open</mat-icon>
-                  <div class="locked-leveldesc">{{forecastState('locklevel', u.id)}}</div>
-                </ng-container>
-                <mat-icon *ngIf="forecastState('saved', u.id)" 
-                matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
-                save</mat-icon>
-                <mat-icon *ngIf="forecastState('edited', u.id)" class="icon-edited">radio_button_checked</mat-icon>
-              </span>
-              <span class="mat-cell">{{getValue('totaldays', u.id) | number: '1.0-2': 'de'}}</span>
-              <span class="mat-cell">{{getValue('projectdays', u.id) | number: '1.0-2': 'de'}}</span>
-              <span class="mat-cell">{{getValue('billabledays', u.id) | number: '1.0-2': 'de'}}</span>
-              <span class="mat-cell">{{getValue('vacationdays', u.id) | number: '1.0-2': 'de'}}</span>
-
-              <span class="mat-cell">{{getValue('benchdays', u.id) | number: '1.0-2': 'de'}}</span>
-              <span class="mat-cell">{{getValue('trainingdays', u.id) | number: '1.0-2': 'de'}}</span>
-              <span class="mat-cell">{{getValue('businessdays', u.id) | number: '1.0-2': 'de'}}</span>
-              
-              <span class="mat-cell">{{getValue('arve', u.id) | number: '1.0-2': 'de'}}%</span>
-              <span class="mat-cell">{{getValue('urve', u.id) | number: '1.0-2': 'de'}}%</span>
-              <span class="mat-cell">&euro; {{getValue('revenue',u.id) | number:'1.0-2':'de' }}</span>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-      
-        <ng-template matExpansionPanelContent>
-          <app-fc-entry class="tab-container" [userId]="u.id" [singleView]="false" [month]="month"></app-fc-entry>
-        </ng-template>
-        
-        <mat-action-row>
-          <button mat-button color="warn" (click)="prevStep()" *ngIf="i > 0">Previous</button>
-          <button mat-button color="primary" (click)="nextStep()" *ngIf="i < (team.length-1)">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
+<div style="height: 72vh; overflow: auto;">
+  <div class="no-data" *ngIf="team.length == 0">
+    <h3>No user assigned.</h3>
   </div>
 
-  <div flex="100" flex-gt-md="25" class="summary-box-container">
-    <app-teamlead-summary [role]="role" [month]="month"></app-teamlead-summary>
+  <div layout="row" layout-wrap *ngIf="team.length > 0">
+    <div flex="100" flex-gt-md="75">
+      <div class="mat-row accordion-header">
+        <div>Name</div>
+        <div>
+          <span></span>
+          <span>Paid Days</span>
+          <span>Project Days</span>
+          <span>Billable Days</span>
+          <span>Vacation Days</span>
+          <span>Bench Time</span>
+          <span>Training Days</span>
+          <span>Business Development Days</span>
+          <span>ARVE</span>
+          <span>URVE</span>
+          <span>ROS</span>
+        </div>
+      </div>
+
+      <mat-accordion displayMode="flat" multi>
+        <mat-expansion-panel *ngFor="let u of team; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+          <mat-expansion-panel-header *ngIf='working(u, month)'>
+            <mat-panel-title>
+              {{u.lastName}}, {{u.firstName}}
+            </mat-panel-title>
+            <mat-panel-description class="mat-row">
+                <span class="mat-cell">
+                  <mat-icon *ngIf="forecastState('locked', u.id)" class="icon-locked"
+                  matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                  lock</mat-icon>
+                  <ng-container *ngIf="forecastState('locked-sub', u.id)">
+                    <mat-icon class="icon-locked-sublevel"
+                    matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                      lock_open</mat-icon>
+                    <div class="locked-leveldesc">{{forecastState('locklevel', u.id)}}</div>
+                  </ng-container>
+                  <mat-icon *ngIf="forecastState('saved', u.id)" 
+                  matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                  save</mat-icon>
+                  <mat-icon *ngIf="forecastState('edited', u.id)" class="icon-edited">radio_button_checked</mat-icon>
+                </span>
+                <span class="mat-cell">{{getValue('totaldays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('projectdays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('billabledays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('vacationdays', u.id) | number: '1.0-2': 'de'}}</span>
+
+                <span class="mat-cell">{{getValue('benchdays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('trainingdays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('businessdays', u.id) | number: '1.0-2': 'de'}}</span>
+                
+                <span class="mat-cell">{{getValue('arve', u.id) | number: '1.0-2': 'de'}}%</span>
+                <span class="mat-cell">{{getValue('urve', u.id) | number: '1.0-2': 'de'}}%</span>
+                <span class="mat-cell">&euro; {{getValue('revenue',u.id) | number:'1.0-2':'de' }}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+        
+          <ng-template matExpansionPanelContent>
+            <app-fc-entry class="tab-container" [userId]="u.id" [singleView]="false" [month]="month"></app-fc-entry>
+          </ng-template>
+          
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()" *ngIf="i > 0">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()" *ngIf="i < (team.length-1)">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div flex="100" flex-gt-md="25" class="summary-box-container">
+      <app-teamlead-summary [role]="role" [month]="month"></app-teamlead-summary>
+    </div>
   </div>
 </div>

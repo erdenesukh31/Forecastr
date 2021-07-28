@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output,EventEmitter } from "@angular/core";
 import { FcEntry } from "../../../core/interfaces/fcEntry";
 import { UserService } from "../../../core/services/user.service";
 import { User } from "../../../core/interfaces/user";
@@ -28,6 +28,12 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   @Input('month') month: Month;
   @Input('role') role: string;
+    /**
+   * step-variable for angular material expansion panel
+   */
+  @Input('step') step: number;
+
+  @Output() setStepEvent = new EventEmitter<number>();
 
   /**
    * userId (loaded from auth-service)
@@ -37,10 +43,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   fcEntries: FcEntry[] = [];
   team: User[] = [];
 
-  /**
-   * step-variable for angular material expansion panel
-   */
-  step: number = -1;
+
 
   fcSubscription: Subscription;
   teamSubscription: Subscription;
@@ -260,6 +263,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   setStep(index: number): void {
     this.step = index;
+    this.setStepEvent.emit(index);
   }
 
   /**
