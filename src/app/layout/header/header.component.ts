@@ -5,7 +5,7 @@ import { LoginService } from "../../core/security/login.service";
 import { UserService } from "../../core/services/user.service";
 import { User } from "../../core/interfaces/user";
 import { Subscription } from "rxjs";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { GetStarted } from "../getStartedModal/get-started.component";
 import { FaqModalComponent } from "../faq-modal/faq-modal.component";
 import { environment as env } from "../../../environments/environment";

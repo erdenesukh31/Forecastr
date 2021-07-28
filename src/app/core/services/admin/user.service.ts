@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../../shared/business-operations.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageStateService } from '../../shared/page-state.service';
 import { UserService } from '../user.service';
 

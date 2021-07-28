@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Month } from "../../../core/interfaces/month";
 import { UtilitiesService } from "../../../core/services/utilities.service";
 import { PageStateService } from "../../../core/shared/page-state.service";

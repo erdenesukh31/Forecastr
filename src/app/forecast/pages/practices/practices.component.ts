@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { UtilitiesService } from '../../../core/services/utilities.service';
 import { PageStateService } from '../../../core/shared/page-state.service';
 import { ExecutiveChartComponent } from "../../components/executive-chart/executive-chart.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-practices',

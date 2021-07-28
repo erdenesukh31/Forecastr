@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ResetPasswordService } from '../core/security/resetPassword.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmMessageDialog } from '../forecast/dialogs/confirm-message/confirm-message.dialog';
 
 function passwordMatcherValidator(control: AbstractControl): { [key: string]: any } | null {

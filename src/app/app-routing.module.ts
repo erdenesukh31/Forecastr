@@ -17,7 +17,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StaffingComponent } from './forecast/pages/staffing/staffing.component';
 import { HeadOfPracticesComponent } from './forecast/pages/head-of-practices/head-of-practices.component';
 import { PracticesComponent } from './forecast/pages/practices/practices.component';
-import { CanActivate } from '@angular/router/src/utils/preactivation';
+import { CanActivate } from '@angular/router';
 import { FinancialControllerComponent } from './forecast/pages/financial-controller/financial-controller.component';
 
 const routes: Routes = [

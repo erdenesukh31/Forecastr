@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { PageStateService } from '../../../core/shared/page-state.service';
 
 import { CalculationService } from "../../../core/services/forecasts/calculation.service";

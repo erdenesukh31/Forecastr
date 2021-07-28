@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { User } from '../../../core/interfaces/user';
 import { UserService } from '../../../core/services/user.service';
 import { Subscription } from 'rxjs';
-import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AddUserDialog } from '../../dialogs/add-user/add-user.dialog';
 import { Role } from '../../../core/interfaces/role';
 import { Grade } from '../../../core/interfaces/grade';
@@ -20,7 +22,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   /**
    * sort for angular material table
    */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * Defined roles

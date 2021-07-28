@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 
 import { environment as env } from "../../../../environments/environment.prod";
@@ -67,6 +67,7 @@ export class StaffingComponent implements OnInit, OnDestroy {
    * initiates staffing view
    */
   initStaffingView(): void {
+
     this.monthSubscription = this.utilitiesService.months$.subscribe((months: Month[]) => {
       this.availableMonths = months;
       this.setDefaultPeriod();

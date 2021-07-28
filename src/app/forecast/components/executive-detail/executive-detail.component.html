@@ -6,7 +6,7 @@
 </div>
 <mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="filter"
 	(change)="teamFilterUpdate(group.value)">
-	<mat-button-toggle value="pl" (click)="changeView('pl')" >
+	<mat-button-toggle value="pl" (click)="changeView('pl')">
 		<mat-icon>supervisor_account</mat-icon> PL Teams
 	</mat-button-toggle>
 	<mat-button-toggle value="pdl" (click)="changeView('pdl')">
@@ -45,15 +45,15 @@
 				<mat-expansion-panel-header>
 					<mat-panel-title>Total</mat-panel-title>
 					<mat-panel-description>
-							<span class="mat-cell">{{totals.projectDays | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">{{totals.billableDays | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">{{totals.vacationDays | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">{{totals.totalDays | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">&euro; {{getTotal('COR') | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">&euro; {{totals.ros | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">{{getTotal('ARVE') | number: '1.0-2': 'de'}}%</span>
-							<span class="mat-cell">{{getTotal('URVE') | number: '1.0-2': 'de'}}%</span>
-							<span class="mat-cell">{{totals.fte | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.projectDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.billableDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.vacationDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.totalDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">&euro; {{getTotal('COR') | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">&euro; {{totals.ros | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{getTotal('ARVE') | number: '1.0-2': 'de'}}%</span>
+						<span class="mat-cell">{{getTotal('URVE') | number: '1.0-2': 'de'}}%</span>
+						<span class="mat-cell">{{totals.fte | number:'1.0-2':'de'}}</span>
 					</mat-panel-description>
 				</mat-expansion-panel-header>
 			</mat-expansion-panel>
@@ -71,10 +71,11 @@
 						<span class="mat-cell">{{teamlead.cor | number: '1.0-1': 'de' }}</span>
 						<span class="mat-cell">&euro;
 							{{teamlead.ros | number:'1.0-2':'de' }}</span>
+						<span class="mat-cell">{{calcARVE(teamlead.projectDays,teamlead.vacationDays,teamlead.totalDays)
+							| number: '1.0-2': 'de'}}%</span>
 						<span
-							class="mat-cell">{{calcARVE(teamlead.projectDays,teamlead.vacationDays,teamlead.totalDays) | number: '1.0-2': 'de'}}%</span>
-						<span
-							class="mat-cell">{{calcURVE(teamlead.billableDays,teamlead.vacationDays,teamlead.totalDays) | number: '1.0-2': 'de'}}%</span>
+							class="mat-cell">{{calcURVE(teamlead.billableDays,teamlead.vacationDays,teamlead.totalDays)
+							| number: '1.0-2': 'de'}}%</span>
 						<span class="mat-cell">{{teamlead.fte | number: '1.0-2': 'de'}}</span>
 					</mat-panel-description>
 				</mat-expansion-panel-header>

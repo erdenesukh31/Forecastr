@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { BusinessOperationsService } from "../../shared/business-operations.service";
 import { UserService } from "../user.service";
 import { Team } from "../../interfaces/team";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { PageStateService } from "../../shared/page-state.service";
 
 /**
