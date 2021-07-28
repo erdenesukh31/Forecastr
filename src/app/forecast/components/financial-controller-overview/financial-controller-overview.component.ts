@@ -28,12 +28,23 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     "expectedRevenue",
   ];
 
+  grades: string[] = [
+    "S",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ];
+
   @Input('months') months: Month[];
 
   /**
     * columns which are displaye
    */
   columnsToDisplay: String[] = [];
+  columnsToDisplay2: String[] = [];
 
   @Input("financial") financialData: FinancialControllerSummaryAPPS[];
   @Input("probabilitySummaries") probabilitySummaries: Map<number,ProbabilitySummary>;
@@ -53,7 +64,30 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     this.columnsToDisplay.push('kpi');
     for (let month of this.months) {
       this.columnsToDisplay.push(month.name);
+      this.columnsToDisplay2.push(month.name);
+     
     }
+  }
+
+  showToggle(name: any) : boolean{
+    if(name === 'ftecss' || name === 'avgVacation'){
+      return false;
+    }
+    return true;
+  }
+
+  openPanel(name: any): boolean {
+    if(name !== 'ftecss' && name !== 'avgVacation'){
+      return false;
+    }
+    return true;
+  }
+
+  disable(name: any): boolean {
+    if(name === 'ftecss' || name === 'avgVacation'){
+      return false;
+    }
+    return true;
   }
 
   mapKpiToUnit(name: string): string {
@@ -64,6 +98,8 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
         return "";
       case "expectedRevenue":
         return "";
+      case "avgVacation":
+        return "Days";
       case "cor":
         return "€";
       case "btu":
@@ -87,6 +123,34 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       default:
         return undefined;
     }
+  }
+
+  
+  getGradeNumberFromGrade(grade:string) : number{
+    switch(grade){
+      case 'S':
+        return 1;
+      case 'A':
+        return 2;
+      case 'B':
+        return 3;
+      case 'C':
+        return 4;
+      case 'D':
+        return 5;
+      case 'E':
+        return 6;
+      case 'F':
+        return 7;
+    }
+  }
+
+  mapGradeToValue(grade: string, monthId: number, kpi:string): number {
+    if(kpi === "avgVacation")
+      return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    if(kpi === "ftecss")
+      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    return 0;
   }
 
 
