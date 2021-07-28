@@ -20,6 +20,7 @@
                 </div>
 			</div>
 		</div>
+        <mat-divider></mat-divider>
 		<mat-accordion displayMode="flat" multi>
             <mat-expansion-panel #panelH *ngFor="let kpi of kpis; let i = index" [hideToggle]="showToggle(kpis[i])" (opened)="openPanel(kpis[i])" [disabled]="disable(kpis[i])">
                 <mat-expansion-panel-header >

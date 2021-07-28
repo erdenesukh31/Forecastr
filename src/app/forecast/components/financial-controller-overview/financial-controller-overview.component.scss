@@ -18,8 +18,9 @@
     flex-direction: row;
     align-items: center;
     margin-right: 24px !important; 
-    font-weight: lighter;
+    font-weight: bold;
     padding: 15px 0px 15px 15px;
+    font-size: 1.1rem;
     color: map-get($font-colors, black);
     margin-right: 8px;
     position: sticky;
