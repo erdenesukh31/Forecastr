@@ -95,9 +95,9 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "arve":
         return "%";
       case "arvi":
-        return "%";
+        return "";
       case "expectedRevenue":
-        return "€";
+        return "";
       case "avgVacation":
         return "Days";
       case "cor":
@@ -119,7 +119,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return "%";
       case "urvi":
-        return "%";
+        return "";
       default:
         return undefined;
     }
@@ -162,9 +162,8 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     }
     switch (name) {
       case "arve":
-        return this.probabilitySummaries.get(monthId).arve * 100;
+        return  this.probabilitySummaries.get(monthId).arve * 100;
       case "arvi":
-        //might needs to be multiplyed by 100
         return entry.arvi;
       case "expectedRevenue":
         return entry.expectedRevenue;
@@ -187,7 +186,6 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return this.probabilitySummaries.get(monthId).urve *100;
       case "urvi":
-        //might needs to be multiplyed by 100
         return entry.urvi;
       default:
         return undefined;
