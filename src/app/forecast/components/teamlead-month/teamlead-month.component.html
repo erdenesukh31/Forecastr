@@ -23,7 +23,7 @@
       </div>
 
       <mat-accordion displayMode="flat" multi>
-        <mat-expansion-panel *ngFor="let u of team; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+        <mat-expansion-panel *ngFor="let u of team; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (opened)="setStep(i)">
           <mat-expansion-panel-header *ngIf='working(u, month)'>
             <mat-panel-title>
               {{u.lastName}}, {{u.firstName}}

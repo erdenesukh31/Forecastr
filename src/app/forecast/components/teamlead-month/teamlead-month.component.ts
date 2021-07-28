@@ -43,7 +43,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   fcEntries: FcEntry[] = [];
   team: User[] = [];
 
-
+  scrollToIndex : number;
 
   fcSubscription: Subscription;
   teamSubscription: Subscription;
@@ -112,6 +112,17 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       .subscribe((fcEntries: FcEntry[]) => {
         this.forecastService.addForecasts(fcEntries);
       });
+      this.scrollToIndex = this.step;
+  }
+
+  ngAfterViewChecked() :void{
+    if(this.scrollToIndex !== -1){
+      let element = document.getElementById("panel-"+this.scrollToIndex);
+      element.scrollIntoView();
+      if(document.activeElement.id === "mat-expansion-panel-header-"+this.scrollToIndex){
+        this.scrollToIndex = -1;
+      }
+    }
   }
 
   /**
@@ -263,6 +274,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   setStep(index: number): void {
     this.step = index;
+    this.scrollToIndex = index;
     this.setStepEvent.emit(index);
   }
 
