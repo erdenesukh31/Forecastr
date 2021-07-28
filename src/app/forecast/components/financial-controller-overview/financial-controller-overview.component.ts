@@ -67,9 +67,6 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       this.columnsToDisplay2.push(month.name);
      
     }
-    console.log(this.columnsToDisplay);
-    console.log(this.columnsToDisplay2);
-    console.log(this.columnsToDisplay.pop);
   }
 
   showToggle(name: any) : boolean{
