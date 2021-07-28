@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Month } from "../../../core/interfaces/month";
 import { FinancialControllerSummaryAPPS } from "../../../core/interfaces/financialAppsSummary";
 import { DatePipe } from "@angular/common";
+import { ProbabilitySummary } from "../../../core/interfaces/probabilitySummary";
 
 @Component({
   selector: 'app-financial-controller-overview',
@@ -27,14 +28,28 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     "expectedRevenue",
   ];
 
+  grades: string[] = [
+    "S",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ];
+
   @Input('months') months: Month[];
 
   /**
     * columns which are displaye
    */
   columnsToDisplay: String[] = [];
+  columnsToDisplay2: String[] = [];
 
   @Input("financial") financialData: FinancialControllerSummaryAPPS[];
+  @Input("probabilitySummaries") probabilitySummaries: Map<number,ProbabilitySummary>;
+
+  
 
   constructor(
     private datePipe: DatePipe,
@@ -49,7 +64,30 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     this.columnsToDisplay.push('kpi');
     for (let month of this.months) {
       this.columnsToDisplay.push(month.name);
+      this.columnsToDisplay2.push(month.name);
+     
     }
+  }
+
+  showToggle(name: any) : boolean{
+    if(name === 'ftecss' || name === 'avgVacation'){
+      return false;
+    }
+    return true;
+  }
+
+  openPanel(name: any): boolean {
+    if(name !== 'ftecss' && name !== 'avgVacation'){
+      return false;
+    }
+    return true;
+  }
+
+  disable(name: any): boolean {
+    if(name === 'ftecss' || name === 'avgVacation'){
+      return false;
+    }
+    return true;
   }
 
   mapKpiToUnit(name: string): string {
@@ -57,9 +95,11 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "arve":
         return "%";
       case "arvi":
-        return "%";
+        return "";
       case "expectedRevenue":
-        return "€";
+        return "";
+      case "avgVacation":
+        return "Days";
       case "cor":
         return "€";
       case "btu":
@@ -79,47 +119,74 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return "%";
       case "urvi":
-        return "%";
+        return "";
       default:
         return undefined;
     }
+  }
+
+  
+  getGradeNumberFromGrade(grade:string) : number{
+    switch(grade){
+      case 'S':
+        return 1;
+      case 'A':
+        return 2;
+      case 'B':
+        return 3;
+      case 'C':
+        return 4;
+      case 'D':
+        return 5;
+      case 'E':
+        return 6;
+      case 'F':
+        return 7;
+    }
+  }
+
+  mapGradeToValue(grade: string, monthId: number, kpi:string): number {
+    if(kpi === "avgVacation")
+      return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    if(kpi === "ftecss")
+      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    return 0;
   }
 
 
   mapKpiToValue(name: string, monthId: number): number {
     let entry = this.financialData.find((value: FinancialControllerSummaryAPPS) => value.monthId == monthId);
 
-    if (entry === undefined) {
+    if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
       return undefined;
     }
-
     switch (name) {
       case "arve":
-        return entry.arve * 100;
+        return  this.probabilitySummaries.get(monthId).arve * 100;
       case "arvi":
-        return entry.arvi * 100;
+        return entry.arvi;
       case "expectedRevenue":
         return entry.expectedRevenue;
       case "cor":
-        return entry.cor;
+        return this.probabilitySummaries.get(monthId).cor;
       case "btu":
         return entry.btu;
       case "avgVacation":
         return entry.avgVacation;
       case "ftecss":
-        return entry.fteCSS;
+        return entry.fte;
       case "pror":
         return entry.pror;
       case "ROS":
-        return entry.ROS;
+        return this.probabilitySummaries.get(monthId).revenue;
       case "ROSint":
-        return entry.ROSint;
+        return this.probabilitySummaries.get(monthId).internalRevenue;
       case "ROSext":
-        return entry.ROSext;
+        return this.probabilitySummaries.get(monthId).externalRevenue;
       case "urve":
-        return entry.urve * 100;
+        return this.probabilitySummaries.get(monthId).urve *100;
       case "urvi":
-        return entry.urvi * 100;
+        return entry.urvi;
       default:
         return undefined;
     }

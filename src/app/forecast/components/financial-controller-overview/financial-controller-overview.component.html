@@ -8,16 +8,43 @@
     </h1>
 </div>
 
-<table mat-table matSort [dataSource]="kpis">
-    <ng-container matColumnDef="kpi">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>KPI</th>
-        <td mat-cell *matCellDef="let element">{{mapKpiToName(element)}}</td>
-    </ng-container>
-    <ng-container matColumnDef="{{month.name}}" *ngFor="let month of months">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{month.name}}</th>
-        <td mat-cell *matCellDef="let element">{{mapKpiToValue(element, month.id) | number: '1.0-2'}}
-            {{mapKpiToUnit(element)}}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-</table>
+<div layout="row" layout-wrap class="table-container">
+	<div flex="100">
+		<div class="mat-row accordion-header">
+            <div>
+                KPI
+            </div>
+			<div *ngFor="let c of columnsToDisplay2; let index=index;">
+                <div>
+                    <span>{{ columnsToDisplay2[index] }}</span>
+                </div>
+			</div>
+		</div>
+        <mat-divider></mat-divider>
+		<mat-accordion displayMode="flat" multi>
+            <mat-expansion-panel #panelH *ngFor="let kpi of kpis; let i = index" [hideToggle]="showToggle(kpis[i])" (opened)="openPanel(kpis[i])" [disabled]="disable(kpis[i])">
+                <mat-expansion-panel-header >
+                    <mat-panel-title>
+                        {{mapKpiToName(kpis[i])}}
+                    </mat-panel-title>
+                    <mat-panel-description *ngFor="let month of months" style="margin-left: auto; margin-right: 0px; flex-grow: unset; width: 10%;">
+                        <span class="mat-cell">{{mapKpiToValue(kpis[i], month.id) | number: '1.0-2'}} {{mapKpiToUnit(kpis[i])}}</span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <table mat-table [dataSource]="grades" style="margin-right: 0px; padding-right: 0px;" id="">
+                    <ng-container matColumnDef="kpi">
+                        <th mat-header-cell *matHeaderCellDef>Grade</th>
+                        <td mat-cell *matCellDef="let element">{{element}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="{{month.name}}" *ngFor="let month of months">
+                        <th mat-header-cell *matHeaderCellDef>{{month.name}}</th>
+                        <td mat-cell class="grade-content" *matCellDef="let element">{{mapGradeToValue(element, month.id, kpi) | number: '1.0-2'}} {{mapKpiToUnit(kpi)}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row  *matRowDef="let row; columns: columnsToDisplay"></tr>
+                </table>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
