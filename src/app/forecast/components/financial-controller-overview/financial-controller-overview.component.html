@@ -28,7 +28,7 @@
                         {{mapKpiToName(kpis[i])}}
                     </mat-panel-title>
                     <mat-panel-description *ngFor="let month of months" style="margin-left: auto; margin-right: 0px; flex-grow: unset; width: 10%;">
-                        <span class="mat-cell">{{mapKpiToValue(kpis[i], month.id) | number: '1.0-2'}}</span>
+                        <span class="mat-cell">{{mapKpiToValue(kpis[i], month.id) | number: '1.0-2'}} {{mapKpiToUnit(kpis[i])}}</span>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
@@ -39,8 +39,7 @@
                     </ng-container>
                     <ng-container matColumnDef="{{month.name}}" *ngFor="let month of months">
                         <th mat-header-cell *matHeaderCellDef>{{month.name}}</th>
-                        <td mat-cell class="grade-content" *matCellDef="let element">{{mapGradeToValue(element, month.id, kpi) | number: '1.0-2'}}
-                            {{mapKpiToUnit(element)}}</td>
+                        <td mat-cell class="grade-content" *matCellDef="let element">{{mapGradeToValue(element, month.id, kpi) | number: '1.0-2'}} {{mapKpiToUnit(kpi)}}</td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
                     <tr mat-row  *matRowDef="let row; columns: columnsToDisplay"></tr>
