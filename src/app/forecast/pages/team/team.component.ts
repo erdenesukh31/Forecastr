@@ -37,6 +37,9 @@ export class TeamComponent implements OnInit, OnDestroy {
 	 */
   activeMonth: number = 0;
 
+  /**
+   * Number of the header in the child's expansion panel currently open
+   */
   step: number = -1;
 
   /**
@@ -136,6 +139,7 @@ export class TeamComponent implements OnInit, OnDestroy {
 		return this.forecastService.checkForecastState(type, monthId, this.userId);
 	}
 
+  //Reflect a step change from teamlead-month into parent
   setStep(event : number){
     this.step = event;
   }

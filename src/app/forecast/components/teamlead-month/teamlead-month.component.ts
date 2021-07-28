@@ -29,10 +29,13 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   @Input('month') month: Month;
   @Input('role') role: string;
     /**
-   * step-variable for angular material expansion panel
+   * step-input-variable for angular material expansion panel
    */
   @Input('step') step: number;
 
+  /**
+   * output event to inform parent about step change
+   */
   @Output() setStepEvent = new EventEmitter<number>();
 
   /**
@@ -42,7 +45,10 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
 
   fcEntries: FcEntry[] = [];
   team: User[] = [];
-
+  
+  /**
+   * scroll-variable for scrolling into in AfterViewChecked
+   */
   scrollToIndex : number;
 
   fcSubscription: Subscription;
@@ -115,10 +121,17 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       this.scrollToIndex = this.step;
   }
 
+  /**
+   *  Called after the ngAfterViewInit() and every subsequent ngAfterContentChecked()
+   *  If something in the component is clicked etc. this is called
+   */
   ngAfterViewChecked() :void{
+    //Check if the component already scrollled successfully
     if(this.scrollToIndex !== -1){
       let element = document.getElementById("panel-"+this.scrollToIndex);
       element.scrollIntoView();
+      //Verify that the scroll to worked
+      //Only if it worked set the scrollToIndex to -1
       if(document.activeElement.id === "mat-expansion-panel-header-"+this.scrollToIndex){
         this.scrollToIndex = -1;
       }

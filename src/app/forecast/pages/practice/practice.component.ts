@@ -29,6 +29,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
   months: Month[] = [];
   monthSubscription: Subscription;
   activeMonth: number = 0;
+  /**
+   * Number of the header in the child's expansion panel currently open
+   */
   step: number = -1;
 
   constructor(
@@ -114,6 +117,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
 		return this.forecastService.checkForecastState(type, monthId, this.userId);
 	}
 
+  //Reflect a step change from teamlead-month into parent
   setStep(event : number){
     this.step = event;
   }
