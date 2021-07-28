@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output,EventEmitter } from "@angular/core";
 import { FcEntry } from "../../../core/interfaces/fcEntry";
 import { UserService } from "../../../core/services/user.service";
 import { User } from "../../../core/interfaces/user";
@@ -28,6 +28,15 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   @Input('month') month: Month;
   @Input('role') role: string;
+    /**
+   * step-input-variable for angular material expansion panel
+   */
+  @Input('step') step: number;
+
+  /**
+   * output event to inform parent about step change
+   */
+  @Output() setStepEvent = new EventEmitter<number>();
 
   /**
    * userId (loaded from auth-service)
@@ -36,11 +45,11 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
 
   fcEntries: FcEntry[] = [];
   team: User[] = [];
-
+  
   /**
-   * step-variable for angular material expansion panel
+   * scroll-variable for scrolling into in AfterViewChecked
    */
-  step: number = -1;
+  scrollToIndex : number;
 
   fcSubscription: Subscription;
   teamSubscription: Subscription;
@@ -109,6 +118,24 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       .subscribe((fcEntries: FcEntry[]) => {
         this.forecastService.addForecasts(fcEntries);
       });
+      this.scrollToIndex = this.step;
+  }
+
+  /**
+   *  Called after the ngAfterViewInit() and every subsequent ngAfterContentChecked()
+   *  If something in the component is clicked etc. this is called
+   */
+  ngAfterViewChecked() :void{
+    //Check if the component already scrollled successfully
+    if(this.scrollToIndex !== -1){
+      let element = document.getElementById("panel-"+this.scrollToIndex);
+      element.scrollIntoView();
+      //Verify that the scroll to worked
+      //Only if it worked set the scrollToIndex to -1
+      if(document.activeElement.id === "mat-expansion-panel-header-"+this.scrollToIndex){
+        this.scrollToIndex = -1;
+      }
+    }
   }
 
   /**
@@ -260,6 +287,8 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   setStep(index: number): void {
     this.step = index;
+    this.scrollToIndex = index;
+    this.setStepEvent.emit(index);
   }
 
   /**
