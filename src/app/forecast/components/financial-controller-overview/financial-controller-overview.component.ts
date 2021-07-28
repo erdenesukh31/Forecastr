@@ -29,6 +29,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   ];
 
   grades: string[] = [
+    "S",
     "A",
     "B",
     "C",
@@ -130,18 +131,20 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   
   getGradeNumberFromGrade(grade:string) : number{
     switch(grade){
-      case 'A':
+      case 'S':
         return 1;
-      case 'B':
+      case 'A':
         return 2;
-      case 'C':
+      case 'B':
         return 3;
-      case 'D':
+      case 'C':
         return 4;
-      case 'E':
+      case 'D':
         return 5;
-      case 'F':
+      case 'E':
         return 6;
+      case 'F':
+        return 7;
     }
   }
 
@@ -149,7 +152,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     if(kpi === "avgVacation")
       return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
     if(kpi === "ftecss")
-      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average *100;
+      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
     return 0;
   }
 
