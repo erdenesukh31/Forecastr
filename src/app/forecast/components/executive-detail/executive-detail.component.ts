@@ -188,23 +188,26 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
 
 
   clickOnEdit(id: number, firstName: string, lastName: string) {
-    this.loadingActive = true;
+    if(this.isEditPermitted())
+    {
+      this.loadingActive = true;
     
-    let dialogRef: any = this.dialog.open(FcEntryDetailDialogComponent,{
-      height: 'auto',
-      width: 'auto',
-      //panelClass: 'getSartedStepper-no-padding-dialog',
-      //backdropClass: 'mat-dialog-container',
-      data:{
-        userId: id,
-        month: this.month,
-        firstName: firstName,
-        lastName: lastName
-      },
-    });
-    dialogRef.afterOpened().subscribe(result => {
-      this.loadingActive = false;
-    });
+      let dialogRef: any = this.dialog.open(FcEntryDetailDialogComponent,{
+        height: 'auto',
+        width: 'auto',
+        //panelClass: 'getSartedStepper-no-padding-dialog',
+        //backdropClass: 'mat-dialog-container',
+        data:{
+          userId: id,
+          month: this.month,
+          firstName: firstName,
+          lastName: lastName
+        },
+      });
+      dialogRef.afterOpened().subscribe(result => {
+        this.loadingActive = false;
+      });
+    }
   }
 
   isEditPermitted(): boolean {
