@@ -95,7 +95,7 @@ export class StaffingComponent implements OnInit, OnDestroy {
         new Date().setMonth(new Date().getMonth())
       ) {
         this.period.from = i;
-        this.period.to = i + 5;
+        this.period.to = i + 7;
         this.showPeriod();
         break;
       }

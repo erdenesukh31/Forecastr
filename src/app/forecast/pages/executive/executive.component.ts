@@ -123,7 +123,7 @@ export class ExecutiveComponent implements OnInit, OnDestroy {
         new Date().setMonth(new Date().getMonth() + 1) // -1 no prevois month
       ) {
         this.period.from = i;
-        this.period.to = i + 5;
+        this.period.to = i + 6;
         this.showPeriod();
         break;
       }
