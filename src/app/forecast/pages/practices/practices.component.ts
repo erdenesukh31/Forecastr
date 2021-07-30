@@ -78,7 +78,6 @@ export class PracticesComponent implements OnInit, OnDestroy {
       ) {
         this.period.from = i;
         this.period.to = i + 6;
-        debugger;
         this.showPeriod();
         break;
       }

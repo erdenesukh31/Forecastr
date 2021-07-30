@@ -146,10 +146,25 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   }
 
   mapGradeToValue(grade: string, monthId: number, kpi:string): number {
-    if(kpi === "avgVacation")
+
+    if(kpi === "avgVacation"){
+
+      if(this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.size <= 0)
+      {
+        return 0;
+      }
       return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    }
+   
     if(kpi === "ftecss")
+    {
+      if(this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.size <= 0)
+      {
+        return 0;
+      }
       return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+    }
+    
     return 0;
   }
 
