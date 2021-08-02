@@ -61,8 +61,8 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
       var todayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
       this.months = this.months.filter((m: Month) => new Date(m.time) >= todayMonth);
 
-      if (this.months.length > 8) {
-        this.months = this.months.slice(0,8);
+      if (this.months.length > 7) {
+        this.months = this.months.slice(0, 7);
       }
 
       if(this.months !== undefined && this.months.length > 0) {

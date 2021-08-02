@@ -77,7 +77,7 @@ export class PracticesComponent implements OnInit, OnDestroy {
         new Date().setMonth(new Date().getMonth() + 1)
       ) {
         this.period.from = i;
-        this.period.to = i + 6;
+        this.period.to = i + 5;
         this.showPeriod();
         break;
       }

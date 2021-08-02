@@ -67,8 +67,8 @@ export class PracticeComponent implements OnInit, OnDestroy {
 				var todayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 				this.months = this.months.filter((m: Month) => new Date(m.time) >= todayMonth);
 
-				if(this.months.length > 8) {
-					this.months = this.months.slice(1, 8);
+				if(this.months.length > 7) {
+					this.months = this.months.slice(1, 7);
         }
         
         let id: number = parseInt(this.route.snapshot.paramMap.get('id'), 10);
