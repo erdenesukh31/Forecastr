@@ -146,23 +146,27 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   }
 
   mapGradeToValue(grade: string, monthId: number, kpi:string): number {
+    if(!this.probabilitySummaries.has(monthId))
+    { 
+      return 0;
+    }
+    let gradeNumber = this.getGradeNumberFromGrade(grade);
 
     if(kpi === "avgVacation"){
-
-      if(this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.size <= 0)
+      if(!this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.has(gradeNumber))
       {
         return 0;
       }
-      return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+      return this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.get(gradeNumber).average;
     }
    
     if(kpi === "ftecss")
     {
-      if(this.probabilitySummaries.get(monthId).avgVacationDaysPerGrade.size <= 0)
+      if(!this.probabilitySummaries.get(monthId).avgFTEPerGrade.has(gradeNumber))
       {
         return 0;
       }
-      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(this.getGradeNumberFromGrade(grade)).average;
+      return this.probabilitySummaries.get(monthId).avgFTEPerGrade.get(gradeNumber).average;
     }
     
     return 0;
@@ -172,8 +176,8 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
   mapKpiToValue(name: string, monthId: number): number {
     let entry = this.financialData.find((value: FinancialControllerSummaryAPPS) => value.monthId == monthId);
 
-    if (entry === undefined || this.probabilitySummaries.get(monthId) === undefined) {
-      return undefined;
+    if (entry === undefined || !this.probabilitySummaries.has(monthId)) {
+      return 0;
     }
     switch (name) {
       case "arve":
