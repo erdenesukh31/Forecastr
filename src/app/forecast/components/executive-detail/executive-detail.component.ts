@@ -465,7 +465,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     let lineEnding = "\r\n";
     let header: string = "Month;" + this.month.name + lineEnding
       + "Working Days;" + this.month.workingdays + lineEnding
-      + "Name;Global ID;FTE;Paid Days;Project Days;Billable Days;Vacation Days;ARVE;URVE;Revenue;COR"
+      + "Name;Global ID;Prod Unit Code;FTE;Paid Days;Project Days;Billable Days;Vacation Days;ARVE;URVE;Revenue;COR"
       + lineEnding;
     
     let body = "";
@@ -481,6 +481,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
       
       let line = user.firstName + " " + user.lastName + ";" //Name
         + this.numberToString(user.globalId.toFixed(0)) + ";" //Global ID
+        + user.prodUnitCode + ";" //Production Unit COde
         + this.numberToString(user.fte) + ";" //FTE
         + this.numberToString(user.fte * parseInt(this.month.workingdays)) + ";" //Paid Days
         + this.numberToString(user.projectDays) + ";" //Project Days
