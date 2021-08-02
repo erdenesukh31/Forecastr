@@ -185,6 +185,7 @@ export class ExecutiveForecastsService {
           teamleads.push({
             id: p.id,
             name: this.getTeamnameForPL(p.id, p.firstName + " " + p.lastName),
+            prodUnitCode : p.prodUnitCode,
             childs: [p.id].concat(
               team
                 .filter((c: User) => childs.indexOf(c.parentId) >= 0)
@@ -204,6 +205,7 @@ export class ExecutiveForecastsService {
           teamleads.push({
             id: p.id,
             name: p.firstName + " " + p.lastName,
+            prodUnitCode : p.prodUnitCode,
             childs: [p.id].concat(
               team
                 .filter((c: User) => c.parentId === p.id)
