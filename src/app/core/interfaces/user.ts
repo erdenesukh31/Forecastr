@@ -60,6 +60,8 @@ export class User {
 
     endDate?: string;
 
+    prodUnitCode? : string;
+
     /**
      * new user constructor with default values
      */
@@ -77,5 +79,6 @@ export class User {
         this.fte = 1;
         this.admin = false;
         this.active = true;
+        this.prodUnitCode = null;
 	}
 }
