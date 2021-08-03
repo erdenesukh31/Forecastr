@@ -58,11 +58,11 @@ export class FinancialControllerComponent implements OnInit, OnDestroy {
     this.monthSubscription = this.utilitiesService.months$.subscribe((months: Month[]) => {
       this.months = months.filter((m: Month) => m.active === true);
       var today = new Date();
-      var todayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      var todayMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
       this.months = this.months.filter((m: Month) => new Date(m.time) >= todayMonth);
 
-      if (this.months.length > 7) {
-        this.months = this.months.slice(0, 7);
+      if (this.months.length > 6) {
+        this.months = this.months.slice(0, 6);
       }
 
       if(this.months !== undefined && this.months.length > 0) {

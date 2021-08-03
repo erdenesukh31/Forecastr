@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatSort, MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
 
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../../../core/interfaces/user';
 import { Role } from '../../../core/interfaces/role';
 import { environment } from '../../../../environments/environment';
@@ -24,7 +25,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   /**
    * Sort variable for angular material table sort method
    */
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   /**
    * team list

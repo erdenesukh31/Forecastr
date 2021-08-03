@@ -9,12 +9,13 @@ import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { TdMediaService } from "@covalent/core";
 import { GetStarted } from "./getStartedModal/get-started.component";
-import { MatDialogModule, MatStepperModule } from "@angular/material";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatStepperModule } from "@angular/material/stepper";
 import { FaqModalComponent } from "./faq-modal/faq-modal.component";
 import { SafeHtmlPipe } from "../core/pipes/safe-html";
 import { OrganizationDialogComponent } from "./organizationModal/organization-dialog.component";
 import { CdkTreeModule } from "@angular/cdk/tree";
-import { MatTreeModule } from "@angular/material";
+import { MatTreeModule } from "@angular/material/tree";
 import { FeedBackDialogComponent } from "./dialogs/feedback/feedback-dialog.component";
 
 @NgModule({

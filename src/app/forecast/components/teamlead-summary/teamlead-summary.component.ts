@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy, Inject } from "@angular/core";
 import { DatePipe } from '@angular/common';
-import { MatTableDataSource, MatDialog, MatSnackBar, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
 
 import { UtilitiesService } from "../../../core/services/utilities.service";
 import { ForecastService } from "../../../core/services/forecasts/forecast.service";

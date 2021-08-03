@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 import { Project } from '../../../core/interfaces/project';
 import { Subscription } from 'rxjs';
 import { ProjectService } from '../../../core/services/admin/projects.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { AddProjectDialog } from '../../dialogs/add-project/add-project.dialog';
 
 /**
@@ -16,7 +17,7 @@ import { AddProjectDialog } from '../../dialogs/add-project/add-project.dialog';
   styleUrls: ['../../admin.component.scss', './projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * project list

@@ -61,7 +61,8 @@
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
           <mat-button-toggle-group class="sm-hop-button-toggle-group" appearance="legacy" aria-label="Role"
             #group="matButtonToggleGroup" [value]="page" (change)="goToPage(group.value)">
-            <mat-button-toggle *ngIf="isMSLLevelRole('SM') || isMSLLevelRole('SMCSS') || isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="practices">
+            <mat-button-toggle *ngIf="isMSLLevelRole('SM') || isMSLLevelRole('SMCSS') || isMSLLevelRole('HOP')"
+              class="sm-hop-button-toggle" value="practices">
               <mat-icon>supervisor_account</mat-icon> Practices
             </mat-button-toggle>
             <mat-button-toggle *ngIf="isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="head-of-practices">

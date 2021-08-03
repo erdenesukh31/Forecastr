@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { VERSION, MatDialogRef, MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { VERSION } from '@angular/material/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Month } from '../../../core/interfaces/month';
 
 @Component({

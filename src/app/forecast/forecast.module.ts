@@ -5,7 +5,8 @@ import { AppRoutingModule } from "../app-routing.module";
 import { CommonModule } from "@angular/common";
 import { CoreModule } from "../core/core.module";
 import { LayoutModule } from "../layout/layout.module";
-import { MatDialogModule, MatBottomSheetModule } from "@angular/material";
+import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from "@angular/core";
-import { MatTableDataSource, MatDialog, MatDialogRef, MatSnackBar } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
 import { cloneDeep } from 'lodash';
 
 import { UtilitiesService } from "../../../core/services/utilities.service";
@@ -187,24 +189,27 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
 
 
   clickOnEdit(id: number, firstName: string, lastName: string) {
-    this.loadingActive = true;
-    
-    let dialogRef: any = this.dialog.open(FcEntryDetailDialogComponent,{
-      height: 'auto',
-      width: 'auto',
-      //panelClass: 'getSartedStepper-no-padding-dialog',
-      //backdropClass: 'mat-dialog-container',
-      data:{
-        userId: id,
-        month: this.month,
-        months: this.months,
-        firstName: firstName,
-        lastName: lastName
-      },
-    });
-    dialogRef.afterOpened().subscribe(result => {
-      this.loadingActive = false;
-    });
+    if(this.isEditPermitted())
+    {
+      this.loadingActive = true;
+      
+      let dialogRef: any = this.dialog.open(FcEntryDetailDialogComponent,{
+        height: 'auto',
+        width: 'auto',
+        //panelClass: 'getSartedStepper-no-padding-dialog',
+        //backdropClass: 'mat-dialog-container',
+        data:{
+          userId: id,
+          month: this.month,
+          months: this.months,
+          firstName: firstName,
+          lastName: lastName
+        },
+      });
+      dialogRef.afterOpened().subscribe(result => {
+        this.loadingActive = false;
+      });
+    }
   }
 
   isEditPermitted(): boolean {

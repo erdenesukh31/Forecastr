@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, SimpleChanges } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { ForecastService } from '../../../core/services/forecasts/forecast.service';
 import { UtilitiesService } from '../../../core/services/utilities.service';
