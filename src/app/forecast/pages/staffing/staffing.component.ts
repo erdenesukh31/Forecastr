@@ -92,7 +92,7 @@ export class StaffingComponent implements OnInit, OnDestroy {
     for (let i: number = 0; i < months.length; i++) {
       if (
         Date.parse(months[i].time) >
-        new Date().setMonth(new Date().getMonth())
+        new Date().setMonth(new Date().getMonth() + 1)
       ) {
         this.period.from = i;
         this.period.to = i + 5;
