@@ -12,7 +12,7 @@
     </ng-container>
     <ng-container matColumnDef="corp">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Corp Id</th>
-        <td mat-cell *matCellDef="let user">{{user.globalId > 0 ? user.globalId : ""}}</td>
+        <td mat-cell *matCellDef="let user">{{user.globalId > -1 ? user.globalId : ""}}</td>
     </ng-container>
     <ng-container matColumnDef="projects">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Projects</th>

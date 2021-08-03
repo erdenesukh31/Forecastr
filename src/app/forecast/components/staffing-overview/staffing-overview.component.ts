@@ -300,7 +300,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
             user.id = -1;
             user.firstName = "";
             user.lastName = "Total";
-            user.globalId = 0;
+            user.globalId = -1;
             user.fte = 0;
             this.users.unshift(user);
         }
