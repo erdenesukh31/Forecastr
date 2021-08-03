@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, SimpleChanges } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -86,64 +86,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
       this.loadingActive = true;
     }
 
-    this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
-
-        if (!this.forecast) {
-          this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
-            if (!res.showDialog || !res.suggestedData || !this.singleView) {
-              return;
-            }
-            /**
-             * For the next release in the future, the copy data functionality will be added
-             */
-
-            if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
-              let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-                data: {
-                  message: 'Copy data from last month submitted?',
-                  button: { cancel: 'No', submit: 'Yes' },
-                },
-              });
-
-              dialogRef.afterClosed().subscribe((add: boolean) => {
-                if (add === true) {
-                  this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
-                }
-              });
-            }
-          });
-
-        } else {
-          this.fcLoaded = true;
-          this.loadingActive = false;
-
-          if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
-            this.fteSliderValue = this.forecast.fte * 100;
-          }
-          else if(typeof this.userService.getUser(this.userId).fte !== 'undefined') {
-            this.fteSliderValue = this.userService.getUser(this.userId).fte * 100;
-            this.forecast.fte = this.userService.getUser(this.userId).fte;
-          }      
-          else {
-            this.fteSliderValue = 100;
-          }
-          if (this.forecast.history && this.forecast.history.length > 0 && this.forecast.history[0].createdAt) {
-            let date: string = formatDate(this.forecast.history[0].createdAt, 'dd.MM.yyyy', 'en');
-            this.lastEditor = 'Last updated from ' + this.forecast.history[0].changedBy + ', ' + date;
-          } else {
-            let date: string = formatDate(this.forecast.createdAt, 'dd.MM.yyyy', 'en');
-            this.lastEditor = 'Last updated from ' + this.forecast.changedBy + ', ' + date;
-          }
-
-          if(typeof this.forecast.gradeId === 'undefined') {
-            this.forecast.gradeId = this.userService.getUser(this.userId).gradeId; 
-          }
-          
-        }
-
-      });
+    this.subscribeForcasts();
 
     this.grades = this.userService.getGrades();
     this.availableProjects = this.utilitiesService.getProjects();
@@ -151,6 +94,66 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
     this.dataSharingService.isCorValueBiggerThanZero().subscribe(isBigger => this.isCorValueBiggerThanZero = isBigger);
+  }
+
+  subscribeForcasts():void {
+    this.fcSubscription = this.forecastService.forecasts$
+    .subscribe((forecasts: FcEntry[]) => {
+      this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
+
+      if (!this.forecast) {
+        this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
+          if (!res.showDialog || !res.suggestedData || !this.singleView) {
+            return;
+          }
+          /**
+           * For the next release in the future, the copy data functionality will be added
+           */
+
+          if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
+            let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+              data: {
+                message: 'Copy data from last month submitted?',
+                button: { cancel: 'No', submit: 'Yes' },
+              },
+            });
+
+            dialogRef.afterClosed().subscribe((add: boolean) => {
+              if (add === true) {
+                this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
+              }
+            });
+          }
+        });
+
+      } else {
+        this.fcLoaded = true;
+        this.loadingActive = false;
+
+        if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
+          this.fteSliderValue = this.forecast.fte * 100;
+        }
+        else if(typeof this.userService.getUser(this.userId).fte !== 'undefined') {
+          this.fteSliderValue = this.userService.getUser(this.userId).fte * 100;
+          this.forecast.fte = this.userService.getUser(this.userId).fte;
+        }      
+        else {
+          this.fteSliderValue = 100;
+        }
+        if (this.forecast.history && this.forecast.history.length > 0 && this.forecast.history[0].createdAt) {
+          let date: string = formatDate(this.forecast.history[0].createdAt, 'dd.MM.yyyy', 'en');
+          this.lastEditor = 'Last updated from ' + this.forecast.history[0].changedBy + ', ' + date;
+        } else {
+          let date: string = formatDate(this.forecast.createdAt, 'dd.MM.yyyy', 'en');
+          this.lastEditor = 'Last updated from ' + this.forecast.changedBy + ', ' + date;
+        }
+
+        if(typeof this.forecast.gradeId === 'undefined') {
+          this.forecast.gradeId = this.userService.getUser(this.userId).gradeId; 
+        }
+        
+      }
+    });
   }
 
   /**
@@ -274,5 +277,10 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
     this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
     });
+  }
+
+  
+  ngOnChanges(changes: SimpleChanges){
+    this.subscribeForcasts();
   }
 }
