@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { FcProject } from '../../../core/interfaces/fcProject';
 import { Month } from '../../../core/interfaces/month';
@@ -15,6 +16,7 @@ import { environment as env } from '../../../../environments/environment';
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
 import { SummaryDataProject, SummaryData } from '../../../core/interfaces/summaryData';
 import { User } from '../../../core/interfaces/user';
+import { FcEntrySummaryVacationWarningComponent } from './vacation-warning/fc-entry-summary-vacation-warning.component';
 
 /**
  * forecast-entry individual summary component
@@ -58,6 +60,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
 
   /**
    * forecast-entry summary constructor
+   * @param dialog
    */
   constructor(
     private utilitiesService: UtilitiesService,
@@ -65,6 +68,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dataSharingService: DataSharingService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { 
     
   }
@@ -125,6 +129,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     let vacationForecast = this.forecast.projects.find(p => p.projectId === vacationProject.id);
     if(vacationForecast.plannedProjectDays <= 0){
       console.log("Show Popup");
+      this.showVacationWarning();
     }
     for(var i = 0; i < this.forecast.projects.length; i++) {
       if(this.forecast.projects[i].mandatory == "N" && this.forecast.projects[i].plannedProjectDays <= 0) {
@@ -213,4 +218,15 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
       return ""
     }
   }
+  showVacationWarning(): void {
+    let dialogRef: any = this.dialog.open(FcEntrySummaryVacationWarningComponent,{
+      height: 'auto',
+      width: 'auto',
+      data:{
+      },
+    });
+    dialogRef.afterOpened().subscribe(result => {
+    });
+  }
 }
+

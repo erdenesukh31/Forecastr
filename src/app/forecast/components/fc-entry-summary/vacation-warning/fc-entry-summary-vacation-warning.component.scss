@@ -1,0 +1,12 @@
+.mat-dialog-content, .tab-container, .mat-dialog-container {
+    overflow: hidden;
+}
+
+.button-row {
+	margin: 10px 5px 20px;
+
+	button.align-right {
+		float: right;
+		margin-left: 5px;
+	}
+}
