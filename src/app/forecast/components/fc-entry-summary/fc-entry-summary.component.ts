@@ -121,6 +121,11 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
    * Calls save forecast in forecast-service.
    */
   saveForecast(): void {
+    let vacationProject = this.projects.find(p => p.name === "0IDVAC793 - Austria Vacation");
+    let vacationForecast = this.forecast.projects.find(p => p.projectId === vacationProject.id);
+    if(vacationForecast.plannedProjectDays <= 0){
+      console.log("Show Popup");
+    }
     for(var i = 0; i < this.forecast.projects.length; i++) {
       if(this.forecast.projects[i].mandatory == "N" && this.forecast.projects[i].plannedProjectDays <= 0) {
         this.snackBar.open("You can't forecast 0 days for non-mandatory projects!", 'OK', { duration: 10000, });
