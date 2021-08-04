@@ -28,6 +28,7 @@
 		<div class="mat-row accordion-header">
 			<div>Name</div>
 			<div>
+				<span>Production Unit Code</span>
 				<span>Project Days</span>
 				<span>Billable Days</span>
 				<span>Vacation Days</span>
@@ -45,6 +46,7 @@
 				<mat-expansion-panel-header>
 					<mat-panel-title>Total</mat-panel-title>
 					<mat-panel-description>
+						<span class="mat-cell"></span>
 						<span class="mat-cell">{{totals.projectDays | number:'1.0-2':'de'}}</span>
 						<span class="mat-cell">{{totals.billableDays | number:'1.0-2':'de'}}</span>
 						<span class="mat-cell">{{totals.vacationDays | number:'1.0-2':'de'}}</span>
@@ -64,6 +66,7 @@
 						{{teamlead.name}}
 					</mat-panel-title>
 					<mat-panel-description>
+						<span class="mat-cell" >{{teamlead.prodUnitCode}}</span>
 						<span class="mat-cell">{{teamlead.projectDays | number: '1.0-1': 'de'}}</span>
 						<span class="mat-cell">{{teamlead.billableDays | number: '1.0-1': 'de'}}</span>
 						<span class="mat-cell">{{teamlead.vacationDays | number: '1.0-1': 'de'}}</span>
