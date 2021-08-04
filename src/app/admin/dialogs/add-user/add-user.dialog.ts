@@ -141,8 +141,8 @@ export class AddUserDialog implements OnInit, OnDestroy {
     roleUpdate(): void {
       let role: Role = this.roles.find((r: Role) => r.roleId === this.userForm.value.roleId);
 
-      if (role && role.permissionType >= environment.roles.msl) {
-        this.userForm.get('admin').setValue(true);
+      if (role && role.permissionType >= environment.roles.fc) {
+       this.userForm.get('admin').setValue(true);
         this.userForm.get('admin').disable();
       } else {
         this.userForm.get('admin').enable();
