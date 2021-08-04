@@ -16,6 +16,7 @@ import { AuthService } from '../../../core/security/auth.service';
 import { environment as env } from '../../../../environments/environment';
 import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-message.dialog';
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
+import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
 
 
 /**
@@ -71,10 +72,10 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private utilitiesService: UtilitiesService,
     private forecastService: ForecastService,
+    private executiveService: ExecutiveForecastsService,
     private userService: UserService,
     private authService: AuthService,
-    private dataSharingService: DataSharingService,
-    
+    private dataSharingService: DataSharingService
   ) {}
 
   /**
@@ -86,7 +87,8 @@ export class FcEntryComponent implements OnInit, OnDestroy {
       this.loadingActive = true;
     }
 
-    this.subscribeForcasts();
+    if(!this.forecast)
+      this.subscribeForcasts();
 
     this.grades = this.userService.getGrades();
     this.availableProjects = this.utilitiesService.getProjects();
@@ -100,7 +102,6 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     this.fcSubscription = this.forecastService.forecasts$
     .subscribe((forecasts: FcEntry[]) => {
       this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
-
       if (!this.forecast) {
         this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
           if (!res.showDialog || !res.suggestedData || !this.singleView) {
@@ -281,6 +282,18 @@ export class FcEntryComponent implements OnInit, OnDestroy {
 
   
   ngOnChanges(changes: SimpleChanges){
-    this.subscribeForcasts();
+    if(changes['month'] && !changes['month'].isFirstChange()){
+      this.loadingActive = true;
+      this.executiveService.initializeDetailValues(this.month.id);
+      this.fcSubscription.unsubscribe();
+      this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
+        this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
+        if(this.forecast)
+        {
+          this.loadingActive = false;
+          this.fcSubscription.unsubscribe();
+        }
+      });
+    }
   }
 }

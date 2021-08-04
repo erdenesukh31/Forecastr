@@ -136,7 +136,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
 
     if(this.switchState) {
       this.filter = this.switchState;
-  }
+    }
     
     this.executiveService.initializeDetailValues(this.month.id);
 
