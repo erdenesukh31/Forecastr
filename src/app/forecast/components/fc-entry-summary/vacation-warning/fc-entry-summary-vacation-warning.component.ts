@@ -9,15 +9,11 @@ import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dial
 })
 export class FcEntrySummaryVacationWarningComponent {
 
-  userId: number;
-
+  /**
+   * default constructor for confirmMessageDialog
+   * @param dialogRef
+   * */
   constructor( 
-    @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<FcEntrySummaryVacationWarningComponent>) {
-      if (data) {
-        this.userId = data.userId
-      }
-    }
-
-  
+    }  
 }

@@ -229,10 +229,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
   showVacationWarning(): Promise<boolean> {
     let dialogRef: any = this.dialog.open(FcEntrySummaryVacationWarningComponent,{
       height: 'auto',
-      width: 'auto',
-      data:{
-        userId: 1
-      },
+      width: 'auto'
     });
     return dialogRef.afterClosed().toPromise();
   }
