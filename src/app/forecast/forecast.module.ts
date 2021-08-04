@@ -38,6 +38,7 @@ import { HeadOfPracticesComponent } from "./pages/head-of-practices/head-of-prac
 import { PracticesComponent } from "./pages/practices/practices.component";
 import { FinancialControllerComponent } from "./pages/financial-controller/financial-controller.component";
 import { FinancialControllerOverviewComponent } from "./components/financial-controller-overview/financial-controller-overview.component";
+import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component";
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { FinancialControllerOverviewComponent } from "./components/financial-con
     ProjectRequestDialog,
     ExecutiveFcEntryComponent,
     FcEntryDetailDialogComponent,
+    FcEntrySummaryVacationWarningComponent,
     PracticesComponent,
     ExecutiveChartComponent,
     ExecutiveStatsComponent,
@@ -86,6 +88,7 @@ import { FinancialControllerOverviewComponent } from "./components/financial-con
     ProjectRequestDialog,
     ExecutiveFcEntryComponent,
     FcEntryDetailDialogComponent,
+    FcEntrySummaryVacationWarningComponent,
     ExecutiveChartComponent
   ],
   exports: []

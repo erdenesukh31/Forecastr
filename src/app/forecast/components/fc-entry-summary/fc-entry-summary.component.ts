@@ -128,9 +128,17 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     let vacationProject = this.projects.find(p => p.name === "0IDVAC793 - Austria Vacation");
     let vacationForecast = this.forecast.projects.find(p => p.projectId === vacationProject.id);
     if(vacationForecast.plannedProjectDays <= 0){
-      console.log("Show Popup");
-      this.showVacationWarning();
+      this.showVacationWarning().then(result=>{
+        if(result){
+          this.uploadSavedForecast();
+        }
+      });
+    }else{
+      this.uploadSavedForecast();
     }
+  }
+
+  uploadSavedForecast() {
     for(var i = 0; i < this.forecast.projects.length; i++) {
       if(this.forecast.projects[i].mandatory == "N" && this.forecast.projects[i].plannedProjectDays <= 0) {
         this.snackBar.open("You can't forecast 0 days for non-mandatory projects!", 'OK', { duration: 10000, });
@@ -218,15 +226,17 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
       return ""
     }
   }
-  showVacationWarning(): void {
+  showVacationWarning(): Promise<boolean> {
     let dialogRef: any = this.dialog.open(FcEntrySummaryVacationWarningComponent,{
       height: 'auto',
       width: 'auto',
       data:{
+        userId: 1
       },
     });
-    dialogRef.afterOpened().subscribe(result => {
-    });
+    return dialogRef.afterClosed().toPromise();
   }
 }
+
+
 
