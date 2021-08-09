@@ -71,7 +71,9 @@
 						<span class="mat-cell">{{teamlead.billableDays | number: '1.0-1': 'de'}}</span>
 						<span class="mat-cell">{{teamlead.vacationDays | number: '1.0-1': 'de'}}</span>
 						<span class="mat-cell">{{teamlead.totalDays | number: '1.0-1': 'de' }}</span>
-						<span class="mat-cell">{{teamlead.cor | number: '1.0-1': 'de' }}</span>
+						<span class="mat-cell">&euro;
+							{{teamlead.cor | number: '1.0-1': 'de' }}
+						</span>
 						<span class="mat-cell">&euro;
 							{{teamlead.ros | number:'1.0-2':'de' }}</span>
 						<span class="mat-cell">{{calcARVE(teamlead.projectDays,teamlead.vacationDays,teamlead.totalDays)
