@@ -54,6 +54,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   fcSubscription: Subscription;
   teamSubscription: Subscription;
   teamFcSubscription: Subscription;
+  firstTime: boolean;
 
   /**
    * teamlead component constructor
@@ -73,6 +74,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    * Initiates forecast-entries + team
    */
   ngOnInit(): void {
+    this.firstTime = true;
     this.fcSubscription = this.forecastService.forecasts$
       .subscribe((forecasts: FcEntry[]) => {
         this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
@@ -132,7 +134,8 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       element.scrollIntoView();
       //Verify that the scroll to worked
       //Only if it worked set the scrollToIndex to -1
-      if(document.activeElement.id === "mat-expansion-panel-header-"+this.scrollToIndex){
+    if(this.firstTime || document.activeElement.parentElement.id === "panel-"+this.scrollToIndex){
+        this.firstTime = false;
         this.scrollToIndex = -1;
       }
     }
