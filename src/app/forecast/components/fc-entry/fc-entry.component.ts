@@ -284,6 +284,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges){
     if(changes['month'] && !changes['month'].isFirstChange()){
       this.loadingActive = true;
+      this.fcLoaded = false;
       this.executiveService.initializeDetailValues(this.month.id);
       this.fcSubscription.unsubscribe();
       this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
@@ -291,6 +292,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
         if(this.forecast)
         {
           this.loadingActive = false;
+          this.fcLoaded = true;
           this.fcSubscription.unsubscribe();
         }
       });
