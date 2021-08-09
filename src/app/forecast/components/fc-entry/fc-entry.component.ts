@@ -17,6 +17,7 @@ import { environment as env } from '../../../../environments/environment';
 import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-message.dialog';
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
 import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
+import { PageStateService } from '../../../core/shared/page-state.service';
 
 
 /**
@@ -57,6 +58,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   fteSliderValue: number;
   fcLoaded: boolean = false;
   fcSubscription: Subscription;
+  spinnerSubscription: Subscription;
   loadingActive: boolean = false;
 
   hasProjectInputFocus: boolean;
@@ -75,7 +77,9 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     private executiveService: ExecutiveForecastsService,
     private userService: UserService,
     private authService: AuthService,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private pageState: PageStateService,
+
   ) {}
 
   /**
@@ -155,6 +159,13 @@ export class FcEntryComponent implements OnInit, OnDestroy {
         
       }
     });
+
+    this.spinnerSubscription = this.pageState.spinner$.subscribe(
+      (spinner: boolean) => {
+        this.loadingActive = spinner;
+        this.fcLoaded = !spinner;
+      }
+    );
   }
 
   /**
@@ -283,16 +294,14 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   
   ngOnChanges(changes: SimpleChanges){
     if(changes['month'] && !changes['month'].isFirstChange()){
-      this.loadingActive = true;
-      this.fcLoaded = false;
+      this.pageState.showSpinner();
       this.executiveService.initializeDetailValues(this.month.id);
       this.fcSubscription.unsubscribe();
       this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
         this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
         if(this.forecast)
         {
-          this.loadingActive = false;
-          this.fcLoaded = true;
+          this.pageState.hideSpinner();
           this.fcSubscription.unsubscribe();
         }
       });
