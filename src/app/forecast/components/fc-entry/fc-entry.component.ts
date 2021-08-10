@@ -168,11 +168,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    * Saves forecast
    */
   saveForecast(): void {
-    this.loadingActive = false;
-    this.fcLoaded = true;
-    this.forecastService.saveForecast(this.month.id, this.userId, false, false);
-    this.loadingActive = true;
-    this.fcLoaded = false;
+    this.forecastService.saveForecast(this.month.id, this.userId, false);
   }
 
   /**

@@ -297,7 +297,7 @@ export class ForecastService {
    * @param userId
    * @param submit
    */
-  saveForecast(monthId: number, userId: number, submit: boolean = false, showSpinner: boolean = true): void {
+  saveForecast(monthId: number, userId: number, submit: boolean = false): void {
     let forecast: FcEntry = cloneDeep(this.forecasts.find((fc: FcEntry) => fc.userId === userId && fc.monthId === monthId));
     if (!forecast) {
       return;
@@ -320,9 +320,8 @@ export class ForecastService {
 
     forecast.history = undefined;
 
-    if(showSpinner){
-      this.pageState.showSpinner();
-    }
+    this.pageState.showSpinner();
+    
     this.http.put(this.BO.forecast(userId, monthId), forecast)
       .subscribe((fc: FcEntry) => {
         this.setForecast(fc, true, false);

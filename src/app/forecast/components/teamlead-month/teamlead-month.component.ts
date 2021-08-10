@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Output,EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output,EventEmitter, HostListener } from "@angular/core";
 import { FcEntry } from "../../../core/interfaces/fcEntry";
 import { UserService } from "../../../core/services/user.service";
 import { User } from "../../../core/interfaces/user";
@@ -120,7 +120,6 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       .subscribe((fcEntries: FcEntry[]) => {
         this.forecastService.addForecasts(fcEntries);
       });
-      this.scrollToIndex = this.step;
   }
 
   /**
@@ -131,12 +130,8 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
     //Check if the component already scrollled successfully
     if(this.scrollToIndex !== -1){
       let element = document.getElementById("panel-"+this.scrollToIndex);
-      element.scrollIntoView();
-      //Verify that the scroll to worked
-      //Only if it worked set the scrollToIndex to -1
-    if(this.firstTime || document.activeElement.parentElement.id === "panel-"+this.scrollToIndex){
-        this.firstTime = false;
-        this.scrollToIndex = -1;
+      if(element){
+          element.scrollIntoView({block: "start", behavior: "smooth"});
       }
     }
   }
@@ -148,6 +143,31 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
     this.fcSubscription.unsubscribe();
     this.teamSubscription.unsubscribe();
     this.teamFcSubscription.unsubscribe();
+  }
+
+  /**
+   * Scroll of the wrapper for this component
+   * @param event 
+   */
+  onScroll(event) {
+    this.scrollToIndex = -1;
+  }
+
+  /**
+   * Scroll with mousewheel
+   * @param event 
+   */
+  @HostListener('mousewheel', ['$event']) 
+  onMousewheel(event) {
+    this.scrollToIndex = -1;
+  }
+
+  /**
+   * Called when an expansion panel is closed
+   * @param event 
+   */
+   ExpPanelClicked(){
+    this.scrollToIndex = -1;
   }
 
   /**
@@ -289,8 +309,8 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    * @param index
    */
   setStep(index: number): void {
-    this.step = index;
     this.scrollToIndex = index;
+    this.step = index;
     this.setStepEvent.emit(index);
   }
 
