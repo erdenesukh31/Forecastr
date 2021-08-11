@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -17,6 +17,7 @@ import { environment as env } from '../../../../environments/environment';
 import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-message.dialog';
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
 import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 /**
@@ -42,6 +43,11 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    * singleView: true in 'individual'-view, false in 'teamlead'-view
    */
   @Input('singleView') singleView: boolean;
+
+  /**
+   * event to subscribe to if there is no forecast for the current user and month
+   */
+   @Output() foreCastEmptyEvent = new EventEmitter();
 
   /**
    * Contains the newest version of forecast
@@ -76,6 +82,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private authService: AuthService,
     private dataSharingService: DataSharingService,
+    private snackBar: MatSnackBar
   ) {}
 
   /**
@@ -87,6 +94,8 @@ export class FcEntryComponent implements OnInit, OnDestroy {
       this.loadingActive = true;
     }
 
+    //only subscribe to forecasts if there is none
+    //since changing of months in handeled in the ngOnChanges function
     if(!this.forecast)
       this.subscribeForcasts();
 
@@ -280,20 +289,31 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Called if there are changes to input fields
+   * @param changes an dict of changes. Value at Key is undefined if there are no chagnes.
+   */
   
   ngOnChanges(changes: SimpleChanges){
+    //If there are changes to the current month BUT its not the first time this chagnes happen
     if(changes['month'] && !changes['month'].isFirstChange()){
       this.loadingActive = true;
       this.fcLoaded = false;
-      this.executiveService.initializeDetailValues(this.month.id);
       this.fcSubscription.unsubscribe();
       this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
         this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
-        if(this.forecast)
-        {
-          this.loadingActive = false;
-          this.fcLoaded = true;
-          this.fcSubscription.unsubscribe();
+      });
+      //init the new month to be retrivable by the forecast service subscription
+      this.executiveService.initializeDetailValues(this.month.id).then(()=>{
+        //when the data is initialized
+        //this should be nearly the same time the subscription received it's value
+        this.loadingActive = false;
+        this.fcLoaded = true;
+        //Since the subscription should already have fired this forecast should only be undefined if there is no forecast
+        if(!this.forecast){
+          this.forecast = undefined;
+          this.foreCastEmptyEvent.emit();
+          this.snackBar.open('There is no forceast for this user and ' + this.month.name, 'Ok', { duration: 10000, });
         }
       });
     }

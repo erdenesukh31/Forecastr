@@ -116,12 +116,16 @@ export class ExecutiveForecastsService {
       });
   }
 
-  initializeDetailValues(monthId: number): void {
-    this.http
-      .get(this.BO.companyDetails(monthId))
-      .subscribe((forecasts: FcEntry[]) => {
-        this.forecastService.addForecasts(forecasts);
-      });
+  initializeDetailValues(monthId: number): Promise<FcEntry[]> {
+    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {
+      this.http
+        .get(this.BO.companyDetails(monthId))
+        .subscribe((forecasts: FcEntry[]) => {
+          this.forecastService.addForecasts(forecasts);
+          resolve(forecasts);
+        });
+    });
+    return promise;
   }
 
   initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {

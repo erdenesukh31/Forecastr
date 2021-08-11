@@ -129,7 +129,8 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   ngAfterViewChecked() :void{
     //Check if the component already scrollled successfully
     if(this.scrollToIndex !== -1){
-      let element = document.getElementById("panel-"+this.scrollToIndex);
+      let index = this.scrollToIndex == 0 ? 0 : this.scrollToIndex -1; 
+      let element = document.getElementById("panel-"+ index);
       if(element){
           element.scrollIntoView({block: "start", behavior: "smooth"});
       }
@@ -168,6 +169,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
    ExpPanelClicked(){
     this.scrollToIndex = -1;
+    this.setStepEvent.emit(-1);
   }
 
   /**
