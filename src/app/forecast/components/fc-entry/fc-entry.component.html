@@ -38,7 +38,7 @@
       cdkAutosizeMaxRows="6"></textarea>
   </mat-form-field>
 
-  <div class="summary-warning error" *ngIf="totalDays() > forecast.totalDays">
+  <div class="summary-warning error" *ngIf="totalDays() > (forecast.totalDays | number: '1.0-2')">
     <mat-icon class="icon">error</mat-icon>
     It is not possible to assign more than <strong>{{forecast.totalDays | number: '1.0-2': 'de'}} days</strong> for this month!<br>
     There are currently <strong>{{totalDays() | number: '1.0-2': 'de'}} days</strong> assigned.
