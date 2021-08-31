@@ -7,7 +7,7 @@ import { AppRoutingModule } from "../app-routing.module";
 
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
-import { TdMediaService } from "@covalent/core";
+import { TdMediaService } from "@covalent/core/media";
 import { GetStarted } from "./getStartedModal/get-started.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatStepperModule } from "@angular/material/stepper";
