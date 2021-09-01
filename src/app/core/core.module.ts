@@ -51,7 +51,6 @@ import {
   CovalentNotificationsModule,
   CovalentCommonModule,
 } from '@covalent/core';
-import 'hammerjs';
 
 import { HttpRequestInterceptorService } from './security/httpRequestInterceptor.service';
 import { RoleGuard } from './security/role-guard.service';
