@@ -11,7 +11,7 @@
       </mat-card-title>
 
       <mat-card-content>
-        <form layout="column" class="pad" (ngSubmit)="login()" #loginForm="ngForm" [formGroup]="loginFormGroup">
+        <form layout="column" class="pad" (ngSubmit)="login()" #loginForm="ng-form" [formGroup]="loginFormGroup">
           <mat-error *ngIf="formSubmitError">{{formSubmitError}}</mat-error>
           <mat-error *ngIf="isEmailFieldEmpty">{{emailInvalidError}}</mat-error>
           <br>
