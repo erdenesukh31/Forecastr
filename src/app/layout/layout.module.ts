@@ -40,6 +40,5 @@ import { FeedBackDialogComponent } from "./dialogs/feedback/feedback-dialog.comp
     FeedBackDialogComponent,
   ],
   exports: [HeaderComponent, FooterComponent],
-  entryComponents: [GetStarted, FaqModalComponent, OrganizationDialogComponent],
 })
 export class LayoutModule {}
