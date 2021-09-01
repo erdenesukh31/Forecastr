@@ -34,7 +34,7 @@
     "intl": "^1.2.5",
     "jwt-decode": "^2.2.0",
     "material-ui-country-flags": "^3.0.1",
-    "ngx-device-detector": "^1.3.11",
+    "ngx-device-detector": "^1.5.2",
     "ngx-powerbi": "^3.0.0",
     "powerbi-client": "^2.18.5",
     "rxjs": "6.6.7",
