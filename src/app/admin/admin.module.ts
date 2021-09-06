@@ -40,14 +40,6 @@ import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.
     AddTeamDialog,
     ConfirmMessageDialog,
   ],
-  entryComponents: [
-    AddProjectDialog,
-    AddMonthDialog,
-    TeamsComponent,
-    AddUserDialog,
-    AddTeamDialog,
-    ConfirmMessageDialog,
-  ],
   exports: [
     MatExpansionModule,
   ],

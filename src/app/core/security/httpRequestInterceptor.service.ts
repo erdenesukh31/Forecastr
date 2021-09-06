@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
@@ -22,8 +22,7 @@ export class HttpRequestInterceptorService implements HttpInterceptor {
    * @param snackBar
    */
   constructor(
-    private auth: AuthService,
-    private login: LoginService,
+    private injector: Injector,
     private router: Router,
     private snackBar: MatSnackBar,
   ) {}
@@ -36,14 +35,16 @@ export class HttpRequestInterceptorService implements HttpInterceptor {
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Get the auth header from the service.
-    const authHeader: string = this.auth.getToken();
+    const authInj= this.injector.get(AuthService);
+    const loginInj= this.injector.get(LoginService);
+    const authHeader: string = authInj.getToken();
     if (authHeader) {
       let authReq: HttpRequest<any>;
       authReq = req.clone({
         setHeaders: { Authorization: authHeader },
       });
 
-      this.login.renewToken();
+      loginInj.renewToken();
       req = authReq;
     }
 
@@ -56,11 +57,11 @@ export class HttpRequestInterceptorService implements HttpInterceptor {
           let errorMessage: string = (error && error.error && error.error.error) ? error.error.error : 'An error occured.';
 
           if (errorStatus === 401) {
-            this.auth.setLogged(false);
+            authInj.setLogged(false);
             this.router.navigate(['/login']);
           }
 
-          if (this.auth.isLogged()) {
+          if (authInj.isLogged()) {
             this.snackBar.open(errorMessage, 'OK', { duration: 10000, });
           }
 

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { DateAdapter, NativeDateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -8,6 +8,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 /**
  * Customized DateAdapter to show Date in the correct format
  */
+@Injectable()
 export class AppDateAdapter extends NativeDateAdapter {
   /**
    * date format method

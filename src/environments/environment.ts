@@ -44,7 +44,7 @@ export const environment: {
 } = {
   production: false,
   version: 'dev',
-  api: 'https://forecastr-test.at.capgemini.com/forecastr-api/api/v1/',
+  api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',
   security: 'jwt',
   authPath: 'auth',
   usersPath: 'users',

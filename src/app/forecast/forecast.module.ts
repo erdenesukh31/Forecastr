@@ -82,15 +82,6 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     FinancialControllerComponent,
     FinancialControllerOverviewComponent,
   ],
-  entryComponents: [
-    ConfirmMessageDialog,
-    ExportCsvDialog,
-    ProjectRequestDialog,
-    ExecutiveFcEntryComponent,
-    FcEntryDetailDialogComponent,
-    FcEntrySummaryVacationWarningComponent,
-    ExecutiveChartComponent
-  ],
   exports: []
 })
 export class ForecastModule {}
