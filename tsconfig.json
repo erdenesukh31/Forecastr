@@ -5,6 +5,9 @@
     "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    //due to: ERROR in node_modules/@covalent/core/common/directives/fullscreen/fullscreen.directive.d.ts:3:11 - error TS2430: Interface 'IFsDocument' incorrectly extends interface 'HTMLDocument'.
+    //should not be necessary in angular 10
+    "skipLibCheck": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
