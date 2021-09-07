@@ -14,7 +14,7 @@
         <img class="image" src="{{ 'assets/img/steps/Step_'}}{{item.image}}" alt="Step 1">
       </div>
       
-      <div layout="row" class="content" flex="20">
+      <div layout="row" [ngClass]="{'content-news' : item.news, 'content': !item.news}" flex="20">
         <div flex="70">
           <h1 class="title">{{item.title}}</h1>
           <div [innerHTML]="item.html"></div>
