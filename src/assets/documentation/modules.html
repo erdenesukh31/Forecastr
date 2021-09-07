@@ -3,17 +3,18 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Forecastr documentation</title>
+        <title>Documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">Forecastr documentation</a>
+            <a href="./" class="navbar-brand">Documentation</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -37,106 +38,6 @@
 </ol>
 <div class="container-fluid modules">
     <div class="row">
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">AdminModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/AdminModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/AdminModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">AppModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/AppModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/AppModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">AppRoutingModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p class="no-graph">
-                                    No graph available.
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/AppRoutingModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">CoreModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/CoreModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/CoreModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">ForecastModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/ForecastModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/ForecastModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card card-module">
-                    <div class="card-header">
-                        <h4 class="card-title">LayoutModule</h4>
-                    </div>
-                    <div class="card-block">
-                                <p>
-                                    <object id="demo-svg" type="image/svg+xml" lazy="./modules/LayoutModule/dependencies.svg" style="width: 100%; height: 175px;">
-                                        Your browser does not support SVG
-                                    </object>
-                                </p>
-                        <footer class="text-center">
-                            <a href="./modules/LayoutModule.html" class="btn btn-default">Browse</a>
-                        </footer>
-                    </div>
-                </div>
-            </div>
     </div>
 </div>
 
@@ -150,6 +51,7 @@
 
 
 
+                   
 
 
 
@@ -172,13 +74,14 @@
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'modules';
             var COMPODOC_CURRENT_PAGE_URL = 'modules.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="./js/menu-wc.js" defer></script>
+       
+       <script type="module" src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 
