@@ -355,8 +355,11 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
 
         this.pageState.hideSpinner();
 
-        if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, filename);
+        let navigator: any = window.navigator;
+        //For IE
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, filename);
+        //For any other browser
         } else {
             const url: string = window.URL.createObjectURL(blob);
 

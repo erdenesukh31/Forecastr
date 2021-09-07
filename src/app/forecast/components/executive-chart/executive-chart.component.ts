@@ -290,8 +290,11 @@ export class ExecutiveChartComponent implements OnInit {
     const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-KPIOverview.csv";    
     this.pageState.hideSpinner();
 
-    if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
+    //For IE
+    let navigator: any = window.navigator;
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, filename);
+    //For any other browser
     } else {
       const url: string = window.URL.createObjectURL(blob);
 
