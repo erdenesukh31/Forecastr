@@ -546,6 +546,6 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
   }
 
   numberToString(no: number, precision: number = 2): string {
-    return no.toLocaleString("de",  { minimumFractionDigits: precision } ).replace(".","");
+    return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: precision } ).replace(".","");
   }
 }

@@ -340,8 +340,8 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
             body += teams.get(team).map(u => u.lastName + ", " + u.firstName + ";" +
                 team + ";" +
                 u.globalId.toString() + ";" +
-                this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 4, 100) + ";" +
-                    this.parseForCSV(this.getMonthFTEFromPerson(x, u), 0, 1)).join(";")).join(lineEnding);
+                this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 100, 4, 4) + ";" +
+                    this.parseForCSV(this.getMonthFTEFromPerson(x, u), 1, 0)).join(";")).join(lineEnding);
             body += lineEnding + lineEnding;
         }
         //summary
@@ -374,13 +374,13 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    parseForCSV(toParse: string, min: number, div: number): string {
+    parseForCSV(toParse: string, div: number, minPrecision: number = 0, maxPrecision: number = 2): string {
         if (toParse == "-") {
             return "0";
         }
 
         let n = parseFloat(toParse) / div;
-        return n.toLocaleString("de", { minimumFractionDigits: min }).replace(".", "");
+        return n.toLocaleString("de", { minimumFractionDigits: minPrecision, maximumFractionDigits: maxPrecision}).replace(".", "");
     }
 
     getMonthFTEFromPerson(month: Month, user: User): string {

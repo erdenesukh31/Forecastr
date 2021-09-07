@@ -247,7 +247,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     const header = "KPI;" + this.months.map((month: Month) => { return month.name }).join(";") + "\r\n";
     const rows = this.kpis.map((kpi: string) => {
       return this.mapKpiToName(kpi) + ";" + this.months.map((month: Month) => {
-        return this.mapKpiToValue(kpi, month.id).toString().replace(".",",");
+        return this.numberToString(this.mapKpiToValue(kpi, month.id));
       }).join(";");
     }).join("\r\n");
 
@@ -274,6 +274,10 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       window.URL.revokeObjectURL(url);
     }
   }
+  numberToString(no: number): string {
+    return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: 2 } ).replace(".","");
+  }
+
 
   ngOnDestroy(): void {
   }

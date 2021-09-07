@@ -98,7 +98,7 @@ export class ExecutiveSummaryComponent implements OnInit {
   }
 
   numberToString(no: number): string {
-    return no.toLocaleString("de",  { minimumFractionDigits: 2 } ).replace(".","");
+    return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: 2 } ).replace(".","");
   }
 }
 
