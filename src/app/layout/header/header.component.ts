@@ -63,15 +63,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.roles = roles;
       }
     );
-
     if (this.auth.showGetStarted()) {
       this.openStepper();
     }
 
     if (
       this.deviceService.browser === "Chrome" ||
-      this.deviceService.browser === "Edge" ||
-      this.deviceService.browser == "Firefox"
+      this.deviceService.browser.toLowerCase().indexOf('edge') > -1 ||
+      this.deviceService.browser === "Firefox"
     ) {
       this.supportedBrowser = true;
     }
