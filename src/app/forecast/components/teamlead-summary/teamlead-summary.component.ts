@@ -446,8 +446,9 @@ export class TeamleadSummaryComponent implements OnInit, OnDestroy {
             const blob: Blob = new Blob([data], { type: "text/csv" });
             const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-Summary.csv";    
     
-            if (window.navigator.msSaveOrOpenBlob) {
-              window.navigator.msSaveOrOpenBlob(blob, filename);
+            let navigator:any = window.navigator;
+            if (navigator.msSaveOrOpenBlob) {
+              navigator.msSaveOrOpenBlob(blob, filename);
             } else {
               const url: string = window.URL.createObjectURL(blob);
         

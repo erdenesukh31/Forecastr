@@ -147,7 +147,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     }
     
     this.forecastService.saveForecast(this.month.id, this.userId);
-    if (!(navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
+    if ((navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
   }
 
   /**
@@ -163,7 +163,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
 
     this.remainingDays = remainDays;
     this.forecastService.saveForecast(this.month.id, this.userId, true);
-    if (!(navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
+    if ((navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
   }
 
   /**

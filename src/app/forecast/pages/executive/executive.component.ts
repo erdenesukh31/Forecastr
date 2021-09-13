@@ -181,8 +181,9 @@ export class ExecutiveComponent implements OnInit, OnDestroy {
       this.datePipe.transform(new Date(), "yyyyMMdd") +
       "-Forecastsummary-Period.csv";
 
-    if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
+    let navigator: any = window.navigator;
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, filename);
     } else {
       const url: string = window.URL.createObjectURL(blob);
 

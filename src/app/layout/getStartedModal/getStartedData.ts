@@ -52,6 +52,12 @@ export const getStartedData = {
 
     "pdl" :[
         {
+            "title":"New",
+            "html": `<p><span>While having an employee open in the Team-Tab, you can switch to the next month and the tab will scroll automatically to this employee.</span></p>`,
+            "image": "-1_pdl.png",
+            "news": "1",
+        },
+        {
             "title":"Get Started",
             "html": `<p><span lang="EN-US">The following steps will help you get started on how to create the utilization forecast for yourself or for your team for the upcoming months.</span></p>`,
             "image": "0_pdl.png"
@@ -124,6 +130,12 @@ export const getStartedData = {
         
     ],  
     "pl":[
+        {
+            "title":"New",
+            "html": `<p><span>While having an employee open in the Team-Tab or Practice-Tab, you can switch to the next month and the tab will scroll automatically to this employee.</span></p>`,
+            "image": "-1_pl.png",
+            "news": "1",
+        },
         {
             "title":"Get Started",
             "html": `<p><span>The following steps will help you get started on how to create the utilization forecast for yourself or for your team for the upcoming months.</span></p>`,

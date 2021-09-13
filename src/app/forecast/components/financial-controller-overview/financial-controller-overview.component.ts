@@ -247,7 +247,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     const header = "KPI;" + this.months.map((month: Month) => { return month.name }).join(";") + "\r\n";
     const rows = this.kpis.map((kpi: string) => {
       return this.mapKpiToName(kpi) + ";" + this.months.map((month: Month) => {
-        return this.mapKpiToValue(kpi, month.id).toString().replace(".",",");
+        return this.numberToString(this.mapKpiToValue(kpi, month.id));
       }).join(";");
     }).join("\r\n");
 
@@ -256,8 +256,11 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
     const blob: Blob = new Blob([data], { type: "text/csv" });
     const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-KPISummary.csv";
 
-    if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
+    let navigator: any = window.navigator;
+    //For IE
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, filename);
+    //For any other browser
     } else {
       const url: string = window.URL.createObjectURL(blob);
 
@@ -271,6 +274,10 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       window.URL.revokeObjectURL(url);
     }
   }
+  numberToString(no: number): string {
+    return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: 2 } ).replace(".","");
+  }
+
 
   ngOnDestroy(): void {
   }
