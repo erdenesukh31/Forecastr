@@ -7,6 +7,7 @@ import { Month } from '../interfaces/month';
 import { Probability } from '../interfaces/probability';
 import { Team } from '../interfaces/team';
 import { BusinessOperationsService } from '../shared/business-operations.service';
+import { HierarchyNode } from '../interfaces/hierarchyNode';
 
 /**
  * utilities services (for months + projects + probabilities)
@@ -35,6 +36,12 @@ export class UtilitiesService {
    */
   teams$: BehaviorSubject<Team[]>;
 
+  /**
+   * Observable which contains the hirarchy
+   */
+  hierarchy$: BehaviorSubject<HierarchyNode>;
+
+
 
   /**
    * utilities service constructor
@@ -48,6 +55,7 @@ export class UtilitiesService {
     this.months$ = new BehaviorSubject([]);
     this.projects$ = new BehaviorSubject([]);
     this.probabilities$ = new BehaviorSubject([]);
+    this.hierarchy$ = new BehaviorSubject(null);
     this.teams$ = new BehaviorSubject([]);
   }
 
@@ -82,6 +90,15 @@ export class UtilitiesService {
     return new Promise<void>((resolve, reject) => {
       this.http.get(this.BO.getProbabilities()).subscribe((probabilities: Probability[]) => {
         this.probabilities$.next(probabilities);
+        resolve();
+      }, () => reject());
+    });
+  }
+
+  initHirarchy(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get(this.BO.companyHierarchy()).subscribe((hierarchy: HierarchyNode) => {
+        this.hierarchy$.next(hierarchy);
         resolve();
       }, () => reject());
     });
