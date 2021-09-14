@@ -28,13 +28,13 @@ export class ExecutiveForecastsService {
   monthValues$: BehaviorSubject<SummaryValues[]>;
   kpiData$: BehaviorSubject<MonthlySummaryReport[]>;
   graphicData$: BehaviorSubject<GraphicSummaryReport[]>;
-  hierarchy$: BehaviorSubject<HierarchyNode>;
   financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;
 
   monthId: number = 1;
   months: Month[];
   projects: Project[];
   teams: Team[];
+  hierarchy: HierarchyNode;
 
   constructor(
     private http: HttpClient,
@@ -68,15 +68,13 @@ export class ExecutiveForecastsService {
   }
 
   initHierarchy(): void {
-    this.http
-      .get(this.BO.companyHierarchy())
-      .subscribe((hierarchy: HierarchyNode) => {
-        this.hierarchy$.next(hierarchy);
-      });
+    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {
+      this.hierarchy = hierarchy;
+    });
   }
 
   getHierarchy(): any {
-    return this.hierarchy$.getValue;
+    return this.hierarchy;
   }
 
   getCurrentMonth(): void {
