@@ -132,6 +132,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -149,8 +153,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -204,6 +206,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -221,8 +227,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -254,7 +258,7 @@ export class ExecutiveStatsComponent implements OnInit {
       `#arveUrveChart`
     );
     let arveUrveChartRef = arveUrveChartCanvas.getContext("2d");
-    this.arveUrveChart = new Chart(arveUrveChartRef, {
+    this.arveUrveChart = new Chart("arveUrveChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -270,6 +274,10 @@ export class ExecutiveStatsComponent implements OnInit {
             data: this.urve
           }
         ]
+      },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
       },
       options: {
         legend: {
@@ -288,8 +296,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -344,6 +350,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -361,8 +371,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -406,6 +414,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -423,8 +435,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5
             }
           ],
           yAxes: [
