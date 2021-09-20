@@ -319,6 +319,10 @@ export class ForecastComponent implements OnInit, OnDestroy {
     return this.authService.hasRole(env.roles.pdl);
   }
 
+  isEm(): boolean {
+    return true;
+  }
+
   isPractice(): boolean {
     return this.authService.hasRole(env.roles.pl);
   }
