@@ -55,7 +55,7 @@ export class SubcosComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pageState.forecastrReady$.subscribe((ready: boolean) => {
 			if (ready && this.authService.hasRole(env.roles.pdl)) {
-				this.initTeamForecast();
+				this.initSubcoForecast();
 			}
 		});
   }
@@ -64,8 +64,8 @@ export class SubcosComponent implements OnInit, OnDestroy {
     this.monthSubscription.unsubscribe();
   }
 
-  private initTeamForecast(): void {
-    this.teamService.initializePDLTeam();
+  private initSubcoForecast(): void {
+    this.teamService.initializePDLTeam(); //TODO: needs to be SubcoService
     this.monthSubscription = this.utilitiesService.months$
       .subscribe((months: Month[]) => {
         this.months = months.filter((m: Month) => m.active === true);
@@ -121,9 +121,8 @@ export class SubcosComponent implements OnInit, OnDestroy {
     this.location.replaceState('/forecast/subcos/' + this.activeMonth);
   }
 
-  //Reflect a step change from teamlead-month into parent
+  //Reflect a step change from em-month into parent
   setStep(event : number){
     this.step = event;
   }
-
 }

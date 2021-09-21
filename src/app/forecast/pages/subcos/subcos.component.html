@@ -1,5 +1,4 @@
 <mat-tab-group [selectedIndex]="activeMonth" (selectedIndexChange)="setTabActive($event)">
-    <h1>Hello</h1> 
     <mat-tab *ngFor="let month of months" label="{{month.name}}" id="{{month.id}}">
       <ng-template mat-tab-label>
               <mat-icon *ngIf="forecastState('edited', month.id)" class="icon-edited">radio_button_checked</mat-icon>
@@ -7,7 +6,7 @@
               {{month.name}}
           </ng-template>
       <ng-template matTabContent> <!-- matTabContent for tab lazy loading -->
-        <app-teamlead-month [month]="month" [step]="step" (setStepEvent)=setStep($event)></app-teamlead-month>
+        <app-subco-month [month]="month" [step]="step" (setStepEvent)=setStep($event)></app-subco-month>
       </ng-template>
     </mat-tab>
 </mat-tab-group>

@@ -1,0 +1,76 @@
+@import '../../../../assets/styles/variables.scss';
+
+.accordion-header {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 24px;
+  color: map-get($font-colors, grey-dark);
+  margin-right: 8px;
+
+  div {
+    display: flex;
+    flex-grow: 1;
+    width: 0;
+    margin-right: 16px;
+
+    &:last-child {
+      flex-grow: 4;
+      text-align: center;
+    }
+
+    span {
+      flex: 1;
+      word-break: break-word;
+      align-self: center;
+    }
+  }
+}
+
+.mat-accordion .mat-expansion-panel {
+  border-radius: 0;
+
+  .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+    font-size: 1.1rem;
+    line-height: 1.2rem;
+    width: 0;
+    align-items: center;
+    flex-grow: 1;
+
+    .mat-cell {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .mat-expansion-panel-header-description {
+    text-align: center; 
+    flex-grow: 4;
+  }
+
+  .mat-cell, .mat-header-cell {
+    flex: 1;
+    color: map-get($font-colors, grey-dark);
+  }
+}
+
+.mat-icon {
+	font-size: 20px;
+	line-height: 20px;
+
+	&:hover {
+		color: map-get($font-colors, grey-light);
+	}
+
+	&.icon-edited, &.icon-edited:hover {
+		color: map-get($font-colors, red);
+	}
+}
+
+.locked-leveldesc {
+  font-size: 0.9rem;
+}
+
+.mat-expansion-panel.mat-expanded {
+  order: -1;
+}
