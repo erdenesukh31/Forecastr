@@ -1,0 +1,63 @@
+<mat-card class="summary-box">
+  <mat-card-title>
+    Summary {{month.name}}
+  </mat-card-title>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="summaryProjects">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Project name</th>
+        <td mat-cell *matCellDef="let project">{{ project.title }}</td>
+        <td mat-footer-cell *matFooterCellDef>
+          Billable days<br>
+          Non-billable days<br>
+          <span class="total">Total days</span><br>
+          <span class="note">Expected days</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="days">
+        <th mat-header-cell *matHeaderCellDef>Days</th>
+        <td mat-cell *matCellDef="let project">{{ project.days | number: '1.0-2' :'de'}}</td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{summaryData.billableDays | number: '1.0-2':'de'}}<br>
+          {{summaryData.nonbillableDays | number: '1.0-2':'de'}}<br>
+          <span class="total">{{(summaryData.billableDays + summaryData.nonbillableDays) | number: '1.0-2':'de'}}</span><br>
+          <span class="note">{{ summaryData.workingDays | number: '1.0-2':'de' }}</span>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['name', 'days']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name', 'days']"></tr>
+      <tr mat-footer-row *matFooterRowDef="['name', 'days']"></tr>
+    </table>
+
+		<div class="card-section">
+      <mat-chip-list>
+        <mat-chip><mat-icon>timeline</mat-icon>ARVE {{summaryData.arve * 100 | number: '1.0-2': 'de'}}%</mat-chip>
+        <mat-chip><mat-icon>timeline</mat-icon>URVE {{summaryData.urve * 100 | number: '1.0-2': 'de'}}%</mat-chip>
+        <mat-chip><mat-icon>trending_up</mat-icon>External Revenue € {{summaryData.extRevenue | number:'':'de' }}</mat-chip>
+        <mat-chip><mat-icon>trending_up</mat-icon>Internal Revenue € {{summaryData.intRevenue | number:'':'de' }}</mat-chip>
+        <mat-chip><mat-icon>trending_up</mat-icon>ROS € {{summaryData.revenue | number:'':'de' }}</mat-chip>
+      </mat-chip-list>
+    </div>
+    <div class="card-section">
+    <!-- <div class="card-section button-rows"> -->
+      <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="submitAll()">
+        <mat-icon>lock</mat-icon> Submit all forecasts
+      </button>
+      <!-- <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="resetAll()"> DEACTIVATED
+        <mat-icon>restore</mat-icon> Reset to initial values
+      </button> -->
+    </div>
+
+    <div class="card-section">
+    <!-- <div class="card-section button-rows"> -->
+      <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="unlockAll()">
+          <mat-icon>lock_open</mat-icon> Unlock all forecasts
+      </button>
+      <button mat-stroked-button class="mat-primary-reversed" [ngClass]="{'button-row': role == 'practice' && hasPracticeLeadRole()}" (click)="openCSVExportModal()">
+        <mat-icon>insert_drive_file</mat-icon> CSV Export
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
