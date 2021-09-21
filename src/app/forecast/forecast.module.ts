@@ -11,6 +11,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";
 import { TeamComponent } from "./pages/team/team.component";
+import { SubcosComponent } from "./pages/subcos/subcos.component";
 
 import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
 import { FcProjectComponent } from "./components/fc-project/fc-project.component";
@@ -58,6 +59,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     ForecastComponent,
     IndividualComponent,
     TeamComponent,
+    SubcosComponent,
     PracticeComponent,
     FcEntryComponent,
     FcProjectComponent,
