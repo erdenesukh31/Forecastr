@@ -20,6 +20,8 @@ import { TeamleadSummaryComponent } from "./components/teamlead-summary/teamlead
 import { TeamleadMonthComponent } from "./components/teamlead-month/teamlead-month.component";
 import { SubcoMonthComponent } from "./components/subco-month/subco-month.component";
 import { SubcoSummaryComponent } from "./components/subco-summary/subco-summary.component";
+import { SubcoFcEntryComponent } from "./components/subco-fc-entry/subco-fc-entry.component"
+import { SubcoFcProjectComponent } from "./components/subco-fc-project/subco-fc-project.component"
 import { PracticeComponent } from "./pages/practice/practice.component";
 
 import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
@@ -67,6 +69,8 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     FcProjectComponent,
     FcEntrySummaryComponent,
     TeamleadMonthComponent,
+    SubcoFcEntryComponent,
+    SubcoFcProjectComponent,
     SubcoMonthComponent,
     SubcoSummaryComponent,
     TeamleadSummaryComponent,
