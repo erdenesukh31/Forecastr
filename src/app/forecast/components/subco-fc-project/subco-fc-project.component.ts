@@ -195,6 +195,7 @@ export class SubcoFcProjectComponent implements OnInit {
   history(attribute: string): string | boolean {
     if (
       this.forecast.history &&
+      this.forecast.history[0].projects[0] &&
       this.forecast.history.length > 0
     ) {
       if (
