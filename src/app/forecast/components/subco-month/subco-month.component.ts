@@ -80,35 +80,18 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
         this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
       });
 
-    if (this.role === 'practice') {
-      this.subcoSubscription = this.subcoService.teamPL$
-        .subscribe((team: User[]) => {
-          for (let i = 0; i < team.length; i++) {
-            for (let i = 0; i < team.length; i++) {
-              if(this.userId === team[i].id) {
-                let tempUser: User = team[0];
-                team[0] = team[i];
-                team.splice(i, 1);
-                team.splice(1, 0, tempUser);
-              }
-            }
+    this.subcoSubscription = this.subcoService.teamPDL$
+      .subscribe((subcos: User[]) => { //TODO: Replace
+        for (let i = 0; i < subcos.length; i++) {
+          if(this.userId === subcos[i].id) {
+            let tempUser: User = subcos[0];
+            subcos[0] = subcos[i];
+            subcos.splice(i, 1);
+            subcos.splice(1, 0, tempUser);
           }
-          this.subcos = team;
-        });
-    } else {
-      this.subcoSubscription = this.subcoService.teamPDL$
-        .subscribe((team: User[]) => {
-          for (let i = 0; i < team.length; i++) {
-            if(this.userId === team[i].id) {
-              let tempUser: User = team[0];
-              team[0] = team[i];
-              team.splice(i, 1);
-              team.splice(1, 0, tempUser);
-            }
-          }
-          this.subcos = team;
-        });
-    }
+        }
+        this.subcos = subcos;
+      });
 
     let level: number = 1;
     if (this.role === 'practice') {
@@ -173,7 +156,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Return value for given type (used for arve + urve + revenue + workingdays)
+   * Return value for given type 
    * @param type
    * @param userId
    */

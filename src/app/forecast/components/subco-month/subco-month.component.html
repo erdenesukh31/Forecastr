@@ -9,16 +9,10 @@
         <div>Name</div>
         <div>
           <span></span>
-          <span>Paid Days</span>
-          <span>Project Days</span>
-          <span>Billable Days</span>
-          <span>Vacation Days</span>
-          <span>Bench Time</span>
-          <span>Training Days</span>
-          <span>Business Development Days</span>
-          <span>ARVE</span>
-          <span>URVE</span>
-          <span>ROS</span>
+          <span>Revenue</span>
+          <span>Costs</span>
+          <span>Contribution</span>
+          <span>CP%</span>
         </div>
       </div>
 
@@ -49,14 +43,6 @@
                 <span class="mat-cell">{{getValue('projectdays', u.id) | number: '1.0-2': 'de'}}</span>
                 <span class="mat-cell">{{getValue('billabledays', u.id) | number: '1.0-2': 'de'}}</span>
                 <span class="mat-cell">{{getValue('vacationdays', u.id) | number: '1.0-2': 'de'}}</span>
-
-                <span class="mat-cell">{{getValue('benchdays', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('trainingdays', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('businessdays', u.id) | number: '1.0-2': 'de'}}</span>
-                
-                <span class="mat-cell">{{getValue('arve', u.id) | number: '1.0-2': 'de'}}%</span>
-                <span class="mat-cell">{{getValue('urve', u.id) | number: '1.0-2': 'de'}}%</span>
-                <span class="mat-cell">&euro; {{getValue('revenue',u.id) | number:'1.0-2':'de' }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
         
