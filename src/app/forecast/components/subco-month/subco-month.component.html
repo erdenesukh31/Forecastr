@@ -9,6 +9,9 @@
         <div>Name</div>
         <div>
           <span></span>
+          <span>Cost Rate</span>
+          <span>COR</span>
+          <span>ManDay</span>
           <span>Revenue</span>
           <span>Costs</span>
           <span>Contribution</span>
@@ -39,15 +42,18 @@
                   save</mat-icon>
                   <mat-icon *ngIf="forecastState('edited', u.id)" class="icon-edited">radio_button_checked</mat-icon>
                 </span>
-                <span class="mat-cell">{{getValue('totaldays', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('projectdays', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('billabledays', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('vacationdays', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costRate', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cor', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('manDay', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('revenue', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costs', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('contribution', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cp', u.id) | number: '1.0-2': 'de'}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
         
           <ng-template matExpansionPanelContent>
-            <app-subco-fc-entry class="tab-container" [userId]="u.id" [singleView]="false" [month]="month"></app-subco-fc-entry>
+            <app-subco-fc-entry class="tab-container" [userId]="u.id" [month]="month"></app-subco-fc-entry>
           </ng-template>
           
           <mat-action-row>

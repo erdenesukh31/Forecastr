@@ -40,11 +40,6 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   @Input('month') month: Month;
 
   /**
-   * singleView: true in 'individual'-view, false in 'teamlead'-view
-   */
-  @Input('singleView') singleView: boolean;
-
-  /**
    * event to subscribe to if there is no forecast for the current user and month
    */
    @Output() foreCastEmptyEvent = new EventEmitter();
@@ -89,10 +84,8 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Initializes forecast entry component.
    */
   ngOnInit(): void {
-    if(!this.singleView) {
-      this.fcLoaded = true;
-      this.loadingActive = true;
-    }
+    this.fcLoaded = true;
+    this.loadingActive = true;
 
     //only subscribe to forecasts if there is none
     //since changing of months in handeled in the ngOnChanges function
@@ -113,7 +106,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
       this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
       if (!this.forecast) {
         this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
-          if (!res.showDialog || !res.suggestedData || !this.singleView) {
+          if (!res.showDialog || !res.suggestedData) {
             return;
           }
           /**

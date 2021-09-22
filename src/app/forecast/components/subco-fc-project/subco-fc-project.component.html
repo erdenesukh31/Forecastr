@@ -1,13 +1,13 @@
 <form class="project-form">
-  <mat-card class="project-container" id="project-{{ monthId }}-{{ i }}">
+  <mat-card class="project-container" id="project-{{ monthId }}">
     <mat-card-content class="project">
       <div layout="row" layout-fill>
-        <div [attr.flex]="hasLeadRole() ? 55 : 75" class="project-element">
+        <div [attr.flex]="55" class="project-element">
           <ng-container *ngIf="!isMandatory(project.projectId)">
             <mat-form-field
               appearance="outline"
               class="no-padding"
-              id="projectId-{{ monthId }}-{{ i }}"
+              id="projectId-{{ monthId }}"
             >
               <input
                 type="text"
@@ -66,7 +66,7 @@
               type="number"
               onClick="this.select()"
               matInput
-              name="costRate-{{ monthId }}-{{ i }}"
+              name="costRate-{{ monthId }}"
               [(ngModel)]="project.costRate"
               required
               min="0"
@@ -74,9 +74,9 @@
               [disabled]="fcIsLocked()"
               (blur)="onProjectDaysBlur($event)"
               #projectDaysInput
-              matTooltip="{{ history('days', i) }}"
+              matTooltip="{{ history('days') }}"
               matTooltipPosition="above"
-              matTooltipDisabled="{{ !history('days', i) }}"
+              matTooltipDisabled="{{ !history('days') }}"
             />
 
           </mat-form-field>
@@ -85,14 +85,13 @@
         <!--COR-->
         <div
           flex="25"
-          *ngIf="hasLeadRole() || hasPLRole()"
           class="project-element"
         >
           <mat-form-field
             appearance="outline"
-            matTooltip="{{ history('cor', i) }}"
+            matTooltip="{{ history('cor') }}"
             matTooltipPosition="above"
-            matTooltipDisabled="{{ !history('cor', i) }}"
+            matTooltipDisabled="{{ !history('cor') }}"
           >
             <mat-label>
               COR
@@ -107,7 +106,7 @@
               matInput
               type="number"
               onClick="this.select()"
-              name="cor-{{ monthId }}-{{ i }}"
+              name="cor-{{ monthId }}"
               [(ngModel)]="project.cor"
               required
               min="1"
@@ -119,14 +118,13 @@
         <!--ManDay-->
         <div
           flex="25"
-          *ngIf="hasLeadRole() || hasPLRole()"
           class="project-element"
         >
           <mat-form-field
             appearance="outline"
-            matTooltip="{{ history('manDay', i) }}"
+            matTooltip="{{ history('manDay') }}"
             matTooltipPosition="above"
-            matTooltipDisabled="{{ !history('manDay', i) }}"
+            matTooltipDisabled="{{ !history('manDay') }}"
           >
             <mat-label>
               ManDay
@@ -141,7 +139,7 @@
               matInput
               type="number"
               onClick="this.select()"
-              name="plannedProjectDays-{{ monthId }}-{{ i }}"
+              name="plannedProjectDays-{{ monthId }}"
               [(ngModel)]="project.plannedProjectDays"
               required
               min="1"

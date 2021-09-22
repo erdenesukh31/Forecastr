@@ -7,11 +7,8 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 import { FcEntry } from "../../../core/interfaces/fcEntry";
 import { FcProject } from "../../../core/interfaces/fcProject";
 import { Project } from "../../../core/interfaces/project";
-import { Probability } from "../../../core/interfaces/probability";
 import { AuthService } from "../../../core/security/auth.service";
 import { FormBuilder, Validators, FormControl } from "@angular/forms";
-import { environment as env } from "../../../../environments/environment";
-import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
 import { ProjectRequestDialog } from "../../dialogs/add-project/project-request.dialog";
 import { DataSharingService } from "../../../core/shared/data-sharing.service";
 
@@ -26,15 +23,9 @@ import { DataSharingService } from "../../../core/shared/data-sharing.service";
 export class SubcoFcProjectComponent implements OnInit {
   @Input("forecast") forecast: FcEntry;
   @Input("project") project: FcProject;
-  @Input("index") i: number;
   @Input("monthId") monthId: number;
   @Input("userId") userId: number;
   @Input("lastEditor") lastEditor: string;
-
-  /**
-   * list of all probabilities
-   */
-  availableProbabilities: Probability[] = [];
 
   /**
    * list of all projects
@@ -84,8 +75,6 @@ export class SubcoFcProjectComponent implements OnInit {
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
     );
-    this.availableProbabilities = this.utilitiesService.getProbabilities();
-
     this.dataSharingService.setProjectInputValid(true);
     this.validateProjects();
     this.checkCORValueBiggerThanZero();
@@ -197,82 +186,50 @@ export class SubcoFcProjectComponent implements OnInit {
     this.validateProjects();
   }
 
-  switchBillable(): string {
-    if (this.project.billable) {
-      if (this.project.billable.valueOf()) {
-        return "Switch to Non-Billable";
-      }
-    }
-
-    return "Switch to Billable";
-  }
-
   /**
    * Loads the history data of a specific forecast
    *
    * @param attribute
    * @param index
    */
-  history(attribute: string, index: number): string | boolean {
+  history(attribute: string): string | boolean {
     if (
       this.forecast.history &&
-      this.forecast.history.length > 0 &&
-      this.forecast.history[0].projects.length > index
+      this.forecast.history.length > 0
     ) {
       if (
         attribute === "days" &&
-        this.forecast.history[0].projects[index].plannedProjectDays
+        this.forecast.history[0].projects[0].plannedProjectDays
       ) {
         return (
           this.lastEditor +
           ": " +
-          this.forecast.history[0].projects[index].plannedProjectDays +
+          this.forecast.history[0].projects[0].plannedProjectDays +
           " days"
         );
       } else if (
         attribute === "cor" &&
-        this.forecast.history[0].projects[index].cor
+        this.forecast.history[0].projects[0].cor
       ) {
         return (
           this.lastEditor +
           ": € " +
-          this.forecast.history[0].projects[index].cor
-        );
-      } else if (attribute === "probabilityId") {
-        return (
-          this.lastEditor +
-          ": " +
-          this.availableProbabilities.find(
-            (p: Probability) =>
-              p.id === this.forecast.history[0].projects[index].probabilityId
-          ).name
+          this.forecast.history[0].projects[0].cor
         );
       }
     } else if (this.forecast.createdAt && this.forecast.changedBy) {
       if (
         attribute === "days" &&
-        this.forecast.projects[index].plannedProjectDays
+        this.forecast.projects[0].plannedProjectDays
       ) {
         return (
           this.lastEditor +
           ": " +
-          this.forecast.projects[index].plannedProjectDays +
+          this.forecast.projects[0].plannedProjectDays +
           " days"
         );
-      } else if (attribute === "cor" && this.forecast.projects[index].cor) {
-        return this.lastEditor + ": € " + this.forecast.projects[index].cor;
-      } else if (
-        attribute === "probabilityId" &&
-        this.forecast.projects[index].probabilityId
-      ) {
-        return (
-          this.lastEditor +
-          ": " +
-          this.availableProbabilities.find(
-            (p: Probability) =>
-              p.id === this.forecast.projects[index].probabilityId
-          ).name
-        );
+      } else if (attribute === "cor" && this.forecast.projects[0].cor) {
+        return this.lastEditor + ": € " + this.forecast.projects[0].cor;
       }
     }
 
@@ -290,39 +247,14 @@ export class SubcoFcProjectComponent implements OnInit {
     return project ? project.name : "";
   }
 
-  /**
-   * Returns whether the logged in user has a lead role
-   */
-  hasLeadRole(): boolean {
-    return this.authService.hasRole(env.roles.pdl);
-  }
-
-  hasPLRole(): boolean {
-    return this.authService.hasRole(env.roles.pl);
-  }
-
-  /**
-   * Tests if a COR value has already been entered
-   * @param cor
-   */
-  hasCORValue(cor: number): boolean {
-    if (typeof cor !== "undefined") {
-      return true;
-    }
-
-    return false;
-  }
-
   checkCORValueBiggerThanZero(): void {
-    if (this.project.billable && this.hasLeadRole()) {
+    if (this.project.billable) {
       if (this.project.cor > 0) {
         this.dataSharingService.setCorValueBiggerThanZero(true);
       } else {
         this.dataSharingService.setCorValueBiggerThanZero(false);
       }
-    } else if (!this.project.billable && this.hasLeadRole()) {
-      this.dataSharingService.setCorValueBiggerThanZero(true);
-    } else if (!this.hasLeadRole()) {
+    } else {
       this.dataSharingService.setCorValueBiggerThanZero(true);
     }
   }
