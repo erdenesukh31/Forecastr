@@ -7,7 +7,7 @@
 <!-- <mat-divider></mat-divider> -->
 
 <div class="project-list" [ngClass]="{'height-fix': !singleView && hasMSLRole()}">
-    <app-subco-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor"></app-subco-fc-project>
+    <app-subco-fc-project [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="0" [lastEditor]="lastEditor"></app-subco-fc-project>
 </div>
 
 <div class="multi-view-box" *ngIf="!singleView">
@@ -26,7 +26,7 @@
 </div>
 
 <div class="button-row">
-  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()"
+  <button mat-raised-button *ngIf="!fcIsLocked()"
     color="primary" (click)="addProjectToForecast()">
     <mat-icon>playlist_add</mat-icon> Add Project
   </button>

@@ -162,30 +162,6 @@ export class SubcoFcProjectComponent implements OnInit {
   }
 
   /**
-   * Removes a project from the forecast.
-   * @param index
-   */
-  removeProjectFromForecast(index: number): void {
-    let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(
-      ConfirmMessageDialog,
-      {
-        data: {
-          message:
-            "Are you sure you want to remove this project from the forecast?",
-          button: { cancel: "Cancel", submit: "Remove" },
-        },
-      }
-    );
-
-    dialogRef.afterClosed().subscribe((remove: boolean) => {
-      if (remove === true) {
-        this.forecastService.removeProject(this.monthId, this.userId, index);
-        this.setProjectInputValidness();
-      }
-    });
-  }
-
-  /**
    * Removes projectId when Autocomplete panel is opened
    */
   clearProjectId(): void {

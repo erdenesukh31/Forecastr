@@ -53,7 +53,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Contains the newest version of forecast
    */
   forecast: FcEntry;
-  availableProjects: Project[] = [];
+  project: Project;
 
   /**
    * string that includes name + date of last edit
@@ -100,7 +100,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
       this.subscribeForcasts();
 
     this.grades = this.userService.getGrades();
-    this.availableProjects = this.utilitiesService.getProjects();
+    this.project = this.utilitiesService.getProjects()[0];
 
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
