@@ -385,7 +385,7 @@ export class TeamleadSummaryComponent implements OnInit, OnDestroy {
               this.numberToString(trainingDays) + ";" + 
               this.numberToString(bddDays) + ";" + 
               this.numberToString(benchDays) + ";" + 
-              this.numberToString((billableDays - nonBillableDays)/(paidDays - vacationDays), 4) + ";" + 
+              this.numberToString((billableDays + nonBillableDays)/(paidDays - vacationDays), 4) + ";" + 
               this.numberToString((billableDays)/(paidDays - vacationDays), 4) + ";" + 
               this.numberToString(externalRevenue) + ";" + 
               this.numberToString(internalRevenue) + ";" + 
