@@ -158,87 +158,27 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   /**
    * Return value for given type 
    * @param type
-   * @param userId
+   * @param subcoId
    */
-  getValue(type: string, userId: number): any {
-    let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.userId === userId);
+  getValue(type: string, subcoId: number): any {
+    let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.userId === subcoId); //TODO: Replace with SubcoForecast and subcoId
     if (!fc) {
-      if (type === 'totaldays') {
-        let u: User = this.userService.getUser(userId);
-        if (u && u.fte) {
-          return u.fte * parseInt(this.month.workingdays, 10);
-        } else {
-          return parseInt(this.month.workingdays, 10);
-        }
-      }
       return 0;
     }
+    if (fc.projects && fc.projects.length > 0) {
+      if (type === 'costRate') {
+        return fc.projects
+          .map((p: FcProject) => (p.costRate ? p.costRate : 0))
+          .reduce((pSum: number, a: number) => pSum + a);
 
-    if (type === 'arve' && typeof fc.arve === 'number') {
-      return parseFloat((fc.arve * 100).toFixed(0));
-
-    } else if (type === 'urve' && typeof fc.urve === 'number') {
-      return parseFloat((fc.urve * 100).toFixed(0));
-
-    } else if (type === 'totaldays') {
-      if (typeof fc.fte !== 'undefined') {
-        return parseInt(this.month.workingdays, 10) * fc.fte;
-      } else {
-        return parseInt(this.month.workingdays, 10);
       }
-
-    } else if (fc.projects && fc.projects.length > 0) {
-      if (type === 'billabledays') {
+      else if (type === 'cor') {
         return fc.projects
-          .map((p: FcProject) => ((p.plannedProjectDays && p.billable) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'projectdays') {
-        let projectIds: number[] = this.utilitiesService.getProjects()
-          .filter((p: Project) => (p.projectType === env.projectTypes.default || p.projectType === env.projectTypes.nonbillable))
-          .map((p: Project) => p.id);
-
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays && (projectIds.indexOf(p.projectId) >= 0) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'vacationdays') {
-        let projectIds: number[] = this.utilitiesService.getProjects()
-          .filter((p: Project) => (p.projectType === env.projectTypes.vacationdays))
-          .map((p: Project) => p.id);
-
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays && (projectIds.indexOf(p.projectId) >= 0) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'benchdays') {
-        let projectIds: number[] = this.utilitiesService.getProjects()
-          .filter((p: Project) => (p.projectType === env.projectTypes.benchdays))
-          .map((p: Project) => p.id);
-
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays && (projectIds.indexOf(p.projectId) >= 0) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'trainingdays') {
-        let projectIds: number[] = this.utilitiesService.getProjects()
-          .filter((p: Project) => (p.projectType === env.projectTypes.trainingdays))
-          .map((p: Project) => p.id);
-
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays && (projectIds.indexOf(p.projectId) >= 0) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'businessdays') {
-        let projectIds: number[] = this.utilitiesService.getProjects()
-          .filter((p: Project) => (p.projectType === env.projectTypes.businessdays))
-          .map((p: Project) => p.id);
-
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays && (projectIds.indexOf(p.projectId) >= 0) ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
-
-      } else if (type === 'workingdays') {
+        .map((p: FcProject) => (p.cor ? p.cor : 0))
+        .reduce((pSum: number, a: number) => pSum + a);
+        
+      }
+      else if (type === 'manDay') {
         return fc.projects
           .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
           .reduce((pSum: number, a: number) => pSum + a);
@@ -246,6 +186,30 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
       } else if (type === 'revenue') {
         return fc.projects
           .map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0)))
+          .reduce((pSum: number, a: number) => pSum + a);
+
+      } else if (type === 'costs') {
+        return fc.projects
+          .map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0)))
+          .reduce((pSum: number, a: number) => pSum + a);
+
+      } else if (type === 'contribution') {
+        return fc.projects
+          .map((p: FcProject) =>{
+            let revenue = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0);
+            let costs = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0);
+            return revenue - costs;
+          }) 
+          .reduce((pSum: number, a: number) => pSum + a);
+
+      } else if (type === 'cp') {
+        return fc.projects
+          .map((p: FcProject) =>{
+            let revenue = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0);
+            let costs = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0);
+            let contribution = revenue - costs;
+            return contribution / revenue;
+          })
           .reduce((pSum: number, a: number) => pSum + a);
 
       }
