@@ -17,6 +17,7 @@ import { AddProjectDialog } from './dialogs/add-project/add-project.dialog';
 import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
+import { SubcosComponent } from './components/subcos/subcos.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,6 +40,7 @@ import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.
     AddUserDialog,
     AddTeamDialog,
     ConfirmMessageDialog,
+    SubcosComponent
   ],
   exports: [
     MatExpansionModule,
