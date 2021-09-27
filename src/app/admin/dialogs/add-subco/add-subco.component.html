@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Add Subcontractor</h2>
+<form [formGroup]="userForm" >
+  <div class="dialog-content" >
+
+   <mat-form-field appearance="outline">
+      <mat-label>Firstname</mat-label>
+      <input matInput formControlName="firstName"  type="text" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lastname</mat-label>
+      <input matInput formControlName="lastName" type="text"  required />
+    </mat-form-field>
+
+    <mat-form-field  appearance="outline">
+      <mat-label>Project code</mat-label>
+      <input formControlName="projectCode" matInput type="text"  required />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!data.id" appearance="outline">
+      <mat-label>Project name</mat-label>
+      <input formControlName="projectName" matInput type="text"  required />
+    </mat-form-field>
+
+    <!--<mat-form-field appearance="outline">
+      <mat-label>Choose a Team</mat-label>
+      <mat-select formControlName="parentId"  id="parentId">
+        <mat-option [value]="null">-</mat-option>
+        <ng-container *ngFor="let t of getTeamleads()">
+          <mat-option *ngIf="t.id !== data.id" [value]="t.id">{{t.lastName}}, {{t.firstName}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>-->
+
+  </div>
+  <mat-dialog-actions>
+    <!--<button mat-button (click)="onCancelClick()">Cancel</button>-->
+    <button mat-button>Cancel</button>
+    <!--<button mat-button (click)="onSaveClick()" [disabled]="userForm.invalid">Save</button>-->
+    <button mat-button>Save</button>
+  </mat-dialog-actions>
+</form> 
