@@ -67,9 +67,9 @@ export class SubCoService {
    */
   initializeAllSubCoPreviews(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoPreview[]>(this.BO.getUsers())   /* To be implemented yet*/
+      this.http.get<subCoPreview[]>(this.BO.getUsers())   /* To be implemented yet getSubCosPreview*/
         .subscribe((subCos: subCoPreview[]) => {
-          this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));    /* sorting ok?*/
+          this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));   
           resolve();
         }, () => reject());
     });
@@ -77,9 +77,9 @@ export class SubCoService {
 
   initializeAllSubCoDetails(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoDetails[]>(this.BO.getUsers())
+      this.http.get<subCoDetails[]>(this.BO.getUsers()) /* To be implemented yet getSubCosPreview*/
         .subscribe((subCos: subCoDetails[]) => {
-          this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));    /* sorting ok?*/
+          this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));  
           resolve();
         }, () => reject());
     });
