@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Add Subcontractor</h2>
+<!--<form [formGroup]="userForm" >-->
+<form>
+  <div class="dialog-content" >
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="text" id="name" required />
+    </mat-form-field>
+
+    <mat-form-field  appearance="outline">
+      <mat-label>Choose a type</mat-label>   <!-- get all subco types -->
+      <mat-select formControlName="type" id="type" required>
+        <mat-option [value]="null">-</mat-option>
+        <mat-option [value]="1">External</mat-option>
+        <mat-option [value]="2">Internal</mat-option>
+        <mat-option [value]="3">Offshore</mat-option>
+        <!--<ng-container *ngFor="let t of types">
+          <mat-option [value]="t.typeId">{{t.name}}</mat-option>
+        </ng-container> -->
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onSaveClick()" [disabled]="subcoForm.invalid">Save</button>
+  </mat-dialog-actions>
+</form> 

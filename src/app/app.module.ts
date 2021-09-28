@@ -17,7 +17,6 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { SafeHtmlPipe } from "./core/pipes/safe-html";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { DeviceDetectorModule } from "ngx-device-detector";
-import { AddSubcoComponent } from './admin/dialogs/add-subco/add-subco.component';
 
 /**
  * AoT requires an exported function for factories
@@ -27,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ResetPasswordComponent, AddSubcoComponent],
+  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     FlexLayoutModule,

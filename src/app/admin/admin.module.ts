@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddMonthDialog } from './dialogs/add-month/add-month.dialog';
 import { AddProjectDialog } from './dialogs/add-project/add-project.dialog';
 import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
+import { AddSubcoDialog } from './dialogs/add-subco/add-subco.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
 import { SubcosComponent } from './components/subcos/subcos.component';
@@ -38,6 +39,7 @@ import { SubcosComponent } from './components/subcos/subcos.component';
     AddProjectDialog,
     AddMonthDialog,
     AddUserDialog,
+    AddSubcoDialog,
     AddTeamDialog,
     ConfirmMessageDialog,
     SubcosComponent
