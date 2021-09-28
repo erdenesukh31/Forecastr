@@ -42,6 +42,8 @@ export class FcProject {
      */
     errors?: string[];
 
+    costRate?: number;
+
     constructor() {
         this.projectId = undefined;
         this.plannedProjectDays = 0;
@@ -51,5 +53,6 @@ export class FcProject {
         this.billable = true;
         this.mandatory = 'N';
         this.projectType = 0;
+        this.costRate = 0;
     }
 }

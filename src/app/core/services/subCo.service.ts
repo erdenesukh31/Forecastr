@@ -6,7 +6,8 @@ import { SubCoType } from '../interfaces/subCoType';
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../shared/business-operations.service';
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
-import { useAnimation } from '@angular/animations';
+import { FcEntry } from '../interfaces/fcEntry';
+import { SummaryData } from '../interfaces/summaryData';
 
 
 
@@ -14,7 +15,6 @@ import { useAnimation } from '@angular/animations';
   providedIn: 'root',
 })
 export class SubCoService {
-
   subCoPrev$: BehaviorSubject<subCoPreview>;
   subCoDet$: BehaviorSubject<subCoDetails>;
   
@@ -150,6 +150,20 @@ export class SubCoService {
     this.allSubCoDetails$.next(subCos);
   }
 
+  //See team-forecast.service:302 setForecastsLockState
+  setForecastsLockState(id: number, level: number, locked: boolean): Promise<FcEntry[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  //See team-forecast.service:56 getTeamForecastPromise
+  getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{
+    throw new Error("Method not implemented.");
+  }
+
+  //See team-forecast.service:105 getSummaryData
+  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: subCoDetails[]): SummaryData {
+    throw new Error("Method not implemented.");
+  }
 
 
    /**
