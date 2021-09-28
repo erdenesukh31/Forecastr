@@ -13,6 +13,7 @@ import { TeamComponent } from './forecast/pages/team/team.component';
 import { environment as env } from '../environments/environment';
 import { PracticeComponent } from './forecast/pages/practice/practice.component';
 import { ExecutiveComponent } from './forecast/pages/executive/executive.component';
+import { SubcosComponent } from './forecast/pages/subcos/subcos.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffingComponent } from './forecast/pages/staffing/staffing.component';
 import { HeadOfPracticesComponent } from './forecast/pages/head-of-practices/head-of-practices.component';
@@ -111,6 +112,14 @@ const routes: Routes = [
         canActivate: [RoleGuard],
         data: {
           expectedRole: 4, //env.roles.fc
+        },
+      },
+      {
+        path: "subcos/:id",
+        component: SubcosComponent,
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: 1, //env.roles.pdl
         },
       },
     ],

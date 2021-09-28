@@ -25,14 +25,22 @@
         <h1>Monthly Forecast</h1>
 
         <div *ngIf="hasLeadRole()">
-          <button *ngIf="isPractice()" mat-raised-button class="dashboard-button practice-dashboard"
+          <button *ngIf="isPractice() && !isEm()" mat-raised-button class="dashboard-button practice-dashboard"
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="!isPractice()" mat-raised-button class="dashboard-button pdl-dashboard"
+          <button *ngIf="!isPractice() && !isEm()" mat-raised-button class="dashboard-button pdl-dashboard"
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
+          <button *ngIf="isPractice() && isEm()" mat-raised-button class="dashboard-button practice-em-dashboard"
+          (click)="openDashboard()">
+          <mat-icon>insert_chart</mat-icon> KPI Overview
+        </button>
+        <button *ngIf="!isPractice() && isEm()" mat-raised-button class="dashboard-button pdl-em-dashboard"
+          (click)="openDashboard()">
+          <mat-icon>insert_chart</mat-icon> KPI Overview
+        </button>
         </div>
 
 
@@ -49,6 +57,9 @@
             </mat-button-toggle>
             <mat-button-toggle value="practice" *ngIf="isPractice()">
               <mat-icon>supervisor_account</mat-icon> Practice
+            </mat-button-toggle>
+            <mat-button-toggle value="subcos" *ngIf="isEm()">
+              <mat-icon>supervisor_account</mat-icon> Subcos
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
