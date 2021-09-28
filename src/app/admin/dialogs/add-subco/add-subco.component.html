@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>Add Subcontractor</h2>
-<form [formGroup]="userForm" >
+<!--<form [formGroup]="userForm" >-->
+<form>
   <div class="dialog-content" >
 
    <mat-form-field appearance="outline">
@@ -17,10 +18,10 @@
       <input formControlName="projectCode" matInput type="text"  required />
     </mat-form-field>
 
-    <mat-form-field *ngIf="!data.id" appearance="outline">
+    <!--<mat-form-field *ngIf="!data.id" appearance="outline">
       <mat-label>Project name</mat-label>
       <input formControlName="projectName" matInput type="text"  required />
-    </mat-form-field>
+    </mat-form-field> -->
 
     <!--<mat-form-field appearance="outline">
       <mat-label>Choose a Team</mat-label>
