@@ -5,6 +5,7 @@ import { FcProject } from './fcProject';
  */
 export class FcEntry {
     forecastId?: number;
+    subcoForecastId?: number;
     userId: number;
     monthId: number;
     comment: string;

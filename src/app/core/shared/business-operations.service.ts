@@ -256,4 +256,52 @@ export class BusinessOperationsService {
   financialSummary(monthIdFrom: number, monthIdTo: number): string {
    return env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo;
 }
+
+  getSubcosPreview(): string {
+    return env.api + 'subcos';
+  }
+  getSubcosDetail(): string {
+    return env.api + 'subcos';
+  }
+  getSubcoPreview(subCoId: number): string {
+    return env.api + 'subcos' + '/' + subCoId;
+  }
+  getSubcoDetail(subCoId: number): string {
+    return env.api + 'subcos' + '/' + subCoId;
+  }
+
+  updateSubCoPreview(subCoId: number): string {
+    return env.api + 'subcos' + '/'   + subCoId;
+  }
+  updateSubCoDetail(subCoId: number): string {
+    return env.api + 'subcos' + '/'   + subCoId;
+  }
+  addSubCoPreview(): string {
+    return env.api + 'subcos' + '/';
+  }
+  addSubCoDetail(): string {
+    return env.api + 'subcos' + '/';
+  }
+  deleteSubCoPreview(subCoId: number): string {
+    return env.api + 'subcos' + '/'  + subCoId;
+  }
+  deleteSubCoDetail(subCoId: number): string {
+    return env.api + 'subcos' + '/'  + subCoId;
+  }
+  getSubCoForecasts(monthId: number, emId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + '/' + emId;
+  }  
+  getSubCoTypes(): string {
+    return env.api + 'subcos' + '/' + 'type';
+  }
+  getSubCoForecastsMonthRange(startMonthId: number, endMonthId: number, emId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + startMonthId+ '/' + endMonthId+ '/'+emId;
+  }  
+  updateSubCoForecasts(subCoForecastId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + subCoForecastId;
+  }  
+  addSubCoForecasts(subCoForecastId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts';
+  }  
+
 }

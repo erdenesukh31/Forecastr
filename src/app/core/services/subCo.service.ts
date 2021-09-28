@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { subCoDetails } from '../interfaces/subCoDetails';
 import { subCoPreview } from '../interfaces/subCoPreview';
+import { SubCoType } from '../interfaces/subCoType';
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../shared/business-operations.service';
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
+import { FcEntry } from '../interfaces/fcEntry';
+import { SummaryData } from '../interfaces/summaryData';
 
 
 
@@ -12,12 +15,13 @@ import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
   providedIn: 'root',
 })
 export class SubCoService {
-
   subCoPrev$: BehaviorSubject<subCoPreview>;
   subCoDet$: BehaviorSubject<subCoDetails>;
   
   allSubCoPreviews$: BehaviorSubject<subCoPreview[]>;
   allSubCoDetails$: BehaviorSubject<subCoDetails[]>;
+
+  types$: BehaviorSubject<SubCoType[]>;
 
 
   /**
@@ -35,6 +39,7 @@ export class SubCoService {
     this.subCoDet$ = new BehaviorSubject(new subCoDetails)
     this.allSubCoPreviews$ = new BehaviorSubject([])
     this.allSubCoDetails$ = new BehaviorSubject([])
+    this.types$ = new BehaviorSubject([]);
   }
 
   /**
@@ -67,7 +72,7 @@ export class SubCoService {
    */
   initializeAllSubCoPreviews(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoPreview[]>(this.BO.getUsers())   /* To be implemented yet getSubCosPreview*/
+      this.http.get<subCoPreview[]>(this.BO.getSubcosPreview())   /* To be implemented yet getSubCosPreview*/
         .subscribe((subCos: subCoPreview[]) => {
           this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));   
           resolve();
@@ -77,7 +82,7 @@ export class SubCoService {
 
   initializeAllSubCoDetails(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoDetails[]>(this.BO.getUsers()) /* To be implemented yet getSubCosPreview*/
+      this.http.get<subCoDetails[]>(this.BO.getSubcosPreview()) /* To be implemented yet getSubCosDetails*/
         .subscribe((subCos: subCoDetails[]) => {
           this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));  
           resolve();
@@ -86,6 +91,18 @@ export class SubCoService {
   }
 
  
+ /**
+   * Requests type data from server
+   */
+  initializeGrades(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get<SubCoType[]>(this.BO.getSubCoTypes())   /* To be implemented yet getSubCosTypes*/
+        .subscribe((types$: SubCoType[]) => {
+          this.types$.next(types$);
+          resolve();
+        }, () => reject());
+    });
+  }
 
   /**
    * Empties subco data
@@ -132,6 +149,71 @@ export class SubCoService {
 
     this.allSubCoDetails$.next(subCos);
   }
+
+  //See team-forecast.service:302 setForecastsLockState
+  setForecastsLockState(id: number, level: number, locked: boolean): Promise<FcEntry[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  //See team-forecast.service:56 getTeamForecastPromise
+  getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{
+    throw new Error("Method not implemented.");
+  }
+
+  //See team-forecast.service:105 getSummaryData
+  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: subCoDetails[]): SummaryData {
+    throw new Error("Method not implemented.");
+  }
+
+
+   /**
+   * updates/changes subco 
+   */
+    updateSubCoPreviews(newSubCos: subCoPreview[]): void {
+      let subCos: subCoPreview[] = this.allSubCoPreviews$.getValue();
+      var i = 0;
+      newSubCos.forEach((u: subCoPreview) => {
+        if (subCos.find((us: subCoPreview) => us.subCoId === u.subCoId)) {
+           subCos[i].subCoType = u.subCoType;
+           subCos[i].subCoTypeId = u.subCoTypeId;
+           subCos[i].resourceName = u.resourceName;
+        }
+        i++;
+      });
+  
+      this.allSubCoPreviews$.next(subCos);
+    }
+    updateSubCoDetails(newSubCos: subCoDetails[]): void {
+      let subCos: subCoDetails[] = this.allSubCoDetails$.getValue();
+      var i = 0;
+      newSubCos.forEach((u: subCoDetails) => {
+        if (subCos.find((us: subCoDetails) => us.subCoId === u.subCoId)) {
+          subCos[i].subCoType = u.subCoType;
+          subCos[i].subCoTypeId = u.subCoTypeId;
+          subCos[i].resourceName = u.resourceName;
+          subCos[i].projectId = u.projectId;
+          subCos[i].projectName = u.projectName;
+          subCos[i].customer = u.customer;
+          subCos[i].monthId = u.monthId;
+          subCos[i].forecastId = u.forecastId;
+          subCos[i].manDay = u.manDay;
+          subCos[i].revenue = u.revenue;
+          subCos[i].costRate = u.costRate;
+          subCos[i].cor = u.cor;
+          subCos[i].cost = u.cost;
+          subCos[i].contribution = u.contribution;
+          subCos[i].cp = u.cp;
+          subCos[i].engagamentManagerID = u.engagamentManagerID;
+        }
+        i++;
+      });
+  
+      this.allSubCoDetails$.next(subCos);
+    }
+
+    getSubcoTypes(): SubCoType[] {
+      return this.types$.getValue();
+    }
 
 
 }

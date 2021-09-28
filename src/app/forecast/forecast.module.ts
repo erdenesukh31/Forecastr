@@ -11,12 +11,17 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";
 import { TeamComponent } from "./pages/team/team.component";
+import { SubcosComponent } from "./pages/subcos/subcos.component";
 
 import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
 import { FcProjectComponent } from "./components/fc-project/fc-project.component";
 import { FcEntrySummaryComponent } from "./components/fc-entry-summary/fc-entry-summary.component";
 import { TeamleadSummaryComponent } from "./components/teamlead-summary/teamlead-summary.component";
 import { TeamleadMonthComponent } from "./components/teamlead-month/teamlead-month.component";
+import { SubcoMonthComponent } from "./components/subco-month/subco-month.component";
+import { SubcoSummaryComponent } from "./components/subco-summary/subco-summary.component";
+import { SubcoFcEntryComponent } from "./components/subco-fc-entry/subco-fc-entry.component"
+import { SubcoFcProjectComponent } from "./components/subco-fc-project/subco-fc-project.component"
 import { PracticeComponent } from "./pages/practice/practice.component";
 
 import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
@@ -58,11 +63,16 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     ForecastComponent,
     IndividualComponent,
     TeamComponent,
+    SubcosComponent,
     PracticeComponent,
     FcEntryComponent,
     FcProjectComponent,
     FcEntrySummaryComponent,
     TeamleadMonthComponent,
+    SubcoFcEntryComponent,
+    SubcoFcProjectComponent,
+    SubcoMonthComponent,
+    SubcoSummaryComponent,
     TeamleadSummaryComponent,
     ExecutiveComponent,
     ExecutiveDetailComponent,
