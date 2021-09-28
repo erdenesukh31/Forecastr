@@ -64,11 +64,11 @@ export class SubcosComponent implements OnInit {
   openUserDialog(subco: subCoPreview): void {
     let dialogRef: any = this.dialog.open(AddSubcoDialog, { height: 'auto', width: '50vw', data: subco });
 
-    /*dialogRef.afterClosed().subscribe((s: subCoPreview | boolean) => {
+    dialogRef.afterClosed().subscribe((s: subCoPreview | boolean) => {
       if (s) {
-        this.userAdminService.setUser(<subCoPreview>s);
+        //this.subcoService.setUser(<subCoPreview>s);
       }
-    });*/
+    });
   }
 
   /**

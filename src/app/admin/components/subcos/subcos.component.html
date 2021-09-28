@@ -1,25 +1,15 @@
-<table mat-table matSort [dataSource]="">
-    <ng-container matColumnDef="active">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
-      <!--td mat-cell *matCellDef="let user" class="flag-button">
-        <mat-slide-toggle color="primary" [checked]="user.active" [(ngModel)]="user.active" (change)="setUserActiveState(user.id, user.active)"></mat-slide-toggle>
-      </td> -->
-    </ng-container>
-  
-    <ng-container  matColumnDef="name">
+<table mat-table matSort [dataSource]="subco">
+  <ng-container matColumnDef="active">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+  </ng-container>
+    <ng-container  matColumnDef="name" >
       <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>
-     <!-- <td mat-cell  *matCellDef="let user">{{user.lastName}}, {{user.firstName}}</td> -->
-     <td mat-cell>
-        Lastname, Firstname
-    </td>
+      <td mat-cell  *matCellDef="let subco">{{subco.resourceName}}</td>
     </ng-container>
   
     <ng-container  matColumnDef="type">
       <th mat-header-cell  mat-sort-header *matHeaderCellDef>Type</th>
-     <!-- <td mat-cell  *matCellDef="let user">{{ user.email }}</td> -->
-     <td mat-cell>
-      12345 
-    </td>
+      <td mat-cell  *matCellDef="let subco">{{ subco.subCoType }}</td> 
     </ng-container>
   
     <ng-container matColumnDef="edit">
@@ -27,8 +17,8 @@
       <!--<td mat-cell *matCellDef="let user" class="action-button" (click)="openUserDialog(user)"><mat-icon>edit</mat-icon></td> -->
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="[ 'active', 'name', 'type', 'edit']"></tr>
-    <tr mat-row  *matRowDef="let row; columns: [ 'active', 'name', 'type', 'edit'];" ></tr>
+    <tr mat-header-row *matHeaderRowDef="[ 'active','name', 'type', 'edit']"></tr>
+    <tr mat-row  *matRowDef="let row; columns: [ 'active','name', 'type', 'edit'];" ></tr>
 </table>
 
 <div class="button-row">
