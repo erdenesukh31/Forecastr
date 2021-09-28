@@ -23,6 +23,8 @@ import { environment as env } from '../../../../environments/environment';
 import { TeamUserService } from "../../../core/services/forecasts/team-user.service";
 import { ExportCsvDialog } from "../../dialogs/export-csv/export-csv.dialog";
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
+import { SubCoService } from "../../../core/services/subCo.service";
+import { subCoDetails } from "../../../core/interfaces/subCoDetails";
 
 /**
  * subco summary component
@@ -57,7 +59,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   /**
    * subcos member list
    */
-  subcos: User[] = []; //TODO: Replace with subcos
+  subcos: subCoDetails[] = []; //TODO: Replace with subcos
 
   /**
    * contains summary-data (calculated in subco-summary service)
@@ -97,9 +99,8 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private utilitiesService: UtilitiesService,
     private forecastService: ForecastService,
-    private subcoForecastService: TeamForecastService, //TODO: Replace with SubcoForecastService
     private userService: UserService,
-    private subcoService: TeamUserService, //TODO: Replace with SubcoService
+    private subcoService: SubCoService, //TODO: Replace with SubcoService
     private authService: AuthService,
     private pageState: PageStateService,
   ) {
@@ -118,46 +119,40 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     this.projects = this.utilitiesService.getProjects();
     this.months = this.utilitiesService.getMonths();
 
-    if (this.role === 'practice') {
-      this.subcosSubscription = this.subcoService.teamPL$ //TODO: replace
-        .subscribe((subco: User[]) => {
-          this.subcos = subco;
-        });
-    } else {
-      this.subcosSubscription = this.subcoService.teamPDL$ //TODO: replace
-        .subscribe((subco: User[]) => {
-          this.subcos = subco;
-        });
-    }
+    this.subcosSubscription = this.subcoService.allSubCoDetails$ //TODO: replace
+      .subscribe((subco: subCoDetails[]) => {
+        this.subcos = subco;
+      });
 
     this.fcSubscription = this.forecastService.forecasts$
       .subscribe((forecasts: FcEntry[]) => {
-        let relevantUsers: User[] = this.subcos.filter((u: User) => this.isUserRelevantForMonth(u, this.month));
-        let userIds: number[] = relevantUsers.map((u: User) => u.id);
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && userIds.indexOf(fc.userId) >= 0);
-        this.summaryData = this.subcoForecastService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantUsers);
+        let relevantSubcos: subCoDetails[] = this.subcos.filter((u: subCoDetails) => this.isSubcoRelevantForMonth(u, this.month));
+        let subcoIds: number[] = relevantSubcos.map((u: subCoDetails) => u.subCoId);
+        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && subcoIds.indexOf(fc.userId) >= 0);
+        this.summaryData = this.subcoService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantSubcos);
         this.summaryProjects = new MatTableDataSource(this.summaryData.days);
       });
   }
 
-  isUserRelevantForMonth(user: User, month: Month) : boolean {
-    if(user.endDate && user.startDate && month.time) {
-      var endMonth = new Date(user.endDate);
-      endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
-      var startMonth = new Date(user.startDate);
-      startMonth = new Date(startMonth.getFullYear(), endMonth.getMonth(), 1);
-      var monthMonth = new Date(month.time);
-      monthMonth = new Date(monthMonth.getFullYear(), monthMonth.getMonth(), 1)
-      if(startMonth <= endMonth) {
-        if(monthMonth > endMonth) {
-          return false;
-        }
-      } else if(startMonth > endMonth) {
-        if(monthMonth <= startMonth && monthMonth >= endMonth) {
-          return false;
-        }
-      }
-    }
+  //TODO: is this relevant
+  isSubcoRelevantForMonth(user: subCoDetails, month: Month) : boolean {
+    // if(user. && user.startDate && month.time) {
+    //   var endMonth = new Date(user.endDate);
+    //   endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
+    //   var startMonth = new Date(user.startDate);
+    //   startMonth = new Date(startMonth.getFullYear(), endMonth.getMonth(), 1);
+    //   var monthMonth = new Date(month.time);
+    //   monthMonth = new Date(monthMonth.getFullYear(), monthMonth.getMonth(), 1)
+    //   if(startMonth <= endMonth) {
+    //     if(monthMonth > endMonth) {
+    //       return false;
+    //     }
+    //   } else if(startMonth > endMonth) {
+    //     if(monthMonth <= startMonth && monthMonth >= endMonth) {
+    //       return false;
+    //     }
+    //   }
+    // }
     return true;
   }
 
@@ -208,7 +203,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       if (submit === true) {
         this.pageState.showSpinner();
         for(let member of this.subcos) {
-          this.forecastService.unlockForecast(this.month.id, member.id);
+          this.forecastService.unlockForecast(this.month.id, member.subCoId);
         }
         this.forecastService.unlockForecast(this.month.id, this.userId);
         this.pageState.hideSpinner();
@@ -241,7 +236,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       level = 2;
     }
 
-    this.subcoForecastService.setForecastsLockState(this.month.id, level, locked)
+    this.subcoService.setForecastsLockState(this.month.id, level, locked)
       .then((forecasts: FcEntry[]) => {
         if (forecasts) {
           this.forecastService.addForecasts(forecasts, true);
@@ -300,7 +295,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
 
     this.utilitiesService.getMonths().forEach((month: Month) => {
       if (csvExportMonths.indexOf(month.id) >= 0) {
-        this.subcoForecastService.getTeamForecastPromise(this.userId, month.id, level).then((fcEntries: FcEntry[]) => { //TODO: Replace
+        this.subcoService.getForecastPromise(this.userId, month.id, level).then((fcEntries: FcEntry[]) => { //TODO: Replace
           let monthSummary: string = "Month;" + month.name + lineEnding + "Working Days;" + month.workingdays + lineEnding;
           monthSummary += header;
 

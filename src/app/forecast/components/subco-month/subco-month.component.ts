@@ -13,6 +13,8 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 import { Project } from "../../../core/interfaces/project";
 import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
+import { subCoDetails } from "../../../core/interfaces/subCoDetails";
+import { SubCoService } from "../../../core/services/subCo.service";
 
 /**
  * teamlead view component
@@ -44,7 +46,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   userId: number;
 
   fcEntries: FcEntry[] = [];
-  subcos: User[] = []; //TODO: Replace User with Subcos
+  subcos: subCoDetails[] = []; 
   
   /**
    * scroll-variable for scrolling into in AfterViewChecked
@@ -61,11 +63,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   constructor(
     private userService: UserService,
-    private subcoService: TeamUserService, //TODO: Needs to be changed
+    private subcoService: SubCoService,
     private authService: AuthService,
     private utilitiesService: UtilitiesService,
     private forecastService: ForecastService,
-    private teamForecastService: TeamForecastService, //TOD: Needs tp be changed or removed
   ) {
     this.userId = this.authService.getUserId();
   }
@@ -77,14 +78,14 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.firstTime = true;
     this.fcSubscription = this.forecastService.forecasts$
       .subscribe((forecasts: FcEntry[]) => {
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
+        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
       });
 
-    this.subcoSubscription = this.subcoService.teamPDL$
-      .subscribe((subcos: User[]) => { //TODO: Replace
+    this.subcoSubscription = this.subcoService.allSubCoDetails$
+      .subscribe((subcos: subCoDetails[]) => {
         for (let i = 0; i < subcos.length; i++) {
-          if(this.userId === subcos[i].id) {
-            let tempUser: User = subcos[0];
+          if(this.userId === subcos[i].engagamentManagerID) { //TODO: do we need that?
+            let tempUser: subCoDetails = subcos[0];
             subcos[0] = subcos[i];
             subcos.splice(i, 1);
             subcos.splice(1, 0, tempUser);
@@ -97,12 +98,6 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     if (this.role === 'practice') {
       level = 2;
     }
-
-    this.subcoFcSubscription = this.teamForecastService
-      .getTeamForecast(this.userId, this.month.id, level)
-      .subscribe((fcEntries: FcEntry[]) => {
-        this.forecastService.addForecasts(fcEntries);
-      });
   }
 
   /**
@@ -161,8 +156,11 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * @param subcoId
    */
   getValue(type: string, subcoId: number): any {
-    let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.userId === subcoId); //TODO: Replace with SubcoForecast and subcoId
-    if (!fc) {
+    let subco: subCoDetails = this.subcos.find((e: subCoDetails) => e.subCoId === subcoId);
+    let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.subcoForecastId === subco.forecastId); 
+    
+
+    if (!subco) {
       return 0;
     }
     if (fc.projects && fc.projects.length > 0) {
@@ -170,54 +168,34 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
         return fc.projects
           .map((p: FcProject) => (p.costRate ? p.costRate : 0))
           .reduce((pSum: number, a: number) => pSum + a);
-
       }
       else if (type === 'cor') {
         return fc.projects
         .map((p: FcProject) => (p.cor ? p.cor : 0))
         .reduce((pSum: number, a: number) => pSum + a);
-        
       }
       else if (type === 'manDay') {
-        return fc.projects
-          .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
+        return subco.manDay;
 
       } else if (type === 'revenue') {
-        return fc.projects
-          .map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0)))
-          .reduce((pSum: number, a: number) => pSum + a);
+        return subco.revenue;
 
       } else if (type === 'costs') {
-        return fc.projects
-          .map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0)))
-          .reduce((pSum: number, a: number) => pSum + a);
+        return subco.cost;
 
       } else if (type === 'contribution') {
-        return fc.projects
-          .map((p: FcProject) =>{
-            let revenue = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0);
-            let costs = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0);
-            return revenue - costs;
-          }) 
-          .reduce((pSum: number, a: number) => pSum + a);
+        return subco.contribution;
 
       } else if (type === 'cp') {
-        return fc.projects
-          .map((p: FcProject) =>{
-            let revenue = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0);
-            let costs = (p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.costRate ? p.costRate : 0);
-            let contribution = revenue - costs;
-            return contribution / revenue;
-          })
-          .reduce((pSum: number, a: number) => pSum + a);
+        return subco.cp;
 
       }
       else if (type === 'history') {
-        if (fc.history && fc.history.length > 0 && fc.history[0].createdAt) {
-          let date: string = formatDate(fc.history[0].createdAt, 'dd.MM.yyyy', 'en');
-          return  'Last updated from ' + fc.changedBy + ', ' + date;
-        }
+        // if (subco.history && subco.history.length > 0 && subco.history[0].createdAt) {
+        //   let date: string = formatDate(subco.history[0].createdAt, 'dd.MM.yyyy', 'en');
+        //   return  'Last updated from ' + subco.changedBy + ', ' + date;
+        // }
+        return 0;
       }
     }
 
