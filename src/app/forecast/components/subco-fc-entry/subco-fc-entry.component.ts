@@ -16,8 +16,9 @@ import { AuthService } from '../../../core/security/auth.service';
 import { environment as env } from '../../../../environments/environment';
 import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-message.dialog';
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
-import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SubCoForecastService } from '../../../core/services/subCoForecast.service';
+import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
 
 
 /**
@@ -54,7 +55,6 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * string that includes name + date of last edit
    */
   lastEditor: string = '';
-  grades: Grade[] = [];
   fteSliderValue: number;
   fcLoaded: boolean = false;
   fcSubscription: Subscription;
@@ -67,12 +67,12 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   /**
    * forecast-entry component constructor
    * @param utilitiesService
-   * @param forecastService
+   * @param subcoForecastService
    */
   constructor(
     private dialog: MatDialog,
     private utilitiesService: UtilitiesService,
-    private forecastService: ForecastService,
+    private subcoForecastService: SubCoForecastService,
     private executiveService: ExecutiveForecastsService,
     private userService: UserService,
     private authService: AuthService,
@@ -92,8 +92,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     if(!this.forecast)
       this.subscribeForcasts();
 
-    this.grades = this.userService.getGrades();
-    this.project = this.utilitiesService.getProjects()[0];
+    this.project = this.utilitiesService.getProjects()[0]; //TODO: set Project
 
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
@@ -101,33 +100,37 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   }
 
   subscribeForcasts():void {
-    this.fcSubscription = this.forecastService.forecasts$
+    this.fcSubscription = this.subcoForecastService.forecasts$
     .subscribe((forecasts: FcEntry[]) => {
       this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.subcoId);
       if (!this.forecast) {
-        this.forecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
-          if (!res.showDialog || !res.suggestedData) {
-            return;
-          }
-          /**
-           * For the next release in the future, the copy data functionality will be added
-           */
+        //Add Empty Forecast
+        this.forecast = new FcEntry();
+        this.fcLoaded = true;
+        this.loadingActive = false;
+        // this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
+        //   if (!res.showDialog || !res.suggestedData) {
+        //     return;
+        //   }
+        //   /**
+        //    * For the next release in the future, the copy data functionality will be added
+        //    */
 
-          if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
-            let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-              data: {
-                message: 'Copy data from last month submitted?',
-                button: { cancel: 'No', submit: 'Yes' },
-              },
-            });
+        //   if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
+        //     let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+        //       data: {
+        //         message: 'Copy data from last month submitted?',
+        //         button: { cancel: 'No', submit: 'Yes' },
+        //       },
+        //     });
 
-            dialogRef.afterClosed().subscribe((add: boolean) => {
-              if (add === true) {
-                this.forecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
-              }
-            });
-          }
-        });
+        //     dialogRef.afterClosed().subscribe((add: boolean) => {
+        //       if (add === true) {
+        //         this.subcoForecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
+        //       }
+        //     });
+        //   }
+        // });
 
       } else {
         this.fcLoaded = true;
@@ -170,21 +173,21 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Saves forecast
    */
   saveForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.subcoId, false);
+    this.subcoForecastService.saveForecast(this.month.id, this.subcoId, false);
   }
 
   /**
    * Submits forecast (save + "locked: true")
    */
   submitForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.subcoId, true);
+    this.subcoForecastService.saveForecast(this.month.id, this.subcoId, true);
   }
 
   /**
    * Unlock a forecast
    */
   unlockForecast(): void {
-    this.forecastService.unlockForecast(this.month.id, this.subcoId);
+    this.subcoForecastService.unlockForecast(this.month.id, this.subcoId);
   }
 
   /**
@@ -195,7 +198,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * @param probabilityId
    */
   addProjectToForecast(): void {
-    this.forecastService.addProject(
+    this.subcoForecastService.addProject(
       this.month.id,
       this.subcoId,
       new FcProject(),
@@ -208,23 +211,23 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  fteSliderValueUpdate(): void {
+  // fteSliderValueUpdate(): void {
 
-    this.forecast.fte = parseFloat((this.fteSliderValue / 100).toFixed(3));
-    this.forecastService.setForecast(this.forecast, false, true);
+  //   this.forecast.fte = parseFloat((this.fteSliderValue / 100).toFixed(3));
+  //   this.subcoForecastService.setForecast(this.forecast, false, true);
 
-  }
+  // }
 
   settingsUpdate(): void {
-    this.forecastService.setForecast(this.forecast, false, true);
+    this.subcoForecastService.setForecast(this.forecast, false, true);
   }
 
-  fteValue(): any {
-    if (typeof this.forecast.fte !== 'undefined') {
-      return Math.round(this.forecast.fte * 1000) / 10;
-    }
-    return 100;
-  }
+  // fteValue(): any {
+  //   if (typeof this.forecast.fte !== 'undefined') {
+  //     return Math.round(this.forecast.fte * 1000) / 10;
+  //   }
+  //   return 100;
+  // }
 
   /**
    * Calculates the total number of days for projects.
@@ -236,20 +239,20 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   /**
    * Test if user fulfills certain role criteria
    */
-  hasLeadRole(): boolean {
-    return this.authService.hasRole(env.roles.pdl);
-  }
+  // hasLeadRole(): boolean {
+  //   return this.authService.hasRole(env.roles.pdl);
+  // }
 
-  hasMSLRole(): boolean {
-    return this.authService.hasRole(env.roles.msl);
-  }
+  // hasMSLRole(): boolean {
+  //   return this.authService.hasRole(env.roles.msl);
+  // }
 
-  hasUnlockPermission(level: number): boolean {
-    if (this.authService.hasRole(level) || this.forecast.locked < this.authService.getRoleId()) {
-      return true;
-    }
-    return false;
-  }
+  // hasUnlockPermission(level: number): boolean {
+  //   if (this.authService.hasRole(level) || this.forecast.locked < this.authService.getRoleId()) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   /**
    * Test is forecast is locked for logged-in user
@@ -277,8 +280,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     });
   }
   copyData():void {
-    this.forecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
-    this.forecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
+    this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
     });
   }
 
@@ -293,7 +295,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
       this.loadingActive = true;
       this.fcLoaded = false;
       this.fcSubscription.unsubscribe();
-      this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
+      this.fcSubscription = this.subcoForecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
         this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.subcoId);
       });
       //init the new month to be retrivable by the forecast service subscription

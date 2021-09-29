@@ -16,6 +16,7 @@ import { formatDate } from '@angular/common';
 import { subCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { subCoPreview } from "../../../core/interfaces/subCoPreview";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 
 /**
  * teamlead view component
@@ -70,7 +71,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     private utilitiesService: UtilitiesService,
     private authService: AuthService,
 
-    private forecastService: ForecastService,
+    private subcoForecastService: SubCoForecastService,
   ) {
     this.userId = this.authService.getUserId();
   }
@@ -80,12 +81,12 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.firstTime = true;
+    this.subcoForecastService.initSubCoForecastByMonth(this.month.id, this.userId);
 
-
-    // this.fcSubscription = this.forecastService.forecasts$
-    // .subscribe((forecasts: FcEntry[]) => {
-    //   this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
-    // });
+    this.fcSubscription = this.subcoForecastService.forecasts$
+    .subscribe((forecasts: FcEntry[]) => {
+      this.fcEntries = forecasts;
+    });
 
     this.subcoService.initSubCoPreviewById(this.userId);
     // this.subcoService.initializeAllSubCoPreviews();
@@ -160,15 +161,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     let subco: subCoDetails = this.allSubcosDetails.find((e: subCoDetails) => e.subCoId === subcoId);
     let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.subcoForecastId === subco.forecastId); 
 
-    fc = new FcEntry();
-    fc.projects = [];
-    fc.projects.push(new FcProject());
-    
-
     if (!subco) {
       return 0;
     }
-    if (fc.projects && fc.projects.length > 0) {
+    if (fc && fc.projects && fc.projects.length > 0) {
       if (type === 'costRate') {
         return fc.projects
           .map((p: FcProject) => (p.costRate ? p.costRate : 0))
@@ -208,11 +204,12 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   }
 
   forecastState(type: string, userId: number): boolean | string {
-    if (type === 'locklevel') {
-      return this.userService.getRoleName(this.forecastService.getForecastLockLevel(this.month.id, userId));
-    } else {
-      return this.forecastService.checkForecastState(type, this.month.id, userId);
-    }
+    // if (type === 'locklevel') {
+    //   return this.userService.getRoleName(this.subcoForecastService.getForecastLockLevel(this.month.id, userId));
+    // } else {
+    //   return this.subcoForecastService.checkForecastState(type, this.month.id, userId);
+    // }
+    return false;
   }
 
   working(user: subCoPreview, month: Month): boolean {

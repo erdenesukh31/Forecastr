@@ -42,7 +42,7 @@
     <mat-icon>save</mat-icon> Save
   </button>
 
-  <button mat-stroked-button *ngIf="fcIsLocked() && hasUnlockPermission(2)" class="mat-primary-reversed align-right"
+  <button mat-stroked-button *ngIf="fcIsLocked()" class="mat-primary-reversed align-right"
     (click)="unlockForecast()">
     <mat-icon>lock_open</mat-icon> Unlock
   </button>

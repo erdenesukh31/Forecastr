@@ -28,6 +28,21 @@ import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
   providedIn: 'root',
 })
 export class SubCoForecastService {
+  loadForecast(subcoId: number, id: number) :Promise<FcEntry[]> {
+    throw new Error('Method not implemented.');
+  }
+  setForecast(forecast: FcEntry, arg1: boolean, arg2: boolean) {
+    throw new Error('Method not implemented.');
+  }
+  addProject(id: number, subcoId: number, arg2: FcProject) {
+    throw new Error('Method not implemented.');
+  }
+  unlockForecast(id: number, subcoId: number) {
+    throw new Error('Method not implemented.');
+  }
+  saveForecast(id: number, subcoId: number, arg2: boolean) {
+    throw new Error('Method not implemented.');
+  }
   /**
    * observable which returns all available forecasts which have already been loaded from the server
    */
@@ -80,13 +95,14 @@ export class SubCoForecastService {
    * Returns data instantly if they already exist, otherwise: loads them from the server first
    * @param monthId
    */
-  getSubCoForecastByMonth(monthId: number,emId: number): Promise<FcEntry[]> {
+  initSubCoForecastByMonth(monthId: number,emId: number): Promise<FcEntry[]> {
     let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
       let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.monthId === monthId && fc.userId === emId);
       if (fcEntries.length > 0) {
         resolve(fcEntries);
       } else {
         this.http.get<FcEntry[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).subscribe((fc: FcEntry[]) => {
+          this.forecasts$.next(fc);
           resolve(fc);
         });
       }
@@ -100,13 +116,14 @@ export class SubCoForecastService {
    * Returns data instantly if they already exist, otherwise: loads them from the server first
    * @param monthId
    */
-    getSubCoForecastMonthRange(startMonthId: number,endMonthId:number,emId: number): Promise<FcEntry[]> {
+    initSubCoForecastMonthRange(startMonthId: number,endMonthId:number,emId: number): Promise<FcEntry[]> {
         let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
           let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.monthId >= startMonthId && fc.monthId <= endMonthId && fc.userId === emId);
           if (fcEntries.length > 0) {
             resolve(fcEntries);
           } else {
-            this.http.get<FcEntry[]>(this.BO.getSubCoForecastsMonthRange(startMonthId, endMonthId,this.authService.getUserId())).subscribe((fc: FcEntry[]) => {
+            this.http.get<FcEntry[]>(this.BO.getSubCoForecastsMonthRange(startMonthId, endMonthId,this.authService.getUserId()))
+            .subscribe((fc: FcEntry[]) => {
               resolve(fc);
             });
           }
