@@ -137,7 +137,7 @@ export class SubCoForecastService {
         return promise;
       }
       
-      setForecast(forecast: FcEntry, loadHistory: boolean, updated: boolean = false): void {
+      setForecast(forecast: FcEntry, updated: boolean = false): void {
         if (!forecast.userId || !forecast.monthId) {
           return;
         }    
