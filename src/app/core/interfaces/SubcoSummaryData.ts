@@ -10,7 +10,7 @@
     /**
      * Total costs
      */
-    costs: number;
+    cost: number;
     /**
      * Total contribution
      */
