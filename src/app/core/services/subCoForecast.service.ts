@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { Suggestion } from '../interfaces/suggestion';
 import { resolve } from 'url';
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
+import { User } from '../interfaces/user';
 
 /**
  * forecast service
@@ -136,7 +137,7 @@ export class SubCoForecastService {
    * changes promise of all forecasts for one month
    * @param monthId
    */
-  /*
+  
     putSubCoForecastByMonth(subCoForecastId:number): Promise<FcEntry[]> {
         let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
           let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.forecastId === subCoForecastId);
@@ -144,7 +145,7 @@ export class SubCoForecastService {
             resolve(fcEntries);
           } else {
             
-            this.http.get<FcEntry[]>(this.BO.updateSubCoForecasts().subscribe((fc: FcEntry[]) => {
+            this.http.get<FcEntry[]>(this.BO.updateSubCoForecasts(subCoForecastId)).subscribe((fc: FcEntry[]) => {
               resolve(fc);
             });
           }
@@ -152,7 +153,38 @@ export class SubCoForecastService {
     
         return promise;
       }
-      */
+      
+      setForecast(forecast: FcEntry, updated: boolean = false): void {
+        if (!forecast.userId || !forecast.monthId) {
+          return;
+        }    
+        if (this.forecasts.find((fc: FcEntry) => fc.userId === forecast.userId && fc.monthId === forecast.monthId)) {
+          this.forecasts
+            .filter((fc: FcEntry) => fc.userId === forecast.userId && fc.monthId === forecast.monthId)
+            .forEach((fc: FcEntry) => {
+              fc.forecastId = forecast.forecastId;
+              if (typeof forecast.locked !== 'number') {
+                fc.locked = forecast.locked === true ? this.authService.getRoleId() : -1;
+              } else {
+                fc.locked = forecast.locked;
+              }
+              fc.comment = forecast.comment;
+              fc.fte = forecast.fte //? forecast.fte : 1; 
+              fc.gradeId = forecast.gradeId;
+              fc.isRelevant = forecast.isRelevant;
+              // fc.projects = mandatoryProjects;
+              fc.updated = updated;      
+            });
+        } else {
+          if (typeof forecast.locked !== 'number') {
+            forecast.locked = forecast.locked === true ? this.authService.getRoleId() : -1;
+          }
+          let u: subCoDetails = this.subCoService.getSubcoDetail(forecast.userId);    
+          this.forecasts.push(forecast);
+        }    
+        this.forecasts$.next(this.forecasts);
+      }
+      
 
   
 }
