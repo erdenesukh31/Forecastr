@@ -1,0 +1,72 @@
+@import '../../../../assets/styles/variables.scss';
+
+.form-field-toggle {
+  margin: 10px;
+}
+
+
+.accordion-header {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 24px;
+  color: map-get($font-colors, grey-dark);
+  margin-right: 8px;
+
+  div {
+    display: flex;
+    flex-grow: 1;
+    width: 0;
+    margin-right: 16px;
+
+    &:last-child {
+      flex-grow: 2;
+      text-align: center;
+    }
+
+    span {
+      flex: 1;
+      word-break: break-word;
+    }
+  }
+}
+
+.mat-accordion .mat-expansion-panel {
+  border-radius: 0;
+
+  .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+    width: 0;
+    line-height: 15px;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .mat-expansion-panel-header-description {
+    text-align: center; 
+    flex-grow: 2;
+  }
+
+  .mat-cell, .mat-header-cell {
+    flex: 1;
+    color: map-get($font-colors, grey-dark);
+  }
+}
+
+.mat-raised-button{
+    margin-top: 20px;
+}
+
+.button-margin {
+  margin: 10px,
+}
+
+.clicked {
+  background-color: #f9fafb;
+}
+
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+	padding-right: 5;
+}
+

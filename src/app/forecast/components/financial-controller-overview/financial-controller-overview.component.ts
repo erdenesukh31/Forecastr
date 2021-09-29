@@ -95,7 +95,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "arve":
         return "%";
       case "arvi":
-        return "";
+        return "%";
       case "expectedRevenue":
         return "";
       case "avgVacation":
@@ -119,7 +119,7 @@ export class FinancialControllerOverviewComponent implements OnInit, OnDestroy {
       case "urve":
         return "%";
       case "urvi":
-        return "";
+        return "%";
       default:
         return undefined;
     }
