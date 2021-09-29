@@ -21,39 +21,39 @@
 
       <mat-accordion displayMode="flat" multi >
         <!--order of events closed and opened is important-->
-        <mat-expansion-panel *ngFor="let u of subcos; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (closed)="ExpPanelClicked()" (opened)="setStep(i)" >
-          <mat-expansion-panel-header *ngIf='working(u, month)'>
+        <mat-expansion-panel *ngFor="let s of subcos; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (closed)="ExpPanelClicked()" (opened)="setStep(i)" >
+          <mat-expansion-panel-header *ngIf='working(s, month)'>
             <mat-panel-title>
-              {{u.lastName}}, {{u.firstName}}
+              {{s.resourceName}}
             </mat-panel-title>
             <mat-panel-description class="mat-row">
                 <span class="mat-cell">
-                  <mat-icon *ngIf="forecastState('locked', u.id)" class="icon-locked"
-                  matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                  <mat-icon *ngIf="forecastState('locked', s.subCoId)" class="icon-locked"
+                  matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
                   lock</mat-icon>
-                  <ng-container *ngIf="forecastState('locked-sub', u.id)">
+                  <ng-container *ngIf="forecastState('locked-sub', s.subCoId)">
                     <mat-icon class="icon-locked-sublevel"
-                    matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                    matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
                       lock_open</mat-icon>
-                    <div class="locked-leveldesc">{{forecastState('locklevel', u.id)}}</div>
+                    <div class="locked-leveldesc">{{forecastState('locklevel', s.subCoId)}}</div>
                   </ng-container>
-                  <mat-icon *ngIf="forecastState('saved', u.id)" 
-                  matTooltip="{{getValue('history', u.id)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', u.id)}}">
+                  <mat-icon *ngIf="forecastState('saved', s.subCoId)" 
+                  matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
                   save</mat-icon>
-                  <mat-icon *ngIf="forecastState('edited', u.id)" class="icon-edited">radio_button_checked</mat-icon>
+                  <mat-icon *ngIf="forecastState('edited', s.subCoId)" class="icon-edited">radio_button_checked</mat-icon>
                 </span>
-                <span class="mat-cell">{{getValue('costRate', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('cor', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('manDay', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('revenue', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('costs', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('contribution', u.id) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('cp', u.id) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costRate', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cor', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('manDay', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('revenue', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costs', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('contribution', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cp', s.subCoId) | number: '1.0-2': 'de'}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
         
           <ng-template matExpansionPanelContent>
-            <app-subco-fc-entry class="tab-container" [userId]="u.id" [month]="month"></app-subco-fc-entry>
+            <app-subco-fc-entry class="tab-container" [userId]="s.subCoId" [month]="month"></app-subco-fc-entry>
           </ng-template>
           
           <mat-action-row>

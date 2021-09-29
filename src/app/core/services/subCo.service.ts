@@ -8,6 +8,8 @@ import { BusinessOperationsService } from '../shared/business-operations.service
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
 import { FcEntry } from '../interfaces/fcEntry';
 import { SummaryData } from '../interfaces/summaryData';
+import { UserService } from './user.service';
+import { AuthService } from '../security/auth.service';
 
 
 
@@ -15,8 +17,12 @@ import { SummaryData } from '../interfaces/summaryData';
   providedIn: 'root',
 })
 export class SubCoService {
-  subCoPrev$: BehaviorSubject<subCoPreview>;
-  subCoDet$: BehaviorSubject<subCoDetails>;
+
+  // subCoPrev$: BehaviorSubject<subCoPreview>;
+  // subCoDet$: BehaviorSubject<subCoDetails>;
+
+  subCoPreviews$: BehaviorSubject<subCoPreview[]>;
+  // subCoDets$: BehaviorSubject<subCoDetails[]>;
   
   allSubCoPreviews$: BehaviorSubject<subCoPreview[]>;
   allSubCoDetails$: BehaviorSubject<subCoDetails[]>;
@@ -35,44 +41,60 @@ export class SubCoService {
     private http: HttpClient,
     private BO: BusinessOperationsService,
   ) {
-    this.subCoPrev$ = new BehaviorSubject(new subCoPreview)
-    this.subCoDet$ = new BehaviorSubject(new subCoDetails)
-    this.allSubCoPreviews$ = new BehaviorSubject([])
-    this.allSubCoDetails$ = new BehaviorSubject([])
+    // this.subCoPrev$ = new BehaviorSubject(new subCoPreview);
+    this.subCoPreviews$ = new BehaviorSubject([]);
+    // this.subCoDet$ = new BehaviorSubject(new subCoDetails);
+    this.allSubCoPreviews$ = new BehaviorSubject([]);
+    this.allSubCoDetails$ = new BehaviorSubject([]);
     this.types$ = new BehaviorSubject([]);
+
   }
 
   /**
    * Loads the current subCo data from the server
    */
-  initSubCoPreview(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoPreview>(this.BO.getOwnUser())         /* To be implemented yet*/
-        .subscribe((subCo: subCoPreview) => {
-          this.subCoPrev$.next(subCo);
-          this.addSubCoPreviews([subCo]);           
-          resolve();
-        }, () => reject());
-    });
-  }
+  // initSubCoPreview(): Promise<void> {
+  //   return new Promise<void>((resolve, reject) => {
+  //     this.http.get<subCoPreview[]>(this.BO.getSubcoPreviews())
+  //       .subscribe((subCo: subCoPreview[]) => {
+  //         this.allSubCoPreviews$.next(subCo);
+  //         this.addSubCoPreviews(subCo);           
+  //         resolve();
+  //       }, () => reject());
+  //   });
+  // }
 
-  initSubCoDetails(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoDetails>(this.BO.getOwnUser())  /* To be implemented yet*/
-        .subscribe((subCo: subCoDetails) => {
-          this.subCoDet$.next(subCo);
-          this.addSubCoDetails([subCo]);                        
-          resolve();
-        }, () => reject());
-    });
-  }
+    /**
+   * Loads the current subCo data from the server
+   */
+    initSubCoPreviewById(emId:number): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+        this.http.get<subCoPreview[]>(this.BO.getSubcoPreviewsByEmId(emId))
+          .subscribe((subCos: subCoPreview[]) => {
+            this.subCoPreviews$.next(subCos);
+            // this.addSubCoPreviews(subCos);           
+            resolve();
+          }, () => reject());
+      });
+    }
+
+  // initSubCoDetails(): Promise<void> {
+  //   return new Promise<void>((resolve, reject) => {
+  //     this.http.get<subCoDetails>(this.BO.getSubcoDetails())
+  //       .subscribe((subCo: subCoDetails) => {
+  //         this.subCoDet$.next(subCo);
+  //         this.addSubCoDetails([subCo]);                        
+  //         resolve();
+  //       }, () => reject());
+  //   });
+  // }
 
   /**
    * Loads all subco data from the server
    */
   initializeAllSubCoPreviews(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoPreview[]>(this.BO.getSubcosPreview())   /* To be implemented yet getSubCosPreview*/
+      this.http.get<subCoPreview[]>(this.BO.getSubcoPreviews())   /* To be implemented yet getSubCosPreview*/
         .subscribe((subCos: subCoPreview[]) => {
           this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));   
           resolve();
@@ -82,7 +104,7 @@ export class SubCoService {
 
   initializeAllSubCoDetails(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoDetails[]>(this.BO.getSubcosPreview()) /* To be implemented yet getSubCosDetails*/
+      this.http.get<subCoDetails[]>(this.BO.getSubcoDetails()) /* To be implemented yet getSubCosDetails*/
         .subscribe((subCos: subCoDetails[]) => {
           this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));  
           resolve();
@@ -94,7 +116,7 @@ export class SubCoService {
  /**
    * Requests type data from server
    */
-  initializeGrades(): Promise<void> {
+  initializeTypes(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http.get<SubCoType[]>(this.BO.getSubCoTypes())   /* To be implemented yet getSubCosTypes*/
         .subscribe((types$: SubCoType[]) => {
@@ -109,11 +131,11 @@ export class SubCoService {
    */
   resetSubCoPreviews(): void {
     this.allSubCoPreviews$.next([]);
-    this.subCoPrev$.next(new subCoPreview());
+    // this.subCoPrev$.next(new subCoPreview());
   }
   resetSubCoDetails(): void {
     this.allSubCoDetails$.next([]);
-    this.subCoDet$.next(new subCoDetails());
+    // this.subCoDet$.next(new subCoDetails());
   }
 
   /**
@@ -139,6 +161,7 @@ export class SubCoService {
 
     this.allSubCoPreviews$.next(subCos);
   }
+
   addSubCoDetails(newSubCos: subCoDetails[]): void {
     let subCos: subCoDetails[] = this.allSubCoDetails$.getValue();
     newSubCos.forEach((u: subCoDetails) => {

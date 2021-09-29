@@ -15,6 +15,7 @@ import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
 import { subCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubCoService } from "../../../core/services/subCo.service";
+import { subCoPreview } from "../../../core/interfaces/subCoPreview";
 
 /**
  * teamlead view component
@@ -46,7 +47,9 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   userId: number;
 
   fcEntries: FcEntry[] = [];
-  subcos: subCoDetails[] = []; 
+  subcos: subCoPreview[] = []; 
+  allSubcosPre: subCoPreview[] = []; 
+  allSubcosDetails: subCoDetails[] = []; 
   
   /**
    * scroll-variable for scrolling into in AfterViewChecked
@@ -64,8 +67,9 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private subcoService: SubCoService,
-    private authService: AuthService,
     private utilitiesService: UtilitiesService,
+    private authService: AuthService,
+
     private forecastService: ForecastService,
   ) {
     this.userId = this.authService.getUserId();
@@ -76,23 +80,20 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.firstTime = true;
-    this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
-      });
 
-    this.subcoSubscription = this.subcoService.allSubCoDetails$
-      .subscribe((subcos: subCoDetails[]) => {
-        for (let i = 0; i < subcos.length; i++) {
-          if(this.userId === subcos[i].engagamentManagerID) { //TODO: do we need that?
-            let tempUser: subCoDetails = subcos[0];
-            subcos[0] = subcos[i];
-            subcos.splice(i, 1);
-            subcos.splice(1, 0, tempUser);
-          }
-        }
-        this.subcos = subcos;
-      });
+
+    this.fcSubscription = this.forecastService.forecasts$
+    .subscribe((forecasts: FcEntry[]) => {
+      this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
+    });
+
+    this.subcoService.initSubCoPreviewById(this.userId);
+    // this.subcoService.initializeAllSubCoPreviews();
+    this.subcoService.initializeAllSubCoDetails();
+
+    this.subcoService.subCoPreviews$.subscribe((subcos: subCoPreview[]) => this.subcos = subcos);
+    // this.subcoService.allSubCoPreviews$.subscribe((subcos: subCoPreview[]) => this.allSubcosPre = subcos);
+    this.subcoService.allSubCoDetails$.subscribe((subcos: subCoDetails[]) => this.allSubcosDetails = subcos);
 
     let level: number = 1;
     if (this.role === 'practice') {
@@ -156,7 +157,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * @param subcoId
    */
   getValue(type: string, subcoId: number): any {
-    let subco: subCoDetails = this.subcos.find((e: subCoDetails) => e.subCoId === subcoId);
+    let subco: subCoDetails = this.allSubcosDetails.find((e: subCoDetails) => e.subCoId === subcoId);
     let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.subcoForecastId === subco.forecastId); 
     
 
