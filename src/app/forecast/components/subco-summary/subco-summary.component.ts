@@ -25,6 +25,7 @@ import { ExportCsvDialog } from "../../dialogs/export-csv/export-csv.dialog";
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { subCoDetails } from "../../../core/interfaces/subCoDetails";
+import { SubcoSummaryData } from "../../../core/interfaces/subcoSummaryData";
 
 /**
  * subco summary component
@@ -64,12 +65,12 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   /**
    * contains summary-data (calculated in subco-summary service)
    */
-  summaryData: SummaryData;
+  summaryData: SubcoSummaryData;
 
   /**
    * provides summary-data projects in 'MatTableDataSource' format
    */
-  summaryProjects: MatTableDataSource<SummaryDataProject>;
+  // summaryProjects: MatTableDataSource<SummaryDataProject>;
 
   /**
    * forecast subscription
@@ -105,7 +106,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     private pageState: PageStateService,
   ) {
     this.fcEntries = [];
-    this.summaryProjects = new MatTableDataSource([]);
+    // this.summaryProjects = new MatTableDataSource([]);
     this.userId = this.authService.getUserId();
   }
 
@@ -130,7 +131,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
         let subcoIds: number[] = relevantSubcos.map((u: subCoDetails) => u.subCoId);
         this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && subcoIds.indexOf(fc.userId) >= 0);
         this.summaryData = this.subcoService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantSubcos);
-        this.summaryProjects = new MatTableDataSource(this.summaryData.days);
+        // this.summaryProjects = new MatTableDataSource(this.summaryData.days);
       });
   }
 
@@ -236,7 +237,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       level = 2;
     }
 
-    this.subcoService.setForecastsLockState(this.month.id, level, locked)
+    this.subcoService.setForecastsLockState(this.month.id, this.userId, locked)
       .then((forecasts: FcEntry[]) => {
         if (forecasts) {
           this.forecastService.addForecasts(forecasts, true);

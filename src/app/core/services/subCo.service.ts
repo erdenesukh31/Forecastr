@@ -10,6 +10,8 @@ import { FcEntry } from '../interfaces/fcEntry';
 import { SummaryData } from '../interfaces/summaryData';
 import { UserService } from './user.service';
 import { AuthService } from '../security/auth.service';
+import { SubcoSummaryData } from '../interfaces/subcoSummaryData';
+import { FcProject } from '../interfaces/fcProject';
 
 
 
@@ -174,18 +176,49 @@ export class SubCoService {
   }
 
   //See team-forecast.service:302 setForecastsLockState
-  setForecastsLockState(id: number, level: number, locked: boolean): Promise<FcEntry[]> {
-    throw new Error("Method not implemented.");
+  setForecastsLockState(monthId: number, emId:number, lockState: boolean): Promise<FcEntry[]> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      this.http.put(this.BO.setSubcoLockState(monthId, emId), { lockState: lockState })
+      .subscribe((forecasts: FcEntry[]) => {
+        resolve(forecasts);
+      }, (e: any) => {
+        reject();
+      });
+    });
   }
 
-  //See team-forecast.service:56 getTeamForecastPromise
+  // See team-forecast.service:56 getTeamForecastPromise
   getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{
     throw new Error("Method not implemented.");
   }
 
   //See team-forecast.service:105 getSummaryData
-  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: subCoDetails[]): SummaryData {
-    throw new Error("Method not implemented.");
+  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: subCoDetails[]): SubcoSummaryData {
+    let summaryData: SubcoSummaryData = {
+      revenue: 0,
+      cost: 0,
+      contribution : 0,
+      cp: 0,
+    }
+
+    fcEntries.forEach(fcE =>{
+      let revenue:number;
+      let cost:number;
+      let contribution:number;
+      let manDay = fcE.projects
+        .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
+        .reduce((pSum: number, a: number) => pSum + a);
+      summaryData.revenue += revenue = fcE.cor * manDay;
+
+      let costRate = fcE.projects
+        .map((p: FcProject) => (p.costRate ? p.costRate : 0))
+        .reduce((pSum: number, a: number) => pSum + a);
+      summaryData.cost += cost = costRate * manDay;
+
+      summaryData.contribution += contribution = revenue - cost;
+      summaryData.cp += contribution / revenue; //TODO: check if correct
+    });
+    return summaryData;
   }
 
 

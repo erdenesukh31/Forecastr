@@ -32,7 +32,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   /**
    * userId (received as input)
    */
-  @Input('userId') userId: number;
+  @Input('subcoId') subcoId: number;
 
   /**
    * selected month (received as input)
@@ -103,9 +103,9 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   subscribeForcasts():void {
     this.fcSubscription = this.forecastService.forecasts$
     .subscribe((forecasts: FcEntry[]) => {
-      this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
+      this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.subcoId);
       if (!this.forecast) {
-        this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
+        this.forecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
           if (!res.showDialog || !res.suggestedData) {
             return;
           }
@@ -123,7 +123,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
 
             dialogRef.afterClosed().subscribe((add: boolean) => {
               if (add === true) {
-                this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
+                this.forecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
               }
             });
           }
@@ -136,9 +136,9 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
         if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
           this.fteSliderValue = this.forecast.fte * 100;
         }
-        else if(typeof this.userService.getUser(this.userId).fte !== 'undefined') {
-          this.fteSliderValue = this.userService.getUser(this.userId).fte * 100;
-          this.forecast.fte = this.userService.getUser(this.userId).fte;
+        else if(typeof this.userService.getUser(this.subcoId).fte !== 'undefined') {
+          this.fteSliderValue = this.userService.getUser(this.subcoId).fte * 100;
+          this.forecast.fte = this.userService.getUser(this.subcoId).fte;
         }      
         else {
           this.fteSliderValue = 100;
@@ -152,7 +152,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
         }
 
         if(typeof this.forecast.gradeId === 'undefined') {
-          this.forecast.gradeId = this.userService.getUser(this.userId).gradeId; 
+          this.forecast.gradeId = this.userService.getUser(this.subcoId).gradeId; 
         }
         
       }
@@ -170,21 +170,21 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Saves forecast
    */
   saveForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.userId, false);
+    this.forecastService.saveForecast(this.month.id, this.subcoId, false);
   }
 
   /**
    * Submits forecast (save + "locked: true")
    */
   submitForecast(): void {
-    this.forecastService.saveForecast(this.month.id, this.userId, true);
+    this.forecastService.saveForecast(this.month.id, this.subcoId, true);
   }
 
   /**
    * Unlock a forecast
    */
   unlockForecast(): void {
-    this.forecastService.unlockForecast(this.month.id, this.userId);
+    this.forecastService.unlockForecast(this.month.id, this.subcoId);
   }
 
   /**
@@ -197,7 +197,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
   addProjectToForecast(): void {
     this.forecastService.addProject(
       this.month.id,
-      this.userId,
+      this.subcoId,
       new FcProject(),
     );
 
@@ -277,8 +277,8 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     });
   }
   copyData():void {
-    this.forecastService.loadForecast(this.userId, this.month.id).then((res: any) => {
-    this.forecastService.addProjectsToForecast(this.userId, this.month.id, res.suggestedData);
+    this.forecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
+    this.forecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
     });
   }
 
@@ -294,7 +294,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
       this.fcLoaded = false;
       this.fcSubscription.unsubscribe();
       this.fcSubscription = this.forecastService.forecasts$.subscribe((forecasts: FcEntry[]) => {
-        this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.userId);
+        this.forecast = forecasts.find((fc: FcEntry) => fc.monthId === this.month.id && fc.userId === this.subcoId);
       });
       //init the new month to be retrivable by the forecast service subscription
       this.executiveService.initializeDetailValues(this.month.id).then(()=>{

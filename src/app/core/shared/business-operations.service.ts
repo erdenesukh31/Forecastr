@@ -319,6 +319,10 @@ export class BusinessOperationsService {
 
   addSubCoForecasts(subCoForecastId: number): string {
     return env.api + 'subcos' + '/'  + 'forecasts';
-  }  
+  }
+
+  setSubcoLockState(monthId : number, emId: number){
+    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + "/" + emId + "/" + "lock";
+  }
 
 }

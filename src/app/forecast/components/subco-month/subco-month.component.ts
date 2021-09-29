@@ -82,10 +82,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.firstTime = true;
 
 
-    this.fcSubscription = this.forecastService.forecasts$
-    .subscribe((forecasts: FcEntry[]) => {
-      this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
-    });
+    // this.fcSubscription = this.forecastService.forecasts$
+    // .subscribe((forecasts: FcEntry[]) => {
+    //   this.fcEntries = forecasts.filter((fc: FcEntry) => fc.subcoForecastId && fc.monthId === this.month.id);
+    // });
 
     this.subcoService.initSubCoPreviewById(this.userId);
     // this.subcoService.initializeAllSubCoPreviews();
@@ -159,6 +159,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   getValue(type: string, subcoId: number): any {
     let subco: subCoDetails = this.allSubcosDetails.find((e: subCoDetails) => e.subCoId === subcoId);
     let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.subcoForecastId === subco.forecastId); 
+
+    fc = new FcEntry();
+    fc.projects = [];
+    fc.projects.push(new FcProject());
     
 
     if (!subco) {
@@ -211,24 +215,24 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     }
   }
 
-  working(user: User, month: Month): boolean {
-    if(user.endDate && user.startDate && month.time) {
-      var endMonth = new Date(user.endDate);
-      endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
-      var startMonth = new Date(user.startDate);
-      startMonth = new Date(startMonth.getFullYear(), endMonth.getMonth(), 1);
-      var monthMonth = new Date(month.time);
-      monthMonth = new Date(monthMonth.getFullYear(), monthMonth.getMonth(), 1)
-      if(startMonth <= endMonth) {
-        if(monthMonth > endMonth) {
-          return false;
-        }
-      } else if(startMonth > endMonth) {
-        if(monthMonth <= startMonth && monthMonth >= endMonth) {
-          return false;
-        }
-      }
-    }
+  working(user: subCoPreview, month: Month): boolean {
+    // if(month.time) {
+    //   var endMonth = new Date(user.endDate);
+    //   endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
+    //   var startMonth = new Date(user.startDate);
+    //   startMonth = new Date(startMonth.getFullYear(), endMonth.getMonth(), 1);
+    //   var monthMonth = new Date(month.time);
+    //   monthMonth = new Date(monthMonth.getFullYear(), monthMonth.getMonth(), 1)
+    //   if(startMonth <= endMonth) {
+    //     if(monthMonth > endMonth) {
+    //       return false;
+    //     }
+    //   } else if(startMonth > endMonth) {
+    //     if(monthMonth <= startMonth && monthMonth >= endMonth) {
+    //       return false;
+    //     }
+    //   }
+    // }
     return true;
   }
 
