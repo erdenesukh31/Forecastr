@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddUserDialog } from '../../dialogs/add-user/add-user.dialog';
 import { UserAdminService } from '../../../core/services/admin/user.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { subCoPreview } from '../../../core/interfaces/subCoPreview';
+import { SubCoPreview } from '../../../core/interfaces/subCoPreview';
 import { SubCoService } from '../../../core/services/subCo.service';
 import { AddSubcoDialog } from '../../dialogs/add-subco/add-subco.dialog';
 @Component({
@@ -20,7 +20,7 @@ export class SubcosComponent implements OnInit {
   /**
    * Subco array as MatTableDataSource (needed for auto updates on table)
    */
-  subco: MatTableDataSource<subCoPreview>;
+  subco: MatTableDataSource<SubCoPreview>;
 
   /**
    * subco update subscription
@@ -37,7 +37,7 @@ export class SubcosComponent implements OnInit {
 
     //load all subcos
     this.subcoSubscription = this.subcoService.allSubCoPreviews$
-      .subscribe((subco: subCoPreview[]) => {
+      .subscribe((subco: SubCoPreview[]) => {
         this.subco = new MatTableDataSource(subco);
         this.subco.sort = this.sort;
       });
@@ -54,19 +54,19 @@ export class SubcosComponent implements OnInit {
    * open add subco dialog
    */
    addNewSubco(): void {
-    this.openUserDialog(new subCoPreview());
+    this.openUserDialog(new SubCoPreview());
   } 
 
   /**
    * open update user dialog
    * @param user
    */
-  openUserDialog(subco: subCoPreview): void {
+  openUserDialog(subco: SubCoPreview): void {
     let dialogRef: any = this.dialog.open(AddSubcoDialog, { height: 'auto', width: '50vw', data: subco });
 
-    dialogRef.afterClosed().subscribe((s: subCoPreview | boolean) => {
+    dialogRef.afterClosed().subscribe((s: SubCoPreview | boolean) => {
       if (s) {
-        this.subcoService.setSubco(<subCoPreview>s);
+        this.subcoService.setSubco(<SubCoPreview>s);
       }
     });
   }

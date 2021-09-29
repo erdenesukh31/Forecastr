@@ -12,7 +12,7 @@ import { UtilitiesService } from './utilities.service';
 import { AuthService } from '../security/auth.service';
 import { PageStateService } from '../shared/page-state.service';
 import { SubCoService } from './subCo.service';
-import { subCoDetails } from '../interfaces/subCoDetails';
+import { SubCoDetails } from '../interfaces/subCoDetails';
 import { environment as env } from '../../../environments/environment.prod';
 import { cloneDeep } from 'lodash';
 import { DataSharingService } from '../shared/data-sharing.service';
@@ -21,6 +21,7 @@ import { Suggestion } from '../interfaces/suggestion';
 import { resolve } from 'url';
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
 import { User } from '../interfaces/user';
+import { fchmod } from 'fs';
 
 /**
  * forecast service
@@ -29,10 +30,10 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class SubCoForecastService {
-  loadForecast(subcoId: number, id: number) :Promise<FcEntry[]> {
-    throw new Error('Method not implemented.');
+  validateProjects(subcoDetails: SubCoDetails) {
+    throw new Error("Method not implemented.");
   }
-  setForecast(forecast: FcEntry, arg1: boolean, arg2: boolean) {
+  loadForecast(subcoId: number, id: number) :Promise<FcEntry[]> {
     throw new Error('Method not implemented.');
   }
   addProject(id: number, subcoId: number, arg2: FcProject) {
@@ -41,18 +42,116 @@ export class SubCoForecastService {
   unlockForecast(id: number, subcoId: number) {
     throw new Error('Method not implemented.');
   }
-  saveForecast(id: number, subcoId: number, arg2: boolean) {
-    throw new Error('Method not implemented.');
+  saveForecast(monthId: number, subcoId: number, submit: boolean) {
+    let subcoDetails: SubCoDetails = cloneDeep(this.forecasts.find((fc: SubCoDetails) => fc.subcontractorId === subcoId && fc.monthId === monthId));
+    if (!subcoDetails) {
+      return;
+    }
+
+    // forecast = this.validateProjects(forecast); //TODO: validate not needed?
+    // if (([].concat.apply([], forecast.projects.map((p: FcProject) => p.errors))).length > 0) {
+    //   forecast.instantValidation = true;
+    //   this.setForecast(forecast, false, true);
+
+    //   this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
+    //   return;
+    // }
+
+    //TODO: Add Locked
+    // if (submit) {
+    //   forecast.locked = true;
+    // } else {
+    //   forecast.locked = false;
+    // }
+
+    //TODO: Add History
+    // forecast.history = undefined;
+
+    this.pageState.showSpinner();
+
+    if(subcoDetails.forecastId && subcoDetails.forecastId){
+      this.http.put(this.BO.subcoForecast(subcoDetails.forecastId), subcoDetails)
+      .subscribe((subcoDetails: SubCoDetails) => {
+        this.setForecast(subcoDetails, true, false);
+        if(!submit) {
+          this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
+        }
+        else {
+          this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
+        }
+        
+        this.pageState.hideSpinner();
+
+      }, (e: any) => {
+        if(e.status === 409) {
+          // if(!this.hasLeadRole()) {
+          //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+          // }
+          // else {
+          //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+          // }
+
+          setTimeout(() => window.location.reload(), 5000);
+          
+        }
+        else {
+          if(!submit) {
+            this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
+          }
+          else if(submit){
+            this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
+          }
+        }
+        this.pageState.hideSpinner();
+
+      });
+    }else{
+      this.http.post(this.BO.createSubcoForecast(), subcoDetails)
+      .subscribe((sd: SubCoDetails) => {
+        this.setForecast(sd, true, false);
+        if(!submit) {
+          this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
+        }
+        else {
+          this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
+        }
+        
+        this.pageState.hideSpinner();
+
+      }, (e: any) => {
+        if(e.status === 409) {
+          // if(!this.hasLeadRole()) {
+          //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+          // }
+          // else {
+          //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+          // }
+
+          setTimeout(() => window.location.reload(), 5000);
+          
+        }
+        else {
+          if(!submit) {
+            this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
+          }
+          else if(submit){
+            this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
+          }
+        }
+        this.pageState.hideSpinner();
+
+      });
+    }
   }
   /**
    * observable which returns all available forecasts which have already been loaded from the server
    */
-  forecasts$: BehaviorSubject<FcEntry[]>;
+  subcoDetails$: BehaviorSubject<SubCoDetails[]>;
 
   /**
    * contains all available forecasts which have already been loaded from the server
    */
-  forecasts: FcEntry[];
+  forecasts: SubCoDetails[];
 
   /**
    * contains all projects
@@ -76,12 +175,12 @@ export class SubCoForecastService {
     private router: Router,
   ) {
     this.forecasts = [];
-    this.forecasts$ = new BehaviorSubject([]);
+    this.subcoDetails$ = new BehaviorSubject([]);
 
     this.utilitiesService.projects$
       .subscribe((projects: Project[]) => {
         this.projects = projects;
-        this.forecasts$.next(this.forecasts);
+        this.subcoDetails$.next(this.forecasts);
       });
 
     this.utilitiesService.months$
@@ -98,12 +197,12 @@ export class SubCoForecastService {
    */
   initSubCoForecastByMonth(monthId: number,emId: number): Promise<FcEntry[]> {
     let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
-      let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.monthId === monthId && fc.userId === emId);
+      let fcEntries: SubCoDetails[] = this.subcoDetails$.getValue().filter((fc: SubCoDetails) => fc.monthId === monthId && fc.engagementManagerId === emId);
       if (fcEntries.length > 0) {
         resolve(fcEntries);
       } else {
-        this.http.get<FcEntry[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).subscribe((fc: FcEntry[]) => {
-          this.forecasts$.next(fc);
+        this.http.get<SubCoDetails[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).subscribe((fc: SubCoDetails[]) => {
+          this.subcoDetails$.next(fc);
           resolve(fc);
         });
       }
@@ -119,7 +218,7 @@ export class SubCoForecastService {
    */
     initSubCoForecastMonthRange(startMonthId: number,endMonthId:number,emId: number): Promise<FcEntry[]> {
         let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
-          let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.monthId >= startMonthId && fc.monthId <= endMonthId && fc.userId === emId);
+          let fcEntries: SubCoDetails[] = this.subcoDetails$.getValue().filter((fc: SubCoDetails) => fc.monthId >= startMonthId && fc.monthId <= endMonthId && fc.engagementManagerId === emId);
           if (fcEntries.length > 0) {
             resolve(fcEntries);
           } else {
@@ -138,14 +237,14 @@ export class SubCoForecastService {
    * @param monthId
    */
   
-    putSubCoForecastByMonth(subCoForecastId:number): Promise<FcEntry[]> {
-        let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
-          let fcEntries: FcEntry[] = this.forecasts$.getValue().filter((fc: FcEntry) => fc.forecastId === subCoForecastId);
+    putSubCoForecastByMonth(subCoForecastId:number): Promise<SubCoDetails[]> {
+        let promise: Promise<SubCoDetails[]> = new Promise((resolve: any, reject: any) => {
+          let fcEntries: SubCoDetails[] = this.subcoDetails$.getValue().filter((fc: SubCoDetails) => fc.forecastId === subCoForecastId);
           if (fcEntries.length > 0) {
             resolve(fcEntries);
           } else {
             
-            this.http.get<FcEntry[]>(this.BO.updateSubCoForecasts(subCoForecastId)).subscribe((fc: FcEntry[]) => {
+            this.http.get<SubCoDetails[]>(this.BO.updateSubCoForecasts(subCoForecastId)).subscribe((fc: SubCoDetails[]) => {
               resolve(fc);
             });
           }
@@ -154,37 +253,36 @@ export class SubCoForecastService {
         return promise;
       }
       
-      setForecast(forecast: FcEntry, updated: boolean = false): void {
-        if (!forecast.userId || !forecast.monthId) {
+      setForecast(subCoDetails: SubCoDetails, loadHistory: boolean, updated: boolean = false): void { //TODO: add LoadHistory
+        if (!subCoDetails.subcontractorId || !subCoDetails.monthId) {
           return;
         }    
-        if (this.forecasts.find((fc: FcEntry) => fc.userId === forecast.userId && fc.monthId === forecast.monthId)) {
+        if (this.forecasts.find((sd: SubCoDetails) => sd.subcontractorId === subCoDetails.subcontractorId && sd.monthId === subCoDetails.monthId)) {
           this.forecasts
-            .filter((fc: FcEntry) => fc.userId === forecast.userId && fc.monthId === forecast.monthId)
-            .forEach((fc: FcEntry) => {
-              fc.forecastId = forecast.forecastId;
-              if (typeof forecast.locked !== 'number') {
-                fc.locked = forecast.locked === true ? this.authService.getRoleId() : -1;
-              } else {
-                fc.locked = forecast.locked;
-              }
-              fc.comment = forecast.comment;
-              fc.fte = forecast.fte //? forecast.fte : 1; 
-              fc.gradeId = forecast.gradeId;
-              fc.isRelevant = forecast.isRelevant;
-              // fc.projects = mandatoryProjects;
-              fc.updated = updated;      
+            .filter((sd: SubCoDetails) => sd.subcontractorId === subCoDetails.subcontractorId && sd.monthId === subCoDetails.monthId)
+            .forEach((sd: SubCoDetails) => {
+              sd.forecastId = subCoDetails.forecastId;
+              //TODO: Add Locked
+              // if (typeof forecast.locked !== 'number') {
+              //   sd.locked = forecast.locked === true ? this.authService.getRoleId() : -1;
+              // } else {
+              //   sd.locked = forecast.locked;
+              // }  
+              sd.manDay = subCoDetails.manDay;
+              sd.cor = subCoDetails.cor;
+              sd.costRate = subCoDetails.costRate;
+              sd.projectId = subCoDetails.projectId;
             });
         } else {
-          if (typeof forecast.locked !== 'number') {
-            forecast.locked = forecast.locked === true ? this.authService.getRoleId() : -1;
-          }
-          let u: subCoDetails = this.subCoService.getSubcoDetail(forecast.userId);    
-          this.forecasts.push(forecast);
+          //TODO: AddLocked
+          // if (typeof subCoDetails.locked !== 'number') {
+          //   subCoDetails.locked = subCoDetails.locked === true ? this.authService.getRoleId() : -1;
+          // }
+          let u: SubCoDetails = this.subCoService.getSubcoDetail(subCoDetails.subcontractorId);    
+          this.forecasts.push(subCoDetails);
         }    
-        this.forecasts$.next(this.forecasts);
+        this.subcoDetails$.next(this.forecasts);
       }
-      
-
-  
 }
+
+

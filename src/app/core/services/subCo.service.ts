@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { subCoDetails } from '../interfaces/subCoDetails';
-import { subCoPreview } from '../interfaces/subCoPreview';
+import { SubCoDetails } from '../interfaces/subCoDetails';
+import { SubCoPreview } from '../interfaces/subCoPreview';
 import { SubCoType } from '../interfaces/subCoType';
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../shared/business-operations.service';
@@ -25,11 +25,11 @@ export class SubCoService {
   // subCoPrev$: BehaviorSubject<subCoPreview>;
   // subCoDet$: BehaviorSubject<subCoDetails>;
 
-  subCoPreviews$: BehaviorSubject<subCoPreview[]>;
+  subCoPreviews$: BehaviorSubject<SubCoPreview[]>;
   // subCoDets$: BehaviorSubject<subCoDetails[]>;
   
-  allSubCoPreviews$: BehaviorSubject<subCoPreview[]>;
-  allSubCoDetails$: BehaviorSubject<subCoDetails[]>;
+  allSubCoPreviews$: BehaviorSubject<SubCoPreview[]>;
+  allSubCoDetails$: BehaviorSubject<SubCoDetails[]>;
 
   types$: BehaviorSubject<SubCoType[]>;
 
@@ -75,8 +75,8 @@ export class SubCoService {
    */
     initSubCoPreviewById(emId:number): Promise<void> {
       return new Promise<void>((resolve, reject) => {
-        this.http.get<subCoPreview[]>(this.BO.getSubcoPreviewsByEmId(emId))
-          .subscribe((subCos: subCoPreview[]) => {
+        this.http.get<SubCoDetails[]>(this.BO.getSubcoPreviewsByEmId(emId))
+          .subscribe((subCos: SubCoDetails[]) => {
             this.subCoPreviews$.next(subCos);
             // this.addSubCoPreviews(subCos);           
             resolve();
@@ -100,8 +100,8 @@ export class SubCoService {
    */
   initializeAllSubCoPreviews(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoPreview[]>(this.BO.getSubcoPreviews())   /* To be implemented yet getSubCosPreview*/
-        .subscribe((subCos: subCoPreview[]) => {
+      this.http.get<SubCoPreview[]>(this.BO.getSubcoPreviews())   /* To be implemented yet getSubCosPreview*/
+        .subscribe((subCos: SubCoPreview[]) => {
           this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));   
           resolve();
         }, () => reject());
@@ -110,8 +110,8 @@ export class SubCoService {
 
   initializeAllSubCoDetails(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<subCoDetails[]>(this.BO.getSubcoDetails()) /* To be implemented yet getSubCosDetails*/
-        .subscribe((subCos: subCoDetails[]) => {
+      this.http.get<SubCoDetails[]>(this.BO.getSubcoDetails()) /* To be implemented yet getSubCosDetails*/
+        .subscribe((subCos: SubCoDetails[]) => {
           this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));  
           resolve();
         }, () => reject());
@@ -147,20 +147,20 @@ export class SubCoService {
   /**
    * returns subCo by a given id
    */
-  getSubcoPreview(id: number): subCoPreview | undefined {
-    return this.allSubCoPreviews$.getValue().find((u: subCoPreview) => u.subCoId === id);
+  getSubcoPreview(id: number): SubCoPreview | undefined {
+    return this.allSubCoPreviews$.getValue().find((u: SubCoPreview) => u.subcontractorId === id);
   }
-  getSubcoDetail(id: number): subCoDetails | undefined {
-    return this.allSubCoDetails$.getValue().find((u: subCoDetails) => u.subCoId === id);
+  getSubcoDetail(id: number): SubCoDetails | undefined {
+    return this.allSubCoDetails$.getValue().find((u: SubCoDetails) => u.subcontractorId === id);
   }
 
   /**
    * Adds subco to subco-list
    * @param subco
    */
-   addSubco(subco: subCoPreview): void {
-    let subcos: subCoPreview[] = this.allSubCoPreviews$.getValue();
-    subcos = subcos.filter((s: subCoPreview) => s.subCoId !== subco.subCoId);
+   addSubco(subco: SubCoPreview): void {
+    let subcos: SubCoPreview[] = this.allSubCoPreviews$.getValue();
+    subcos = subcos.filter((s: SubCoPreview) => s.subcontractorId !== subco.subcontractorId);
     subcos.push(subco);
 
     this.allSubCoPreviews$.next(subcos);
@@ -169,10 +169,10 @@ export class SubCoService {
   /**
    * adds subCo to list 
    */
-  addSubCoPreviews(newSubCos: subCoPreview[]): void {
-    let subCos: subCoPreview[] = this.allSubCoPreviews$.getValue();
-    newSubCos.forEach((u: subCoPreview) => {
-      if (!subCos.find((us: subCoPreview) => us.subCoId === u.subCoId)) {
+  addSubCoPreviews(newSubCos: SubCoPreview[]): void {
+    let subCos: SubCoPreview[] = this.allSubCoPreviews$.getValue();
+    newSubCos.forEach((u: SubCoPreview) => {
+      if (!subCos.find((us: SubCoPreview) => us.subcontractorId === u.subcontractorId)) {
         subCos.push(u);
       }
     });
@@ -180,10 +180,10 @@ export class SubCoService {
     this.allSubCoPreviews$.next(subCos);
   }
 
-  addSubCoDetails(newSubCos: subCoDetails[]): void {
-    let subCos: subCoDetails[] = this.allSubCoDetails$.getValue();
-    newSubCos.forEach((u: subCoDetails) => {
-      if (!subCos.find((us: subCoDetails) => us.subCoId === u.subCoId)) {
+  addSubCoDetails(newSubCos: SubCoDetails[]): void {
+    let subCos: SubCoDetails[] = this.allSubCoDetails$.getValue();
+    newSubCos.forEach((u: SubCoDetails) => {
+      if (!subCos.find((us: SubCoDetails) => us.subcontractorId === u.subcontractorId)) {
         subCos.push(u);
       }
     });
@@ -209,7 +209,7 @@ export class SubCoService {
   }
 
   //See team-forecast.service:105 getSummaryData
-  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: subCoDetails[]): SubcoSummaryData {
+  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: SubCoDetails[]): SubcoSummaryData {
     let summaryData: SubcoSummaryData = {
       revenue: 0,
       cost: 0,
@@ -241,12 +241,12 @@ export class SubCoService {
    * Updates subco in subco-list
    * @param subco
    */
-   editSubco(subco: subCoPreview): void {
-    let subcos: subCoPreview[] = this.allSubCoPreviews$.getValue();
+   editSubco(subco: SubCoPreview): void {
+    let subcos: SubCoPreview[] = this.allSubCoPreviews$.getValue();
     subcos
-      .filter((s: subCoPreview) => s.subCoId === subco.subCoId)
-      .forEach((s: subCoPreview) => {
-        s.subCoType = subco.subCoType;
+      .filter((s: SubCoPreview) => s.subcontractorId === subco.subcontractorId)
+      .forEach((s: SubCoPreview) => {
+        s.subcontractorTypeName = subco.subcontractorTypeName;
         s.resourceName = subco.resourceName;
       });
 
@@ -257,13 +257,13 @@ export class SubCoService {
    /**
    * updates/changes subco 
    */
-    updateSubCoPreviews(newSubCos: subCoPreview[]): void {
-      let subCos: subCoPreview[] = this.allSubCoPreviews$.getValue();
+    updateSubCoPreviews(newSubCos: SubCoPreview[]): void {
+      let subCos: SubCoPreview[] = this.allSubCoPreviews$.getValue();
       var i = 0;
-      newSubCos.forEach((u: subCoPreview) => {
-        if (subCos.find((us: subCoPreview) => us.subCoId === u.subCoId)) {
-           subCos[i].subCoType = u.subCoType;
-           subCos[i].subCoTypeId = u.subCoTypeId;
+      newSubCos.forEach((u: SubCoPreview) => {
+        if (subCos.find((us: SubCoPreview) => us.subcontractorId === u.subcontractorId)) {
+           subCos[i].subcontractorTypeName = u.subcontractorTypeName;
+           subCos[i].subcontractorTypeId = u.subcontractorTypeId;
            subCos[i].resourceName = u.resourceName;
         }
         i++;
@@ -272,13 +272,13 @@ export class SubCoService {
       this.allSubCoPreviews$.next(subCos);
     }
     
-    updateSubCoDetails(newSubCos: subCoDetails[]): void {
-      let subCos: subCoDetails[] = this.allSubCoDetails$.getValue();
+    updateSubCoDetails(newSubCos: SubCoDetails[]): void {
+      let subCos: SubCoDetails[] = this.allSubCoDetails$.getValue();
       var i = 0;
-      newSubCos.forEach((u: subCoDetails) => {
-        if (subCos.find((us: subCoDetails) => us.subCoId === u.subCoId)) {
-          subCos[i].subCoType = u.subCoType;
-          subCos[i].subCoTypeId = u.subCoTypeId;
+      newSubCos.forEach((u: SubCoDetails) => {
+        if (subCos.find((us: SubCoDetails) => us.subcontractorId === u.subcontractorId)) {
+          subCos[i].subcontractorTypeName = u.subcontractorTypeName;
+          subCos[i].subcontractorTypeId = u.subcontractorTypeId;
           subCos[i].resourceName = u.resourceName;
           subCos[i].projectId = u.projectId;
           subCos[i].projectName = u.projectName;
@@ -292,7 +292,7 @@ export class SubCoService {
           subCos[i].cost = u.cost;
           subCos[i].contribution = u.contribution;
           subCos[i].cp = u.cp;
-          subCos[i].engagamentManagerID = u.engagamentManagerID;
+          subCos[i].engagementManagerId = u.engagementManagerId;
         }
         i++;
       });
@@ -308,10 +308,10 @@ export class SubCoService {
    * Calls add or edit subco request to server
    * @param subco
    */
-  setSubco(subco: subCoPreview): void {
-    if (subco.subCoId) {
-      this.http.put(this.BO.updateSubCoPreview(subco.subCoId), subco).subscribe(
-        (s: subCoPreview) => {
+  setSubco(subco: SubCoPreview): void {
+    if (subco.subcontractorId) {
+      this.http.put(this.BO.updateSubCoPreview(subco.subcontractorId), subco).subscribe(
+        (s: SubCoPreview) => {
           this.editSubco(s);
           this.snackBar.open("Subco successfully saved!", "OK", {
             duration: 5000,
@@ -327,7 +327,7 @@ export class SubCoService {
       );
     } else {
       this.http.post(this.BO.createUser(), subco).subscribe(
-        (s: subCoPreview) => {
+        (s: SubCoPreview) => {
           this.addSubco(s);
           this.snackBar.open("Subco successfully added!", "OK", {
             duration: 5000,

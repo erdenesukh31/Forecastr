@@ -13,9 +13,9 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 import { Project } from "../../../core/interfaces/project";
 import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
-import { subCoDetails } from "../../../core/interfaces/subCoDetails";
+import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubCoService } from "../../../core/services/subCo.service";
-import { subCoPreview } from "../../../core/interfaces/subCoPreview";
+import { SubCoPreview } from "../../../core/interfaces/subCoPreview";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 
 /**
@@ -47,10 +47,9 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   userId: number;
 
-  fcEntries: FcEntry[] = [];
-  subcos: subCoPreview[] = []; 
-  allSubcosPre: subCoPreview[] = []; 
-  allSubcosDetails: subCoDetails[] = []; 
+  subcos: SubCoPreview[] = []; 
+  subcosDetails: SubCoDetails[] = []; 
+  allSubcosPre: SubCoPreview[] = []; 
   
   /**
    * scroll-variable for scrolling into in AfterViewChecked
@@ -82,19 +81,14 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.firstTime = true;
     this.subcoForecastService.initSubCoForecastByMonth(this.month.id, this.userId);
-
-    this.fcSubscription = this.subcoForecastService.forecasts$
-    .subscribe((forecasts: FcEntry[]) => {
-      this.fcEntries = forecasts;
-    });
-
     this.subcoService.initSubCoPreviewById(this.userId);
     // this.subcoService.initializeAllSubCoPreviews();
-    this.subcoService.initializeAllSubCoDetails();
+    // this.subcoService.initializeAllSubCoDetails();
 
-    this.subcoService.subCoPreviews$.subscribe((subcos: subCoPreview[]) => this.subcos = subcos);
+    this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) => this.subcos = subcos);
+    this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => this.subcosDetails = subcos);
     // this.subcoService.allSubCoPreviews$.subscribe((subcos: subCoPreview[]) => this.allSubcosPre = subcos);
-    this.subcoService.allSubCoDetails$.subscribe((subcos: subCoDetails[]) => this.allSubcosDetails = subcos);
+    // this.subcoService.allSubCoDetails$.subscribe((subcos: SubCoDetails[]) => this.allSubcosDetails = subcos);
 
     let level: number = 1;
     if (this.role === 'practice') {
@@ -158,37 +152,33 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * @param subcoId
    */
   getValue(type: string, subcoId: number): any {
-    let subco: subCoDetails = this.allSubcosDetails.find((e: subCoDetails) => e.subCoId === subcoId);
-    let fc: FcEntry = this.fcEntries.find((e: FcEntry) => e.subcoForecastId === subco.forecastId); 
+    let subco: SubCoPreview = this.subcos.find((e: SubCoPreview) => e.subcontractorId === subcoId);
+    let details = this.subcosDetails.find(d => d.subcontractorId === subcoId && d.monthId ===this.month.id);
 
     if (!subco) {
       return 0;
     }
-    if (fc && fc.projects && fc.projects.length > 0) {
+    if (subco) {
       if (type === 'costRate') {
-        return fc.projects
-          .map((p: FcProject) => (p.costRate ? p.costRate : 0))
-          .reduce((pSum: number, a: number) => pSum + a);
+        return details.costRate;
       }
       else if (type === 'cor') {
-        return fc.projects
-        .map((p: FcProject) => (p.cor ? p.cor : 0))
-        .reduce((pSum: number, a: number) => pSum + a);
+        return details.cor;
       }
       else if (type === 'manDay') {
-        return subco.manDay;
+        return details.manDay;
 
       } else if (type === 'revenue') {
-        return subco.revenue;
+        return details.revenue;
 
       } else if (type === 'costs') {
-        return subco.cost;
+        return details.cost;
 
       } else if (type === 'contribution') {
-        return subco.contribution;
+        return details.contribution;
 
       } else if (type === 'cp') {
-        return subco.cp;
+        return details.cp;
 
       }
       else if (type === 'history') {
@@ -212,7 +202,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  working(user: subCoPreview, month: Month): boolean {
+  working(user: SubCoPreview, month: Month): boolean {
     // if(month.time) {
     //   var endMonth = new Date(user.endDate);
     //   endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);

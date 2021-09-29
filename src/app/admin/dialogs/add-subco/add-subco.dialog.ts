@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { User } from "../../../core/interfaces/user";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { subCoPreview } from '../../../core/interfaces/subCoPreview';
+import { SubCoPreview } from '../../../core/interfaces/subCoPreview';
 import { Subscription } from 'rxjs';
 import { SubCoService } from '../../../core/services/subCo.service';
 import { SubCoType } from '../../../core/interfaces/subCoType';
@@ -33,7 +33,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
   /**
     * list of user (for teamlead select)
    */
-  subco: subCoPreview[];
+  subco: SubCoPreview[];
 
   /**
      * list of types (for type select)
@@ -41,19 +41,19 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
    types: SubCoType[];
 
   constructor(public dialogRef: MatDialogRef<AddSubcoDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: subCoPreview,
+    @Inject(MAT_DIALOG_DATA) public data: SubCoPreview,
     private subcoService: SubCoService,
     private fb: FormBuilder) { 
 
-      if (typeof data.subCoId !== 'undefined') {
+      if (typeof data.subcontractorId !== 'undefined') {
         this.subcoForm = this.fb.group({
-          id: fb.control(data.subCoId),
-          type: fb.control(data.subCoType, Validators.required),
+          id: fb.control(data.subcontractorId),
+          type: fb.control(data.subcontractorTypeName, Validators.required),
           name: fb.control(data.resourceName, Validators.required)
         });
       } else {
         this.subcoForm = this.fb.group({
-          type: fb.control(data.subCoType, Validators.required),
+          type: fb.control(data.subcontractorTypeName, Validators.required),
           name: fb.control(data.resourceName, Validators.required)
         });
       }
@@ -61,7 +61,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subcoSubscription = this.subcoService.allSubCoPreviews$
-        .subscribe((subco: subCoPreview[]) => {
+        .subscribe((subco: SubCoPreview[]) => {
           this.subco = subco;
         });
 

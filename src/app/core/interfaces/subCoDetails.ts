@@ -1,7 +1,7 @@
-export class subCoDetails {
-    subCoId: number;
-    subCoTypeId: number;
-    subCoType: string;
+export class SubCoDetails {
+    subcontractorId: number;
+    subcontractorTypeId: number;
+    subcontractorTypeName: string;
     resourceName: string;
     projectName: string;
     projectId: number;
@@ -15,12 +15,12 @@ export class subCoDetails {
     cost: number;
     contribution: number;
     cp: number;
-    engagamentManagerID: number;
+    engagementManagerId: number;
 
     constructor() {
-        this.subCoId = null;
-        this.subCoTypeId = null;
-        this.subCoType = '';
+        this.subcontractorId = null;
+        this.subcontractorTypeId = null;
+        this.subcontractorTypeName = '';
 	    this.resourceName = '';	
         this.projectName = '';
         this.projectId = null;
@@ -34,6 +34,6 @@ export class subCoDetails {
         this.cost = null;
         this.contribution = null;
         this.cp = null;
-        this.engagamentManagerID = null;	
+        this.engagementManagerId = null;	
 	}
 }

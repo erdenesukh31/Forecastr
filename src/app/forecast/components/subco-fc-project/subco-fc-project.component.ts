@@ -11,6 +11,8 @@ import { AuthService } from "../../../core/security/auth.service";
 import { FormBuilder, Validators, FormControl } from "@angular/forms";
 import { ProjectRequestDialog } from "../../dialogs/add-project/project-request.dialog";
 import { DataSharingService } from "../../../core/shared/data-sharing.service";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
+import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 
 /**
  * forecast-entry component
@@ -21,10 +23,10 @@ import { DataSharingService } from "../../../core/shared/data-sharing.service";
   styleUrls: ["./subco-fc-project.component.scss"],
 })
 export class SubcoFcProjectComponent implements OnInit {
-  @Input("forecast") forecast: FcEntry;
+  @Input("subCoDetails") subcoDetails: SubCoDetails;
   @Input("project") project: FcProject;
   @Input("monthId") monthId: number;
-  @Input("userId") userId: number;
+  @Input("subcoId") subcoId: number;
   @Input("lastEditor") lastEditor: string;
 
   /**
@@ -55,7 +57,7 @@ export class SubcoFcProjectComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private utilitiesService: UtilitiesService,
-    private forecastService: ForecastService,
+    private subcoForecastService: SubCoForecastService,
     private dataSharingService: DataSharingService
   ) {}
 
@@ -66,8 +68,9 @@ export class SubcoFcProjectComponent implements OnInit {
     this.projectControl = this.fb.control(
       {
         value: this.project.projectId,
-        disabled:
-          this.forecast.locked >= this.authService.getRoleId() ? true : false,
+        disabled: false 
+        //TODO: Add Locked
+          // this.subcoDetails.locked >= this.authService.getRoleId() ? true : false
       },
       Validators.required
     );
@@ -116,7 +119,7 @@ export class SubcoFcProjectComponent implements OnInit {
       }
     }
 
-    this.forecastService.validateProjects(this.forecast);
+    this.subcoForecastService.validateProjects(this.subcoDetails);
     this.setProjectInputValidness();
     this.checkCORValueBiggerThanZero();
   }
@@ -137,16 +140,17 @@ export class SubcoFcProjectComponent implements OnInit {
   }
 
   setProjectInputValidness(): void {
-    if (this.forecast.projects) {
+    if (this.subcoDetails.projectId) {
       this.dataSharingService.setProjectInputValid(true);
       this.dataSharingService.setCorValueBiggerThanZero(true);
 
-      for (let p of this.forecast.projects) {
-        if (p.errors.length > 0) {
-          this.dataSharingService.setProjectInputValid(false);
-          break;
-        }
-      }
+      //TODO. ValidateProject
+      // for (let p of this.subcoDetails.projects) {
+      //   if (p.errors.length > 0) {
+      //     this.dataSharingService.setProjectInputValid(false);
+      //     break;
+      //   }
+      // }
     }
   }
 
@@ -182,7 +186,8 @@ export class SubcoFcProjectComponent implements OnInit {
       }
     }
 
-    this.forecastService.setForecast(this.forecast, false, true);
+    this.subcoDetails.projectId = this.project.projectId;
+    this.subcoForecastService.setForecast(this.subcoDetails, false, true);
     this.validateProjects();
   }
 
@@ -193,46 +198,47 @@ export class SubcoFcProjectComponent implements OnInit {
    * @param index
    */
   history(attribute: string): string | boolean {
-    if (
-      this.forecast.history &&
-      this.forecast.history[0].projects[0] &&
-      this.forecast.history.length > 0
-    ) {
-      if (
-        attribute === "days" &&
-        this.forecast.history[0].projects[0].plannedProjectDays
-      ) {
-        return (
-          this.lastEditor +
-          ": " +
-          this.forecast.history[0].projects[0].plannedProjectDays +
-          " days"
-        );
-      } else if (
-        attribute === "cor" &&
-        this.forecast.history[0].projects[0].cor
-      ) {
-        return (
-          this.lastEditor +
-          ": € " +
-          this.forecast.history[0].projects[0].cor
-        );
-      }
-    } else if (this.forecast.createdAt && this.forecast.changedBy) {
-      if (
-        attribute === "days" &&
-        this.forecast.projects[0].plannedProjectDays
-      ) {
-        return (
-          this.lastEditor +
-          ": " +
-          this.forecast.projects[0].plannedProjectDays +
-          " days"
-        );
-      } else if (attribute === "cor" && this.forecast.projects[0].cor) {
-        return this.lastEditor + ": € " + this.forecast.projects[0].cor;
-      }
-    }
+    //TODO: Add History
+    // if (
+    //   this.subcoDetails.history &&
+    //   this.subcoDetails.history[0].projects[0] &&
+    //   this.subcoDetails.history.length > 0
+    // ) {
+    //   if (
+    //     attribute === "days" &&
+    //     this.subcoDetails.history[0].projects[0].plannedProjectDays
+    //   ) {
+    //     return (
+    //       this.lastEditor +
+    //       ": " +
+    //       this.subcoDetails.history[0].projects[0].plannedProjectDays +
+    //       " days"
+    //     );
+    //   } else if (
+    //     attribute === "cor" &&
+    //     this.subcoDetails.history[0].projects[0].cor
+    //   ) {
+    //     return (
+    //       this.lastEditor +
+    //       ": € " +
+    //       this.subcoDetails.history[0].projects[0].cor
+    //     );
+    //   }
+    // } else if (this.subcoDetails.createdAt && this.subcoDetails.changedBy) {
+    //   if (
+    //     attribute === "days" &&
+    //     this.subcoDetails.projects[0].plannedProjectDays
+    //   ) {
+    //     return (
+    //       this.lastEditor +
+    //       ": " +
+    //       this.subcoDetails.projects[0].plannedProjectDays +
+    //       " days"
+    //     );
+    //   } else if (attribute === "cor" && this.subcoDetails.projects[0].cor) {
+    //     return this.lastEditor + ": € " + this.subcoDetails.projects[0].cor;
+    //   }
+    // }
 
     return false;
   }
@@ -288,10 +294,12 @@ export class SubcoFcProjectComponent implements OnInit {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
-    if (this.forecast && this.forecast.locked >= this.authService.getRoleId()) {
-      return true;
-    }
     return false;
+    //TODO: AddLocked
+    // if (this.subcoDetails && this.subcoDetails.locked >= this.authService.getRoleId()) {
+    //   return true;
+    // }
+    // return false;
   }
   addProjectMail() {
     let dialogRef: MatDialogRef<ProjectRequestDialog> = this.dialog.open(

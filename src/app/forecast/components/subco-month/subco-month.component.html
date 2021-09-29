@@ -28,32 +28,32 @@
             </mat-panel-title>
             <mat-panel-description class="mat-row">
                 <span class="mat-cell">
-                  <mat-icon *ngIf="forecastState('locked', s.subCoId)" class="icon-locked"
-                  matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
+                  <mat-icon *ngIf="forecastState('locked', s.subcontractorId)" class="icon-locked"
+                  matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
                   lock</mat-icon>
-                  <ng-container *ngIf="forecastState('locked-sub', s.subCoId)">
+                  <ng-container *ngIf="forecastState('locked-sub', s.subcontractorId)">
                     <mat-icon class="icon-locked-sublevel"
-                    matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
+                    matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
                       lock_open</mat-icon>
-                    <div class="locked-leveldesc">{{forecastState('locklevel', s.subCoId)}}</div>
+                    <div class="locked-leveldesc">{{forecastState('locklevel', s.subcontractorId)}}</div>
                   </ng-container>
-                  <mat-icon *ngIf="forecastState('saved', s.subCoId)" 
-                  matTooltip="{{getValue('history', s.subCoId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subCoId)}}">
+                  <mat-icon *ngIf="forecastState('saved', s.subcontractorId)" 
+                  matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
                   save</mat-icon>
-                  <mat-icon *ngIf="forecastState('edited', s.subCoId)" class="icon-edited">radio_button_checked</mat-icon>
+                  <mat-icon *ngIf="forecastState('edited', s.subcontractorId)" class="icon-edited">radio_button_checked</mat-icon>
                 </span>
-                <span class="mat-cell">{{getValue('costRate', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('cor', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('manDay', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('revenue', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('costs', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('contribution', s.subCoId) | number: '1.0-2': 'de'}}</span>
-                <span class="mat-cell">{{getValue('cp', s.subCoId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costRate', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cor', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('manDay', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('revenue', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costs', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('contribution', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cp', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
         
           <ng-template matExpansionPanelContent>
-            <app-subco-fc-entry class="tab-container" [subcoId]="s.subCoId" [month]="month"></app-subco-fc-entry>
+            <app-subco-fc-entry class="tab-container" [subcoId]="s.subcontractorId" [month]="month"></app-subco-fc-entry>
           </ng-template>
           
           <mat-action-row>

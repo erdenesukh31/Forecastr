@@ -325,4 +325,11 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + "/" + emId + "/" + "lock";
   }
 
+  subcoForecast(subcontractorForecastId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + subcontractorForecastId ;
+  }
+  
+  createSubcoForecast(): string {
+    return env.api + 'subcos' + '/'  + 'forecasts';
+  }
 }

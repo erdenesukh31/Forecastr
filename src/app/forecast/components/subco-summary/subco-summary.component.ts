@@ -24,7 +24,7 @@ import { TeamUserService } from "../../../core/services/forecasts/team-user.serv
 import { ExportCsvDialog } from "../../dialogs/export-csv/export-csv.dialog";
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
 import { SubCoService } from "../../../core/services/subCo.service";
-import { subCoDetails } from "../../../core/interfaces/subCoDetails";
+import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubcoSummaryData } from "../../../core/interfaces/subcoSummaryData";
 
 /**
@@ -60,7 +60,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   /**
    * subcos member list
    */
-  subcos: subCoDetails[] = []; //TODO: Replace with subcos
+  subcos: SubCoDetails[] = []; //TODO: Replace with subcos
 
   /**
    * contains summary-data (calculated in subco-summary service)
@@ -121,14 +121,14 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     this.months = this.utilitiesService.getMonths();
 
     this.subcosSubscription = this.subcoService.allSubCoDetails$ //TODO: replace
-      .subscribe((subco: subCoDetails[]) => {
+      .subscribe((subco: SubCoDetails[]) => {
         this.subcos = subco;
       });
 
     this.fcSubscription = this.forecastService.forecasts$
       .subscribe((forecasts: FcEntry[]) => {
-        let relevantSubcos: subCoDetails[] = this.subcos.filter((u: subCoDetails) => this.isSubcoRelevantForMonth(u, this.month));
-        let subcoIds: number[] = relevantSubcos.map((u: subCoDetails) => u.subCoId);
+        let relevantSubcos: SubCoDetails[] = this.subcos.filter((u: SubCoDetails) => this.isSubcoRelevantForMonth(u, this.month));
+        let subcoIds: number[] = relevantSubcos.map((u: SubCoDetails) => u.subcontractorId);
         this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && subcoIds.indexOf(fc.userId) >= 0);
         this.summaryData = this.subcoService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantSubcos);
         // this.summaryProjects = new MatTableDataSource(this.summaryData.days);
@@ -136,7 +136,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   }
 
   //TODO: is this relevant
-  isSubcoRelevantForMonth(user: subCoDetails, month: Month) : boolean {
+  isSubcoRelevantForMonth(user: SubCoDetails, month: Month) : boolean {
     // if(user. && user.startDate && month.time) {
     //   var endMonth = new Date(user.endDate);
     //   endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
@@ -204,7 +204,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       if (submit === true) {
         this.pageState.showSpinner();
         for(let member of this.subcos) {
-          this.forecastService.unlockForecast(this.month.id, member.subCoId);
+          this.forecastService.unlockForecast(this.month.id, member.subcontractorId);
         }
         this.forecastService.unlockForecast(this.month.id, this.userId);
         this.pageState.hideSpinner();
