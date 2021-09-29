@@ -9,15 +9,11 @@
     </mat-form-field>
 
     <mat-form-field  appearance="outline">
-      <mat-label>Choose a type</mat-label>   <!-- get all subco types -->
+      <mat-label>Choose a type</mat-label>   
       <mat-select formControlName="type" id="type" required>
-        <mat-option [value]="null">-</mat-option>
-        <mat-option [value]="1">External</mat-option>
-        <mat-option [value]="2">Internal</mat-option>
-        <mat-option [value]="3">Offshore</mat-option>
-        <!--<ng-container *ngFor="let t of types">
-          <mat-option [value]="t.typeId">{{t.name}}</mat-option>
-        </ng-container> -->
+        <ng-container *ngFor="let t of types">
+          <mat-option [value]="t.subCoTypeId">{{t.subCoTypeName}}</mat-option>
+        </ng-container> 
       </mat-select>
     </mat-form-field>
 

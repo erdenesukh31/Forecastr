@@ -5,6 +5,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { subCoPreview } from '../../../core/interfaces/subCoPreview';
 import { Subscription } from 'rxjs';
 import { SubCoService } from '../../../core/services/subCo.service';
+import { SubCoType } from '../../../core/interfaces/subCoType';
 
 @Component({
   templateUrl: './add-subco.dialog.html',
@@ -34,6 +35,11 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
    */
   subco: subCoPreview[];
 
+  /**
+     * list of types (for type select)
+     */
+   types: SubCoType[];
+
   constructor(public dialogRef: MatDialogRef<AddSubcoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: subCoPreview,
     private subcoService: SubCoService,
@@ -59,10 +65,10 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
           this.subco = subco;
         });
 
-      /*this.typeSubscription = this.subcoService.roles$
-        .subscribe((roles: Role[]) => {
-          this.roles = roles;                //get the subco types
-        }); */
+      this.typeSubscription = this.subcoService.types$
+        .subscribe((types: SubCoType[]) => {
+          this.types = types;     
+        }); 
   }
 
   /**

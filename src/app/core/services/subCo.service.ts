@@ -8,6 +8,8 @@ import { BusinessOperationsService } from '../shared/business-operations.service
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
 import { FcEntry } from '../interfaces/fcEntry';
 import { SummaryData } from '../interfaces/summaryData';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PageStateService } from '../shared/page-state.service';
 
 
 
@@ -34,6 +36,8 @@ export class SubCoService {
   constructor(
     private http: HttpClient,
     private BO: BusinessOperationsService,
+    private snackBar: MatSnackBar,
+    private pageState: PageStateService
   ) {
     this.subCoPrev$ = new BehaviorSubject(new subCoPreview)
     this.subCoDet$ = new BehaviorSubject(new subCoDetails)
@@ -127,6 +131,18 @@ export class SubCoService {
   }
 
   /**
+   * Adds subco to subco-list
+   * @param subco
+   */
+   addSubco(subco: subCoPreview): void {
+    let subcos: subCoPreview[] = this.allSubCoPreviews$.getValue();
+    subcos = subcos.filter((s: subCoPreview) => s.subCoId !== subco.subCoId);
+    subcos.push(subco);
+
+    this.allSubCoPreviews$.next(subcos);
+  }
+
+  /**
    * adds subCo to list 
    */
   addSubCoPreviews(newSubCos: subCoPreview[]): void {
@@ -165,6 +181,22 @@ export class SubCoService {
     throw new Error("Method not implemented.");
   }
 
+  /**
+   * Updates subco in subco-list
+   * @param subco
+   */
+   editSubco(subco: subCoPreview): void {
+    let subcos: subCoPreview[] = this.allSubCoPreviews$.getValue();
+    subcos
+      .filter((s: subCoPreview) => s.subCoId === subco.subCoId)
+      .forEach((s: subCoPreview) => {
+        s.subCoType = subco.subCoType;
+        s.resourceName = subco.resourceName;
+      });
+
+    this.allSubCoPreviews$.next(subcos);
+  }
+
 
    /**
    * updates/changes subco 
@@ -183,6 +215,7 @@ export class SubCoService {
   
       this.allSubCoPreviews$.next(subCos);
     }
+    
     updateSubCoDetails(newSubCos: subCoDetails[]): void {
       let subCos: subCoDetails[] = this.allSubCoDetails$.getValue();
       var i = 0;
@@ -214,6 +247,46 @@ export class SubCoService {
     getSubcoTypes(): SubCoType[] {
       return this.types$.getValue();
     }
+
+    /**
+   * Calls add or edit subco request to server
+   * @param subco
+   */
+  setSubco(subco: subCoPreview): void {
+    if (subco.subCoId) {
+      this.http.put(this.BO.updateSubCoPreview(subco.subCoId), subco).subscribe(
+        (s: subCoPreview) => {
+          this.editSubco(s);
+          this.snackBar.open("Subco successfully saved!", "OK", {
+            duration: 5000,
+          });
+          this.pageState.hideSpinner();
+        },
+        (e: any) => {
+          this.snackBar.open("Subco could not be saved!", "OK", {
+            duration: 10000,
+          });
+          this.pageState.hideSpinner();
+        }
+      );
+    } else {
+      this.http.post(this.BO.createUser(), subco).subscribe(
+        (s: subCoPreview) => {
+          this.addSubco(s);
+          this.snackBar.open("Subco successfully added!", "OK", {
+            duration: 5000,
+          });
+          this.pageState.hideSpinner();
+        },
+        (e: any) => {
+          this.snackBar.open("Subco could not be added!", "OK", {
+            duration: 10000,
+          });
+          this.pageState.hideSpinner();
+        }
+      );
+    }
+  }
 
 
 }

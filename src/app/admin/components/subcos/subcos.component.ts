@@ -66,7 +66,7 @@ export class SubcosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((s: subCoPreview | boolean) => {
       if (s) {
-        //this.subcoService.setUser(<subCoPreview>s);
+        this.subcoService.setSubco(<subCoPreview>s);
       }
     });
   }
