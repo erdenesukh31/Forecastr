@@ -155,10 +155,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     let subco: SubCoPreview = this.subcos.find((e: SubCoPreview) => e.subcontractorId === subcoId);
     let details = this.subcosDetails.find(d => d.subcontractorId === subcoId && d.monthId ===this.month.id);
 
-    if (!subco) {
+    if (!details) {
       return 0;
     }
-    if (subco) {
+    if (details) {
       if (type === 'costRate') {
         return details.costRate;
       }

@@ -3,7 +3,7 @@
     <mat-card-content class="project">
       <div layout="row" layout-fill>
         <div [attr.flex]="55" class="project-element">
-          <ng-container *ngIf="!isMandatory(project.projectId)">
+          <ng-container>
             <mat-form-field
               appearance="outline"
               class="no-padding"
@@ -31,7 +31,7 @@
               (closed)="callDataUpdate()"
             >
               <ng-container *ngFor="let p of filteredProjects">
-                <mat-option *ngIf="!isMandatory(p.id)" [value]="p.id">{{
+                <mat-option [value]="p.id">{{
                   p.name
                 }}</mat-option>
               </ng-container>
@@ -41,18 +41,17 @@
             </mat-autocomplete>
           </ng-container>
 
-          <div
+          <!-- <div
             class="mat-form-field-clone"
             [ngClass]="{ 'not-locked': !fcIsLocked() }"
-            *ngIf="isMandatory(project.projectId)"
           >
             <input
               type="text"
               disabled
-              value="{{ projectName(project.projectId) }}"
+              value="{{ projectName(subcoDetails.projectId) }}"
             />
             <span class="label">Default Project</span>
-          </div>
+          </div> -->
         </div>
 
         <!-- Cost Rate -->
@@ -67,7 +66,7 @@
               onClick="this.select()"
               matInput
               name="costRate-{{ monthId }}"
-              [(ngModel)]="project.costRate"
+              [(ngModel)]="subcoDetails.costRate"
               required
               min="0"
               (ngModelChange)="callDataUpdate()"
@@ -107,7 +106,7 @@
               type="number"
               onClick="this.select()"
               name="cor-{{ monthId }}"
-              [(ngModel)]="project.cor"
+              [(ngModel)]="subcoDetails.cor"
               required
               min="1"
               (ngModelChange)="callDataUpdate()"
@@ -139,8 +138,8 @@
               matInput
               type="number"
               onClick="this.select()"
-              name="plannedProjectDays-{{ monthId }}"
-              [(ngModel)]="project.plannedProjectDays"
+              name="manDay-{{ monthId }}"
+              [(ngModel)]="subcoDetails.manDay"
               required
               min="1"
               (ngModelChange)="callDataUpdate()"

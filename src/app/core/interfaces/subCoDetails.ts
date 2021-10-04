@@ -14,6 +14,7 @@ export class SubCoDetails {
     cor:number;
     cost: number;
     contribution: number;
+    lockState: string;
     cp: number;
     engagementManagerId: number;
 
@@ -33,6 +34,7 @@ export class SubCoDetails {
         this.costRate = null;
         this.cost = null;
         this.contribution = null;
+        this.lockState = '';
         this.cp = null;
         this.engagementManagerId = null;	
 	}

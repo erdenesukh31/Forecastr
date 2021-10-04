@@ -67,10 +67,9 @@ export class SubcoFcProjectComponent implements OnInit {
   ngOnInit(): void {
     this.projectControl = this.fb.control(
       {
-        value: this.project.projectId,
-        disabled: false 
-        //TODO: Add Locked
-          // this.subcoDetails.locked >= this.authService.getRoleId() ? true : false
+        value: this.subcoDetails.projectId,
+        disabled: 
+            this.subcoDetails.lockState !== 'LockedState1'
       },
       Validators.required
     );
@@ -266,17 +265,17 @@ export class SubcoFcProjectComponent implements OnInit {
     }
   }
 
-  /**
-   * Tests if a project is mandatory
-   * @param projectId
-   */
-  isMandatory(projectId: number): boolean {
-    return this.availableProjects.find(
-      (p: Project) => p.mandatory === "Y" && p.id === projectId
-    )
-      ? true
-      : false;
-  }
+  // /**
+  //  * Tests if a project is mandatory
+  //  * @param projectId
+  //  */
+  // isMandatory(projectId: number): boolean {
+  //   return this.availableProjects.find(
+  //     (p: Project) => p.mandatory === "Y" && p.id === projectId
+  //   )
+  //     ? true
+  //     : false;
+  // }
 
   /**
    * Tests if a project is automatically set as internal
@@ -294,12 +293,10 @@ export class SubcoFcProjectComponent implements OnInit {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
+    if (this.subcoDetails && this.subcoDetails.lockState !== 'LockedState1') {
+      return true;
+    }
     return false;
-    //TODO: AddLocked
-    // if (this.subcoDetails && this.subcoDetails.locked >= this.authService.getRoleId()) {
-    //   return true;
-    // }
-    // return false;
   }
   addProjectMail() {
     let dialogRef: MatDialogRef<ProjectRequestDialog> = this.dialog.open(

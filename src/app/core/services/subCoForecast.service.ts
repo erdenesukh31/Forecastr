@@ -21,7 +21,6 @@ import { Suggestion } from '../interfaces/suggestion';
 import { resolve } from 'url';
 import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
 import { User } from '../interfaces/user';
-import { fchmod } from 'fs';
 
 /**
  * forecast service
