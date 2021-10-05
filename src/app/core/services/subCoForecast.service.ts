@@ -29,133 +29,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class SubCoForecastService {
-  validateProjects(subcoDetails: SubCoDetails) {
-    throw new Error("Method not implemented.");
-  }
-  loadForecast(subcoId: number, id: number) :Promise<FcEntry[]> {
-    throw new Error('Method not implemented.');
-  }
-  addProject(id: number, subcoId: number, arg2: FcProject) {
-    throw new Error('Method not implemented.');
-  }
-  unlockForecast(forecastId: number) {
-    this.http.put(this.BO.setSubcoForecastUnlocked(forecastId),null)
-    .subscribe(r =>{
-      let subcoDetails : SubCoDetails= this.subcoDetails.find(sd => sd.forecastId === forecastId);
-      subcoDetails.lockState = 'Unlocked'
-      this.setForecast(subcoDetails, true, false);
-    });
 
-  }
-  saveForecast(monthId: number, subcoId: number, submit: boolean) {
-    let subcoDetails: SubCoDetails = cloneDeep(this.subcoDetails.find((fc: SubCoDetails) => fc.subcontractorId === subcoId && fc.monthId === monthId));
-    if (!subcoDetails) {
-      return;
-    }
-
-    // forecast = this.validateProjects(forecast); //TODO: validate not needed?
-    // if (([].concat.apply([], forecast.projects.map((p: FcProject) => p.errors))).length > 0) {
-    //   forecast.instantValidation = true;
-    //   this.setForecast(forecast, false, true);
-
-    //   this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
-    //   return;
-    // }
-
-    if (submit) {
-      subcoDetails.lockState = 'LockedState1';
-    } else {
-      subcoDetails.lockState = 'Unlocked';
-    }
-
-    //TODO: Add History
-    // forecast.history = undefined;
-
-    this.pageState.showSpinner();
-
-    if(subcoDetails.forecastId && subcoDetails.projectId){
-      this.http.put(this.BO.subcoForecast(subcoDetails.forecastId), subcoDetails)
-      .subscribe((subcoDetails: SubCoDetails) => {
-        this.setForecast(subcoDetails, true, false);
-        if(!submit) {
-          this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
-        }
-        else {
-          this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
-        }
-        
-        this.pageState.hideSpinner();
-
-      }, (e: any) => {
-        if(e.status === 409) {
-          // if(!this.hasLeadRole()) {
-          //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
-          // }
-          // else {
-          //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
-          // }
-
-          setTimeout(() => window.location.reload(), 5000);
-          
-        }
-        else {
-          if(!submit) {
-            this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
-          }
-          else if(submit){
-            this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
-          }
-        }
-        this.pageState.hideSpinner();
-
-      });
-    }else if(subcoDetails.projectId){
-      this.http.post(this.BO.createSubcoForecast(), subcoDetails)
-      .subscribe((sd: SubCoDetails) => {
-        this.setForecast(sd, true, false);
-        if(!submit) {
-          this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
-        }
-        else {
-          this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
-        }
-        
-        this.pageState.hideSpinner();
-
-      }, (e: any) => {
-        if(e.status === 409) {
-          // if(!this.hasLeadRole()) {
-          //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
-          // }
-          // else {
-          //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
-          // }
-
-          setTimeout(() => window.location.reload(), 5000);
-          
-        }
-        else {
-          if(!submit) {
-            this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
-          }
-          else if(submit){
-            this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
-          }
-        }
-        this.pageState.hideSpinner();
-
-      });
-    }else{
-      if(!submit) {
-        this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
-      }
-      else if(submit){
-        this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
-      }
-      this.pageState.hideSpinner();
-    }
-    
-  }
   /**
    * observable which returns all available forecasts which have already been loaded from the server
    */
@@ -301,6 +175,129 @@ export class SubCoForecastService {
           this.subcoDetails.push(subCoDetails);
         }    
         this.subcoDetails$.next(this.subcoDetails);
+      }
+
+      getForecastPromise(monthId: number) : Promise<SubCoDetails[]> {
+        return this.http.get<SubCoDetails[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).toPromise();
+      }
+
+      unlockForecast(forecastId: number) {
+        this.http.put(this.BO.setSubcoForecastUnlocked(forecastId),null)
+        .subscribe(r =>{
+          let subcoDetails : SubCoDetails= this.subcoDetails.find(sd => sd.forecastId === forecastId);
+          subcoDetails.lockState = 'Unlocked'
+          this.setForecast(subcoDetails, true, false);
+        });
+    
+      }
+      saveForecast(monthId: number, subcoId: number, submit: boolean) {
+        let subcoDetails: SubCoDetails = cloneDeep(this.subcoDetails.find((fc: SubCoDetails) => fc.subcontractorId === subcoId && fc.monthId === monthId));
+        if (!subcoDetails) {
+          return;
+        }
+    
+        // forecast = this.validateProjects(forecast); //TODO: validate not needed?
+        // if (([].concat.apply([], forecast.projects.map((p: FcProject) => p.errors))).length > 0) {
+        //   forecast.instantValidation = true;
+        //   this.setForecast(forecast, false, true);
+    
+        //   this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
+        //   return;
+        // }
+    
+        if (submit) {
+          subcoDetails.lockState = 'LockedState1';
+        } else {
+          subcoDetails.lockState = 'Unlocked';
+        }
+    
+        //TODO: Add History
+        // forecast.history = undefined;
+    
+        this.pageState.showSpinner();
+    
+        if(subcoDetails.forecastId && subcoDetails.projectId){
+          this.http.put(this.BO.subcoForecast(subcoDetails.forecastId), subcoDetails)
+          .subscribe((subcoDetails: SubCoDetails) => {
+            this.setForecast(subcoDetails, true, false);
+            if(!submit) {
+              this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
+            }
+            else {
+              this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
+            }
+            
+            this.pageState.hideSpinner();
+    
+          }, (e: any) => {
+            if(e.status === 409) {
+              // if(!this.hasLeadRole()) {
+              //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+              // }
+              // else {
+              //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+              // }
+    
+              setTimeout(() => window.location.reload(), 5000);
+              
+            }
+            else {
+              if(!submit) {
+                this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
+              }
+              else if(submit){
+                this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
+              }
+            }
+            this.pageState.hideSpinner();
+    
+          });
+        }else if(subcoDetails.projectId){
+          this.http.post(this.BO.createSubcoForecast(), subcoDetails)
+          .subscribe((sd: SubCoDetails) => {
+            this.setForecast(sd, true, false);
+            if(!submit) {
+              this.snackBar.open('Your forecast has been successfully saved.', 'OK', { duration: 5000, });
+            }
+            else {
+              this.snackBar.open('Your forecast has been successfully submitted.', 'OK', { duration: 5000, });
+            }
+            
+            this.pageState.hideSpinner();
+    
+          }, (e: any) => {
+            if(e.status === 409) {
+              // if(!this.hasLeadRole()) {
+              //   this.snackBar.open('Your forecast has already been submitted by your team lead. Please contact your supervisor. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+              // }
+              // else {
+              //   this.snackBar.open('The forecast has already been submitted by your colleague. The page will be refreshed automatically.', 'OK', { duration: 10000, });
+              // }
+    
+              setTimeout(() => window.location.reload(), 5000);
+              
+            }
+            else {
+              if(!submit) {
+                this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
+              }
+              else if(submit){
+                this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
+              }
+            }
+            this.pageState.hideSpinner();
+    
+          });
+        }else{
+          if(!submit) {
+            this.snackBar.open('Your forecast could not be saved. Please try again later.', 'OK', { duration: 10000, });
+          }
+          else if(submit){
+            this.snackBar.open('Your forecast could not be submitted. Please try again later.', 'OK', { duration: 10000, });
+          }
+          this.pageState.hideSpinner();
+        }
+        
       }
 }
 

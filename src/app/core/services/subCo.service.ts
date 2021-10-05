@@ -204,7 +204,7 @@ export class SubCoService {
   // }
 
   // See team-forecast.service:56 getTeamForecastPromise
-  getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{
+  getForecastPromise(emId: number, id: number): Promise<FcEntry[]>{
     throw new Error("Method not implemented.");
   }
 
