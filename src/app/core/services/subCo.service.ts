@@ -209,7 +209,7 @@ export class SubCoService {
   }
 
   //See team-forecast.service:105 getSummaryData
-  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: SubCoDetails[]): SubcoSummaryData {
+  getSummaryData(subcos: SubCoDetails[]): SubcoSummaryData {
     let summaryData: SubcoSummaryData = {
       revenue: 0,
       cost: 0,
@@ -217,20 +217,12 @@ export class SubCoService {
       cp: 0,
     }
 
-    fcEntries.forEach(fcE =>{
+    subcos.forEach(sub =>{
       let revenue:number;
       let cost:number;
       let contribution:number;
-      let manDay = fcE.projects
-        .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
-        .reduce((pSum: number, a: number) => pSum + a);
-      summaryData.revenue += revenue = fcE.cor * manDay;
-
-      let costRate = fcE.projects
-        .map((p: FcProject) => (p.costRate ? p.costRate : 0))
-        .reduce((pSum: number, a: number) => pSum + a);
-      summaryData.cost += cost = costRate * manDay;
-
+      summaryData.revenue += revenue = sub.cor * sub.manDay;
+      summaryData.cost += cost = sub.costRate * sub.manDay;
       summaryData.contribution += contribution = revenue - cost;
       summaryData.cp += contribution / revenue; //TODO: check if correct
     });

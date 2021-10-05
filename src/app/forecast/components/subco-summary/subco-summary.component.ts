@@ -26,6 +26,7 @@ import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-mess
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubcoSummaryData } from "../../../core/interfaces/subcoSummaryData";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 
 /**
  * subco summary component
@@ -89,7 +90,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
    * @param datePipe
    * @param dialog
    * @param utilitiesService
-   * @param forecastService
+   * @param subcoForecastService
    * @param subcoForecastService
    * @param userService
    * @param pageState
@@ -99,7 +100,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private utilitiesService: UtilitiesService,
-    private forecastService: ForecastService,
+    private subcoForecastService: SubCoForecastService,
     private userService: UserService,
     private subcoService: SubCoService, //TODO: Replace with SubcoService
     private authService: AuthService,
@@ -125,13 +126,9 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
         this.subcos = subco;
       });
 
-    this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        let relevantSubcos: SubCoDetails[] = this.subcos.filter((u: SubCoDetails) => this.isSubcoRelevantForMonth(u, this.month));
-        let subcoIds: number[] = relevantSubcos.map((u: SubCoDetails) => u.subcontractorId);
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && subcoIds.indexOf(fc.userId) >= 0);
-        this.summaryData = this.subcoService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantSubcos);
-        // this.summaryProjects = new MatTableDataSource(this.summaryData.days);
+    this.fcSubscription = this.subcoForecastService.subcoDetails$
+      .subscribe((forecasts: SubCoDetails[]) => {
+        this.summaryData = this.subcoService.getSummaryData(forecasts);
       });
   }
 
@@ -193,24 +190,24 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     });
   }
 
-  unlockAll(): void {
-    let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-      data: {
-        message: 'Are you sure you want to unlock all forecasts?',
-        button: { cancel: 'No', submit: 'Yes' },
-      },
-    });
-    dialogRef.afterClosed().subscribe((submit: boolean) => {
-      if (submit === true) {
-        this.pageState.showSpinner();
-        for(let member of this.subcos) {
-          this.forecastService.unlockForecast(this.month.id, member.subcontractorId);
-        }
-        this.forecastService.unlockForecast(this.month.id, this.userId);
-        this.pageState.hideSpinner();
-      }
-    });
-  }
+  // unlockAll(): void {
+  //   let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+  //     data: {
+  //       message: 'Are you sure you want to unlock all forecasts?',
+  //       button: { cancel: 'No', submit: 'Yes' },
+  //     },
+  //   });
+  //   dialogRef.afterClosed().subscribe((submit: boolean) => {
+  //     if (submit === true) {
+  //       this.pageState.showSpinner();
+  //       for(let member of this.subcos) {
+  //         this.subcoForecastService.unlockForecast(this.month.id, member.subcontractorId);
+  //       }
+  //       this.subcoForecastService.unlockForecast(this.month.id, this.userId);
+  //       this.pageState.hideSpinner();
+  //     }
+  //   });
+  // }
 
   /**
    * Reset all forecasts to initial state DEACTIVATED
@@ -237,20 +234,20 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       level = 2;
     }
 
-    this.subcoService.setForecastsLockState(this.month.id, this.userId, locked)
-      .then((forecasts: FcEntry[]) => {
-        if (forecasts) {
-          this.forecastService.addForecasts(forecasts, true);
-        } else {
-          this.forecastService.setTeamLockState(this.month.id, level, role); //TODO: Replace
-        }
+    // this.subcoService.setForecastsLockState(this.month.id, this.userId, locked)
+    //   .then((forecasts: FcEntry[]) => {
+    //     if (forecasts) {
+    //       this.forecastService.addForecasts(forecasts, true);
+    //     } else {
+    //       this.forecastService.setTeamLockState(this.month.id, level, role); //TODO: Replace
+    //     }
 
-        this.snackBar.open(messageSuccess, 'OK', { duration: 10000, });
-        this.pageState.hideSpinner();
-      }).catch(() => {
-        this.snackBar.open(messageFail, 'OK', { duration: 10000, });
-        this.pageState.hideSpinner();
-      });
+    //     this.snackBar.open(messageSuccess, 'OK', { duration: 10000, });
+    //     this.pageState.hideSpinner();
+    //   }).catch(() => {
+    //     this.snackBar.open(messageFail, 'OK', { duration: 10000, });
+    //     this.pageState.hideSpinner();
+    //   });
   }
 
   /**
