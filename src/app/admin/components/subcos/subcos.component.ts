@@ -34,6 +34,7 @@ export class SubcosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subcoService.initializeAllSubCoPreviews();
 
     //load all subcos
     this.subcoSubscription = this.subcoService.allSubCoPreviews$

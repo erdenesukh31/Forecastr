@@ -75,8 +75,8 @@ export class SubCoService {
    */
     initSubCoPreviewById(emId:number): Promise<void> {
       return new Promise<void>((resolve, reject) => {
-        this.http.get<SubCoDetails[]>(this.BO.getSubcoPreviewsByEmId(emId))
-          .subscribe((subCos: SubCoDetails[]) => {
+        this.http.get<SubCoPreview[]>(this.BO.getSubcoPreviewsByEmId(emId))
+          .subscribe((subCos: SubCoPreview[]) => {
             this.subCoPreviews$.next(subCos);
             // this.addSubCoPreviews(subCos);           
             resolve();
@@ -318,7 +318,7 @@ export class SubCoService {
         }
       );
     } else {
-      this.http.post(this.BO.createUser(), subco).subscribe(
+      this.http.post(this.BO.addSubCoPreview(), subco).subscribe(
         (s: SubCoPreview) => {
           this.addSubco(s);
           this.snackBar.open("Subco successfully added!", "OK", {

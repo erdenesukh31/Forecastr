@@ -1,18 +1,23 @@
 <h2 mat-dialog-title>Add Subcontractor</h2>
 <!--<form [formGroup]="userForm" >-->
-<form>
+<form [formGroup]="subcoForm">
   <div class="dialog-content" >
 
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput formControlName="name" type="text" id="name" required />
+        <input matInput formControlName="resourceName" type="text" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Engagement Manager Id</mat-label>
+        <input matInput formControlName="subcontractorEmId" type="text" required />
     </mat-form-field>
 
     <mat-form-field  appearance="outline">
       <mat-label>Choose a type</mat-label>   
-      <mat-select formControlName="type" id="type" required>
+      <mat-select formControlName="subcontractorTypeId" required>
         <ng-container *ngFor="let t of types">
-          <mat-option [value]="t.subCoTypeId">{{t.subCoTypeName}}</mat-option>
+          <mat-option [value]="t.subcontractorTypeId">{{t.subcontractorTypeName}}</mat-option>
         </ng-container> 
       </mat-select>
     </mat-form-field>
