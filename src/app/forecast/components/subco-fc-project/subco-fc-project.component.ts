@@ -69,7 +69,7 @@ export class SubcoFcProjectComponent implements OnInit {
       {
         value: this.subcoDetails.projectId,
         disabled: 
-            this.subcoDetails.lockState !== 'LockedState1'
+            this.subcoDetails.lockState !== 'Unlocked'
       },
       Validators.required
     );
@@ -293,7 +293,7 @@ export class SubcoFcProjectComponent implements OnInit {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
-    if (this.subcoDetails && this.subcoDetails.lockState !== 'LockedState1') {
+    if (this.subcoDetails && this.subcoDetails.lockState !== 'Unlocked') {
       return true;
     }
     return false;

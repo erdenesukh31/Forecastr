@@ -321,8 +321,8 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + 'forecasts';
   }
 
-  setSubcoLockState(monthId : number, emId: number){
-    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + "/" + emId + "/" + "lock";
+  setSubcoForecastUnlocked(forecastid : number){
+    return env.api + 'subcos' + '/'  + 'forecasts' + '/' + forecastid + '/' + 'unlock';
   }
 
   subcoForecast(subcontractorForecastId: number): string {

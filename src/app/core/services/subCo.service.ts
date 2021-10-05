@@ -192,16 +192,16 @@ export class SubCoService {
   }
 
   //See team-forecast.service:302 setForecastsLockState
-  setForecastsLockState(monthId: number, emId:number, lockState: boolean): Promise<FcEntry[]> {
-    return new Promise<any>((resolve: any, reject: any) => {
-      this.http.put(this.BO.setSubcoLockState(monthId, emId), { lockState: lockState })
-      .subscribe((forecasts: FcEntry[]) => {
-        resolve(forecasts);
-      }, (e: any) => {
-        reject();
-      });
-    });
-  }
+  // setForecastsLockState(monthId: number, emId:number, lockState: boolean): Promise<FcEntry[]> {
+  //   return new Promise<any>((resolve: any, reject: any) => {
+  //     this.http.put(this.BO.setSubcoForecastUnlocked(monthId, emId), { lockState: lockState })
+  //     .subscribe((forecasts: FcEntry[]) => {
+  //       resolve(forecasts);
+  //     }, (e: any) => {
+  //       reject();
+  //     });
+  //   });
+  // }
 
   // See team-forecast.service:56 getTeamForecastPromise
   getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{

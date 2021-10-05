@@ -92,10 +92,8 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     //since changing of months in handeled in the ngOnChanges function
     if(!this.subCoDetails)
       this.subscribeForcasts();
-    else
+    if(!this.project)
       this.project = this.utilitiesService.getProjects().find(p => p.id === this.subCoDetails.projectId);
-
-    // this.project = new Project();
 
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
@@ -109,15 +107,15 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
       if (!this.subCoDetails) {
         //Add Empty Forecast
         this.subCoDetails = new SubCoDetails();
+        this.subCoDetails.engagementManagerId = this.authService.getUserId();
         this.subCoDetails.costRate = 0;
         this.subCoDetails.cor = 0;
         this.subCoDetails.manDay = 0;
-        this.subCoDetails.projectId = -1;
-        this.subCoDetails.lockState = 'LockedState1';
+        this.subCoDetails.lockState = 'Unlocked';
         this.project = new Project();
         this.subCoDetails.subcontractorId = this.subcoId;
         this.subCoDetails.monthId = this.month.id;
-        this.subcoForecastService.forecasts.push(this.subCoDetails);
+        this.subcoForecastService.subcoDetails.push(this.subCoDetails);
         this.fcLoaded = true;
         this.loadingActive = false;
         // this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
@@ -199,7 +197,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Unlock a forecast
    */
   unlockForecast(): void {
-    this.subcoForecastService.unlockForecast(this.month.id, this.subcoId);
+    this.subcoForecastService.unlockForecast(this.subCoDetails.forecastId);
   }
 
   /**
@@ -270,12 +268,10 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
+    if (this.subCoDetails && this.subCoDetails.lockState !== 'Unlocked') {
+      return true;
+    }
     return false;
-    //TODO: Add Locked
-    // if (this.forecast && this.forecast.locked >= this.authService.getRoleId()) {
-    //   return true;
-    // }
-    // return false;
   }
 
   fcLockedBySub(): boolean {
