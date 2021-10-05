@@ -33,10 +33,10 @@
 
 		<div class="card-section">
       <mat-chip-list>
-        <mat-chip><mat-icon>timeline</mat-icon>Revenue {{summaryData.revenue * 100 | number: '1.0-2': 'de'}}%</mat-chip>
-        <mat-chip><mat-icon>timeline</mat-icon>Costs {{summaryData.cost * 100 | number: '1.0-2': 'de'}}%</mat-chip>
+        <mat-chip><mat-icon>timeline</mat-icon>Revenue {{summaryData.revenue * 100 | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip><mat-icon>timeline</mat-icon>Costs {{summaryData.cost * 100 | number: '1.0-2': 'de'}}</mat-chip>
         <mat-chip><mat-icon>trending_up</mat-icon>Contribution {{summaryData.contribution | number:'':'de' }}</mat-chip>
-        <mat-chip><mat-icon>trending_up</mat-icon> CP% {{summaryData.cp | number:'':'de' }}</mat-chip>
+        <mat-chip><mat-icon>trending_up</mat-icon> CP {{summaryData.cp | number:'':'de' }}%</mat-chip>
       </mat-chip-list>
     </div>
     <div class="card-section">
