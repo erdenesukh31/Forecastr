@@ -207,19 +207,19 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
    * @param days
    * @param probabilityId
    */
-  addProjectToForecast(): void {
-    this.subcoForecastService.addProject(
-      this.month.id,
-      this.subcoId,
-      new FcProject(),
-    );
+  // addProjectToForecast(): void {
+  //   this.subcoForecastService.addProject(
+  //     this.month.id,
+  //     this.subcoId,
+  //     new FcProject(),
+  //   );
 
-    // Sets the focus to newly added project
-    setTimeout(() => {
-      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.subCoDetails.projectName));
-      el.querySelector('.mat-input-element').focus();
-    }, 100);
-  }
+  //   // Sets the focus to newly added project
+  //   setTimeout(() => {
+  //     const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.subCoDetails.projectName));
+  //     el.querySelector('.mat-input-element').focus();
+  //   }, 100);
+  // }
 
   // fteSliderValueUpdate(): void {
 
@@ -292,8 +292,9 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     });
   }
   copyData():void {
-    this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
-    });
+    //TODO: add Load Forecast
+    // this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
+    // });
   }
 
   /**
