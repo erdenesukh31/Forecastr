@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { environment as env } from '../../../environments/environment';
 
 /**
@@ -332,4 +333,20 @@ export class BusinessOperationsService {
   createSubcoForecast(): string {
     return env.api + 'subcos' + '/'  + 'forecasts';
   }
+
+  // Subco Fiancial controller - still fix the paths 
+
+  getSubCoInternalForMonth(monthId: number): string {
+    return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId ;
+  }
+
+  getSubCoExternalForMonth(monthId: number): string {
+    return env.api + 'subcos' + '/'  + 'external' +'/' + monthId ;
+  }
+
+
+  getSubCoOffshoreForMonth(monthId: number): string {
+    return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
+  }
+
 }
