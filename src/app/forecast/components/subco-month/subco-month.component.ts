@@ -115,9 +115,6 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * Unsubscribe services when component gets destroyed
    */
   ngOnDestroy(): void {
-    this.fcSubscription.unsubscribe();
-    this.subcoSubscription.unsubscribe();
-    this.subcoFcSubscription.unsubscribe();
   }
 
   /**

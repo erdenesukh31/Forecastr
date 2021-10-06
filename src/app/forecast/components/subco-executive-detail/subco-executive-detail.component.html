@@ -32,7 +32,6 @@
 			<div>Resource Name</div>
 			<div>
 				<span *ngIf="filter !== 'offshore'">Project Name</span>
-				<span *ngIf="filter !== 'offshore'">Is Eastern European</span>
 				<span *ngIf="filter !== 'offshore'">Customer</span>
 				<span>Revenue</span>
 				<span>Cost</span>
@@ -47,7 +46,6 @@
 					<mat-expansion-panel-header>
 						<mat-panel-title>Total</mat-panel-title>
 						<mat-panel-description>
-							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
 							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
@@ -65,7 +63,6 @@
 						</mat-panel-title>
 						<mat-panel-description>
 							<span class="mat-cell">{{subco.projectName}}</span>
-							<span class="mat-cell">{{subco.isEasternEurope}}</span>
 							<span class="mat-cell">{{subco.customer}}</span>
 							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
@@ -90,10 +87,10 @@
 		</div>
 	</div>
 
-	<div layout="row" layout-wrap>
+	<!-- <div layout="row" layout-wrap>
 		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
 			(click)="exportCSV()">
 			<mat-icon>insert_drive_file</mat-icon> Export CSV
 		</button>
-	</div>
+	</div> -->
 </div>
