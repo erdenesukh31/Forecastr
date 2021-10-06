@@ -267,6 +267,10 @@ export class ForecastComponent implements OnInit, OnDestroy {
         return "practices";
       } else if (params[1] === "financial-controller") {
         return "financial-controller";
+      } else if (params[1] === "subcos") {
+        return "subcos";
+      } else if (params[1] === "subcos-exectuive") {
+        return "subcos-exectuive";
       }
       else {
         return "individual";
@@ -281,8 +285,8 @@ export class ForecastComponent implements OnInit, OnDestroy {
    * @param page
    */
   goToPage(page: string): void {
-    this.page = page;
-    this.router.navigate(["/forecast/" + page + "/active"]);
+      this.page = page;
+      this.router.navigate(["/forecast/" + page + "/active"]);
   }
 
   isMSLLevelRole(roleName: string): boolean {

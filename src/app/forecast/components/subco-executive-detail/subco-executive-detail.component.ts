@@ -81,7 +81,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     revenue: 0, 
     cost: 0, 
     contribution: 0,
-    cP: 0
+    cp: 0
   };
 
   /**
@@ -182,7 +182,6 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    * 
    */
   ngOnDestroy(): void {
-    this.teamSubscription.unsubscribe();
   }
 
   exportCSV(): void {
