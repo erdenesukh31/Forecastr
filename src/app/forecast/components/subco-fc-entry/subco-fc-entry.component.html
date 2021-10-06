@@ -10,21 +10,6 @@
     <app-subco-fc-project [subCoDetails]="subCoDetails" [project]="project" [monthId]="month.id" [subcoId]="subcoId" [lastEditor]="lastEditor"></app-subco-fc-project>
 </div>
 
-<!-- <div class="multi-view-box">
-  <mat-form-field appearance="outline">
-    <mat-label>Comments</mat-label>
-    <textarea matInput [(ngModel)]="subCoDetails.comment" name="comment" placeholder="Leave a comment" maxLength="500"
-      [disabled]="fcIsLocked()" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
-      cdkAutosizeMaxRows="6"></textarea>
-  </mat-form-field>
-
-  <div class="summary-warning error" *ngIf="totalDays() > (subCoDetails.totalDays | number: '1.0-2')">
-    <mat-icon class="icon">error</mat-icon>
-    It is not possible to assign more than <strong>{{forecast.totalDays | number: '1.0-2': 'de'}} days</strong> for this month!<br>
-    There are currently <strong>{{totalDays() | number: '1.0-2': 'de'}} days</strong> assigned.
-  </div>
-</div> -->
-
 <div class="button-row">
 
   <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"

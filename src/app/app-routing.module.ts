@@ -20,6 +20,7 @@ import { HeadOfPracticesComponent } from './forecast/pages/head-of-practices/hea
 import { PracticesComponent } from './forecast/pages/practices/practices.component';
 import { CanActivate } from '@angular/router';
 import { FinancialControllerComponent } from './forecast/pages/financial-controller/financial-controller.component';
+import { SubcosExecutiveComponent } from './forecast/pages/subcos-executive/subcos-executive.component';
 
 const routes: Routes = [
   {
@@ -120,6 +121,14 @@ const routes: Routes = [
         canActivate: [RoleGuard],
         data: {
           expectedRole: 1, //env.roles.pdl
+        },
+      },
+      {
+        path: "subcos-executive/:id",
+        component: SubcosExecutiveComponent,
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: 4, //env.roles.fc
         },
       },
     ],

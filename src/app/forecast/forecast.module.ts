@@ -12,6 +12,7 @@ import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";
 import { TeamComponent } from "./pages/team/team.component";
 import { SubcosComponent } from "./pages/subcos/subcos.component";
+import { SubcosExecutiveComponent } from "./pages/subcos-executive/subcos-executive.component";
 
 import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
 import { FcProjectComponent } from "./components/fc-project/fc-project.component";
@@ -22,6 +23,7 @@ import { SubcoMonthComponent } from "./components/subco-month/subco-month.compon
 import { SubcoSummaryComponent } from "./components/subco-summary/subco-summary.component";
 import { SubcoFcEntryComponent } from "./components/subco-fc-entry/subco-fc-entry.component"
 import { SubcoFcProjectComponent } from "./components/subco-fc-project/subco-fc-project.component"
+import { SubcoExecutiveDetailComponent } from "./components/subco-executive-detail/subco-executive-detail.component"
 import { PracticeComponent } from "./pages/practice/practice.component";
 
 import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
@@ -64,6 +66,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     IndividualComponent,
     TeamComponent,
     SubcosComponent,
+    SubcosExecutiveComponent,
     PracticeComponent,
     FcEntryComponent,
     FcProjectComponent,
@@ -71,6 +74,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     TeamleadMonthComponent,
     SubcoFcEntryComponent,
     SubcoFcProjectComponent,
+    SubcoExecutiveDetailComponent,
     SubcoMonthComponent,
     SubcoSummaryComponent,
     TeamleadSummaryComponent,

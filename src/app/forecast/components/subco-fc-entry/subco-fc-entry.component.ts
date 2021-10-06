@@ -116,59 +116,9 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
         this.subCoDetails.subcontractorId = this.subcoId;
         this.subCoDetails.monthId = this.month.id;
         this.subcoForecastService.subcoDetails.push(this.subCoDetails);
-        this.fcLoaded = true;
-        this.loadingActive = false;
-        // this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
-        //   if (!res.showDialog || !res.suggestedData) {
-        //     return;
-        //   }
-        //   /**
-        //    * For the next release in the future, the copy data functionality will be added
-        //    */
-
-        //   if (res.suggestedData.projects.length > 0 || res.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId) {
-        //     let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-        //       data: {
-        //         message: 'Copy data from last month submitted?',
-        //         button: { cancel: 'No', submit: 'Yes' },
-        //       },
-        //     });
-
-        //     dialogRef.afterClosed().subscribe((add: boolean) => {
-        //       if (add === true) {
-        //         this.subcoForecastService.addProjectsToForecast(this.subcoId, this.month.id, res.suggestedData);
-        //       }
-        //     });
-        //   }
-        // });
-
-      } else {
-        this.fcLoaded = true;
-        this.loadingActive = false;
-
-        // if (typeof this.forecast.fte !== 'undefined') { // switched because forecast fte should be taken primary from saved/submitted forcast
-        //   this.fteSliderValue = this.forecast.fte * 100;
-        // }
-        // else if(typeof this.userService.getUser(this.subcoId).fte !== 'undefined') {
-        //   this.fteSliderValue = this.userService.getUser(this.subcoId).fte * 100;
-        //   this.forecast.fte = this.userService.getUser(this.subcoId).fte;
-        // }      
-        // else {
-        //   this.fteSliderValue = 100;
-        // }
-        // if (this.forecast.history && this.forecast.history.length > 0 && this.forecast.history[0].createdAt) {
-        //   let date: string = formatDate(this.forecast.history[0].createdAt, 'dd.MM.yyyy', 'en');
-        //   this.lastEditor = 'Last updated from ' + this.forecast.history[0].changedBy + ', ' + date;
-        // } else {
-        //   let date: string = formatDate(this.forecast.createdAt, 'dd.MM.yyyy', 'en');
-        //   this.lastEditor = 'Last updated from ' + this.forecast.changedBy + ', ' + date;
-        // }
-
-        // if(typeof this.forecast.gradeId === 'undefined') {
-        //   this.forecast.gradeId = this.userService.getUser(this.subcoId).gradeId; 
-        // }
-        
       }
+      this.fcLoaded = true;
+      this.loadingActive = false;
     });
   }
 
@@ -200,69 +150,10 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     this.subcoForecastService.unlockForecast(this.subCoDetails.forecastId);
   }
 
-  /**
-   * Adds a new project.
-   * Sets the cursor focus at the beginning of the newly added project.
-   * @param id
-   * @param days
-   * @param probabilityId
-   */
-  // addProjectToForecast(): void {
-  //   this.subcoForecastService.addProject(
-  //     this.month.id,
-  //     this.subcoId,
-  //     new FcProject(),
-  //   );
-
-  //   // Sets the focus to newly added project
-  //   setTimeout(() => {
-  //     const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.subCoDetails.projectName));
-  //     el.querySelector('.mat-input-element').focus();
-  //   }, 100);
-  // }
-
-  // fteSliderValueUpdate(): void {
-
-  //   this.forecast.fte = parseFloat((this.fteSliderValue / 100).toFixed(3));
-  //   this.subcoForecastService.setForecast(this.forecast, false, true);
-
-  // }
 
   settingsUpdate(): void {
     this.subcoForecastService.setForecast(this.subCoDetails, false, false); //TODO: is sumbitted false?
   }
-
-  // fteValue(): any {
-  //   if (typeof this.forecast.fte !== 'undefined') {
-  //     return Math.round(this.forecast.fte * 1000) / 10;
-  //   }
-  //   return 100;
-  // }
-
-  /**
-   * Calculates the total number of days for projects.
-   */
-  // totalDays(): number {
-  //   return this.forecast.billableDays + this.forecast.nonbillableDays;
-  // }
-
-  /**
-   * Test if user fulfills certain role criteria
-   */
-  // hasLeadRole(): boolean {
-  //   return this.authService.hasRole(env.roles.pdl);
-  // }
-
-  // hasMSLRole(): boolean {
-  //   return this.authService.hasRole(env.roles.msl);
-  // }
-
-  // hasUnlockPermission(level: number): boolean {
-  //   if (this.authService.hasRole(level) || this.forecast.locked < this.authService.getRoleId()) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   /**
    * Test is forecast is locked for logged-in user
@@ -274,14 +165,6 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  fcLockedBySub(): boolean {
-    return false;
-    //TODO: Add Locked
-    // if (this.forecast && this.forecast.locked >= 0 && this.forecast.locked < this.authService.getRoleId()) {
-    //   return true;
-    // }
-    // return false;
-  }
   openDialog(): void {
     let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
       width: '250px',
@@ -290,11 +173,6 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy {
              button: { cancel: 'No', submit: 'Yes' },
              },
     });
-  }
-  copyData():void {
-    //TODO: add Load Forecast
-    // this.subcoForecastService.loadForecast(this.subcoId, this.month.id).then((res: any) => {
-    // });
   }
 
   /**

@@ -1,0 +1,12 @@
+<div class="practices-view">
+    <div class="practices-view-container">
+        <h3>Months</h3>
+        <mat-tab-group>
+            <mat-tab *ngFor="let month of months" label="{{ month.name }}">
+                <ng-template matTabContent>
+                    <app-subco-executive-detail (viewSwitch)="changeViewSwitch($event)" [switchState]="viewSwitch"  [month]="month" [months]="months"></app-subco-executive-detail>
+                  </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
