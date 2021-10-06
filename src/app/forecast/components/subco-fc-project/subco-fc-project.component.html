@@ -147,14 +147,14 @@
         <!--Probabilities-->
         <div flex="35" class="project-element">
           <mat-button-toggle-group
-            name="probabilityId-{{ monthId }}-{{ i }}"
+            name="probabilityId-{{ monthId }}"
             [(ngModel)]="subcoDetails.probabilityId"
             required
             (ngModelChange)="callDataUpdate()"
             [disabled]="fcIsLocked()"
-            matTooltip="{{ history('probabilityId', i) }}"
+            matTooltip="{{ history('probabilityId') }}"
             matTooltipPosition="above"
-            matTooltipDisabled="{{ !history('probabilityId', i) }}"
+            matTooltipDisabled="{{ !history('probabilityId') }}"
           >
             <mat-button-toggle
               *ngFor="let p of availableProbabilities"
