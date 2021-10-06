@@ -336,16 +336,16 @@ export class BusinessOperationsService {
 
   // Subco Fiancial controller - still fix the paths 
 
-  getSubcoInternalForMonth(monthId: number): string {
+  getSubCoInternalForMonth(monthId: number): string {
     return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId ;
   }
 
-  getSubcoExternalForMonth(monthId: number): string {
+  getSubCoExternalForMonth(monthId: number): string {
     return env.api + 'subcos' + '/'  + 'external' +'/' + monthId ;
   }
 
 
-  getSubcoOffshoreForMonth(monthId: number): string {
+  getSubCoOffshoreForMonth(monthId: number): string {
     return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
   }
 
