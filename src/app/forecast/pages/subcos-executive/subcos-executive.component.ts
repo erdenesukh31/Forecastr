@@ -7,11 +7,11 @@ import { ExecutiveChartComponent } from "../../components/executive-chart/execut
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-subcos-financial-controller',
-  templateUrl: './subcos-financial-controller.component.html',
-  styleUrls: ['./subcos-financial-controller.component.scss']
+  selector: 'app-subcos-executive',
+  templateUrl: './subcos-executive.component.html',
+  styleUrls: ['./subcos-executive.component.scss']
 })
-export class SubcosFinancialControllerComponent implements OnInit, OnDestroy {
+export class SubcosExecutiveComponent implements OnInit, OnDestroy {
 
   monthSubscription: Subscription;
 

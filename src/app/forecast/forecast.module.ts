@@ -12,7 +12,7 @@ import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";
 import { TeamComponent } from "./pages/team/team.component";
 import { SubcosComponent } from "./pages/subcos/subcos.component";
-import { SubcosFinancialControllerComponent } from "./pages/subcos-financial-controller/subcos-financial-controller.component";
+import { SubcosExecutiveComponent } from "./pages/subcos-executive/subcos-executive.component";
 
 import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
 import { FcProjectComponent } from "./components/fc-project/fc-project.component";
@@ -66,7 +66,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     IndividualComponent,
     TeamComponent,
     SubcosComponent,
-    SubcosFinancialControllerComponent,
+    SubcosExecutiveComponent,
     PracticeComponent,
     FcEntryComponent,
     FcProjectComponent,
