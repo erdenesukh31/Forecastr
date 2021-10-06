@@ -150,14 +150,6 @@ export class SubcoFcProjectComponent implements OnInit {
     if (this.subcoDetails.projectId) {
       this.dataSharingService.setProjectInputValid(true);
       this.dataSharingService.setCorValueBiggerThanZero(true);
-
-      //TODO. ValidateProject
-      // for (let p of this.subcoDetails.projects) {
-      //   if (p.errors.length > 0) {
-      //     this.dataSharingService.setProjectInputValid(false);
-      //     break;
-      //   }
-      // }
     }
   }
 
@@ -199,58 +191,6 @@ export class SubcoFcProjectComponent implements OnInit {
   }
 
   /**
-   * Loads the history data of a specific forecast
-   *
-   * @param attribute
-   * @param index
-   */
-  history(attribute: string): string | boolean {
-    //TODO: Add History
-    // if (
-    //   this.subcoDetails.history &&
-    //   this.subcoDetails.history[0].projects[0] &&
-    //   this.subcoDetails.history.length > 0
-    // ) {
-    //   if (
-    //     attribute === "days" &&
-    //     this.subcoDetails.history[0].projects[0].plannedProjectDays
-    //   ) {
-    //     return (
-    //       this.lastEditor +
-    //       ": " +
-    //       this.subcoDetails.history[0].projects[0].plannedProjectDays +
-    //       " days"
-    //     );
-    //   } else if (
-    //     attribute === "cor" &&
-    //     this.subcoDetails.history[0].projects[0].cor
-    //   ) {
-    //     return (
-    //       this.lastEditor +
-    //       ": € " +
-    //       this.subcoDetails.history[0].projects[0].cor
-    //     );
-    //   }
-    // } else if (this.subcoDetails.createdAt && this.subcoDetails.changedBy) {
-    //   if (
-    //     attribute === "days" &&
-    //     this.subcoDetails.projects[0].plannedProjectDays
-    //   ) {
-    //     return (
-    //       this.lastEditor +
-    //       ": " +
-    //       this.subcoDetails.projects[0].plannedProjectDays +
-    //       " days"
-    //     );
-    //   } else if (attribute === "cor" && this.subcoDetails.projects[0].cor) {
-    //     return this.lastEditor + ": € " + this.subcoDetails.projects[0].cor;
-    //   }
-    // }
-
-    return false;
-  }
-
-  /**
    * Returns the name of a project.
    * @param id
    */
@@ -272,19 +212,6 @@ export class SubcoFcProjectComponent implements OnInit {
       this.dataSharingService.setCorValueBiggerThanZero(true);
     }
   }
-
-  // /**
-  //  * Tests if a project is mandatory
-  //  * @param projectId
-  //  */
-  // isMandatory(projectId: number): boolean {
-  //   return this.availableProjects.find(
-  //     (p: Project) => p.mandatory === "Y" && p.id === projectId
-  //   )
-  //     ? true
-  //     : false;
-  // }
-
   /**
    * Tests if a project is automatically set as internal
    * @param projectId
