@@ -1,0 +1,47 @@
+@import "../../../../assets/styles/variables.scss";
+
+.practices-view-container {
+    margin-top: 5px;
+    padding: 0;
+    background: transparent;
+}
+
+.second-header {
+    width: 100%;
+}
+
+.executive-btn {
+    float: right;
+    position: relative;
+}
+
+.mat-icon {
+    font-size: 18px;
+    color: #fff !important;
+}
+
+.period-container {
+    width: 100%;
+}
+.period-component {
+    display: inline-flex;
+    margin: 0 5px;
+
+    &.mat-form-field {
+      width: 200px;
+    }
+
+    &.mat-raised-button {
+      margin-top: 4px;
+      bottom: 4px;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+}
+  
+.period-download {
+    margin-top: 4px;
+    bottom: 4px;
+}

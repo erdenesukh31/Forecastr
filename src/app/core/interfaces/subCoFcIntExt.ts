@@ -14,12 +14,10 @@ export class SubCoFcIntExt{
     constructor(){
         this.resourceName = "";
         this.projectName = "";
-        this.projectName = "";
         this.engagementManagerId = null;
         this.isEasternEurope = false;
         this.customer = "";
         this.revenue = 0;
-        this.cost = 0;
         this.cost = 0;
         this.contribution = 0;
         this.cP = 0;
