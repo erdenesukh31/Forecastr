@@ -2,8 +2,8 @@
   <mat-card class="project-container" id="project-{{ monthId }}">
     <mat-card-content class="project">
       <div layout="row" layout-fill>
-        <div [attr.flex]="55" class="project-element">
-          <ng-container>
+        <div [attr.flex]="30" class="project-element">
+          <ng-container *ngIf="!fcIsLocked()">
             <mat-form-field
               appearance="outline"
               class="no-padding"
@@ -41,8 +41,9 @@
             </mat-autocomplete>
           </ng-container>
 
-          <!-- <div
+          <div
             class="mat-form-field-clone"
+            *ngIf="fcIsLocked()"
             [ngClass]="{ 'not-locked': !fcIsLocked() }"
           >
             <input
@@ -50,12 +51,12 @@
               disabled
               value="{{ projectName(subcoDetails.projectId) }}"
             />
-            <span class="label">Default Project</span>
-          </div> -->
+            <span class="label">Project</span>
+          </div>
         </div>
 
         <!-- Cost Rate -->
-        <div flex="25" class="project-element">
+        <div flex="15" class="project-element">
           <mat-form-field appearance="outline">
             <mat-label>
               Cost Rate
@@ -83,7 +84,7 @@
 
         <!--COR-->
         <div
-          flex="25"
+          flex="15"
           class="project-element"
         >
           <mat-form-field
@@ -95,18 +96,13 @@
             <mat-label>
               COR
             </mat-label>
-
-            <!-- [disabled]="
-              isFixedInternal(project.projectId) ||
-              fcIsLocked() ||
-              !project.billable
-            " -->
             <input
               matInput
               type="number"
               onClick="this.select()"
               name="cor-{{ monthId }}"
               [(ngModel)]="subcoDetails.cor"
+              [disabled]="fcIsLocked()"
               required
               min="1"
               (ngModelChange)="callDataUpdate()"
@@ -116,7 +112,7 @@
 
         <!--ManDay-->
         <div
-          flex="25"
+          flex="15"
           class="project-element"
         >
           <mat-form-field
@@ -140,11 +136,32 @@
               onClick="this.select()"
               name="manDay-{{ monthId }}"
               [(ngModel)]="subcoDetails.manDay"
+              [disabled]="fcIsLocked()"
               required
               min="1"
               (ngModelChange)="callDataUpdate()"
             />
           </mat-form-field>
+        </div>
+
+        <!--Probabilities-->
+        <div flex="35" class="project-element">
+          <mat-button-toggle-group
+            name="probabilityId-{{ monthId }}"
+            [(ngModel)]="subcoDetails.probabilityId"
+            required
+            (ngModelChange)="callDataUpdate()"
+            [disabled]="fcIsLocked()"
+            matTooltip="{{ history('probabilityId') }}"
+            matTooltipPosition="above"
+            matTooltipDisabled="{{ !history('probabilityId') }}"
+          >
+            <mat-button-toggle
+              *ngFor="let p of availableProbabilities"
+              [value]="p.id"
+              >{{ p.name }}</mat-button-toggle
+            >
+          </mat-button-toggle-group>
         </div>
       </div>
     </mat-card-content>

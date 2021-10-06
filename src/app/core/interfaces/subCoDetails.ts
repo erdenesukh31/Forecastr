@@ -17,6 +17,7 @@ export class SubCoDetails {
     lockState: string;
     cp: number;
     engagementManagerId: number;
+    probabilityId: number;
 
     constructor() {
         this.subcontractorId = null;
@@ -36,6 +37,7 @@ export class SubCoDetails {
         this.contribution = null;
         this.lockState = '';
         this.cp = null;
-        this.engagementManagerId = null;	
+        this.engagementManagerId = null;
+        this.probabilityId = 3;
 	}
 }

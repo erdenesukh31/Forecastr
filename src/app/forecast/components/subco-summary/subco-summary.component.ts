@@ -26,6 +26,7 @@ import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-mess
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubcoSummaryData } from "../../../core/interfaces/subcoSummaryData";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 
 /**
  * subco summary component
@@ -89,7 +90,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
    * @param datePipe
    * @param dialog
    * @param utilitiesService
-   * @param forecastService
+   * @param subcoForecastService
    * @param subcoForecastService
    * @param userService
    * @param pageState
@@ -99,7 +100,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private utilitiesService: UtilitiesService,
-    private forecastService: ForecastService,
+    private subcoForecastService: SubCoForecastService,
     private userService: UserService,
     private subcoService: SubCoService, //TODO: Replace with SubcoService
     private authService: AuthService,
@@ -125,13 +126,9 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
         this.subcos = subco;
       });
 
-    this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        let relevantSubcos: SubCoDetails[] = this.subcos.filter((u: SubCoDetails) => this.isSubcoRelevantForMonth(u, this.month));
-        let subcoIds: number[] = relevantSubcos.map((u: SubCoDetails) => u.subcontractorId);
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id && subcoIds.indexOf(fc.userId) >= 0);
-        this.summaryData = this.subcoService.getSummaryData(this.fcEntries, parseInt(this.month.workingdays, 10), relevantSubcos);
-        // this.summaryProjects = new MatTableDataSource(this.summaryData.days);
+    this.fcSubscription = this.subcoForecastService.subcoDetails$
+      .subscribe((forecasts: SubCoDetails[]) => {
+        this.summaryData = this.subcoService.getSummaryData(forecasts);
       });
   }
 
@@ -193,24 +190,24 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     });
   }
 
-  unlockAll(): void {
-    let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-      data: {
-        message: 'Are you sure you want to unlock all forecasts?',
-        button: { cancel: 'No', submit: 'Yes' },
-      },
-    });
-    dialogRef.afterClosed().subscribe((submit: boolean) => {
-      if (submit === true) {
-        this.pageState.showSpinner();
-        for(let member of this.subcos) {
-          this.forecastService.unlockForecast(this.month.id, member.subcontractorId);
-        }
-        this.forecastService.unlockForecast(this.month.id, this.userId);
-        this.pageState.hideSpinner();
-      }
-    });
-  }
+  // unlockAll(): void {
+  //   let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+  //     data: {
+  //       message: 'Are you sure you want to unlock all forecasts?',
+  //       button: { cancel: 'No', submit: 'Yes' },
+  //     },
+  //   });
+  //   dialogRef.afterClosed().subscribe((submit: boolean) => {
+  //     if (submit === true) {
+  //       this.pageState.showSpinner();
+  //       for(let member of this.subcos) {
+  //         this.subcoForecastService.unlockForecast(this.month.id, member.subcontractorId);
+  //       }
+  //       this.subcoForecastService.unlockForecast(this.month.id, this.userId);
+  //       this.pageState.hideSpinner();
+  //     }
+  //   });
+  // }
 
   /**
    * Reset all forecasts to initial state DEACTIVATED
@@ -237,20 +234,20 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       level = 2;
     }
 
-    this.subcoService.setForecastsLockState(this.month.id, this.userId, locked)
-      .then((forecasts: FcEntry[]) => {
-        if (forecasts) {
-          this.forecastService.addForecasts(forecasts, true);
-        } else {
-          this.forecastService.setTeamLockState(this.month.id, level, role); //TODO: Replace
-        }
+    // this.subcoService.setForecastsLockState(this.month.id, this.userId, locked)
+    //   .then((forecasts: FcEntry[]) => {
+    //     if (forecasts) {
+    //       this.forecastService.addForecasts(forecasts, true);
+    //     } else {
+    //       this.forecastService.setTeamLockState(this.month.id, level, role); //TODO: Replace
+    //     }
 
-        this.snackBar.open(messageSuccess, 'OK', { duration: 10000, });
-        this.pageState.hideSpinner();
-      }).catch(() => {
-        this.snackBar.open(messageFail, 'OK', { duration: 10000, });
-        this.pageState.hideSpinner();
-      });
+    //     this.snackBar.open(messageSuccess, 'OK', { duration: 10000, });
+    //     this.pageState.hideSpinner();
+    //   }).catch(() => {
+    //     this.snackBar.open(messageFail, 'OK', { duration: 10000, });
+    //     this.pageState.hideSpinner();
+    //   });
   }
 
   /**
@@ -285,145 +282,49 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
     let openRequests: number = csvExportMonths.length;
 
     let level: number = 1;
-    if (this.role === 'practice') {
-      level = 2;
-    }
     let summaryMap = new Map();
     let monthSummaries: string[] = [];
     let lineEnding = "\r\n";
-    let header = "Name;Grade;FTE;Paid Days;Project Days;Billable Days;Vacation Days;Training Days;Business Development Days;Bench Days;ARVE;URVE;External Revenue;Internal Revenue;Revenue;Weighted COR" + lineEnding;
-    let summaryHeader = "FTE;Paid Days;Project Days;Billable Days;Vacation Days;Training Days;Business Development Days;Bench Days;ARVE;URVE;External Revenue;Internal Revenue;Revenue;Weighted COR" + lineEnding;
+    let header = "Resource;Project Name;Customer;Cost Rate;Cor;Man Day;Revenue;Cost;Contribution;CP%;"+ lineEnding;
+    let summaryHeader = "Total Revenue;Total Cost;Total Contribution;Total CP%;" + lineEnding;
 
     this.utilitiesService.getMonths().forEach((month: Month) => {
       if (csvExportMonths.indexOf(month.id) >= 0) {
-        this.subcoService.getForecastPromise(this.userId, month.id, level).then((fcEntries: FcEntry[]) => { //TODO: Replace
+        this.subcoForecastService.getForecastPromise(month.id).then((details: SubCoDetails[]) => {
           let monthSummary: string = "Month;" + month.name + lineEnding + "Working Days;" + month.workingdays + lineEnding;
           monthSummary += header;
 
-          let totalExternal: number = 0;
-          let totalInternal: number = 0;
+          let totalContribution: number = 0;
+          let totalCosts: number = 0;
           let totalRevenue: number = 0;
+          let totalCP: number = 0;
 
-          let totalFTE: number = 0;
-
-          let totalBDD: number = 0;
-          let totalVaction: number = 0;
-          let totalTraining: number = 0;
-          let totalBench: number = 0;
-          let totalProject: number = 0;
-          let totalBillable: number = 0;
-          let totalPaid: number = 0;
-          let totalNonBillable: number = 0;
-
-          let totalCOR: number = 0;
-
-          for(var fc of fcEntries) {
-            let user = this.userService.getUser(fc.userId);
-            let userName = user.firstName + " " + user.lastName;
-            
-            let grade = this.userService.getGrades().find((grade: Grade) => grade.gradeId === fc.gradeId);
-            let gradeName = grade.name;
-
-            let externalRevenue: number = 0;
-            let internalRevenue: number = 0;
-            let revenue: number = 0;
-
-            let bddDays: number = 0;
-            let vacationDays: number = 0;
-            let trainingDays: number = 0;
-            let benchDays: number = 0;
-            let projectDays: number = 0;
-            let billableDays: number = 0;
-            let nonBillableDays: number = 0;
-
-            let paidDays: number = parseInt(month.workingdays) * fc.fte;
-
-            let cor: number = 0;
-
-            for(var pj of fc.projects) {
-              if(pj.projectType === 1 || pj.projectType === 6) {
-                projectDays += pj.plannedProjectDays;
-              }
-
-              if(pj.projectType === 2) {
-                bddDays += pj.plannedProjectDays;
-              } else if(pj.projectType === 3) {
-                trainingDays += pj.plannedProjectDays;
-              } else if(pj.projectType === 4) {
-                vacationDays += pj.plannedProjectDays;
-              } else if(pj.projectType === 5) {
-                benchDays += pj.plannedProjectDays;
-              }
-
-              if(pj.billable && (pj.projectType === 1 || pj.projectType === 6)) {
-                let rev = pj.cor * pj.plannedProjectDays;
-                cor += rev;
-                if(pj.externalRevenue) {
-                  externalRevenue += rev;
-                } else {
-                  internalRevenue += rev;
-                }
-
-                billableDays += pj.plannedProjectDays;
-                revenue += rev;
-              } else if(!pj.billable && (pj.projectType === 1 || pj.projectType === 6)) {
-                nonBillableDays += pj.plannedProjectDays;
-              }
-            }
-
-            let monthEntry: string = userName + ";" + 
-              gradeName + ";" + 
-              this.numberToString(fc.fte) + ";" + 
-              this.numberToString(paidDays) + ";" + 
-              this.numberToString(projectDays) + ";" + 
-              this.numberToString(billableDays) + ";" + 
-              this.numberToString(vacationDays) + ";" + 
-              this.numberToString(trainingDays) + ";" + 
-              this.numberToString(bddDays) + ";" + 
-              this.numberToString(benchDays) + ";" + 
-              this.numberToString((billableDays - nonBillableDays)/(paidDays - vacationDays), 4) + ";" + 
-              this.numberToString((billableDays)/(paidDays - vacationDays), 4) + ";" + 
-              this.numberToString(externalRevenue) + ";" + 
-              this.numberToString(internalRevenue) + ";" + 
-              this.numberToString(revenue) + ";" +
-              this.numberToString(cor / billableDays) +
+          for(var d of details) {
+            let monthEntry: string = d.resourceName + ";" + 
+              d.projectName + ";" + 
+              d.customer + ";" + 
+              this.numberToString(d.costRate) + ";" + 
+              this.numberToString(d.cor) + ";" + 
+              this.numberToString(d.manDay) + ";" + 
+              this.numberToString(d.revenue) + ";" + 
+              this.numberToString(d.cost) + ";" + 
+              this.numberToString(d.contribution) + ";" + 
+              this.numberToString(d.cp) + ";" + 
               lineEnding;
 
-            totalExternal += externalRevenue;
-            totalInternal += internalRevenue;
-            totalRevenue += revenue;
-
-            totalFTE += fc.fte;
-
-            totalBDD += bddDays;
-            totalVaction += vacationDays;
-            totalTraining += trainingDays;
-            totalBench += benchDays;
-            totalProject += projectDays;
-            totalBillable += billableDays;
-            totalNonBillable += nonBillableDays;
-
-            totalPaid += paidDays;
-
-            totalCOR += cor;
+            totalContribution += d.contribution;
+            totalCosts += d.cost;
+            totalRevenue += d.revenue;
+            totalCP += d.cp;
 
             monthSummary += monthEntry;
           }
 
-          let monthTotalEntry = this.numberToString(totalFTE) + ";" + 
-            this.numberToString(totalPaid) + ";" + 
-            this.numberToString(totalProject) + ";" + 
-            this.numberToString(totalBillable) + ";" + 
-            this.numberToString(totalVaction) + ";" + 
-            this.numberToString(totalTraining) + ";" + 
-            this.numberToString(totalBDD) + ";" + 
-            this.numberToString(totalBench) + ";" + 
-            this.numberToString((totalBillable + totalNonBillable) / (totalPaid - totalVaction), 4) + ";" + 
-            this.numberToString((totalBillable) / (totalPaid - totalVaction), 4) + ";" + 
-            this.numberToString(totalExternal) + ";" + 
-            this.numberToString(totalInternal) + ";" + 
-            this.numberToString(totalRevenue) + ";" +
-            this.numberToString(totalCOR / totalBillable) +
+          let monthTotalEntry = 
+            this.numberToString(totalRevenue) + ";" + 
+            this.numberToString(totalCosts) + ";" + 
+            this.numberToString(totalContribution) + ";" + 
+            this.numberToString(totalCP) + ";" + 
             lineEnding;
 
           monthSummary += "\n\n" + "Summary\n" + summaryHeader + monthTotalEntry + "\n";

@@ -45,21 +45,26 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
     private subcoService: SubCoService,
     private fb: FormBuilder) { 
 
-      if (typeof data.subcontractorId !== 'undefined') {
+      if (data.subcontractorId !== null) {
         this.subcoForm = this.fb.group({
-          id: fb.control(data.subcontractorId),
-          type: fb.control(data.subcontractorTypeName, Validators.required),
-          name: fb.control(data.resourceName, Validators.required)
+          subcontractorId: fb.control(data.subcontractorId),
+          subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
+          resourceName: fb.control(data.resourceName, Validators.required),
+          subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
         });
       } else {
         this.subcoForm = this.fb.group({
-          type: fb.control(data.subcontractorTypeName, Validators.required),
-          name: fb.control(data.resourceName, Validators.required)
+          subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
+          resourceName: fb.control(data.resourceName, Validators.required),
+          subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
         });
       }
     }
 
   ngOnInit(): void {
+    this.subcoService.initializeAllSubCoPreviews();
+    this.subcoService.initializeTypes();
+
     this.subcoSubscription = this.subcoService.allSubCoPreviews$
         .subscribe((subco: SubCoPreview[]) => {
           this.subco = subco;

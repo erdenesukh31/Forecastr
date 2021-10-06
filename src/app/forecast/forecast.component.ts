@@ -320,7 +320,7 @@ export class ForecastComponent implements OnInit, OnDestroy {
   }
 
   isEm(): boolean {
-    return true;
+    return this.authService.isEngagementManager();
   }
 
   isPractice(): boolean {

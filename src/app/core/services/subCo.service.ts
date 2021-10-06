@@ -75,8 +75,8 @@ export class SubCoService {
    */
     initSubCoPreviewById(emId:number): Promise<void> {
       return new Promise<void>((resolve, reject) => {
-        this.http.get<SubCoDetails[]>(this.BO.getSubcoPreviewsByEmId(emId))
-          .subscribe((subCos: SubCoDetails[]) => {
+        this.http.get<SubCoPreview[]>(this.BO.getSubcoPreviewsByEmId(emId))
+          .subscribe((subCos: SubCoPreview[]) => {
             this.subCoPreviews$.next(subCos);
             // this.addSubCoPreviews(subCos);           
             resolve();
@@ -192,24 +192,24 @@ export class SubCoService {
   }
 
   //See team-forecast.service:302 setForecastsLockState
-  setForecastsLockState(monthId: number, emId:number, lockState: boolean): Promise<FcEntry[]> {
-    return new Promise<any>((resolve: any, reject: any) => {
-      this.http.put(this.BO.setSubcoLockState(monthId, emId), { lockState: lockState })
-      .subscribe((forecasts: FcEntry[]) => {
-        resolve(forecasts);
-      }, (e: any) => {
-        reject();
-      });
-    });
-  }
+  // setForecastsLockState(monthId: number, emId:number, lockState: boolean): Promise<FcEntry[]> {
+  //   return new Promise<any>((resolve: any, reject: any) => {
+  //     this.http.put(this.BO.setSubcoForecastUnlocked(monthId, emId), { lockState: lockState })
+  //     .subscribe((forecasts: FcEntry[]) => {
+  //       resolve(forecasts);
+  //     }, (e: any) => {
+  //       reject();
+  //     });
+  //   });
+  // }
 
   // See team-forecast.service:56 getTeamForecastPromise
-  getForecastPromise(userId: number, id: number, level: number): Promise<FcEntry[]>{
+  getForecastPromise(emId: number, id: number): Promise<FcEntry[]>{
     throw new Error("Method not implemented.");
   }
 
   //See team-forecast.service:105 getSummaryData
-  getSummaryData(fcEntries: FcEntry[], arg1: number, relevantSubcos: SubCoDetails[]): SubcoSummaryData {
+  getSummaryData(subcos: SubCoDetails[]): SubcoSummaryData {
     let summaryData: SubcoSummaryData = {
       revenue: 0,
       cost: 0,
@@ -217,20 +217,12 @@ export class SubCoService {
       cp: 0,
     }
 
-    fcEntries.forEach(fcE =>{
+    subcos.forEach(sub =>{
       let revenue:number;
       let cost:number;
       let contribution:number;
-      let manDay = fcE.projects
-        .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
-        .reduce((pSum: number, a: number) => pSum + a);
-      summaryData.revenue += revenue = fcE.cor * manDay;
-
-      let costRate = fcE.projects
-        .map((p: FcProject) => (p.costRate ? p.costRate : 0))
-        .reduce((pSum: number, a: number) => pSum + a);
-      summaryData.cost += cost = costRate * manDay;
-
+      summaryData.revenue += revenue = sub.cor * sub.manDay;
+      summaryData.cost += cost = sub.costRate * sub.manDay;
       summaryData.contribution += contribution = revenue - cost;
       summaryData.cp += contribution / revenue; //TODO: check if correct
     });
@@ -326,7 +318,7 @@ export class SubCoService {
         }
       );
     } else {
-      this.http.post(this.BO.createUser(), subco).subscribe(
+      this.http.post(this.BO.addSubCoPreview(), subco).subscribe(
         (s: SubCoPreview) => {
           this.addSubco(s);
           this.snackBar.open("Subco successfully added!", "OK", {

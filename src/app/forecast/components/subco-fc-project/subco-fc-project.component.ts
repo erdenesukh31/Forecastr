@@ -13,6 +13,7 @@ import { ProjectRequestDialog } from "../../dialogs/add-project/project-request.
 import { DataSharingService } from "../../../core/shared/data-sharing.service";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
+import { Probability } from "../../../core/interfaces/probability";
 
 /**
  * forecast-entry component
@@ -38,6 +39,12 @@ export class SubcoFcProjectComponent implements OnInit {
    * list of filtered projects
    */
   filteredProjects: Project[] = [];
+
+  /**
+   * list of available probabilities
+   */
+  availableProbabilities: Probability[] = [];
+
 
   /**
    * projectcontrol attribute for angular material autocomplete
@@ -69,10 +76,11 @@ export class SubcoFcProjectComponent implements OnInit {
       {
         value: this.subcoDetails.projectId,
         disabled: 
-            this.subcoDetails.lockState !== 'LockedState1'
+            this.subcoDetails.lockState !== 'Unlocked'
       },
       Validators.required
     );
+    this.availableProbabilities = this.utilitiesService.getProbabilities();
     this.availableProjects = this.utilitiesService.getProjects();
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
@@ -118,7 +126,7 @@ export class SubcoFcProjectComponent implements OnInit {
       }
     }
 
-    this.subcoForecastService.validateProjects(this.subcoDetails);
+    // this.subcoForecastService.validateProjects(this.subcoDetails);
     this.setProjectInputValidness();
     this.checkCORValueBiggerThanZero();
   }
@@ -293,7 +301,7 @@ export class SubcoFcProjectComponent implements OnInit {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
-    if (this.subcoDetails && this.subcoDetails.lockState !== 'LockedState1') {
+    if (this.subcoDetails && this.subcoDetails.lockState !== 'Unlocked') {
       return true;
     }
     return false;
