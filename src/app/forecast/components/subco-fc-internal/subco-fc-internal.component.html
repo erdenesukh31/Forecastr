@@ -1,0 +1,92 @@
+<div style="margin: 10px;">
+	<h3 class="headermargin">Teams</h3>
+	<div class="fte" style="position: absolute; right: 0px;">
+		<span> FTE {{fte | number: '1.0-1': 'de'}} </span>
+	</div>
+</div>
+<mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="filter"
+	(change)="teamFilterUpdate(group.value)">
+	<mat-button-toggle value="pl" (click)="changeView('pl')">
+		<mat-icon>supervisor_account</mat-icon> PL Teams
+	</mat-button-toggle>
+	<mat-button-toggle value="pdl" (click)="changeView('pdl')">
+		<mat-icon>supervisor_account</mat-icon> PDL Teams
+	</mat-button-toggle>
+</mat-button-toggle-group>
+
+
+
+<div layout="row" layout-wrap *ngIf="teamleads.length > 0">
+	<div flex="100">
+		<div class="mat-row accordion-header">
+			<div>Name</div>
+			<div>
+				<span>Production Unit Code</span>
+				<span>Project Days</span>
+				<span>Billable Days</span>
+				<span>Vacation Days</span>
+				<span>Paid Days</span>
+				<span>COR</span>
+				<span>ROS</span>
+				<span>ARVE</span>
+				<span>URVE</span>
+				<span>FTE</span>
+			</div>
+		</div>
+
+		<mat-accordion displayMode="flat" multi>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>Total</mat-panel-title>
+					<mat-panel-description>
+						<span class="mat-cell"></span>
+						<span class="mat-cell">{{totals.projectDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.billableDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.vacationDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{totals.totalDays | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">&euro; {{getTotal('COR') | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">&euro; {{totals.ros | number:'1.0-2':'de'}}</span>
+						<span class="mat-cell">{{getTotal('ARVE') | number: '1.0-2': 'de'}}%</span>
+						<span class="mat-cell">{{getTotal('URVE') | number: '1.0-2': 'de'}}%</span>
+						<span class="mat-cell">{{totals.fte | number:'1.0-2':'de'}}</span>
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+			</mat-expansion-panel>
+
+			<mat-expansion-panel *ngFor="let teamlead of teamleads; let i = index">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{teamlead.name}}
+					</mat-panel-title>
+					<mat-panel-description>
+						<span class="mat-cell" >{{teamlead.prodUnitCode}}</span>
+						<span class="mat-cell">{{teamlead.projectDays | number: '1.0-1': 'de'}}</span>
+						<span class="mat-cell">{{teamlead.billableDays | number: '1.0-1': 'de'}}</span>
+						<span class="mat-cell">{{teamlead.vacationDays | number: '1.0-1': 'de'}}</span>
+						<span class="mat-cell">{{teamlead.totalDays | number: '1.0-1': 'de' }}</span>
+						<span class="mat-cell">&euro;
+							{{teamlead.cor | number: '1.0-1': 'de' }}
+						</span>
+						<span class="mat-cell">&euro;
+							{{teamlead.ros | number:'1.0-2':'de' }}</span>
+						<span class="mat-cell">{{calcARVE(teamlead.projectDays,teamlead.vacationDays,teamlead.totalDays)
+							| number: '1.0-2': 'de'}}%</span>
+						<span
+							class="mat-cell">{{calcURVE(teamlead.billableDays,teamlead.vacationDays,teamlead.totalDays)
+							| number: '1.0-2': 'de'}}%</span>
+						<span class="mat-cell">{{teamlead.fte | number: '1.0-2': 'de'}}</span>
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+
+			
+			</mat-expansion-panel>
+		</mat-accordion>
+	</div>
+
+	<div layout="row" layout-wrap>
+		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
+			(click)="exportCSV()">
+			<mat-icon>insert_drive_file</mat-icon> Export CSV
+		</button>
+	</div>
+</div>
