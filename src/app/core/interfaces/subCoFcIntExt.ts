@@ -8,7 +8,7 @@ export class SubCoFcIntExt{
     revenue: number;
     cost: number;
     contribution: number;
-    cP: number;
+    cp: number;
 
 
     constructor(){
@@ -20,7 +20,7 @@ export class SubCoFcIntExt{
         this.revenue = 0;
         this.cost = 0;
         this.contribution = 0;
-        this.cP = 0;
+        this.cp = 0;
     }
 }
 

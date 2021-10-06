@@ -31,9 +31,9 @@
 		<div class="mat-row accordion-header">
 			<div>Resource Name</div>
 			<div>
-				<span>Project Name</span>
-				<span>Is Eastern European</span>
-				<span>Customer</span>
+				<span *ngIf="filter !== 'offshore'">Project Name</span>
+				<span *ngIf="filter !== 'offshore'">Is Eastern European</span>
+				<span *ngIf="filter !== 'offshore'">Customer</span>
 				<span>Revenue</span>
 				<span>Cost</span>
 				<span>Contribution</span>
@@ -53,7 +53,7 @@
 							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.cost | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.contribution | number:'1.0-2':'de'}}</span>
-							<span class="mat-cell">{{totals.cP | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totals.cp | number:'1.0-2':'de'}}%</span>
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 				</mat-expansion-panel>
@@ -70,7 +70,7 @@
 							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
 							<span class="mat-cell">{{subco.contribution | number: '1.0-1': 'de' }}</span>
-							<span class="mat-cell">{{subco.cP | number: '1.0-2': 'de'}}</span>
+							<span class="mat-cell">{{subco.cp | number: '1.0-2': 'de'}}%</span>
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 				</mat-expansion-panel>
@@ -78,27 +78,12 @@
 		</div>
 		<div *ngIf="filter === 'offshore'">
 			<div class="mat-row  accordion-header">
-				<div>Offshore Average</div>
-				<div>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span>{{offshoreAverage.totalRevenue | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreAverage.totalCost | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreAverage.totalContribution | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreAverage.cP | number:'1.0-2':'de'}}</span>
-				</div>
-			</div>
-			<div class="mat-row  accordion-header">
 				<div>Offshore Totals</div>
 				<div>
-					<span></span>
-					<span></span>
-					<span></span>
 					<span>{{offshoreTotals.totalRevenue | number:'1.0-2':'de'}}</span>
 					<span>{{offshoreTotals.totalCost | number:'1.0-2':'de'}}</span>
 					<span>{{offshoreTotals.totalContribution | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreTotals.cP | number:'1.0-2':'de'}}</span>
+					<span>{{offshoreTotals.cp | number:'1.0-2':'de'}}%</span>
 				</div>
 			</div>
 

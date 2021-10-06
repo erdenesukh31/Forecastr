@@ -25,6 +25,7 @@ import { DatePipe } from "@angular/common";
 import { SubCoFcIntExt } from "../../../core/interfaces/subCoFcIntExt";
 import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
 import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
+import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
 
 /**
  * teamlead summary component
@@ -94,11 +95,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    * @param pageState
    */
   constructor(
-    private utilitiesService: UtilitiesService,
-    private forecastService: ForecastService,
-    private userService: UserService,
-    private executiveService: ExecutiveForecastsService,
-    private teamForecastService: TeamForecastService,
+    private subcoFinancialControllerService: SubCoFinancialControllerService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private authService: AuthService,
@@ -112,7 +109,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       revenue: 0, 
       cost: 0, 
       contribution: 0,
-      cP: 0
+      cp: 0
     };
   }
 
@@ -125,41 +122,34 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.filter = this.switchState;
     }
 
+    this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
+
     this.getValues(); 
   }
 
   getValues() {
-    let testSubco: SubCoFcIntExt ={
-      cost: 10,
-      customer: 'Blizzard',
-      engagementManagerId: 6,
-      projectName: 'Valorant',
-      resourceName: 'Jeff Bezos',
-      cP: 20,
-      contribution: 2,
-      isEasternEurope: true,
-      projectCode: '12312asa',
-      revenue: 200
-    }
-
-    let offshroeTest: SubCoFcOffshore={
-      cP:100,
-      totalContribution: 200,
-      totalCost: 1,
-      totalRevenue: 20,
-    }
-
     switch(this.filter){
       case 'external':
-        this.internalExternal = [testSubco]
+        this.subcoFinancialControllerService.initSubCoExternalForMonth(this.month.id);
+
+        this.subcoFinancialControllerService.intExtSubCo$.subscribe((external: SubCoFcIntExt[]) =>{
+          this.internalExternal = external;
+          this.getTotals();
+        })
         break;
       case 'offshore':
-        this.offshoreTotals = offshroeTest;
-        this.offshoreAverage = offshroeTest;
+        this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore) =>{
+          this.offshoreTotals = offshore;
+        })
         break;
       default:
       case 'internal':
-        this.internalExternal = [testSubco, testSubco]
+        this.subcoFinancialControllerService.initSubCoInternalForMonth(this.month.id);
+
+        this.subcoFinancialControllerService.intExtSubCo$.subscribe((internal: SubCoFcIntExt[]) =>{
+          this.internalExternal = internal;
+          this.getTotals();
+        })
         break;
     }
   }
@@ -278,5 +268,22 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
 
   numberToString(no: number, precision: number = 2): string {
     return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: precision } ).replace(".","");
+  }
+
+  getTotals(){
+    let revenue = 0;
+    let cost = 0;
+    let contribution = 0;
+    this.internalExternal.forEach((ie: SubCoFcIntExt) =>{
+      revenue += ie.revenue;
+      cost += ie.cost;
+      contribution += ie.contribution;
+    })
+    this.totals = { 
+      revenue: revenue, 
+      cost: cost, 
+      contribution: contribution,
+      cp: contribution / revenue
+    };
   }
 }

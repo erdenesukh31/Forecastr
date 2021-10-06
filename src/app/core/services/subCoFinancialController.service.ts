@@ -17,7 +17,7 @@ import { PageStateService } from '../shared/page-state.service';
 export class SubCoFinancialControllerService {
 
   intExtSubCo$: BehaviorSubject<SubCoFcIntExt[]>;
-  offshoreSubCo$: BehaviorSubject<SubCoFcOffshore[]>
+  offshoreSubCo$: BehaviorSubject<SubCoFcOffshore>
 
   /**
    * subCo service constructor
@@ -33,7 +33,7 @@ export class SubCoFinancialControllerService {
     private pageState: PageStateService
   ) {
     this.intExtSubCo$ = new BehaviorSubject([]);
-    this.offshoreSubCo$ = new BehaviorSubject([]);
+    this.offshoreSubCo$ = new BehaviorSubject(null);
   }
 
   /**
@@ -65,8 +65,8 @@ export class SubCoFinancialControllerService {
    */
     initSubCoOffshoreForMonth(monthId:number): Promise<void> {
       return new Promise<void>((resolve, reject) => {
-        this.http.get<SubCoFcOffshore[]>(this.BO.getSubCoOffshoreForMonth(monthId))   //WIP in Business Operations --> add Endpoint
-          .subscribe((subCos: SubCoFcOffshore[]) => {
+        this.http.get<SubCoFcOffshore>(this.BO.getSubCoOffshoreForMonth(monthId))   //WIP in Business Operations --> add Endpoint
+          .subscribe((subCos: SubCoFcOffshore) => {
             this.offshoreSubCo$.next(subCos);
             resolve();
           }, () => reject());
