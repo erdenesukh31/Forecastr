@@ -2,7 +2,7 @@ export class SubCoFcOffshore{
     totalRevenue: number;
     totalCost: number;
     totalContribution: number;
-    cp: number;
+    totalCp: number;
    
 
 
@@ -10,7 +10,7 @@ export class SubCoFcOffshore{
         this.totalRevenue = 0;
         this.totalContribution=0;
         this.totalCost = 0;
-        this.cp = 0;
+        this.totalCp = 0;
     }
 }
 

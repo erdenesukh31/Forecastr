@@ -33,6 +33,7 @@
 			<div>
 				<span *ngIf="filter !== 'offshore'">Project Name</span>
 				<span *ngIf="filter !== 'offshore'">Customer</span>
+				<span *ngIf="filter === 'internal'">Eastern Europe(?)</span>
 				<span>Revenue</span>
 				<span>Cost</span>
 				<span>Contribution</span>
@@ -48,6 +49,7 @@
 						<mat-panel-description>
 							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
+							<span class="mat-cell" *ngIf="filter === 'internal'"></span>
 							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.cost | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.contribution | number:'1.0-2':'de'}}</span>
@@ -64,6 +66,8 @@
 						<mat-panel-description>
 							<span class="mat-cell">{{subco.projectName}}</span>
 							<span class="mat-cell">{{subco.customer}}</span>
+							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== true">Yes</span>
+							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== false">No</span>
 							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
 							<span class="mat-cell">{{subco.contribution | number: '1.0-1': 'de' }}</span>
@@ -80,7 +84,7 @@
 					<span>{{offshoreTotals.totalRevenue | number:'1.0-2':'de'}}</span>
 					<span>{{offshoreTotals.totalCost | number:'1.0-2':'de'}}</span>
 					<span>{{offshoreTotals.totalContribution | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreTotals.cp | number:'1.0-2':'de'}}%</span>
+					<span>{{offshoreTotals.totalCp | number:'1.0-2':'de'}}%</span>
 				</div>
 			</div>
 

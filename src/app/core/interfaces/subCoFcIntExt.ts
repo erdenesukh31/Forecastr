@@ -1,4 +1,4 @@
-export class SubCoFcIntExt{
+export class SubCoFcIntExt {
     resourceName: string;
     projectCode: string;
     projectName: string;
@@ -10,8 +10,7 @@ export class SubCoFcIntExt{
     contribution: number;
     cp: number;
 
-
-    constructor(){
+    constructor() {
         this.resourceName = "";
         this.projectName = "";
         this.engagementManagerId = null;
@@ -23,7 +22,3 @@ export class SubCoFcIntExt{
         this.cp = 0;
     }
 }
-
-
-
-   
