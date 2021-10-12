@@ -55,6 +55,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   teamSubscription: Subscription;
   teamFcSubscription: Subscription;
   firstTime: boolean;
+  isStepping: boolean;
 
   /**
    * teamlead component constructor
@@ -75,6 +76,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.firstTime = true;
+    this.isStepping = false;
     this.fcSubscription = this.forecastService.forecasts$
       .subscribe((forecasts: FcEntry[]) => {
         this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
@@ -161,15 +163,6 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   @HostListener('mousewheel', ['$event']) 
   onMousewheel(event) {
     this.scrollToIndex = -1;
-  }
-
-  /**
-   * Called when an expansion panel is closed
-   * @param event 
-   */
-   ExpPanelClicked(){
-    this.scrollToIndex = -1;
-    this.setStepEvent.emit(-1);
   }
 
   /**
@@ -317,9 +310,23 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Called when an expansion panel is closed
+   * @param event 
+   */
+  ExpPanelClicked(){
+    if(!this.isStepping){
+      this.scrollToIndex = -1;
+      this.setStepEvent.emit(-1);
+    }
+    this.isStepping = false;
+  }
+  
+
+  /**
    * Go to next accordion
    */
   nextStep(): void {
+    this.isStepping = true;
     this.step++;
   }
 
@@ -327,6 +334,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    * Go to previous accordion
    */
   prevStep(): void {
+    this.isStepping = true;
     this.step--;
   }
 }
