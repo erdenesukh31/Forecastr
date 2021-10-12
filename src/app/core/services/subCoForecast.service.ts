@@ -142,7 +142,7 @@ export class SubCoForecastService {
       }
       
       setForecast(subCoDetails: SubCoDetails, loadHistory: boolean, updated: boolean = false): void { //TODO: add LoadHistory
-        if (!subCoDetails.subcontractorId || !subCoDetails.monthId) {
+        if (!subCoDetails.subcontractorId || !subCoDetails.monthId || !subCoDetails.projectId) {
           return;
         }    
         if (this.subcoDetails.find((sd: SubCoDetails) => sd.subcontractorId === subCoDetails.subcontractorId && sd.monthId === subCoDetails.monthId)) {
