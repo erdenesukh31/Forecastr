@@ -113,7 +113,7 @@ export class SubcoFcProjectComponent implements OnInit {
       this.projectControl.setValue(this.filteredProjects[0].id);
     }
     this.validateProjects();
-    //this.callDataUpdate();
+  //  this.callDataUpdate();
   }
 
   validateProjects(): void {
@@ -185,6 +185,7 @@ export class SubcoFcProjectComponent implements OnInit {
       }
     }
 
+    this.project.cor = this.subcoDetails.cor;
     this.subcoDetails.projectId = this.project.projectId;
     this.subcoForecastService.setForecast(this.subcoDetails, false, true);
     this.validateProjects();
