@@ -13,11 +13,6 @@
 <div class="button-row">
 
   <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
-  (click)="copyData()">
-    <mat-icon>content_copy</mat-icon> Copy Data
-  </button>
-  
-  <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
     (click)="submitForecast()" [disabled]="subCoDetails.manDay > month.workingday || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
     <mat-icon>lock</mat-icon> Submit
   </button>
