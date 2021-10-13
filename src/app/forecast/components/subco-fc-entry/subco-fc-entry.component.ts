@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, SimpleChanges, Output, EventEmitter,OnChanges } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -30,7 +30,7 @@ import { SubCoDetails as SubCoDetails } from '../../../core/interfaces/subCoDeta
   templateUrl: './subco-fc-entry.component.html',
   styleUrls: [ './subco-fc-entry.component.scss' ],
 })
-export class SubcoFcEntryComponent implements OnInit, OnDestroy {
+export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * userId (received as input)
    */

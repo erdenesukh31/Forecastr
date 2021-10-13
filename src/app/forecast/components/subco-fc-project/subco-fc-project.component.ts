@@ -109,7 +109,9 @@ export class SubcoFcProjectComponent implements OnInit {
     if (this.filteredProjects.length === 1) {
       this.projectControl.setValue(this.filteredProjects[0].id);
     }
-    //this.callDataUpdate();
+
+  //  this.callDataUpdate();
+
   }
 
   onProjectDaysBlur(event: any): void {
@@ -165,6 +167,7 @@ export class SubcoFcProjectComponent implements OnInit {
       }
     }
 
+    this.project.cor = this.subcoDetails.cor;
     this.subcoDetails.projectId = this.project.projectId;
     this.subcoForecastService.setForecast(this.subcoDetails, false, true);
   }
