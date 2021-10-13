@@ -75,12 +75,17 @@ export class ProjectService {
         this.addProject(p);
         this.snackBar.open('Project successfully saved!', 'OK', { duration: 5000, });
         this.pageState.hideSpinner();
-
-      }, (e: any) => {
-        this.snackBar.open('Project could not be saved!', 'OK', { duration: 10000, });
-        this.pageState.hideSpinner();
-
-      });
+      }, (e: any) => {    
+        if (e.status === 400) {
+          this.snackBar.open('Project already exists!', 'OK', { duration: 10000, });
+          this.pageState.hideSpinner();
+        }
+        else{
+          this.snackBar.open('Project could not be saved!', 'OK', { duration: 10000, });
+          this.pageState.hideSpinner();
+        }        
+      }      
+      );
   }
 
   setProjectActiveState(id: number, state: boolean): void {
