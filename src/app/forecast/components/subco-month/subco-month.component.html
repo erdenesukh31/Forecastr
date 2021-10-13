@@ -21,7 +21,7 @@
 
       <mat-accordion displayMode="flat" multi >
         <!--order of events closed and opened is important-->
-        <mat-expansion-panel *ngFor="let s of subcos; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (closed)="ExpPanelClicked()" (opened)="setStep(i)" >
+        <mat-expansion-panel *ngFor="let s of subcos; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (opened)="setStep(i)" (closed)="ExpPanelClicked()" >
           <mat-expansion-panel-header *ngIf='working(s, month)'>
             <mat-panel-title>
               {{s.resourceName}}

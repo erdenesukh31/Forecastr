@@ -60,6 +60,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   subcoSubscription: Subscription;
   subcoFcSubscription: Subscription; //TODO: Probably do not need that
   firstTime: boolean;
+  isStepping: boolean;
 
   /**
    * teamlead component constructor
@@ -80,15 +81,12 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.firstTime = true;
+    this.isStepping = false;
     this.subcoForecastService.initSubCoForecastByMonth(this.month.id, this.userId);
     this.subcoService.initSubCoPreviewById(this.userId);
-    // this.subcoService.initializeAllSubCoPreviews();
-    // this.subcoService.initializeAllSubCoDetails();
 
     this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) => this.subcos = subcos);
     this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => this.subcosDetails = subcos);
-    // this.subcoService.allSubCoPreviews$.subscribe((subcos: subCoPreview[]) => this.allSubcosPre = subcos);
-    // this.subcoService.allSubCoDetails$.subscribe((subcos: SubCoDetails[]) => this.allSubcosDetails = subcos);
 
     let level: number = 1;
     if (this.role === 'practice') {
@@ -134,13 +132,12 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.scrollToIndex = -1;
   }
 
-  /**
-   * Called when an expansion panel is closed
-   * @param event 
-   */
-   ExpPanelClicked(){
-    this.scrollToIndex = -1;
-    this.setStepEvent.emit(-1);
+  forecastState(type: string, userId: number): boolean | string {
+    return false;
+  }
+
+  working(user: SubCoPreview, month: Month): boolean {
+    return true;
   }
 
   /**
@@ -190,38 +187,8 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  forecastState(type: string, userId: number): boolean | string {
-    // if (type === 'locklevel') {
-    //   return this.userService.getRoleName(this.subcoForecastService.getForecastLockLevel(this.month.id, userId));
-    // } else {
-    //   return this.subcoForecastService.checkForecastState(type, this.month.id, userId);
-    // }
-    return false;
-  }
-
-  working(user: SubCoPreview, month: Month): boolean {
-    // if(month.time) {
-    //   var endMonth = new Date(user.endDate);
-    //   endMonth = new Date(endMonth.getFullYear(), endMonth.getMonth(), 1);
-    //   var startMonth = new Date(user.startDate);
-    //   startMonth = new Date(startMonth.getFullYear(), endMonth.getMonth(), 1);
-    //   var monthMonth = new Date(month.time);
-    //   monthMonth = new Date(monthMonth.getFullYear(), monthMonth.getMonth(), 1)
-    //   if(startMonth <= endMonth) {
-    //     if(monthMonth > endMonth) {
-    //       return false;
-    //     }
-    //   } else if(startMonth > endMonth) {
-    //     if(monthMonth <= startMonth && monthMonth >= endMonth) {
-    //       return false;
-    //     }
-    //   }
-    // }
-    return true;
-  }
-
   /**
-   * Set index for accordion
+   * Set step for accordion
    * @param index
    */
   setStep(index: number): void {
@@ -231,9 +198,23 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Called when an expansion panel is closed
+   * @param event 
+   */
+  ExpPanelClicked(){
+    if(!this.isStepping){
+      this.scrollToIndex = -1;
+      this.setStepEvent.emit(-1);
+    }
+    this.isStepping = false;
+  }
+  
+
+  /**
    * Go to next accordion
    */
   nextStep(): void {
+    this.isStepping = true;
     this.step++;
   }
 
@@ -241,6 +222,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * Go to previous accordion
    */
   prevStep(): void {
+    this.isStepping = true;
     this.step--;
   }
 }

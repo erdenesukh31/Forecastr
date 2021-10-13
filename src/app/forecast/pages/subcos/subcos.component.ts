@@ -65,7 +65,7 @@ export class SubcosComponent implements OnInit, OnDestroy {
   }
 
   private initSubcoForecast(): void {
-    this.teamService.initializePDLTeam(); //TODO: needs to be SubcoService
+    // this.teamService.initializePDLTeam(); //TODO: needs to be SubcoService
     this.monthSubscription = this.utilitiesService.months$
       .subscribe((months: Month[]) => {
         this.months = months.filter((m: Month) => m.active === true);

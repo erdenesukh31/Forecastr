@@ -85,9 +85,6 @@ export class SubcoFcProjectComponent implements OnInit {
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
     );
-    this.dataSharingService.setProjectInputValid(true);
-    this.validateProjects();
-    this.checkCORValueBiggerThanZero();
   }
 
   /**
@@ -112,30 +109,15 @@ export class SubcoFcProjectComponent implements OnInit {
     if (this.filteredProjects.length === 1) {
       this.projectControl.setValue(this.filteredProjects[0].id);
     }
-    this.validateProjects();
+
   //  this.callDataUpdate();
-  }
 
-  validateProjects(): void {
-    if (!this.project.projectId) {
-      for (let p of this.availableProjects) {
-        if (p.id === this.projectControl.value) {
-          this.project.projectId = p.id;
-          break;
-        }
-      }
-    }
-
-    // this.subcoForecastService.validateProjects(this.subcoDetails);
-    this.setProjectInputValidness();
-    this.checkCORValueBiggerThanZero();
   }
 
   onProjectDaysBlur(event: any): void {
     if (event.target.value === "") {
       this.project.plannedProjectDays = 0;
     }
-    this.validateProjects();
   }
 
   /**
@@ -188,7 +170,6 @@ export class SubcoFcProjectComponent implements OnInit {
     this.project.cor = this.subcoDetails.cor;
     this.subcoDetails.projectId = this.project.projectId;
     this.subcoForecastService.setForecast(this.subcoDetails, false, true);
-    this.validateProjects();
   }
 
   /**
@@ -202,17 +183,6 @@ export class SubcoFcProjectComponent implements OnInit {
     return project ? project.name : "";
   }
 
-  checkCORValueBiggerThanZero(): void {
-    if (this.project.billable) {
-      if (this.project.cor > 0) {
-        this.dataSharingService.setCorValueBiggerThanZero(true);
-      } else {
-        this.dataSharingService.setCorValueBiggerThanZero(false);
-      }
-    } else {
-      this.dataSharingService.setCorValueBiggerThanZero(true);
-    }
-  }
   /**
    * Tests if a project is automatically set as internal
    * @param projectId

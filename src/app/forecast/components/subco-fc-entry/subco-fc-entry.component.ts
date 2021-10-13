@@ -92,8 +92,10 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
     //since changing of months in handeled in the ngOnChanges function
     if(!this.subCoDetails)
       this.subscribeForcasts();
-    if(!this.project)
+    if(this.subCoDetails.projectId && !this.project)
       this.project = this.utilitiesService.getProjects().find(p => p.id === this.subCoDetails.projectId);
+    else 
+      this.project = new Project();
 
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
@@ -111,10 +113,13 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
         this.subCoDetails.costRate = 0;
         this.subCoDetails.cor = 0;
         this.subCoDetails.manDay = 0;
+        this.subCoDetails.contribution = 0;
+        this.subCoDetails.revenue = 0;
+        this.subCoDetails.cp = 0;
         this.subCoDetails.lockState = 'Unlocked';
-        this.project = new Project();
         this.subCoDetails.subcontractorId = this.subcoId;
         this.subCoDetails.monthId = this.month.id;
+        this.project = new Project();
         this.subcoForecastService.subcoDetails.push(this.subCoDetails);
       }
       this.fcLoaded = true;
