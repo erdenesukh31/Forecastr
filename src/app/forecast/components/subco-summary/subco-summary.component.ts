@@ -256,7 +256,10 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   hasPracticeLeadRole(): boolean {
     return this.authService.hasRole(env.roles.pl);
   }
-
+  isFinancialController(): boolean {
+    return this.authService.hasRole(env.roles.fc);
+  }
+  
   /**
    * Open csv export modal to choose which data to export
    */

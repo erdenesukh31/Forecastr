@@ -33,12 +33,18 @@
 
 		<div class="card-section">
       <mat-chip-list>
-        <mat-chip><mat-icon>timeline</mat-icon>Revenue {{summaryData.revenue  | number: '1.0-2': 'de'}}</mat-chip>
-        <mat-chip><mat-icon>timeline</mat-icon>Costs {{summaryData.cost  | number: '1.0-2': 'de'}}</mat-chip>
-        <mat-chip><mat-icon>trending_up</mat-icon>Contribution {{summaryData.contribution | number:'':'de' }}</mat-chip>
-        <mat-chip><mat-icon>trending_up</mat-icon> CP {{summaryData.cp | number:'':'de' }}%</mat-chip>
+        <mat-chip *ngIf="!isFinancialController()"><mat-icon>timeline</mat-icon>Revenue {{summaryData.revenue  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="!isFinancialController()"><mat-icon>timeline</mat-icon>Costs {{summaryData.cost  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="!isFinancialController()"><mat-icon>trending_up</mat-icon>Contribution {{summaryData.contribution | number:'':'de' }}</mat-chip>
+        <mat-chip *ngIf="!isFinancialController()"><mat-icon>trending_up</mat-icon> CP {{summaryData.cp | number:'':'de' }}%</mat-chip>
+        
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Internal {{summaryData.avgFteInternal  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE External {{summaryData.avgFteExternal  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Offshore {{summaryData.avgFteOffshore  | number: '1.0-2': 'de'}}</mat-chip>
       </mat-chip-list>
     </div>
+  
+ 
     <div class="card-section">
     <!-- <div class="card-section button-rows"> -->
       <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="submitAll()">
@@ -54,7 +60,7 @@
       <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="unlockAll()">
           <mat-icon>lock_open</mat-icon> Unlock all forecasts
       </button>
-      <button mat-stroked-button class="mat-primary-reversed" [ngClass]="{'button-row': role == 'practice' && hasPracticeLeadRole()}" (click)="openCSVExportModal()">
+      <button mat-stroked-button class="mat-primary-reversed" *ngIf="!isFinancialController()" [ngClass]="{'button-row': role == 'practice' && hasPracticeLeadRole()}" (click)="openCSVExportModal()">
         <mat-icon>insert_drive_file</mat-icon> CSV Export
       </button>
     </div>
