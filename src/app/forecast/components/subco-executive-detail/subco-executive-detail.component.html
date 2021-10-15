@@ -27,7 +27,7 @@
 
 
 <div layout="row" layout-wrap >
-	<div flex="100">
+    <div flex="100" flex-gt-md="75">
 		<div class="mat-row accordion-header">
 			<div>Resource Name</div>
 			<div>
@@ -39,7 +39,9 @@
 				<span>Contribution</span>
 				<span>CP</span>
 			</div>
+		
 		</div>
+	
 
 		<div *ngIf="filter !== 'offshore'">
 			<mat-accordion displayMode="flat" multi>
@@ -90,7 +92,11 @@
 
 		</div>
 	</div>
-
+	 
+	<div flex="100" flex-gt-md="25" class="summary-box-container">
+		<app-subco-summary [role]="role" [month]="month"></app-subco-summary>
+	</div>
+	
 	 <div layout="row" layout-wrap>
 		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
 			(click)="exportCSV()">

@@ -26,6 +26,7 @@ import { SubCoFcIntExt } from "../../../core/interfaces/subCoFcIntExt";
 import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
 import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
 import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
+import {SubcoSummaryComponent} from "../subco-summary/subco-summary.component";
 
 /**
  * teamlead summary component
@@ -41,6 +42,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    */
   @Input('month') month: Month;
   @Input('months') months: Month[];
+  @Input('role') role: string;
 
   /**
    * viewSwitch saves if the PL of PDL View is shown as Output
