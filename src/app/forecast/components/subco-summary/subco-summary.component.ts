@@ -27,6 +27,7 @@ import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubcoSummaryData } from "../../../core/interfaces/subcoSummaryData";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
+import { SubCoTotals } from "../../../core/interfaces/subCoTotals";
 
 /**
  * subco summary component
@@ -69,6 +70,10 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   summaryData: SubcoSummaryData;
 
   /**
+   * contains totals-data 
+   */
+  subCoTotals: SubCoTotals;
+  /**
    * provides summary-data projects in 'MatTableDataSource' format
    */
   // summaryProjects: MatTableDataSource<SummaryDataProject>;
@@ -82,6 +87,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
    * subcos subscription
    */
   subcosSubscription: Subscription;
+
 
   userId: number;
 
@@ -130,6 +136,9 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       .subscribe((forecasts: SubCoDetails[]) => {
         this.summaryData = this.subcoService.getSummaryData(forecasts);
       });
+
+      
+      //gettotalsdata for Financial controller avg FTEs
   }
 
   //TODO: is this relevant
