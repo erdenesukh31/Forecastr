@@ -54,7 +54,7 @@ export class SubcosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageState.forecastrReady$.subscribe((ready: boolean) => {
-			if (ready && this.authService.hasRole(env.roles.pdl)) {
+			if (ready && this.authService.hasRole(env.roles.css)) {
 				this.initSubcoForecast();
 			}
 		});
