@@ -38,9 +38,9 @@
         <mat-chip *ngIf="!isFinancialController()"><mat-icon>trending_up</mat-icon>Contribution {{summaryData.contribution | number:'':'de' }}</mat-chip>
         <mat-chip *ngIf="!isFinancialController()"><mat-icon>trending_up</mat-icon> CP {{summaryData.cp | number:'':'de' }}%</mat-chip>
         
-        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Internal {{summaryData.avgFteInternal  | number: '1.0-2': 'de'}}</mat-chip>
-        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE External {{summaryData.avgFteExternal  | number: '1.0-2': 'de'}}</mat-chip>
-        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Offshore {{summaryData.avgFteOffshore  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Internal {{subCoTotals.averageFTEInternal  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE External {{subCoTotals.averageFTEExternal  | number: '1.0-2': 'de'}}</mat-chip>
+        <mat-chip *ngIf="isFinancialController()"><mat-icon>timeline</mat-icon>Avg. FTE Offshore {{subCoTotals.averageFTEOffshore  | number: '1.0-2': 'de'}}</mat-chip>
       </mat-chip-list>
     </div>
   

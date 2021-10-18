@@ -14,7 +14,7 @@ import { SubcoSummaryData } from '../interfaces/subcoSummaryData';
 import { FcProject } from '../interfaces/fcProject';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageStateService } from '../shared/page-state.service';
-
+import { SubCoTotals } from '../interfaces/subCoTotals';
 
 
 @Injectable({
@@ -30,6 +30,8 @@ export class SubCoService {
   
   allSubCoPreviews$: BehaviorSubject<SubCoPreview[]>;
   allSubCoDetails$: BehaviorSubject<SubCoDetails[]>;
+  subCoTotals$: BehaviorSubject<SubCoTotals>;
+
 
   types$: BehaviorSubject<SubCoType[]>;
 
@@ -52,6 +54,8 @@ export class SubCoService {
     // this.subCoDet$ = new BehaviorSubject(new subCoDetails);
     this.allSubCoPreviews$ = new BehaviorSubject([]);
     this.allSubCoDetails$ = new BehaviorSubject([]);
+    this.subCoTotals$ = new BehaviorSubject(null);
+
     this.types$ = new BehaviorSubject([]);
 
   }
@@ -100,7 +104,7 @@ export class SubCoService {
    */
   initializeAllSubCoPreviews(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<SubCoPreview[]>(this.BO.getSubcoPreviews())   /* To be implemented yet getSubCosPreview*/
+      this.http.get<SubCoPreview[]>(this.BO.getSubcoPreviews())   
         .subscribe((subCos: SubCoPreview[]) => {
           this.allSubCoPreviews$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));   
           resolve();
@@ -110,7 +114,7 @@ export class SubCoService {
 
   initializeAllSubCoDetails(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<SubCoDetails[]>(this.BO.getSubcoDetails()) /* To be implemented yet getSubCosDetails*/
+      this.http.get<SubCoDetails[]>(this.BO.getSubcoDetails()) 
         .subscribe((subCos: SubCoDetails[]) => {
           this.allSubCoDetails$.next(subCos.sort((a, b) => (a.resourceName > b.resourceName) ? 1 : -1));  
           resolve();
@@ -124,13 +128,40 @@ export class SubCoService {
    */
   initializeTypes(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.http.get<SubCoType[]>(this.BO.getSubCoTypes())   /* To be implemented yet getSubCosTypes*/
+      this.http.get<SubCoType[]>(this.BO.getSubCoTypes())   
         .subscribe((types$: SubCoType[]) => {
           this.types$.next(types$);
           resolve();
         }, () => reject());
     });
   }
+
+  /**
+   * Rquests subcototals from server
+   */
+   initializeSubcoTotalsForMonth(monthId:number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get<SubCoTotals>(this.BO.getSubCoTotalsForMonth(monthId))   
+        .subscribe((subCoTotals$ : SubCoTotals) => {
+          this.subCoTotals$.next(subCoTotals$);
+          resolve();
+        }, () => reject());
+    });
+  }
+
+   /**
+   * Rquests subcototals for a month range from server
+   */
+    initializeSubcoTotalsForMonthRange(startMonthId:number,endMonthId:number): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+        this.http.get<SubCoTotals>(this.BO.getSubCoTotalsMonthRange(startMonthId,endMonthId))  
+          .subscribe((subCoTotals$ : SubCoTotals) => {
+            this.subCoTotals$.next(subCoTotals$);
+            resolve();
+          }, () => reject());
+      });
+    }
+
 
   /**
    * Empties subco data

@@ -27,7 +27,7 @@ import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
 import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
 import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
 import {SubcoSummaryComponent} from "../subco-summary/subco-summary.component";
-
+import { ExecutiveChartComponent } from "../executive-chart/executive-chart.component";
 /**
  * teamlead summary component
  */
@@ -411,5 +411,20 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       contribution: contribution,
       cp: contribution / revenue
     };
+  }
+
+  openDashboard(): void {
+   
+      const dialogRef = this.dialog.open(ExecutiveChartComponent, {
+        height: "90%",
+        width: "90%",
+        panelClass: "custom-dialog-container",
+        data: {},
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log("The dialog was closed");
+      });
+    
   }
 }
