@@ -171,7 +171,7 @@ export class SubCoForecastService {
           // if (typeof subCoDetails.locked !== 'number') {
           //   subCoDetails.locked = subCoDetails.locked === true ? this.authService.getRoleId() : -1;
           // }
-          let u: SubCoDetails = this.subCoService.getSubcoDetail(subCoDetails.subcontractorId);    
+          // let u: SubCoDetails = this.subCoService.getSubcoDetail(subCoDetails.subcontractorId);    
           this.subcoDetails.push(subCoDetails);
         }    
         this.subcoDetails$.next(this.subcoDetails);

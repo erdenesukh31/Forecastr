@@ -120,7 +120,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
         this.subCoDetails.subcontractorId = this.subcoId;
         this.subCoDetails.monthId = this.month.id;
         this.project = new Project();
-        this.subcoForecastService.subcoDetails.push(this.subCoDetails);
+        // this.subcoForecastService.subcoDetails.push(this.subCoDetails);
       }
       this.fcLoaded = true;
       this.loadingActive = false;
