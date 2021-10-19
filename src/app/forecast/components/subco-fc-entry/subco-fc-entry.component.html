@@ -13,12 +13,12 @@
 <div class="button-row">
 
   <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
-    (click)="submitForecast()" [disabled]="subCoDetails.manDay > month.workingdays || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+    (click)="submitForecast()" [disabled]="subCoDetails.manDay > month.workingdays">
     <mat-icon>lock</mat-icon> Submit
   </button>
 
   <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
-    (click)="saveForecast()" [disabled]="subCoDetails.manDay > month.workingdays || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+    (click)="saveForecast()" [disabled]="subCoDetails.manDay > month.workingdays">
     <mat-icon>save</mat-icon> Save
   </button>
 

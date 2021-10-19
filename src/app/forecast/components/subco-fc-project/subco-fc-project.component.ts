@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { ForecastService } from "../../../core/services/forecasts/forecast.service";
@@ -76,7 +76,7 @@ export class SubcoFcProjectComponent implements OnInit {
       {
         value: this.subcoDetails.projectId,
         disabled: 
-            this.subcoDetails.lockState !== 'Unlocked'
+            this.subcoDetails.lockState === 'LoackedState1'
       },
       Validators.required
     );
