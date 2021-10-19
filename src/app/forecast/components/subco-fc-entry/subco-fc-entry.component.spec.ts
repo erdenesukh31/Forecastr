@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubcoFcEntryComponent } from './subco-fc-entry.component';
 
-describe('FcEntryComponent', () => {
+describe('SubcoFcEntryComponent', () => {
   let component: SubcoFcEntryComponent;
   let fixture: ComponentFixture<SubcoFcEntryComponent>;
 

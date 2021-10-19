@@ -19,6 +19,16 @@ export class SubCoDetails {
     engagementManagerId: number;
     probabilityId: number;
 
+  /**
+     * List of errors if validation was unsuccessful
+     */
+   errors?: string[];
+
+    /**
+     * if set to true, input fields in fc-entry will be validated instantly (otherwise only when "Save" is clicked)
+     */
+     instantValidation?: boolean;
+
     constructor() {
         this.subcontractorId = null;
         this.subcontractorTypeId = null;

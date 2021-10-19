@@ -142,6 +142,7 @@ export class SubCoForecastService {
       }
       
       setForecast(subCoDetails: SubCoDetails, loadHistory: boolean, updated: boolean = false): void { //TODO: add LoadHistory
+       console.log("set");
         if (!subCoDetails.subcontractorId || !subCoDetails.monthId || !subCoDetails.projectId) {
           return;
         }    
@@ -186,6 +187,7 @@ export class SubCoForecastService {
         .subscribe(r =>{
           let subcoDetails : SubCoDetails= this.subcoDetails.find(sd => sd.forecastId === forecastId);
           subcoDetails.lockState = 'Unlocked'
+          console.log("unlock");
           this.setForecast(subcoDetails, true, false);
         });
     
@@ -196,14 +198,14 @@ export class SubCoForecastService {
           return;
         }
     
-        // forecast = this.validateProjects(forecast); //TODO: validate not needed?
-        // if (([].concat.apply([], forecast.projects.map((p: FcProject) => p.errors))).length > 0) {
-        //   forecast.instantValidation = true;
-        //   this.setForecast(forecast, false, true);
+        subcoDetails = this.validateProjects(subcoDetails); //TODO: validate not needed?
+        if (subcoDetails.errors.length > 0) {
+          subcoDetails.instantValidation = true;
+          this.setForecast(subcoDetails, false, true);
     
-        //   this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
-        //   return;
-        // }
+          this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
+          return;
+        }
     
         if (submit) {
           subcoDetails.lockState = 'LockedState1';
@@ -298,6 +300,42 @@ export class SubCoForecastService {
           this.pageState.hideSpinner();
         }
         
+      }
+
+      validateProjects(subcoForecats: SubCoDetails): SubCoDetails {
+        
+        subcoForecats.errors = [];
+    
+          if (typeof subcoForecats.projectId === 'undefined') {
+            subcoForecats.errors.push('No project found.');
+          }
+          // if (typeof p.cor === 'undefined') {
+          //   if (this.authService.getRoleId() === env.roles.css) {
+          //     p.cor = 0;
+          //   } else {
+          //     p.errors.push('No COR value defined.');
+          //   }
+          // } else if (typeof p.cor !== 'number') {
+          //   p.errors.push('COR value has to be a number.');
+          // } else if (p.cor < 0) {
+          //   p.errors.push('COR value has to be a positive number.');
+          // }
+    
+          if (typeof subcoForecats.manDay === 'undefined') {
+            subcoForecats.errors.push('Number of project days not specified.');
+          } else if (typeof subcoForecats.manDay !== 'number') {
+            subcoForecats.errors.push('Project days value has to be a number.');
+          } else if (subcoForecats.manDay < 0) {
+            subcoForecats.errors.push('Project days value has to be a positive number.');
+          }
+    
+          if (!subcoForecats.probabilityId) {
+            subcoForecats.errors.push('No probability defined.');
+          }
+          if(subcoForecats.cor < 1) {
+            subcoForecats.errors.push("COR value cannot be 0 or empty.");
+          }
+        return subcoForecats;
       }
 }
 

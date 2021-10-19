@@ -43,8 +43,9 @@
 
           <div
             class="mat-form-field-clone"
-            *ngIf="fcIsLocked()"
             [ngClass]="{ 'not-locked': !fcIsLocked() }"
+            *ngIf="fcIsLocked()"
+           
           >
             <input
               type="text"

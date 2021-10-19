@@ -72,6 +72,7 @@ export class SubcoFcProjectComponent implements OnInit {
    * Initializes forecast entry component.
    */
   ngOnInit(): void {
+    console.log(this.subcoDetails);
     this.projectControl = this.fb.control(
       {
         value: this.subcoDetails.projectId,
@@ -80,11 +81,16 @@ export class SubcoFcProjectComponent implements OnInit {
       },
       Validators.required
     );
-    this.availableProbabilities = this.utilitiesService.getProbabilities();
+  
     this.availableProjects = this.utilitiesService.getProjects();
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
     );
+    this.availableProbabilities = this.utilitiesService.getProbabilities();
+
+    this.dataSharingService.setProjectInputValid(true);
+    this.validateProjects();
+    this.checkCORValueBiggerThanZero();
   }
 
   /**
@@ -107,17 +113,32 @@ export class SubcoFcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputFocus(false);
 
     if (this.filteredProjects.length === 1) {
+      debugger;
       this.projectControl.setValue(this.filteredProjects[0].id);
     }
-
+    this.validateProjects();
   //  this.callDataUpdate();
 
   }
+  validateProjects(): void {
+    if (!this.project.projectId) {
+      for (let p of this.availableProjects) {
+        if (p.id === this.projectControl.value) {
+          this.project.projectId = p.id;
+          break;
+        }
+      }
+    }
 
+    this.subcoForecastService.validateProjects(this.subcoDetails);
+    this.setProjectInputValidness();
+    this.checkCORValueBiggerThanZero();
+  }
   onProjectDaysBlur(event: any): void {
     if (event.target.value === "") {
       this.project.plannedProjectDays = 0;
     }
+    this.validateProjects();
   }
 
   /**
@@ -132,6 +153,10 @@ export class SubcoFcProjectComponent implements OnInit {
     if (this.subcoDetails.projectId) {
       this.dataSharingService.setProjectInputValid(true);
       this.dataSharingService.setCorValueBiggerThanZero(true);
+    }
+
+    if (this.subcoDetails.errors.length > 0) {
+      this.dataSharingService.setProjectInputValid(false);
     }
   }
 
@@ -170,6 +195,7 @@ export class SubcoFcProjectComponent implements OnInit {
     this.project.cor = this.subcoDetails.cor;
     this.subcoDetails.projectId = this.project.projectId;
     this.subcoForecastService.setForecast(this.subcoDetails, false, true);
+    this.validateProjects();
   }
 
   /**
@@ -219,6 +245,18 @@ export class SubcoFcProjectComponent implements OnInit {
     });
   }
 
+  checkCORValueBiggerThanZero(): void {
+    if (this.project.billable) {
+      if (this.project.cor > 0) {
+        this.dataSharingService.setCorValueBiggerThanZero(true);
+      } else {
+        this.dataSharingService.setCorValueBiggerThanZero(false);
+      }
+    } else if (!this.project.billable ) {
+      this.dataSharingService.setCorValueBiggerThanZero(true);
+    }
+  }
+
   /**
    * Turns an error test into a css class
    * @param errtext - the text of the error
@@ -228,3 +266,5 @@ export class SubcoFcProjectComponent implements OnInit {
     return result.replace(/\s/gi, "-");
   }
 }
+
+
