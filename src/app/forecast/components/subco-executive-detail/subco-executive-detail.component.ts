@@ -28,6 +28,7 @@ import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collection
 import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
 import {SubcoSummaryComponent} from "../subco-summary/subco-summary.component";
 import { ExecutiveChartComponent } from "../executive-chart/executive-chart.component";
+import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-executive-chart.component";
 /**
  * teamlead summary component
  */
@@ -413,9 +414,9 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     };
   }
 
-  openDashboard(): void {
+  openDashboardSubco(): void {
    
-      const dialogRef = this.dialog.open(ExecutiveChartComponent, {
+      const dialogRef = this.dialog.open(SubcoExecutiveChartComponent, {
         height: "90%",
         width: "90%",
         panelClass: "custom-dialog-container",

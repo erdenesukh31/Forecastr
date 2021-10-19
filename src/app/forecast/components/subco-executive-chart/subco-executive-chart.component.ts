@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, Inject } from "@angular/core";
-import { Chart } from "chart.js";
 import {
   MatDialogRef,
   MAT_DIALOG_DATA
@@ -8,6 +7,14 @@ import { ExecutiveForecastsService } from "../../../core/services/forecasts/exec
 import { MonthlySummaryReport } from "../../../core/interfaces/kpiData";
 import { PageStateService } from "../../../core/shared/page-state.service";
 import { DatePipe } from '@angular/common';
+import { Subscription } from "rxjs";
+
+import { SubCoTotals } from "../../../core/interfaces/subCoTotals";
+import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
+import { SubCoService } from "../../../core/services/subCo.service";
+import { Month } from "../../../core/interfaces/month";
+import { UtilitiesService } from "../../../core/services/utilities.service";
+
 
 @Component({
   selector: "app-subco-executive-chart",
@@ -16,248 +23,71 @@ import { DatePipe } from '@angular/common';
 })
 export class SubcoExecutiveChartComponent implements OnInit {
 
+  /**
+   * month (received as input)
+   */
+   @Input('month') month: Month;
+   @Input('months') months: Month[];
   showComponent: boolean = false;
   
-  summaryValuesArray: SummaryValues[];
-  
-  reports: MonthlySummaryReport[];
-
+  SubCoDetailTotals: SubCoDetailTotals[];   
   monthLabels: string[];
 
-  /*
-   *ChartJs object which will render the ARVE/URVE chart
-   */
-  arveUrveChart;
-  /*
-   * ARVE set for total ARVE/month for the next 6 months
-   */
-  arve: number[];
-  /*
-   * URVE set for total URVE/month for the next 6 months
-   */
-  urve: number[];
+  totalRevenueInternal: number[];
+  totalRevenueExternal: number[];
+  totalRevenueOffshore: number[];
+  totalCostInternal: number[];
+  totalCostExternal: number[];
+  totalCostOffshore: number[];
+  averageFTEInternal: number[];
+  averageFTEExternal: number[];
+  averageFTEOffshore: number[];
+  
+  totalsSubscription: Subscription;
 
-  /*
-   *ChartJs object which will render the COR chart
-   */
-  corChart;
-  /*
-   * COR set for total COR/month for the next 6 months
-   */
-  cor: number[];
-
-  /*
-   *ChartJs object which will render the Revenue chart
-   */
-  revenueChart;
-  /*
-   * Internal revenue set for internal revenue/month for the next 6 months
-   */
-  intRev: number[];
-  /*
-   * External revenue set for external revenue/month for the next 6 months
-   */
-  extRev: number[];
-  /*
-   * Total revenue set for total revenue/month for the next 6 months
-   */
-  totalRev: number[];
-
-  fte: number[];
 
   constructor(
-    public dialogRef: MatDialogRef<ExecutiveChartComponent>,
+    public dialogRef: MatDialogRef<SubcoExecutiveChartComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private executiveService: ExecutiveForecastsService,
+    private subcoService: SubCoService,
     private pageState: PageStateService,
     private datePipe: DatePipe,
+    private utilitiesService: UtilitiesService,
   ) {}
 
   ngOnInit() {
-    this.reports = this.executiveService.getKpiData();
-    this.reports = this.reports.sort(function(a, b) { return a.monthId-b.monthId });
-    
-    /**initialize arve to empty set */
-    this.arve = [];
-    
-    /**initialize urve to empty set */
-    this.urve = [];
-    
-    /**initialize cor to empty set */
-    this.cor = [];
-    
-    /**initialize extRev to empty set */
-    this.extRev = [];
-    
-    /**initialize intRev to empty set */
-    this.intRev = [];
-    
-    /**initialize totalRev to empty set */
-    this.totalRev = [];
+    debugger;
+    this.months = this.utilitiesService.getMonths();
+    this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id,(this.month.id+5));
 
-    this.monthLabels = [];
+    this.totalsSubscription = this.subcoService.subCoDetailTotals$
+    .subscribe((subcoDetailTotals: SubCoDetailTotals[]) => {
+      this.SubCoDetailTotals = subcoDetailTotals;
+    }); 
 
-    this.fte = [];
+    this.SubCoDetailTotals = this.SubCoDetailTotals.sort(function(a, b) { return a.monthId-b.monthId });
+    //if?
+    this.processTableData(this.SubCoDetailTotals);
+    this.showComponent = true;    
 
-    if (this.reports.length > 0) {
-      this.processTableData(this.reports);
-      this.showComponent = true;    
-    }   
   }
 
-  processTableData(reports: MonthlySummaryReport[]) : void {
-    for (let report of reports) {
-      this.arve.push(report.arve * 100);
-      this.urve.push(report.urve * 100);
-      this.cor.push(report.cor);
-      this.intRev.push(report.internalRevenue);
-      this.fte.push(report.fte);
-      this.extRev.push(report.externalRevenue);
-      this.totalRev.push(report.ros);
-      this.monthLabels.push(report.month.charAt(0).toUpperCase() + report.month.slice(1) + ' \'' + (report.year % 100).toString());
+  processTableData(totals: SubCoDetailTotals[]) : void {
+    for (let total of totals) {
+    
+      this.totalRevenueInternal.push(total.subcontractorTotals.totalRevenueInternal);
+      this.totalRevenueExternal.push(total.subcontractorTotals.totalRevenueExternal);
+      this.totalRevenueOffshore.push(total.subcontractorTotals.totalRevenueOffshore);
+      this.totalCostInternal.push(total.subcontractorTotals.totalCostInternal);
+      this.totalCostExternal.push(total.subcontractorTotals.totalCostExternal);
+      this.totalCostOffshore.push(total.subcontractorTotals.totalCostOffshore);
+      this.averageFTEInternal.push(total.subcontractorTotals.averageFTEInternal);
+      this.averageFTEExternal.push(total.subcontractorTotals.averageFTEExternal);
+      this.averageFTEOffshore.push(total.subcontractorTotals.averageFTEOffshore);
+      //needed?
+     // this.monthLabels.push(total.month.charAt(0).toUpperCase() + total.month.slice(1) + ' \'' + (total.year % 100).toString());
     }
 
-    this.arveUrveChart = new Chart("arve-urve", {
-      type: "bar",
-      data: {
-        labels: this.monthLabels,
-        datasets: [
-          {
-            label: "ARVE",
-            backgroundColor: "#95E616",
-            data: this.arve
-          },
-          {
-            label: "URVE",
-            backgroundColor: "#FF304C",
-            data: this.urve
-          }
-        ]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5
-            }
-          ],
-          yAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                min: 0,
-                max: 100
-              }
-            }
-          ]
-        }
-      }
-    });
-
-    this.corChart = new Chart("cor", {
-      type: "line",
-      data: {
-        labels: this.monthLabels,
-        datasets: [
-          {
-            data: this.cor,
-            borderColor: "#7e39ba",
-            fill: false
-          }
-        ]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              barPercentage: 0.5,
-              categoryPercentage: 0.5
-            }
-          ],
-          yAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                min: 0
-              }
-            }
-          ]
-        }
-      }
-    });
-
-    this.revenueChart = this.arveUrveChart = new Chart("revenue", {
-      type: "bar",
-      data: {
-        labels: this.monthLabels,
-        datasets: [
-          {
-            label: "INT",
-            backgroundColor: "#12abdb",
-            data: this.intRev
-          },
-          {
-            label: "EXT",
-            backgroundColor: "#0070ad",
-            data: this.extRev
-          },
-          {
-            label: "TOTAL",
-            backgroundColor: "#2b0a3d",
-            data: this.totalRev
-          }
-        ]
-      },
-      options: {
-        legend: {
-          display: true
-        },
-        scales: {
-          xAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5
-            }
-          ],
-          yAxes: [
-            {
-              display: true,
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                min: 0
-              }
-            }
-          ]
-        }
-      }
-    });
   }
 
   total(numArray: number[]) {
@@ -278,16 +108,18 @@ export class SubcoExecutiveChartComponent implements OnInit {
     this.pageState.showSpinner();
     let lineEnding = "\r\n";
     let header = "KPI;" + this.monthLabels.join(";") + lineEnding;
-    let body: string = "ARVE;" + this.arve.map(this.numberToString).join(";") + lineEnding + 
-      "URVE;" + this.urve.map(this.numberToString).join(";") + lineEnding +
-      "COR;" + this.cor.map(this.numberToString).join(";") + lineEnding +
-      "Int. Revenue;" + this.intRev.map(this.numberToString).join(";") + lineEnding + 
-      "Ext. Revenue;" + this.extRev.map(this.numberToString).join(";") + lineEnding +
-      "Total Revenue;" + this.totalRev.map(this.numberToString).join(";") + lineEnding +
-      "FTE;" + this.fte.map(this.numberToString).join(";") + lineEnding;
+    let body: string = "Total Int. Revenue;" + this.totalCostInternal.map(this.numberToString).join(";") + lineEnding + 
+      "Total Ext. Revenue;" + this.totalRevenueExternal.map(this.numberToString).join(";") + lineEnding +
+      "Total Off. Revenue;" + this.totalCostOffshore.map(this.numberToString).join(";") + lineEnding +
+      "Total Int. Cost;" + this.totalCostInternal.map(this.numberToString).join(";") + lineEnding +
+      "Total Ext. Cost;" + this.totalCostExternal.map(this.numberToString).join(";") + lineEnding + 
+      "Total Off. Cost;" + this.totalCostOffshore.map(this.numberToString).join(";") + lineEnding +
+      "Avg. Int. FTE" + this.averageFTEInternal.map(this.numberToString).join(";") + lineEnding +
+      "Avg. Ext. FTE;" + this.averageFTEExternal.map(this.numberToString).join(";") + lineEnding;
+      "Avg. Off. FTE;" + this.averageFTEOffshore.map(this.numberToString).join(";") + lineEnding;
     const data = header + body;
     const blob: Blob = new Blob([data], { type: "text/csv" });
-    const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-KPIOverview.csv";    
+    const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubCoKPIOverview.csv";    
     this.pageState.hideSpinner();
 
     //For IE
@@ -312,23 +144,4 @@ export class SubcoExecutiveChartComponent implements OnInit {
   numberToString(no: number): string {
     return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: 2 } ).replace(".","");
   }
-}
-
-export interface SummaryValues {
-  monthId: number;
-  probabilityId: number;
-  billableDays: number;
-  nonBillableDays: number;
-  vacationDays: number;
-  trainingDays: number;
-  businessDays: number;
-  benchDays: number;
-  workingDays: number;
-  fteCss: number;
-  cor: number;
-  arve: number;
-  fte: number;
-  urve: number;
-  ros: number;
-  external: number;
 }

@@ -9,6 +9,7 @@ import { environment as env } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class BusinessOperationsService {
+ 
   
  
   /**
@@ -351,11 +352,15 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
   }
 
+  //for Avg FTE Summary Financial Controller
   getSubCoTotalsForMonth(monthId: number): string {
     return env.api + 'subcos' + '/' + 'totals' + '/' + monthId;
   }
-  getSubCoTotalsMonthRange(startMonthId: number, endMonthId: number): string {
+
+  //for Subco Total Summary HOP and Financial Controller
+  getSubCoDetailTotalsMonthRange(startMonthId: number, endMonthId: number): string {
     return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId +'/'+ endMonthId;
   }
+ 
 
 }

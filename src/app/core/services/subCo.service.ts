@@ -15,7 +15,7 @@ import { FcProject } from '../interfaces/fcProject';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageStateService } from '../shared/page-state.service';
 import { SubCoTotals } from '../interfaces/subCoTotals';
-
+import { SubCoDetailTotals } from '../interfaces/subCoDetailTotals';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class SubCoService {
   allSubCoPreviews$: BehaviorSubject<SubCoPreview[]>;
   allSubCoDetails$: BehaviorSubject<SubCoDetails[]>;
   subCoTotals$: BehaviorSubject<SubCoTotals>;
-
+  subCoDetailTotals$: BehaviorSubject<SubCoDetailTotals[]>;     //array or not?
 
   types$: BehaviorSubject<SubCoType[]>;
 
@@ -55,7 +55,7 @@ export class SubCoService {
     this.allSubCoPreviews$ = new BehaviorSubject([]);
     this.allSubCoDetails$ = new BehaviorSubject([]);
     this.subCoTotals$ = new BehaviorSubject(null);
-
+    this.subCoDetailTotals$ = new BehaviorSubject([]);           //empty array or null?
     this.types$ = new BehaviorSubject([]);
 
   }
@@ -152,16 +152,17 @@ export class SubCoService {
    /**
    * Rquests subcototals for a month range from server
    */
-    initializeSubcoTotalsForMonthRange(startMonthId:number,endMonthId:number): Promise<void> {
+    initializeSubcoDetailTotalsForMonthRange(startMonthId:number,endMonthId:number): Promise<void> {
+      console.log(this.BO.getSubCoDetailTotalsMonthRange(startMonthId,endMonthId))
+
       return new Promise<void>((resolve, reject) => {
-        this.http.get<SubCoTotals>(this.BO.getSubCoTotalsMonthRange(startMonthId,endMonthId))  
-          .subscribe((subCoTotals$ : SubCoTotals) => {
-            this.subCoTotals$.next(subCoTotals$);
+        this.http.get<SubCoDetailTotals[]>(this.BO.getSubCoDetailTotalsMonthRange(startMonthId,endMonthId))  
+          .subscribe((subCoDetailTotals$ : SubCoDetailTotals[]) => {
+            this.subCoDetailTotals$.next(subCoDetailTotals$);
             resolve();
           }, () => reject());
       });
     }
-
 
   /**
    * Empties subco data

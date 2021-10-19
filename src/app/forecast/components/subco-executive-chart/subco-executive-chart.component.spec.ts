@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExecutiveChartComponent } from './subco-executive-chart.component';
+import { SubcoExecutiveChartComponent } from './subco-executive-chart.component';
 
 describe('ExecutiveChartComponent', () => {
-  let component: ExecutiveChartComponent;
-  let fixture: ComponentFixture<ExecutiveChartComponent>;
+  let component: SubcoExecutiveChartComponent;
+  let fixture: ComponentFixture<SubcoExecutiveChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExecutiveChartComponent ]
+      declarations: [ SubcoExecutiveChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExecutiveChartComponent);
+    fixture = TestBed.createComponent(SubcoExecutiveChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
