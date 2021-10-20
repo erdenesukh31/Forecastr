@@ -142,7 +142,6 @@ export class SubCoForecastService {
       }
       
       setForecast(subCoDetails: SubCoDetails, loadHistory: boolean, updated: boolean = false): void { //TODO: add LoadHistory
-       console.log("set");
         if (!subCoDetails.subcontractorId || !subCoDetails.monthId || !subCoDetails.projectId) {
           return;
         }    
@@ -187,7 +186,6 @@ export class SubCoForecastService {
         .subscribe(r =>{
           let subcoDetails : SubCoDetails= this.subcoDetails.find(sd => sd.forecastId === forecastId);
           subcoDetails.lockState = 'Unlocked'
-          console.log("unlock");
           this.setForecast(subcoDetails, true, false);
         });
     

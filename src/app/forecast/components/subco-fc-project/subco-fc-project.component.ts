@@ -72,7 +72,6 @@ export class SubcoFcProjectComponent implements OnInit {
    * Initializes forecast entry component.
    */
   ngOnInit(): void {
-    console.log(this.subcoDetails);
     this.projectControl = this.fb.control(
       {
         value: this.subcoDetails.projectId,
