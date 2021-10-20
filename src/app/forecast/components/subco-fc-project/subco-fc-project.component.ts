@@ -112,7 +112,6 @@ export class SubcoFcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputFocus(false);
 
     if (this.filteredProjects.length === 1) {
-      debugger;
       this.projectControl.setValue(this.filteredProjects[0].id);
     }
     this.validateProjects();
