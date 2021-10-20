@@ -115,6 +115,7 @@ export class ForecastService {
           }
           fc.comment = forecast.comment;
           fc.fte = forecast.fte //? forecast.fte : 1; 
+          fc.ros = forecast.ros;
           fc.gradeId = forecast.gradeId;
           fc.isRelevant = forecast.isRelevant;
           fc.projects = mandatoryProjects;
