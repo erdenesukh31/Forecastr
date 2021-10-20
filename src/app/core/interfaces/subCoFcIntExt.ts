@@ -5,7 +5,7 @@ export class SubCoFcIntExt {
     engagementManagerId: number;
     customer: string;
     isEasternEurope: boolean;
-    manday: number;
+    manDay: number;
     revenue: number;
     cost: number;
     contribution: number;
@@ -21,5 +21,6 @@ export class SubCoFcIntExt {
         this.cost = 0;
         this.contribution = 0;
         this.cp = 0;
+        this.manDay = 0;
     }
 }

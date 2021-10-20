@@ -404,7 +404,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let contribution = 0;
     let manday = 0;
     this.internalExternal.forEach((ie: SubCoFcIntExt) =>{
-      manday += ie.manday;
+      manday += ie.manDay;
       revenue += ie.revenue;
       cost += ie.cost;
       contribution += ie.contribution;

@@ -72,7 +72,7 @@
 							<span class="mat-cell">{{subco.customer}}</span>
 							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== true">Yes</span>
 							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== false">No</span>
-							<span class="mat-cell">{{subco.manday | number: '1.0-1': 'de'}}</span>
+							<span class="mat-cell">{{subco.manDay | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
 							<span class="mat-cell">{{subco.contribution | number: '1.0-1': 'de' }}</span>
