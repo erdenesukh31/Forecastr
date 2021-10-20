@@ -3,6 +3,9 @@ export class SubCoFcOffshore{
     totalCost: number;
     totalContribution: number;
     totalCp: number;
+    projectName: string;
+    projectCode: string;
+    totalManDays: number;
    
 
 
@@ -11,6 +14,9 @@ export class SubCoFcOffshore{
         this.totalContribution=0;
         this.totalCost = 0;
         this.totalCp = 0;
+        this.projectCode= "";
+        this.projectName= "";
+        this.totalManDays= 0;
     }
 }
 

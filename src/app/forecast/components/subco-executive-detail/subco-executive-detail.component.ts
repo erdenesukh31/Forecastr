@@ -67,7 +67,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   /**
   * list of all subco dtos for offshore
   */
-  offshoreTotals: SubCoFcOffshore;
+  offshoreTotals: SubCoFcOffshore[];
 
     /**
   * list of all subco dtos for offshore
@@ -81,6 +81,13 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   loadingActive: boolean = false;
 
   totals: any = { 
+    revenue: 0, 
+    cost: 0, 
+    contribution: 0,
+    cp: 0
+  };
+
+  totalsOffshore: any = { 
     revenue: 0, 
     cost: 0, 
     contribution: 0,
@@ -115,6 +122,14 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       contribution: 0,
       cp: 0
     };
+
+    this.totalsOffshore = { 
+      manday: 0, 
+      revenue: 0, 
+      cost: 0, 
+      contribution: 0,
+      cp: 0
+    };
   }
 
   /**
@@ -142,8 +157,9 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
         })
         break;
       case 'offshore':
-        this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore) =>{
+        this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore[]) =>{
           this.offshoreTotals = offshore;
+          this.getTotalsOffshore();
         })
         break;
       default:
@@ -274,44 +290,44 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
             + "Revenue;Cost;Contribution;CP"
             + lineEndingOffshore;
           
-          let bodyOffshore = "";
+          // let bodyOffshore = "";
               
-          this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore) =>{
-            this.offshoreTotals = offshore;
-          })
+          // this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore) =>{
+          //   this.offshoreTotals = offshore;
+          // })
           
         
-            let line = this.offshoreTotals.totalRevenue + ";" 
-            + this.offshoreTotals.totalCost+ ";"
-            + this.offshoreTotals.totalContribution+ ";" 
-            + this.offshoreTotals.totalCp +";"
-            +lineEndingOffshore;
+          //   let line = this.offshoreTotals.totalRevenue + ";" 
+          //   + this.offshoreTotals.totalCost+ ";"
+          //   + this.offshoreTotals.totalContribution+ ";" 
+          //   + this.offshoreTotals.totalCp +";"
+          //   +lineEndingOffshore;
 
-            bodyOffshore = bodyOffshore + line;
+          //   bodyOffshore = bodyOffshore + line;
 
-            const data = headerOffshore + bodyOffshore + lineEndingOffshore + lineEndingOffshore;
-            const blob: Blob = new Blob([data], { type: "text/csv" });
-            const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoOffshoreOverview.csv";    
+          //   const data = headerOffshore + bodyOffshore + lineEndingOffshore + lineEndingOffshore;
+          //   const blob: Blob = new Blob([data], { type: "text/csv" });
+          //   const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoOffshoreOverview.csv";    
         
-            this.pageState.hideSpinner();
+          //   this.pageState.hideSpinner();
         
-            let navigator: any = window.navigator;
-            //For IE
-            if (navigator.msSaveOrOpenBlob) {
-              navigator.msSaveOrOpenBlob(blob, filename);
-            //For any other browser
-            } else {
-              const url: string = window.URL.createObjectURL(blob);
+          //   let navigator: any = window.navigator;
+          //   //For IE
+          //   if (navigator.msSaveOrOpenBlob) {
+          //     navigator.msSaveOrOpenBlob(blob, filename);
+          //   //For any other browser
+          //   } else {
+          //     const url: string = window.URL.createObjectURL(blob);
         
-              let a: HTMLAnchorElement = document.createElement("a");
-              a.href = url;
-              a.download = filename;
+          //     let a: HTMLAnchorElement = document.createElement("a");
+          //     a.href = url;
+          //     a.download = filename;
         
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              window.URL.revokeObjectURL(url);
-            }
+          //     document.body.appendChild(a);
+          //     a.click();
+          //     document.body.removeChild(a);
+          //     window.URL.revokeObjectURL(url);
+          //   }
           ;
         break;
       }
@@ -414,7 +430,27 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       revenue: revenue, 
       cost: cost, 
       contribution: contribution,
-      cp: contribution / revenue
+      cp: (contribution / revenue) * 100
+    };
+  }
+
+  getTotalsOffshore(){
+    let revenue = 0;
+    let cost = 0;
+    let contribution = 0;
+    let manday = 0;
+    this.offshoreTotals.forEach((ie: SubCoFcOffshore) =>{
+      manday += ie.totalManDays;
+      revenue += ie.totalRevenue;
+      cost += ie.totalCost;
+      contribution += ie.totalContribution;
+    })
+    this.totalsOffshore = { 
+      manday: manday,
+      revenue: revenue, 
+      cost: cost, 
+      contribution: contribution,
+      cp: (contribution / revenue) * 100
     };
   }
 }

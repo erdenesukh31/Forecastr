@@ -26,10 +26,11 @@
 </button> -->
 
 
-<div layout="row" layout-wrap >
-    <div flex="100" flex-gt-md="75">
+<div layout="row" layout-wrap>
+	<div flex="100" flex-gt-md="75">
 		<div class="mat-row accordion-header">
-			<div>Resource Name</div>
+			<div *ngIf="filter !== 'offshore'">Resource Name</div>
+			<div *ngIf="filter === 'offshore'">Project Name</div>
 			<div>
 				<span *ngIf="filter !== 'offshore'">Project Name</span>
 				<span *ngIf="filter !== 'offshore'">Customer</span>
@@ -40,9 +41,9 @@
 				<span>Contribution</span>
 				<span>CP</span>
 			</div>
-		
+
 		</div>
-	
+
 
 		<div *ngIf="filter !== 'offshore'">
 			<mat-accordion displayMode="flat" multi>
@@ -70,40 +71,62 @@
 						<mat-panel-description>
 							<span class="mat-cell">{{subco.projectName}}</span>
 							<span class="mat-cell">{{subco.customer}}</span>
-							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== true">Yes</span>
-							<span class="mat-cell" *ngIf="filter === 'internal' && subco.isEasternEurope=== false">No</span>
+							<span class="mat-cell"
+								*ngIf="filter === 'internal' && subco.isEasternEurope=== true">Yes</span>
+							<span class="mat-cell"
+								*ngIf="filter === 'internal' && subco.isEasternEurope=== false">No</span>
 							<span class="mat-cell">{{subco.manDay | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
 							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
 							<span class="mat-cell">{{subco.contribution | number: '1.0-1': 'de' }}</span>
-							<span class="mat-cell">{{subco.cp | number: '1.0-2': 'de'}}%</span>
+							<span class="mat-cell">{{subco.cp * 100  | number: '1.0-2': 'de'}}%</span>
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 				</mat-expansion-panel>
 			</mat-accordion>
 		</div>
-		<div *ngIf="filter === 'offshore'">
-			<div class="mat-row  accordion-header">
-				<div>Offshore Totals</div>
-				<div>
-					<span>{{offshoreTotals.totalRevenue | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreTotals.totalCost | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreTotals.totalContribution | number:'1.0-2':'de'}}</span>
-					<span>{{offshoreTotals.totalCp | number:'1.0-2':'de'}}%</span>
-				</div>
-			</div>
 
+		<div *ngIf="filter === 'offshore'">
+			<mat-accordion displayMode="flat" multi>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Total</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell">{{totalsOffshore.manday | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.revenue | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.cost | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.contribution | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.cp | number:'1.0-2':'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+
+				<mat-expansion-panel *ngFor="let totalProject of offshoreTotals; let i = index">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{totalProject.projectName}}
+						</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell">{{totalProject.totalManDays | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalRevenue | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalCost | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalContribution | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalCp * 100 | number:'1.0-2':'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+			</mat-accordion>
 		</div>
 	</div>
-	 
+
 	<div flex="100" flex-gt-md="25" class="summary-box-container">
 		<app-subco-summary [role]="role" [month]="month"></app-subco-summary>
 	</div>
-	
-	 <div layout="row" layout-wrap>
+
+	<div layout="row" layout-wrap>
 		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
 			(click)="exportCSV()">
 			<mat-icon>insert_drive_file</mat-icon> Export CSV
 		</button>
-	</div> 
+	</div>
 </div>
