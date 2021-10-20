@@ -5,6 +5,7 @@ export class SubCoFcIntExt {
     engagementManagerId: number;
     customer: string;
     isEasternEurope: boolean;
+    manday: number;
     revenue: number;
     cost: number;
     contribution: number;

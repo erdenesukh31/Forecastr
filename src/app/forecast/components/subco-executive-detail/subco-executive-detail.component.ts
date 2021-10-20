@@ -27,6 +27,7 @@ import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
 import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
 import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
 import {SubcoSummaryComponent} from "../subco-summary/subco-summary.component";
+import { MatCalendarBody } from "@angular/material/datepicker";
 
 /**
  * teamlead summary component
@@ -108,6 +109,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     this.userId = this.authService.getUserId();
     this.fte=0;
     this.totals = { 
+      manday: 0, 
       revenue: 0, 
       cost: 0, 
       contribution: 0,
@@ -400,12 +402,15 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let revenue = 0;
     let cost = 0;
     let contribution = 0;
+    let manday = 0;
     this.internalExternal.forEach((ie: SubCoFcIntExt) =>{
+      manday += ie.manday;
       revenue += ie.revenue;
       cost += ie.cost;
       contribution += ie.contribution;
     })
     this.totals = { 
+      manday: manday,
       revenue: revenue, 
       cost: cost, 
       contribution: contribution,
