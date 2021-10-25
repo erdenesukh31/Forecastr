@@ -19,7 +19,7 @@
   <div mat-dialog-content>
     <div layout="row" layout-wrap *ngIf="showComponent">
       <div flex="100" class="px-16 pt-5">
-        Overview/Summary of the KPIs for the next 6 Months. 
+        Overview/Summary of the Subcontractor KPIs for the next 6 Months. 
 
         <table class="border-collapse w-100 h-100">
           <thead class="border-line color-grey">
@@ -28,9 +28,8 @@
               <td *ngFor="let m of monthLabels" class="stats-table-header">
                 {{ m }}
               </td>
-              <td class="stats-table-header">TOTAL</td>
             </tr>
-          </thead>
+          </thead> 
           <tbody>
             <!--Total Int. Revenue -->
             <tr class="border-line">
