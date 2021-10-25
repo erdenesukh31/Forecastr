@@ -32,6 +32,7 @@
 			<div *ngIf="filter !== 'offshore'">Resource Name</div>
 			<div *ngIf="filter === 'offshore'">Project Name</div>
 			<div>
+				<span>Engagement Manager</span>
 				<span *ngIf="filter !== 'offshore'">Project Name</span>
 				<span *ngIf="filter !== 'offshore'">Customer</span>
 				<span *ngIf="filter === 'internal'">Eastern Europe(?)</span>
@@ -69,6 +70,7 @@
 							{{subco.resourceName}}
 						</mat-panel-title>
 						<mat-panel-description>
+							<span class="mat-cell">{{subco.engagementManagerName}}</span>
 							<span class="mat-cell">{{subco.projectName}}</span>
 							<span class="mat-cell">{{subco.customer}}</span>
 							<span class="mat-cell"
@@ -107,6 +109,7 @@
 							{{totalProject.projectName}}
 						</mat-panel-title>
 						<mat-panel-description>
+							<span class="mat-cell">{{totalProject.engagementManagerName}}</span>
 							<span class="mat-cell">{{totalProject.totalManDays | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalProject.totalRevenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalProject.totalCost | number:'1.0-2':'de'}}</span>

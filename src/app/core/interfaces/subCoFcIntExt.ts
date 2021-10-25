@@ -3,6 +3,7 @@ export class SubCoFcIntExt {
     projectCode: string;
     projectName: string;
     engagementManagerId: number;
+    engagementManagerName: string;
     customer: string;
     isEasternEurope: boolean;
     manDay: number;
@@ -15,6 +16,7 @@ export class SubCoFcIntExt {
         this.resourceName = "";
         this.projectName = "";
         this.engagementManagerId = null;
+        this.engagementManagerName = "";
         this.isEasternEurope = false;
         this.customer = "";
         this.revenue = 0;
