@@ -66,6 +66,11 @@
 
     <div flex="100" flex-gt-md="25" class="summary-box-container">
       <app-subco-summary [role]="role" [month]="month"></app-subco-summary>
+      <div class="button-row">
+        <button mat-raised-button (click)="addNewSubco()" color="primary">
+          <mat-icon>person_add</mat-icon> Add Subco
+        </button> 
+    </div>
     </div>
   </div>
 </div>

@@ -17,7 +17,8 @@ import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoPreview } from "../../../core/interfaces/subCoPreview";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
-
+import { MatDialog } from '@angular/material/dialog';
+import { AddSubcoDialogEm } from "../../dialogs/add-subco-em/add-subco-em.dialog";
 /**
  * teamlead view component
  */
@@ -70,6 +71,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     private subcoService: SubCoService,
     private utilitiesService: UtilitiesService,
     private authService: AuthService,
+    private dialog: MatDialog,
 
     private subcoForecastService: SubCoForecastService,
   ) {
@@ -224,5 +226,28 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   prevStep(): void {
     this.isStepping = true;
     this.step--;
+  }
+
+   /**
+   * open add subco dialog
+   */
+    addNewSubco(): void {
+      this.openUserDialog(new SubCoPreview());
+    } 
+
+      /**
+   * open update user dialog
+   * @param user
+   */
+  openUserDialog(subco: SubCoPreview): void {
+    let dialogRef: any = this.dialog.open(AddSubcoDialogEm, { height: 'auto', width: '50vw', data: subco });
+
+    dialogRef.afterClosed().subscribe((s: SubCoPreview | boolean) => {
+      if (s) {
+        var temp = s as SubCoPreview;
+        temp.subcontractorEmId = this.userId;
+        this.subcoService.setSubco(<SubCoPreview>temp);
+      }
+    });
   }
 }
