@@ -195,7 +195,7 @@ export class SubCoService {
     subcos = subcos.filter((s: SubCoPreview) => s.subcontractorId !== subco.subcontractorId);
     subcos.push(subco);
 
-    this.allSubCoPreviews$.next(subcos);
+    this.subCoPreviews$.next(subcos);
   }
 
   /**
