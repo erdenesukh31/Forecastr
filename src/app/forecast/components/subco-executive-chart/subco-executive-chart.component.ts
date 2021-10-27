@@ -30,7 +30,7 @@ export class SubcoExecutiveChartComponent implements OnInit {
    @Input('months') months: Month[];
   showComponent: boolean = false;
   
-  SubCoDetailTotals: SubCoDetailTotals[];   
+  subCoDetailTotals: SubCoDetailTotals[];   
   monthLabels: string[];
 
   totalRevenueInternal: number[];
@@ -53,26 +53,70 @@ export class SubcoExecutiveChartComponent implements OnInit {
     private pageState: PageStateService,
     private datePipe: DatePipe,
     private utilitiesService: UtilitiesService,
-  ) {}
+
+  ) {  
+    this.totalRevenueInternal = [];
+    this.totalRevenueExternal = [];
+    this.totalRevenueOffshore= [];
+    this.totalCostInternal= [];
+    this.totalCostExternal= [];
+    this.totalCostOffshore= [];
+    this.averageFTEInternal= [];
+    this.averageFTEExternal= [];
+    this.averageFTEOffshore= [];
+    this.monthLabels = [];
+
+  }
 
   ngOnInit() {
-    debugger;
+
+    
     this.months = this.utilitiesService.getMonths();
-    this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id,(this.month.id+5));
+    const dateObj = new Date();
+    const monthName = dateObj.toLocaleString("default", { month: "short" });
+    var year = dateObj.getFullYear();
+    var last = String(year).slice(-2);
+    var monthYear = monthName + " '"+last;
+    var i = 0;
+    for (i = 0; i < this.months.length; i++) {
+      if(this.months[i].name.includes(monthYear))
+      {
+        break;
+      }
+    }
+    
+    this.subcoService.initializeSubcoDetailTotalsForMonthRange(i+2,i+7);
+
 
     this.totalsSubscription = this.subcoService.subCoDetailTotals$
     .subscribe((subcoDetailTotals: SubCoDetailTotals[]) => {
-      this.SubCoDetailTotals = subcoDetailTotals;
+      this.subCoDetailTotals = subcoDetailTotals;
     }); 
 
-    this.SubCoDetailTotals = this.SubCoDetailTotals.sort(function(a, b) { return a.monthId-b.monthId });
+
+    this.subCoDetailTotals = this.subCoDetailTotals.sort(function(a, b) { return a.monthId-b.monthId });
     //if?
-    this.processTableData(this.SubCoDetailTotals);
+    this.processTableData(this.subCoDetailTotals);
     this.showComponent = true;    
 
   }
 
   processTableData(totals: SubCoDetailTotals[]) : void {
+    this.months = this.utilitiesService.getMonths();
+    const dateObj = new Date();
+    const monthName = dateObj.toLocaleString("default", { month: "short" });
+    var year = dateObj.getFullYear();
+    var last = String(year).slice(-2);
+    var monthYear = monthName + " '"+last;
+    var i = 0;
+    for (i = 0; i < this.months.length; i++) {
+      if(this.months[i].name.includes(monthYear))
+      {
+        break;
+      }
+    }
+    i=i+1;
+
     for (let total of totals) {
     
       this.totalRevenueInternal.push(total.subcontractorTotals.totalRevenueInternal);
@@ -84,9 +128,10 @@ export class SubcoExecutiveChartComponent implements OnInit {
       this.averageFTEInternal.push(total.subcontractorTotals.averageFTEInternal);
       this.averageFTEExternal.push(total.subcontractorTotals.averageFTEExternal);
       this.averageFTEOffshore.push(total.subcontractorTotals.averageFTEOffshore);
-      //needed?
-     // this.monthLabels.push(total.month.charAt(0).toUpperCase() + total.month.slice(1) + ' \'' + (total.year % 100).toString());
+      this.monthLabels.push(this.months[i].name);  
+      i++;
     }
+
 
   }
 
@@ -108,14 +153,15 @@ export class SubcoExecutiveChartComponent implements OnInit {
     this.pageState.showSpinner();
     let lineEnding = "\r\n";
     let header = "KPI;" + this.monthLabels.join(";") + lineEnding;
-    let body: string = "Total Int. Revenue;" + this.totalCostInternal.map(this.numberToString).join(";") + lineEnding + 
+    let body: string = 
+      "Total Int. Revenue;" + this.totalRevenueInternal.map(this.numberToString).join(";") + lineEnding + 
       "Total Ext. Revenue;" + this.totalRevenueExternal.map(this.numberToString).join(";") + lineEnding +
-      "Total Off. Revenue;" + this.totalCostOffshore.map(this.numberToString).join(";") + lineEnding +
+      "Total Off. Revenue;" + this.totalRevenueOffshore.map(this.numberToString).join(";") + lineEnding +
       "Total Int. Cost;" + this.totalCostInternal.map(this.numberToString).join(";") + lineEnding +
       "Total Ext. Cost;" + this.totalCostExternal.map(this.numberToString).join(";") + lineEnding + 
       "Total Off. Cost;" + this.totalCostOffshore.map(this.numberToString).join(";") + lineEnding +
-      "Avg. Int. FTE" + this.averageFTEInternal.map(this.numberToString).join(";") + lineEnding +
-      "Avg. Ext. FTE;" + this.averageFTEExternal.map(this.numberToString).join(";") + lineEnding;
+      "Avg. Int. FTE;" + this.averageFTEInternal.map(this.numberToString).join(";") + lineEnding +
+      "Avg. Ext. FTE;" + this.averageFTEExternal.map(this.numberToString).join(";") + lineEnding +
       "Avg. Off. FTE;" + this.averageFTEOffshore.map(this.numberToString).join(";") + lineEnding;
     const data = header + body;
     const blob: Blob = new Blob([data], { type: "text/csv" });
