@@ -1,0 +1,132 @@
+<div>
+  <div
+    mat-dialog-title
+    class="fix"
+    layout="row"
+    layout-align="space-between center"
+    style="margin-bottom: 0px; padding-bottom: 0;"
+  >
+    <span>Subco Totals Overview</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+
+    <button mat-icon-button (click)="onNoClick()">
+      <mat-icon class="white">close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <div layout="row" layout-wrap *ngIf="showComponent">
+      <div flex="100" class="px-16 pt-5">
+        Overview/Summary of the KPIs for the next 6 Months. 
+
+        <table class="border-collapse w-100 h-100">
+          <thead class="border-line color-grey">
+            <tr>
+              <td class="stats-table-header">KPI</td>
+              <td *ngFor="let m of monthLabels" class="stats-table-header">
+                {{ m }}
+              </td>
+              <td class="stats-table-header">TOTAL</td>
+            </tr>
+          </thead>
+          <tbody>
+            <!--Total Int. Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Int. Revenue</td>
+              <td class="stats-table-cell" *ngFor="let t of totalRevenueInternal">  
+                {{ t | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de'}}</td>
+            </tr>
+
+            <!--Total Ext. Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Ext. Revenue</td>
+              <td class="stats-table-cell" *ngFor="let t of totalRevenueExternal">
+                {{ t | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Total Off. Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Off. Revenue</td>
+              <td class="stats-table-cell" *ngFor="let t of totalRevenueOffshore">
+                {{ t | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Total Int. Cost-->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Int. Cost</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCostInternal">
+                {{t | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Total Ext. Cost -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Ext. Cost</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCostExternal">
+                {{ t | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Total Off. Cost -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Off. Cost</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCostOffshore">
+                {{ t | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Avg. Int. FTE -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Avg. Int. FTE</td>
+              <td class="stats-table-cell" *ngFor="let t of averageFTEInternal">
+                {{ t | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+             <!--Avg. Ext. FTE -->
+             <tr class="border-line">
+              <td class="stats-table-cell">Avg. Ext. FTE</td>
+              <td class="stats-table-cell" *ngFor="let t of averageFTEExternal">
+                {{ t | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+             <!--Avg. Off. FTE -->
+             <tr class="border-line">
+              <td class="stats-table-cell">Avg. Off. FTE</td>
+              <td class="stats-table-cell" *ngFor="let t of averageFTEOffshore">
+                {{ t | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+
+  </div>
+
+  <div mat-dialog-actions
+    style="background-color: #0070ad; margin-bottom: 0px;"
+    layout="row" 
+    layout-align="space-between center"  
+    class="fix" >
+        <button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary" style="background-color: white;" (click)="exportCSV()">
+          <mat-icon>insert_drive_file</mat-icon> Export CSV
+        </button>
+  </div>

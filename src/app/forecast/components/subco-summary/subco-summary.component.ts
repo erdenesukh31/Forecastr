@@ -90,6 +90,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
 
 
   userId: number;
+  totalsSubscription: Subscription;
 
   /**
    * constructor for subco-summary component
@@ -126,6 +127,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.projects = this.utilitiesService.getProjects();
     this.months = this.utilitiesService.getMonths();
+    this.subcoService.initializeSubcoTotalsForMonth(this.month.id);
 
     this.subcosSubscription = this.subcoService.allSubCoDetails$ //TODO: replace
       .subscribe((subco: SubCoDetails[]) => {
@@ -136,9 +138,11 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
       .subscribe((forecasts: SubCoDetails[]) => {
         this.summaryData = this.subcoService.getSummaryData(forecasts);
       });
-
       
-      //gettotalsdata for Financial controller avg FTEs
+      this.totalsSubscription = this.subcoService.subCoTotals$
+      .subscribe((subcototalss: SubCoTotals) => {
+        this.subCoTotals = subcototalss;
+      });
   }
 
   //TODO: is this relevant

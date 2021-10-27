@@ -36,19 +36,20 @@
           <button *ngIf="isPractice() && isEm()" mat-raised-button class="dashboard-button practice-em-dashboard"
           (click)="openDashboard()">
           <mat-icon>insert_chart</mat-icon> KPI Overview
-        </button>
-        <button *ngIf="!isPractice() && isEm()" mat-raised-button class="dashboard-button pdl-em-dashboard"
-          (click)="openDashboard()">
-          <mat-icon>insert_chart</mat-icon> KPI Overview
-        </button>
+          </button>        
+          <button *ngIf="!isPractice() && isEm()" mat-raised-button class="dashboard-button pdl-em-dashboard"
+            (click)="openDashboard()">
+            <mat-icon>insert_chart</mat-icon> KPI Overview
+          </button>
         </div>
 
 
 
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
+      
           <mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="page"
             (change)="goToPage(group.value)">
-
+          
             <mat-button-toggle value="individual">
               <mat-icon>person</mat-icon> Me
             </mat-button-toggle>
@@ -62,6 +63,7 @@
               <mat-icon>supervisor_account</mat-icon> Subcos
             </mat-button-toggle>
           </mat-button-toggle-group>
+       
         </div>
 
         <div class="switch-role-toggle" *ngIf="isEmAndHasNoLeadRole()">
@@ -81,6 +83,10 @@
       <div *ngIf="isMSLLevelRole('HOP') || isMSLLevelRole('SM') || isMSLLevelRole('SMCSS')" class="role-header">
         <button mat-raised-button color="primary" (click)="openDashboard()">
           <mat-icon>insert_chart</mat-icon> KPI Overview
+        </button>
+        <button mat-raised-button  *ngIf="isMSLLevelRole('HOP') || isFinancialController() " class="dashboard-button subco-totals-dashboard"
+        (click)="openDashboardSubco()">
+        <mat-icon>insert_chart</mat-icon> Subco Totals Overview
         </button>
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
           <mat-button-toggle-group class="sm-hop-button-toggle-group" appearance="legacy" aria-label="Role"

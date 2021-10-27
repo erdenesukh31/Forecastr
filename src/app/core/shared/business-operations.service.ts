@@ -9,6 +9,9 @@ import { environment as env } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class BusinessOperationsService {
+ 
+  
+ 
   /**
    * returns login-path
    */
@@ -348,5 +351,16 @@ export class BusinessOperationsService {
   getSubCoOffshoreForMonth(monthId: number): string {
     return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
   }
+
+  //for Avg FTE Summary Financial Controller
+  getSubCoTotalsForMonth(monthId: number): string {
+    return env.api + 'subcos' + '/' + 'totals' + '/' + monthId;
+  }
+
+  //for Subco Total Summary HOP and Financial Controller
+  getSubCoDetailTotalsMonthRange(startMonthId: number, endMonthId: number): string {
+    return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId +'/'+ endMonthId;
+  }
+ 
 
 }

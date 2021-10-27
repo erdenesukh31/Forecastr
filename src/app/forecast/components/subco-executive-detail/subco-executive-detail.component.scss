@@ -4,6 +4,21 @@
   margin: 20px 0px 0px 20px;
 }
 
+.dashboard-button {
+  position: relative;
+  width: 220px;
+  top: 0;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 20px;
+  background-color: map-get($font-colors, blue);
+  color: map-get($font-colors, white);
+  box-shadow: 0px 1px 5px grey;
+
+  .mat-icon {
+    color: map-get($font-colors, white);
+  }
+}
 .mat-button-toggle-group {
   margin: 20px 30px 0;
   background-color: map-get($font-colors, white);

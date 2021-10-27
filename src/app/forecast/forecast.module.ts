@@ -48,6 +48,7 @@ import { FinancialControllerComponent } from "./pages/financial-controller/finan
 import { FinancialControllerOverviewComponent } from "./components/financial-controller-overview/financial-controller-overview.component";
 import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component";
 
+import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart/subco-executive-chart.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -97,6 +98,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     HeadOfPracticesComponent,
     FinancialControllerComponent,
     FinancialControllerOverviewComponent,
+    SubcoExecutiveChartComponent,
   ],
   exports: []
 })
