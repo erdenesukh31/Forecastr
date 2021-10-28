@@ -337,8 +337,6 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + 'forecasts';
   }
 
-  // Subco Fiancial controller - still fix the paths 
-
   getSubCoInternalForMonth(monthId: number): string {
     return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId ;
   }
@@ -352,6 +350,19 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
   }
 
+  getSubCoInternalForMonthRange(monthId: number, endMonthId:number): string {
+    return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId +'/' + endMonthId;
+  }
+
+  getSubCoExternalForMonthRange(monthId: number, endMonthId:number): string {
+    return env.api + 'subcos' + '/'  + 'external' +'/' + monthId +'/' + endMonthId;
+  }
+
+
+  getSubCoOffshoreForMonthRange(monthId: number, endMonthId:number): string {
+    return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId +'/' + endMonthId;
+  }
+
   //for Avg FTE Summary Financial Controller
   getSubCoTotalsForMonth(monthId: number): string {
     return env.api + 'subcos' + '/' + 'totals' + '/' + monthId;
@@ -361,6 +372,5 @@ export class BusinessOperationsService {
   getSubCoDetailTotalsMonthRange(startMonthId: number, endMonthId: number): string {
     return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId +'/'+ endMonthId;
   }
- 
 
 }

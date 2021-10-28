@@ -7,7 +7,7 @@ export class SubCoFcOffshore{
     projectCode: string;
     totalManDays: number;
     engagementManagerName: string;
-   
+    monthId: number;
 
 
     constructor(){
@@ -19,6 +19,7 @@ export class SubCoFcOffshore{
         this.projectName= "";
         this.totalManDays= 0;
         this.engagementManagerName = "";
+        this.monthId =0;
     }
 }
 

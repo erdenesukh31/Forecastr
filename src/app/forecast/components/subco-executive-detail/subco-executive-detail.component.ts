@@ -26,7 +26,7 @@ import { SubCoFcIntExt } from "../../../core/interfaces/subCoFcIntExt";
 import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
 import { getMultipleValuesInSingleSelectionError } from "@angular/cdk/collections";
 import { SubCoFinancialControllerService } from "../../../core/services/subCoFinancialController.service";
-import {SubcoSummaryComponent} from "../subco-summary/subco-summary.component";
+import { SubcoSummaryComponent } from "../subco-summary/subco-summary.component";
 import { MatCalendarBody } from "@angular/material/datepicker";
 import { ExecutiveChartComponent } from "../executive-chart/executive-chart.component";
 import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-executive-chart.component";
@@ -70,9 +70,23 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   */
   offshoreTotals: SubCoFcOffshore[];
 
-    /**
+  /**
+* list of all subco dtos for internal
+*/
+  internalMonthRange: SubCoFcIntExt[];
+  /**
+ * list of all subco dtos for internal
+ */
+  externalMonthRange: SubCoFcIntExt[];
+
+  /**
   * list of all subco dtos for offshore
   */
+  offshoreTotalsRange: SubCoFcOffshore[];
+
+  /**
+* list of all subco dtos for offshore
+*/
   offshoreAverage: SubCoFcOffshore;
 
   userId: number;
@@ -81,19 +95,27 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
 
   loadingActive: boolean = false;
 
-  totals: any = { 
-    revenue: 0, 
-    cost: 0, 
+  totals: any = {
+    revenue: 0,
+    cost: 0,
     contribution: 0,
     cp: 0
   };
 
-  totalsOffshore: any = { 
-    revenue: 0, 
-    cost: 0, 
+  totalsOffshore: any = {
+    revenue: 0,
+    cost: 0,
     contribution: 0,
     cp: 0
   };
+
+  totalsCSVMonth: any = {
+    revenue: 0,
+    cost: 0,
+    contribution: 0,
+    cp: 0,
+    manDay: 0
+  }
 
   /**
    * constructor for teamlead-summary component
@@ -115,21 +137,29 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   ) {
     this.filter = 'internal'; // 'internal', 'external' or 'offshore'
     this.userId = this.authService.getUserId();
-    this.fte=0;
-    this.totals = { 
-      manday: 0, 
-      revenue: 0, 
-      cost: 0, 
+    this.fte = 0;
+    this.totals = {
+      manday: 0,
+      revenue: 0,
+      cost: 0,
       contribution: 0,
       cp: 0
     };
 
-    this.totalsOffshore = { 
-      manday: 0, 
-      revenue: 0, 
-      cost: 0, 
+    this.totalsOffshore = {
+      manday: 0,
+      revenue: 0,
+      cost: 0,
       contribution: 0,
       cp: 0
+    };
+
+    this.totalsCSVMonth = {
+      revenue: 0,
+      cost: 0,
+      contribution: 0,
+      cp: 0,
+      manday: 0
     };
   }
 
@@ -138,27 +168,30 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
 
-    if(this.switchState) {
+    if (this.switchState) {
       this.filter = this.switchState;
     }
 
-    this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
+    this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5),
+      this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
+      this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
 
-    this.getValues(); 
+      this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
+    this.getValues();
   }
 
   getValues() {
-    switch(this.filter){
+    switch (this.filter) {
       case 'external':
         this.subcoFinancialControllerService.initSubCoExternalForMonth(this.month.id);
 
-        this.subcoFinancialControllerService.intExtSubCo$.subscribe((external: SubCoFcIntExt[]) =>{
+        this.subcoFinancialControllerService.intExtSubCo$.subscribe((external: SubCoFcIntExt[]) => {
           this.internalExternal = external;
           this.getTotals();
         })
         break;
       case 'offshore':
-        this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore[]) =>{
+        this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore[]) => {
           this.offshoreTotals = offshore;
           this.getTotalsOffshore();
         })
@@ -167,7 +200,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       case 'internal':
         this.subcoFinancialControllerService.initSubCoInternalForMonth(this.month.id);
 
-        this.subcoFinancialControllerService.intExtSubCo$.subscribe((internalSubco: SubCoFcIntExt[]) =>{
+        this.subcoFinancialControllerService.intExtSubCo$.subscribe((internalSubco: SubCoFcIntExt[]) => {
           this.internalExternal = internalSubco;
           this.getTotals();
         })
@@ -208,265 +241,282 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   exportCSV(): void {
     this.pageState.showSpinner();
 
-    switch(this.filter){
-      case 'external': {
-        let lineEnding = "\r\n";
-        let header: string = "Month;" + this.month.name + lineEnding
-          + "Working Days;" + this.month.workingdays + lineEnding
-          + "Resource Name;Project Name;Customer;Revenue;Cost;Contribution;CP"
-          + lineEnding;
-        
-        let body = "";
-    
-        let totalRevenue =0;
-        let totalCost =0;
-        let totalContribution =0;
-        let totalCP =0;
+    let body = "";
+    let monthHeader = " ; ; ; ; ;Month;"
+    let workingDaysMonth = " ; ; ; ; ;Working Days;"
+    let headerValueNames = "Resource Name;Engagement Manager;Project Name;Customer; ;"
+    let header = "";
+    let lineEnding = "\r\n";
+    let summaryLine = "";
+    let summaryHeader = "";
+    let currentPosition = this.month.id;
+    let skip = "; ; ; ; ; ;";
 
-        
-        this.subcoFinancialControllerService.intExtSubCo$.subscribe((external: SubCoFcIntExt[]) =>{
-          this.internalExternal = external;
-          this.getTotals();
-        })
-        
+    this.months.forEach((month: Month) => {
 
-        this.internalExternal.forEach((subco: any) => {
-      
-          let line = subco.resourceName+ ";" 
-            + subco.projectName +";"
-            + subco.customer+";"  
-            + this.numberToString(subco.revenue)+";"    
-            + this.numberToString(subco.cost)+";" 
-            + this.numberToString(subco.contribution)+";"       
-            + this.numberToString(subco.cp,2)+";"         
-            + lineEnding;
-          body = body + line;
-          totalRevenue += subco.revenue;
-          totalCost += subco.cost;
-          totalContribution += subco.contribution;
-          totalCP += subco.cp;
-        });
-         
-          let summaryHeader = "Summary;" + this.month.name + lineEnding
-          + "Revenue;Cost;Contribution;CP" 
-          + lineEnding;
-         let summaryLine = this.numberToString(totalRevenue) + ";" 
-          + this.numberToString(totalCost) + ";" 
-          + this.numberToString(totalContribution) + ";" 
-          + this.numberToString(totalCP) + ";"        
-          + lineEnding;
-          
+      monthHeader += month.name + " ; ; ; ; ; ;";
+      workingDaysMonth += month.workingdays + " ; ; ; ; ; ;";
+      headerValueNames += "ManDay;Revenue;Cost;Contribution;CP; ;";
+    });
 
-          const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine;
-          const blob: Blob = new Blob([data], { type: "text/csv" });
-          const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoExternalOverview.csv";    
-      
-          this.pageState.hideSpinner();
-      
-          let navigator: any = window.navigator;
-          //For IE
-          if (navigator.msSaveOrOpenBlob) {
-            navigator.msSaveOrOpenBlob(blob, filename);
-          //For any other browser
-          } else {
-            const url: string = window.URL.createObjectURL(blob);
-      
-            let a: HTMLAnchorElement = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-      
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+    header += monthHeader + lineEnding + workingDaysMonth + lineEnding + headerValueNames + lineEnding
+
+    this.subscribeMonthRange();
+    this.months.forEach(element => {
+      summaryHeader = " ; ; ; ; Summary;"
+
+      this.getTotalsForSpecificMonth(element.id);
+      summaryLine += this.numberToString(this.totalsCSVMonth.manday) + ";"
+        + this.numberToString(this.totalsCSVMonth.revenue) + ";"
+        + this.numberToString(this.totalsCSVMonth.cost) + ";"
+        + this.numberToString(this.totalsCSVMonth.contribution) + ";"
+        + this.numberToString(this.totalsCSVMonth.cp) + "; ;"
+    });
+
+    body += "Internal Subcontractors" + lineEnding;
+    this.internalMonthRange.forEach((subco: any) => {
+
+      const result = this.internalMonthRange.filter((sub: any) => sub.subcontractorIntExt.resourceName == subco.subcontractorIntExt.resourceName
+        && sub.subcontractorIntExt.projectName == subco.subcontractorIntExt.projectName)
+      if (result.length > 0) {
+        let line = "";
+        line += subco.subcontractorIntExt.resourceName + ";"
+          + subco.subcontractorIntExt.engagementManagerName + ";"
+          + subco.subcontractorIntExt.projectName + ";"
+          + subco.subcontractorIntExt.customer + "; ;";
+
+        result.forEach((subco: any) => {
+          if (subco.monthId > currentPosition) {
+            while (subco.monthId != currentPosition) {
+              line += skip;
+              currentPosition = currentPosition + 1;
+            }
           }
-       
-     
-       break;
-      }
-      case 'offshore':{   
-          let lineEndingOffshore = "\r\n";
-          let headerOffshore: string = "Month;" + this.month.name + lineEndingOffshore
-            + "Working Days;" + this.month.workingdays + lineEndingOffshore
-            + "Revenue;Cost;Contribution;CP"
-            + lineEndingOffshore;
-          
-          // let bodyOffshore = "";
-              
-          // this.subcoFinancialControllerService.offshoreSubCo$.subscribe((offshore: SubCoFcOffshore) =>{
-          //   this.offshoreTotals = offshore;
-          // })
-          
-        
-          //   let line = this.offshoreTotals.totalRevenue + ";" 
-          //   + this.offshoreTotals.totalCost+ ";"
-          //   + this.offshoreTotals.totalContribution+ ";" 
-          //   + this.offshoreTotals.totalCp +";"
-          //   +lineEndingOffshore;
+          line += this.numberToString(subco.subcontractorIntExt.manDay) + ";"
+            + this.numberToString(subco.subcontractorIntExt.revenue) + ";"
+            + this.numberToString(subco.subcontractorIntExt.cost) + ";"
+            + this.numberToString(subco.subcontractorIntExt.contribution) + ";"
+            + this.numberToString(subco.subcontractorIntExt.cp * 100, 2) + ";" + ";"
 
-          //   bodyOffshore = bodyOffshore + line;
+          currentPosition = currentPosition + 1;
+        });
+        currentPosition = this.month.id;
+        this.internalMonthRange = this.internalMonthRange.filter((sub: any) => !(sub.subcontractorIntExt.resourceName == subco.subcontractorIntExt.resourceName
+          && sub.subcontractorIntExt.projectName == subco.subcontractorIntExt.projectName));
 
-          //   const data = headerOffshore + bodyOffshore + lineEndingOffshore + lineEndingOffshore;
-          //   const blob: Blob = new Blob([data], { type: "text/csv" });
-          //   const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoOffshoreOverview.csv";    
-        
-          //   this.pageState.hideSpinner();
-        
-          //   let navigator: any = window.navigator;
-          //   //For IE
-          //   if (navigator.msSaveOrOpenBlob) {
-          //     navigator.msSaveOrOpenBlob(blob, filename);
-          //   //For any other browser
-          //   } else {
-          //     const url: string = window.URL.createObjectURL(blob);
-        
-          //     let a: HTMLAnchorElement = document.createElement("a");
-          //     a.href = url;
-          //     a.download = filename;
-        
-          //     document.body.appendChild(a);
-          //     a.click();
-          //     document.body.removeChild(a);
-          //     window.URL.revokeObjectURL(url);
-          //   }
-          ;
-        break;
-      }
-      default:
-      case 'internal':{
-        let lineEndingInternal = "\r\n";
-        let headerInternal: string = "Month;" + this.month.name + lineEndingInternal
-          + "Working Days;" + this.month.workingdays + lineEndingInternal
-          + "Resource Name;Project Name;Customer;Eastern Europe(?);Revenue;Cost;Contribution;CP"
-          + lineEndingInternal;
-        
-        let bodyInternal = "";
-    
-        let totalRevenueInternal =0;
-        let totalCostInternal =0;
-        let totalContributionInternal =0;
-        let totalCPInternal =0;
+        body = body + line + lineEnding;
+      };
+    });
 
-        
-        this.subcoFinancialControllerService.intExtSubCo$.subscribe((internal: SubCoFcIntExt[]) =>{
-          this.internalExternal = internal;
-          this.getTotals();
-        })
-        
+    body += lineEnding + "External Subcontractors" + lineEnding;
 
-        this.internalExternal.forEach((subco: any) => {
-      
-          let line = subco.resourceName+ ";" 
-            + subco.projectName +";"
-            + subco.customer+";"  
-            + subco.isEasternEurope+";"
-            + this.numberToString(subco.revenue)+";"    
-            + this.numberToString(subco.cost)+";" 
-            + this.numberToString(subco.contribution)+";"       
-            + this.numberToString(subco.cp,2)+";"         
-            + lineEndingInternal;
-          bodyInternal = bodyInternal + line;
-          totalRevenueInternal += subco.revenue;
-          totalCostInternal += subco.cost;
-          totalContributionInternal += subco.contribution;
-          totalCPInternal += subco.cp;
+    this.externalMonthRange.forEach((subco: any) => {
+
+      const result = this.externalMonthRange.filter((sub: any) => sub.subcontractorIntExt.resourceName == subco.subcontractorIntExt.resourceName
+        && sub.subcontractorIntExt.projectName == subco.subcontractorIntExt.projectName)
+      if (result.length > 0) {
+        let line = "";
+        line += subco.subcontractorIntExt.resourceName + ";"
+          + subco.subcontractorIntExt.engagementManagerName + ";"
+          + subco.subcontractorIntExt.projectName + ";"
+          + subco.subcontractorIntExt.customer + "; ;";
+
+        result.forEach((subcoR: any) => {
+
+          if (subcoR.monthId > currentPosition) {
+            while (subcoR.monthId != currentPosition) {
+              line += skip;
+              currentPosition = currentPosition + 1;
+            }
+          }
+
+          line += this.numberToString(subco.subcontractorIntExt.manDay) + ";"
+            + this.numberToString(subcoR.subcontractorIntExt.revenue) + ";"
+            + this.numberToString(subcoR.subcontractorIntExt.cost) + ";"
+            + this.numberToString(subcoR.subcontractorIntExt.contribution) + ";"
+            + this.numberToString(subcoR.subcontractorIntExt.cp * 100, 2) + ";" + ";"
+
+          currentPosition = currentPosition + 1;
         });
 
-          let summaryHeader = "Summary;" + this.month.name + lineEndingInternal
-          + "Revenue;Cost;Contribution;CP" 
-          + lineEndingInternal;
-          let summaryLine = this.numberToString(totalRevenueInternal) + ";" 
-          + this.numberToString(totalCostInternal) + ";" 
-          + this.numberToString(totalContributionInternal) + ";" 
-          + this.numberToString(totalCPInternal) + ";"        
-          + lineEndingInternal;
+        currentPosition = this.month.id;
 
-          const data = headerInternal + bodyInternal + lineEndingInternal + lineEndingInternal + summaryHeader + summaryLine;
-          const blob: Blob = new Blob([data], { type: "text/csv" });
-          const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoInternalOverview.csv";    
-      
-          this.pageState.hideSpinner();
-      
-          let navigator: any = window.navigator;
-          //For IE
-          if (navigator.msSaveOrOpenBlob) {
-            navigator.msSaveOrOpenBlob(blob, filename);
-          //For any other browser
-          } else {
-            const url: string = window.URL.createObjectURL(blob);
-      
-            let a: HTMLAnchorElement = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-      
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-          }
-       
-        
-        break;
+        this.externalMonthRange = this.externalMonthRange.filter((sub: any) => !(sub.subcontractorIntExt.resourceName == subco.subcontractorIntExt.resourceName
+          && sub.subcontractorIntExt.projectName == subco.subcontractorIntExt.projectName))
+
+        body = body + line + lineEnding;
       }
-    }
+    });
+
+    body += lineEnding + "Offshore" + lineEnding
+
+    this.offshoreTotalsRange.forEach((subco: any) => {
+      const result = this.offshoreTotalsRange.filter((sub: any) => sub.subcontractorOffshore.projectName == subco.subcontractorOffshore.projectName)
+      if (result.length > 0) {
+        let line = "";
+        line += "" + ";"
+          + subco.subcontractorOffshore.engagementManagerName + ";"
+          + subco.subcontractorOffshore.projectName + ";"
+          + subco.subcontractorOffshore.customer + "; ;";
+
+        result.forEach((subcoR: any) => {
+
+          if (subcoR.monthId > currentPosition) {
+            while (subcoR.monthId != currentPosition) {
+              line += skip;
+              currentPosition = currentPosition + 1;
+            }
+          }
+          line += this.numberToString(subco.subcontractorOffshore.totalManDays) + ";"
+            + this.numberToString(subcoR.subcontractorOffshore.totalRevenue) + ";"
+            + this.numberToString(subcoR.subcontractorOffshore.totalCost) + ";"
+            + this.numberToString(subcoR.subcontractorOffshore.totalContribution) + ";"
+            + this.numberToString(subcoR.subcontractorOffshore.totalCp * 100, 2) + ";" + ";"
+
+          currentPosition = currentPosition + 1;
+        });
+
+        this.offshoreTotalsRange = this.offshoreTotalsRange.filter((sub: any) => sub.subcontractorOffshore.projectName != subco.subcontractorOffshore.projectName)
+
+        body = body + line + lineEnding;
+      }
+    });
+
+    const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine;
+    const blob: Blob = new Blob([data], { type: "text/csv" });
+    const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoExternalOverview.csv";
+
+    this.pageState.hideSpinner();
+
+    let navigator: any = window.navigator;
+    //For IE
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(blob, filename);
+      //For any other browser
+    } else {
+      const url: string = window.URL.createObjectURL(blob);
+
+      let a: HTMLAnchorElement = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    };
   }
 
+  subscribeMonthRange(): void {
+    this.subcoFinancialControllerService.intSubCoRange$.subscribe((internal: SubCoFcIntExt[]) => {
+      this.internalMonthRange = internal;
+    })
+
+    this.subcoFinancialControllerService.extSubCoRange$.subscribe((external: SubCoFcIntExt[]) => {
+      this.externalMonthRange = external;
+    })
+
+    this.subcoFinancialControllerService.offshoreSubCoRange$.subscribe((offshore: SubCoFcOffshore[]) => {
+      this.offshoreTotalsRange = offshore;
+    })
+  }
   numberToString(no: number, precision: number = 2): string {
-    return no.toLocaleString("de",  { minimumFractionDigits: 0, maximumFractionDigits: precision } ).replace(".","");
+    return no.toLocaleString("de", { minimumFractionDigits: 0, maximumFractionDigits: precision }).replace(".", "");
   }
 
-  getTotals(){
+  getTotalsForSpecificMonth(monthId: number) {
     let revenue = 0;
     let cost = 0;
     let contribution = 0;
     let manday = 0;
-    this.internalExternal.forEach((ie: SubCoFcIntExt) =>{
+    var temp = this.internalMonthRange.filter(month => month.monthId == monthId);
+
+    temp.forEach((ie: any) => {
+      manday += ie.subcontractorIntExt.manDay;
+      revenue += ie.subcontractorIntExt.revenue;
+      cost += ie.subcontractorIntExt.cost;
+      contribution += ie.subcontractorIntExt.contribution;
+    });
+
+    temp = this.externalMonthRange.filter(month => month.monthId == monthId);
+
+    temp.forEach((ie: any) => {
+      manday += ie.subcontractorIntExt.manDay;
+      revenue += ie.subcontractorIntExt.revenue;
+      cost += ie.subcontractorIntExt.cost;
+      contribution += ie.subcontractorIntExt.contribution;
+    });
+
+    var tempOff = this.offshoreTotalsRange.filter(month => month.monthId == monthId);
+
+    tempOff.forEach((ie: any) => {
+      manday += ie.subcontractorOffshore.totalManDays;
+      revenue += ie.subcontractorOffshore.totalRevenue;
+      cost += ie.subcontractorOffshore.totalCost;
+      contribution += ie.subcontractorOffshore.totalContribution;
+    });
+
+    this.totalsCSVMonth = {
+      manday: manday,
+      revenue: revenue,
+      cost: cost,
+      contribution: contribution,
+      cp: (contribution / revenue) * 100
+    };
+  }
+  
+  getTotals() {
+    let revenue = 0;
+    let cost = 0;
+    let contribution = 0;
+    let manday = 0;
+    this.internalExternal.forEach((ie: SubCoFcIntExt) => {
       manday += ie.manDay;
       revenue += ie.revenue;
       cost += ie.cost;
       contribution += ie.contribution;
     })
-    this.totals = { 
+    this.totals = {
       manday: manday,
-      revenue: revenue, 
-      cost: cost, 
+      revenue: revenue,
+      cost: cost,
       contribution: contribution,
       cp: (contribution / revenue) * 100
     };
   }
 
-  getTotalsOffshore(){
+  getTotalsOffshore() {
     let revenue = 0;
     let cost = 0;
     let contribution = 0;
     let manday = 0;
-    this.offshoreTotals.forEach((ie: SubCoFcOffshore) =>{
+    this.offshoreTotals.forEach((ie: SubCoFcOffshore) => {
       manday += ie.totalManDays;
       revenue += ie.totalRevenue;
       cost += ie.totalCost;
       contribution += ie.totalContribution;
     })
-    this.totalsOffshore = { 
+    this.totalsOffshore = {
       manday: manday,
-      revenue: revenue, 
-      cost: cost, 
+      revenue: revenue,
+      cost: cost,
       contribution: contribution,
       cp: (contribution / revenue) * 100
     };
   }
 
   openDashboardSubco(): void {
-   
-      const dialogRef = this.dialog.open(SubcoExecutiveChartComponent, {
-        height: "90%",
-        width: "90%",
-        panelClass: "custom-dialog-container",
-        data: {},
-      });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log("The dialog was closed");
-      });
-    
+    const dialogRef = this.dialog.open(SubcoExecutiveChartComponent, {
+      height: "90%",
+      width: "90%",
+      panelClass: "custom-dialog-container",
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
+
   }
 }
