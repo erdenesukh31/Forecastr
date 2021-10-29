@@ -418,7 +418,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine
      + lineEnding  + lineEnding + avgFTEExt + lineEnding + avgFTEInt + lineEnding + avgFTEOffshore 
      + lineEnding  + lineEnding + secondSheetHeader + lineEnding + bodySecondSheet;
-    const blob: Blob = new Blob([data], { type: "text/csv" });
+    const blob: Blob = new Blob(["\ufeff",data], { type: "text/csv" });
     const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoExternalOverview.csv";
 
     this.pageState.hideSpinner();
