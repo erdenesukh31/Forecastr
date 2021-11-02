@@ -60,6 +60,7 @@
 						<mat-panel-description>
 							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
+							<span class="mat-cell"></span>
 							<span class="mat-cell" *ngIf="filter === 'internal'"></span>
 							<span class="mat-cell">{{totals.manday | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
@@ -100,6 +101,7 @@
 					<mat-expansion-panel-header>
 						<mat-panel-title>Total</mat-panel-title>
 						<mat-panel-description>
+							<span class="mat-cell"></span>
 							<span class="mat-cell">{{totalsOffshore.manday | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalsOffshore.revenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalsOffshore.cost | number:'1.0-2':'de'}}</span>
