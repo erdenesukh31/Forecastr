@@ -256,8 +256,9 @@ export class SubCoService {
       summaryData.revenue += revenue = sub.cor * sub.manDay;
       summaryData.cost += cost = sub.costRate * sub.manDay;
       summaryData.contribution += contribution = revenue - cost;
-      summaryData.cp += contribution / revenue; //TODO: check if correct
+
     });
+    summaryData.cp += summaryData.contribution / summaryData.revenue * 100;
     return summaryData;
   }
 

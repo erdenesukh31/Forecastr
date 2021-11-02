@@ -178,7 +178,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
         return details.contribution;
 
       } else if (type === 'cp') {
-        return details.cp;
+        return details.cp*100;
 
       }
       else if (type === 'history') {
