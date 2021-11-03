@@ -2,6 +2,7 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import Button from './button.component';
 import ButtonSaveCancelComponent from './Button_Save-Cancel.component';
+import { withDesign } from 'storybook-addon-designs'
 
 // More on default export: https://storybook.js.org/docs/angular/writing-stories/introduction#default-export
 export default {
@@ -11,11 +12,8 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
+  decorators: [withDesign],
   parameters: {
-  design: {
-      type: 'figma',
-      url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/ButtonSaveCancel'
-  }
  }
 } as Meta;
 
@@ -25,30 +23,53 @@ const Template: Story<ButtonSaveCancelComponent> = (args: ButtonSaveCancelCompon
 
 });
 
-export const Primary = Template.bind({});
+export const SaveDefault = Template.bind({});
 // More on args: https://storybook.js.org/docs/angular/writing-stories/args
-Primary.args = {
+SaveDefault.args = {
   primary: true,
-  label: 'ButtonSaveCancelComponent',
+  label: 'ButtonSaveCancelComponent'
+};
+
+SaveDefault.parameters = {
   design: {
-    type: 'figma',
-    url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/ButtonSaveCancel/Save/Default'
+    type: 'experimental-figspec',
+    url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=322%3A1840'
+  }
 }
-};
 
-export const Secondary = Template.bind({});
-Secondary.args = {
+export const SavePressed = Template.bind({});
+SavePressed.args = {
   label: 'ButtonSaveCancelComponent',
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
+SavePressed.parameters = {
+  design: {
+    type: 'experimental-figspec',
+    url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=322%3A1847'
+  }
+}
+
+export const CancelPressed = Template.bind({});
+CancelPressed.args = {
   label: 'ButtonSaveCancelComponent',
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
+CancelPressed.parameters = {
+  design: {
+    type: 'experimental-figspec',
+    url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=322%3A1849'
+  }
+}
+
+
+export const CancelDefault = Template.bind({});
+CancelDefault.args = {
   label: 'ButtonSaveCancelComponent',
 };
+
+CancelDefault.parameters = {
+  design: {
+    type: 'experimental-figspec',
+    url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=322%3A1838'
+  }
+}
