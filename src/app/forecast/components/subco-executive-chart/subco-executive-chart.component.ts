@@ -91,18 +91,15 @@ export class SubcoExecutiveChartComponent implements OnInit {
     this.totalsSubscription = this.subcoService.subCoDetailTotals$
     .subscribe((subcoDetailTotals: SubCoDetailTotals[]) => {
       this.subCoDetailTotals = subcoDetailTotals;
-    }); 
-
-
-    this.subCoDetailTotals = this.subCoDetailTotals.sort(function(a, b) { return a.monthId-b.monthId });
-    //if?
-    this.processTableData(this.subCoDetailTotals);
-    this.showComponent = true;    
-
+      this.subCoDetailTotals = this.subCoDetailTotals.sort(function(a, b) { return a.monthId-b.monthId });
+      if (this.subCoDetailTotals.length > 0) {
+       this.processTableData(this.subCoDetailTotals);
+     this.showComponent = true;    
+     }
+    });
   }
 
   processTableData(totals: SubCoDetailTotals[]) : void {
-    this.months = this.utilitiesService.getMonths();
     const dateObj = new Date();
     const monthName = dateObj.toLocaleString("default", { month: "short" });
     var year = dateObj.getFullYear();
@@ -116,6 +113,17 @@ export class SubcoExecutiveChartComponent implements OnInit {
       }
     }
     i=i+1;
+
+    this.totalRevenueInternal = [];
+    this.totalRevenueExternal = [];
+    this.totalRevenueOffshore= [];
+    this.totalCostInternal= [];
+    this.totalCostExternal= [];
+    this.totalCostOffshore= [];
+    this.averageFTEInternal= [];
+    this.averageFTEExternal= [];
+    this.averageFTEOffshore= [];
+    this.monthLabels = [];
 
     for (let total of totals) {
     
@@ -133,6 +141,10 @@ export class SubcoExecutiveChartComponent implements OnInit {
     }
 
 
+  }
+
+  ngOnDestroy(): void {
+    this.totalsSubscription.unsubscribe();
   }
 
   total(numArray: number[]) {
