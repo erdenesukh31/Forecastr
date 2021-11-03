@@ -112,6 +112,7 @@ export class SubcoExecutiveChartComponent implements OnInit {
         break;
       }
     }
+    
     i=i+1;
 
     this.totalRevenueInternal = [];
