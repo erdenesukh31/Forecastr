@@ -42,6 +42,9 @@ export class SubcoExecutiveChartComponent implements OnInit {
   averageFTEInternal: number[];
   averageFTEExternal: number[];
   averageFTEOffshore: number[];
+  totalCPInternal: number[];
+  totalCPExternal: number[];
+  totalCPOffshore: number[];
   
   totalsSubscription: Subscription;
 
@@ -65,6 +68,9 @@ export class SubcoExecutiveChartComponent implements OnInit {
     this.averageFTEExternal= [];
     this.averageFTEOffshore= [];
     this.monthLabels = [];
+    this.totalCPInternal = [];
+    this.totalCPExternal = [];
+    this.totalCPOffshore = [];
 
   }
 
@@ -124,6 +130,9 @@ export class SubcoExecutiveChartComponent implements OnInit {
     this.averageFTEInternal= [];
     this.averageFTEExternal= [];
     this.averageFTEOffshore= [];
+    this.totalCPInternal = [];
+    this.totalCPExternal = [];
+    this.totalCPOffshore = [];
     this.monthLabels = [];
 
     for (let total of totals) {
@@ -137,6 +146,10 @@ export class SubcoExecutiveChartComponent implements OnInit {
       this.averageFTEInternal.push(total.subcontractorTotals.averageFTEInternal);
       this.averageFTEExternal.push(total.subcontractorTotals.averageFTEExternal);
       this.averageFTEOffshore.push(total.subcontractorTotals.averageFTEOffshore);
+      this.totalCPInternal.push(total.subcontractorTotals.totalCPInternal);
+      this.totalCPExternal.push(total.subcontractorTotals.totalCPExternal);
+      this.totalCPOffshore.push(total.subcontractorTotals.totalCPOffshore);
+
       this.monthLabels.push(this.months[i].name);  
       i++;
     }
@@ -175,7 +188,10 @@ export class SubcoExecutiveChartComponent implements OnInit {
       "Total Off. Cost;" + this.totalCostOffshore.map(this.numberToString).join(";") + lineEnding +
       "Avg. Int. FTE;" + this.averageFTEInternal.map(this.numberToString).join(";") + lineEnding +
       "Avg. Ext. FTE;" + this.averageFTEExternal.map(this.numberToString).join(";") + lineEnding +
-      "Avg. Off. FTE;" + this.averageFTEOffshore.map(this.numberToString).join(";") + lineEnding;
+      "Avg. Off. FTE;" + this.averageFTEOffshore.map(this.numberToString).join(";") + lineEnding +
+      "Total Int. CP;" + this.totalCPInternal.map(this.numberToString).join(";") + lineEnding +
+      "Total Ext. CP;" + this.totalCPExternal.map(this.numberToString).join(";") + lineEnding +
+      "TOtal Off. CP;" + this.totalCPOffshore.map(this.numberToString).join(";") + lineEnding;
     const data = header + body;
     const blob: Blob = new Blob([data], { type: "text/csv" });
     const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubCoKPIOverview.csv";    

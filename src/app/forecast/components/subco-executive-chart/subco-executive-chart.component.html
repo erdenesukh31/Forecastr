@@ -109,6 +109,30 @@
               </td>
               <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
             </tr>
+             <!--Total. Int. CP -->
+             <tr class="border-line">
+              <td class="stats-table-cell">Total. Int. CP</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCPInternal">
+                {{t | number:'1.0-2':'de'}}%
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+             <!--Total. Ext. CP -->
+             <tr class="border-line">
+              <td class="stats-table-cell">Total. Ext. CP</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCPExternal">
+                {{t | number:'1.0-2':'de'}}%
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
+             <!--Total. Off. CP -->
+             <tr class="border-line">
+              <td class="stats-table-cell">Total. Off. CP</td>
+              <td class="stats-table-cell" *ngFor="let t of totalCPOffshore">
+                {{t | number:'1.0-2':'de'}}%
+              </td>
+              <td class="stats-table-cell">{{ t | number: '1.0-2': 'de' }}</td>
+            </tr>
           </tbody>
         </table>
       </div>

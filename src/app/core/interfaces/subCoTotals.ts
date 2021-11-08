@@ -8,6 +8,9 @@ export class SubCoTotals{
     averageFTEInternal: number;
     averageFTEExternal: number;
     averageFTEOffshore: number;
+    totalCPInternal: number;
+    totalCPExternal: number;
+    totalCPOffshore: number;
 
 
 
@@ -21,6 +24,9 @@ export class SubCoTotals{
         this.averageFTEInternal = 0;
         this.averageFTEExternal = 0;
         this.averageFTEOffshore = 0;
+        this.totalCPInternal = 0;
+        this.totalCPExternal = 0;
+        this.totalCPOffshore = 0;
       
     }
 }
