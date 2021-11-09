@@ -146,9 +146,9 @@ export class SubcoExecutiveChartComponent implements OnInit {
       this.averageFTEInternal.push(total.subcontractorTotals.averageFTEInternal);
       this.averageFTEExternal.push(total.subcontractorTotals.averageFTEExternal);
       this.averageFTEOffshore.push(total.subcontractorTotals.averageFTEOffshore);
-      this.totalCPInternal.push(total.subcontractorTotals.totalCPInternal);
-      this.totalCPExternal.push(total.subcontractorTotals.totalCPExternal);
-      this.totalCPOffshore.push(total.subcontractorTotals.totalCPOffshore);
+      this.totalCPInternal.push(total.subcontractorTotals.totalCPInternal * 100);
+      this.totalCPExternal.push(total.subcontractorTotals.totalCPExternal* 100);
+      this.totalCPOffshore.push(total.subcontractorTotals.totalCPOffshore* 100);
 
       this.monthLabels.push(this.months[i].name);  
       i++;

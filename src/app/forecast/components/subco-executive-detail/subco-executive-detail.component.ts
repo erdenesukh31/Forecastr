@@ -30,6 +30,8 @@ import { SubcoSummaryComponent } from "../subco-summary/subco-summary.component"
 import { MatCalendarBody } from "@angular/material/datepicker";
 import { ExecutiveChartComponent } from "../executive-chart/executive-chart.component";
 import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-executive-chart.component";
+import { SubCoService } from "../../../core/services/subCo.service";
+import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
 /**
  * teamlead summary component
  */
@@ -117,6 +119,13 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     manDay: 0
   }
 
+ /**
+    * contains totals-data 
+    */
+  subCoTotals:  SubCoDetailTotals[];
+
+  totalsSubscription: Subscription;
+
   /**
    * constructor for teamlead-summary component
    * @param datePipe
@@ -129,6 +138,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    */
   constructor(
     private subcoFinancialControllerService: SubCoFinancialControllerService,
+    private subcoService: SubCoService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private authService: AuthService,
@@ -176,6 +186,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
       this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
 
+      this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
       this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
     this.getValues();
   }
@@ -248,30 +259,55 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let header = "";
     let lineEnding = "\r\n";
     let summaryLine = "";
-    let summaryHeader = "";
+    let summaryHeader =  " ; ; ; ; Summary;"
+    let avgFTEInt =" ; ; ; ; ;"
+    let avgFTEExt = " ; ; ; ; ;"
+    let avgFTEOffshore = " ; ; ; ; ;"
     let currentPosition = this.month.id;
     let skip = "; ; ; ; ; ;";
 
+    let secondSheetHeader = ";";
+    let RevExternalSub =  "Revenue External Subcontractor ;" ;
+    let RevInternalSub =  "Revenue Internal Subcontractor ;" ;
+    let RevOffshoreSub =  "Revenue Offshore Subcontractor ;" ;
+    let DCExternalSub =  "DC External Subcontractor ;" ;
+    let DCEInternalSub =  "DC Internal Subcontractor ;" ;
+    let DCOffshoreSub =  "DC Offshore Subcontractor ;" ;
+    let bodySecondSheet = "";
+
+    this.subscribeMonthRange();
     this.months.forEach((month: Month) => {
 
       monthHeader += month.name + " ; ; ; ; ; ;";
       workingDaysMonth += month.workingdays + " ; ; ; ; ; ;";
       headerValueNames += "ManDay;Revenue;Cost;Contribution;CP; ;";
-    });
+      secondSheetHeader += month.name + ";";
 
-    header += monthHeader + lineEnding + workingDaysMonth + lineEnding + headerValueNames + lineEnding
 
-    this.subscribeMonthRange();
-    this.months.forEach(element => {
-      summaryHeader = " ; ; ; ; Summary;"
-
-      this.getTotalsForSpecificMonth(element.id);
+      this.getTotalsForSpecificMonth(month.id);
       summaryLine += this.numberToString(this.totalsCSVMonth.manday) + ";"
         + this.numberToString(this.totalsCSVMonth.revenue) + ";"
         + this.numberToString(this.totalsCSVMonth.cost) + ";"
         + this.numberToString(this.totalsCSVMonth.contribution) + ";"
-        + this.numberToString(this.totalsCSVMonth.cp) + "; ;"
+        + this.numberToString(this.totalsCSVMonth.cp) + "; ;";
+
+        avgFTEInt += "AverageFTE Internal;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEInternal + "; ; ; ; ; ";
+        avgFTEExt +="AverageFTE External;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEExternal + "; ; ; ; ; ";
+        avgFTEOffshore += "AverageFTE Offshore;" +this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEOffshore + "; ; ; ; ; ";
     });
+
+    this.subCoTotals.forEach(element => {
+      RevExternalSub += this.numberToString(element.subcontractorTotals.totalRevenueExternal/1000) + ";";
+      RevInternalSub += this.numberToString(element.subcontractorTotals.totalRevenueInternal/1000) + ";";
+      RevOffshoreSub += this.numberToString(element.subcontractorTotals.totalCostOffshore/1000) + ";";
+      DCExternalSub += this.numberToString(-element.subcontractorTotals.totalCostExternal/1000) + ";";
+      DCEInternalSub += this.numberToString(element.subcontractorTotals.totalCostInternal/1000) + ";";
+      DCOffshoreSub += this.numberToString(-element.subcontractorTotals.totalCostOffshore/1000) + ";";
+    });
+    bodySecondSheet = RevExternalSub + lineEnding + RevInternalSub + lineEnding + RevOffshoreSub + lineEnding 
+    + DCExternalSub + lineEnding+  DCEInternalSub + lineEnding+  DCOffshoreSub + lineEnding;
+
+  header += monthHeader + lineEnding + workingDaysMonth + lineEnding + headerValueNames + lineEnding;
 
     body += "Internal Subcontractors" + lineEnding;
     this.internalMonthRange.forEach((subco: any) => {
@@ -382,9 +418,11 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       }
     });
 
-    const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine;
-    const blob: Blob = new Blob([data], { type: "text/csv" });
-    const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoExternalOverview.csv";
+    const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine
+    + lineEnding  + lineEnding + avgFTEExt + lineEnding + avgFTEInt + lineEnding + avgFTEOffshore 
+    + lineEnding  + lineEnding + secondSheetHeader + lineEnding + bodySecondSheet;
+    const blob: Blob = new Blob(["\ufeff",data], { type: "text/csv" });
+    const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoOverview.csv";
 
     this.pageState.hideSpinner();
 
@@ -419,6 +457,12 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     this.subcoFinancialControllerService.offshoreSubCoRange$.subscribe((offshore: SubCoFcOffshore[]) => {
       this.offshoreTotalsRange = offshore;
     })
+
+    
+    this.totalsSubscription = this.subcoService.subCoDetailTotals$
+      .subscribe((subcototalss:  SubCoDetailTotals[]) => {
+        this.subCoTotals = subcototalss;
+      });
   }
   numberToString(no: number, precision: number = 2): string {
     return no.toLocaleString("de", { minimumFractionDigits: 0, maximumFractionDigits: precision }).replace(".", "");
