@@ -325,7 +325,7 @@ export class SubcoSummaryComponent implements OnInit, OnDestroy {
               this.numberToString(d.revenue) + ";" + 
               this.numberToString(d.cost) + ";" + 
               this.numberToString(d.contribution) + ";" + 
-              this.numberToString(d.cp) + ";" + 
+              this.numberToString(d.cp  * 100) + ";" + 
               lineEnding;
 
             totalContribution += d.contribution;
