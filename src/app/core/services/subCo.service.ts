@@ -277,6 +277,7 @@ export class SubCoService {
       .forEach((s: SubCoPreview) => {
         s.subcontractorTypeName = subco.subcontractorTypeName;
         s.resourceName = subco.resourceName;
+        s.subcontractorEmId = subco.subcontractorEmId;
       });
 
     this.allSubCoPreviews$.next(subcos);
