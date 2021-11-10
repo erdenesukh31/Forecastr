@@ -119,10 +119,10 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     manDay: 0
   }
 
- /**
-    * contains totals-data 
-    */
-  subCoTotals:  SubCoDetailTotals[];
+  /**
+     * contains totals-data 
+     */
+  subCoTotals: SubCoDetailTotals[];
 
   totalsSubscription: Subscription;
 
@@ -187,7 +187,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
 
       this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
-      this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
+    this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
     this.getValues();
   }
 
@@ -259,20 +259,20 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let header = "";
     let lineEnding = "\r\n";
     let summaryLine = "";
-    let summaryHeader =  " ; ; ; ; Summary;"
-    let avgFTEInt =" ; ; ; ; ;"
+    let summaryHeader = " ; ; ; ; Summary;"
+    let avgFTEInt = " ; ; ; ; ;"
     let avgFTEExt = " ; ; ; ; ;"
     let avgFTEOffshore = " ; ; ; ; ;"
     let currentPosition = this.month.id;
     let skip = "; ; ; ; ; ;";
 
     let secondSheetHeader = ";";
-    let RevExternalSub =  "Revenue External Subcontractor ;" ;
-    let RevInternalSub =  "Revenue Internal Subcontractor ;" ;
-    let RevOffshoreSub =  "Revenue Offshore Subcontractor ;" ;
-    let DCExternalSub =  "DC External Subcontractor ;" ;
-    let DCEInternalSub =  "DC Internal Subcontractor ;" ;
-    let DCOffshoreSub =  "DC Offshore Subcontractor ;" ;
+    let RevExternalSub = "Revenue External Subcontractor ;";
+    let RevInternalSub = "Revenue Internal Subcontractor ;";
+    let RevOffshoreSub = "Revenue Offshore Subcontractor ;";
+    let DCExternalSub = "DC External Subcontractor ;";
+    let DCEInternalSub = "DC Internal Subcontractor ;";
+    let DCOffshoreSub = "DC Offshore Subcontractor ;";
     let bodySecondSheet = "";
 
     this.subscribeMonthRange();
@@ -291,23 +291,23 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
         + this.numberToString(this.totalsCSVMonth.contribution) + ";"
         + this.numberToString(this.totalsCSVMonth.cp) + "; ;";
 
-        avgFTEInt += "AverageFTE Internal;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEInternal + "; ; ; ; ; ";
-        avgFTEExt +="AverageFTE External;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEExternal + "; ; ; ; ; ";
-        avgFTEOffshore += "AverageFTE Offshore;" +this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEOffshore + "; ; ; ; ; ";
+      avgFTEInt += "AverageFTE Internal;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEInternal + "; ; ; ; ; ";
+      avgFTEExt += "AverageFTE External;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEExternal + "; ; ; ; ; ";
+      avgFTEOffshore += "AverageFTE Offshore;" + this.subCoTotals.find(sub => sub.monthId == month.id).subcontractorTotals.averageFTEOffshore + "; ; ; ; ; ";
     });
 
     this.subCoTotals.forEach(element => {
-      RevExternalSub += this.numberToString(element.subcontractorTotals.totalRevenueExternal/1000) + ";";
-      RevInternalSub += this.numberToString(element.subcontractorTotals.totalRevenueInternal/1000) + ";";
-      RevOffshoreSub += this.numberToString(element.subcontractorTotals.totalCostOffshore/1000) + ";";
-      DCExternalSub += this.numberToString(-element.subcontractorTotals.totalCostExternal/1000) + ";";
-      DCEInternalSub += this.numberToString(element.subcontractorTotals.totalCostInternal/1000) + ";";
-      DCOffshoreSub += this.numberToString(-element.subcontractorTotals.totalCostOffshore/1000) + ";";
+      RevExternalSub += this.numberToString(element.subcontractorTotals.totalRevenueExternal / 1000) + ";";
+      RevInternalSub += this.numberToString(element.subcontractorTotals.totalRevenueInternal / 1000) + ";";
+      RevOffshoreSub += this.numberToString(element.subcontractorTotals.totalCostOffshore / 1000) + ";";
+      DCExternalSub += this.numberToString(-element.subcontractorTotals.totalCostExternal / 1000) + ";";
+      DCEInternalSub += this.numberToString(element.subcontractorTotals.totalCostInternal / 1000) + ";";
+      DCOffshoreSub += this.numberToString(-element.subcontractorTotals.totalCostOffshore / 1000) + ";";
     });
-    bodySecondSheet = RevExternalSub + lineEnding + RevInternalSub + lineEnding + RevOffshoreSub + lineEnding 
-    + DCExternalSub + lineEnding+  DCEInternalSub + lineEnding+  DCOffshoreSub + lineEnding;
+    bodySecondSheet = RevExternalSub + lineEnding + RevInternalSub + lineEnding + RevOffshoreSub + lineEnding
+      + DCExternalSub + lineEnding + DCEInternalSub + lineEnding + DCOffshoreSub + lineEnding;
 
-  header += monthHeader + lineEnding + workingDaysMonth + lineEnding + headerValueNames + lineEnding;
+    header += monthHeader + lineEnding + workingDaysMonth + lineEnding + headerValueNames + lineEnding;
 
     body += "Internal Subcontractors" + lineEnding;
     this.internalMonthRange.forEach((subco: any) => {
@@ -321,7 +321,17 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
           + subco.subcontractorIntExt.projectName + ";"
           + subco.subcontractorIntExt.customer + "; ;";
 
+        console.log(result);
         result.forEach((subco: any) => {
+          if (subco.monthId < currentPosition) {
+            body = body + line + lineEnding;
+            currentPosition = currentPosition - 1;
+            line = "";
+            line += subco.subcontractorIntExt.resourceName + ";"
+              + subco.subcontractorIntExt.engagementManagerName + ";"
+              + subco.subcontractorIntExt.projectName + ";"
+              + subco.subcontractorIntExt.customer + "; ;";
+          }
           if (subco.monthId > currentPosition) {
             while (subco.monthId != currentPosition) {
               line += skip;
@@ -333,6 +343,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
             + this.numberToString(subco.subcontractorIntExt.cost) + ";"
             + this.numberToString(subco.subcontractorIntExt.contribution) + ";"
             + this.numberToString(subco.subcontractorIntExt.cp * 100, 2) + ";" + ";"
+
 
           currentPosition = currentPosition + 1;
         });
@@ -358,7 +369,15 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
           + subco.subcontractorIntExt.customer + "; ;";
 
         result.forEach((subcoR: any) => {
-
+          if (subco.monthId < currentPosition) {
+            body = body + line + lineEnding;
+            currentPosition = currentPosition - 1;
+            line = "";
+            line += subco.subcontractorIntExt.resourceName + ";"
+              + subco.subcontractorIntExt.engagementManagerName + ";"
+              + subco.subcontractorIntExt.projectName + ";"
+              + subco.subcontractorIntExt.customer + "; ;";
+          }
           if (subcoR.monthId > currentPosition) {
             while (subcoR.monthId != currentPosition) {
               line += skip;
@@ -396,7 +415,6 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
           + subco.subcontractorOffshore.customer + "; ;";
 
         result.forEach((subcoR: any) => {
-
           if (subcoR.monthId > currentPosition) {
             while (subcoR.monthId != currentPosition) {
               line += skip;
@@ -419,9 +437,9 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     });
 
     const data = header + body + lineEnding + lineEnding + summaryHeader + summaryLine
-    + lineEnding  + lineEnding + avgFTEExt + lineEnding + avgFTEInt + lineEnding + avgFTEOffshore 
-    + lineEnding  + lineEnding + secondSheetHeader + lineEnding + bodySecondSheet;
-    const blob: Blob = new Blob(["\ufeff",data], { type: "text/csv" });
+      + lineEnding + lineEnding + avgFTEExt + lineEnding + avgFTEInt + lineEnding + avgFTEOffshore
+      + lineEnding + lineEnding + secondSheetHeader + lineEnding + bodySecondSheet;
+    const blob: Blob = new Blob(["\ufeff", data], { type: "text/csv" });
     const filename: string = this.datePipe.transform(new Date(), "yyyyMMdd") + "-SubcoOverview.csv";
 
     this.pageState.hideSpinner();
@@ -458,9 +476,9 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.offshoreTotalsRange = offshore;
     })
 
-    
+
     this.totalsSubscription = this.subcoService.subCoDetailTotals$
-      .subscribe((subcototalss:  SubCoDetailTotals[]) => {
+      .subscribe((subcototalss: SubCoDetailTotals[]) => {
         this.subCoTotals = subcototalss;
       });
   }
@@ -508,7 +526,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       cp: (contribution / revenue) * 100
     };
   }
-  
+
   getTotals() {
     let revenue = 0;
     let cost = 0;
