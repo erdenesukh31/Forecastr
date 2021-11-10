@@ -283,7 +283,6 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       headerValueNames += "ManDay;Revenue;Cost;Contribution;CP; ;";
       secondSheetHeader += month.name + ";";
 
-
       this.getTotalsForSpecificMonth(month.id);
       summaryLine += this.numberToString(this.totalsCSVMonth.manday) + ";"
         + this.numberToString(this.totalsCSVMonth.revenue) + ";"
@@ -321,7 +320,6 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
           + subco.subcontractorIntExt.projectName + ";"
           + subco.subcontractorIntExt.customer + "; ;";
 
-        console.log(result);
         result.forEach((subco: any) => {
           if (subco.monthId < currentPosition) {
             body = body + line + lineEnding;
@@ -475,7 +473,6 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     this.subcoFinancialControllerService.offshoreSubCoRange$.subscribe((offshore: SubCoFcOffshore[]) => {
       this.offshoreTotalsRange = offshore;
     })
-
 
     this.totalsSubscription = this.subcoService.subCoDetailTotals$
       .subscribe((subcototalss: SubCoDetailTotals[]) => {
