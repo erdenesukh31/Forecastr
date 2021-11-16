@@ -38,6 +38,8 @@ import { NgxPowerBiModule } from "ngx-powerbi";
 import { ExecutiveFcEntryComponent } from "./dialogs/executive-fc-entry/executive-fc-entry.component";
 import { FcEntryDetailDialogComponent } from "./components/executive-detail/fc-entry-detail-dialog.component";
 import { ExecutiveChartComponent } from "./components/executive-chart/executive-chart.component";
+import { ExecutiveChartPdlComponent} from "./components/executive-chart-pdl/executive-chart-pdl.component";
+import { ExecutiveChartPlComponent} from "./components/executive-chart-pl/executive-chart-pl.component";
 import { ExecutiveStatsComponent } from './components/executive-stats/executive-stats.component';
 
 import { StaffingComponent } from "./pages/staffing/staffing.component";
@@ -92,6 +94,8 @@ import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart
     FcEntrySummaryVacationWarningComponent,
     PracticesComponent,
     ExecutiveChartComponent,
+    ExecutiveChartPdlComponent,
+    ExecutiveChartPlComponent,
     ExecutiveStatsComponent,
     StaffingComponent,
     StaffingOverviewComponent,

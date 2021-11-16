@@ -27,6 +27,8 @@ export class ExecutiveForecastsService {
   summaryValues$: BehaviorSubject<SummaryValues[]>;
   monthValues$: BehaviorSubject<SummaryValues[]>;
   kpiData$: BehaviorSubject<MonthlySummaryReport[]>;
+  kpiDataPDL$: BehaviorSubject<MonthlySummaryReport[]>;
+    kpiDataPL$: BehaviorSubject<MonthlySummaryReport[]>;
   graphicData$: BehaviorSubject<GraphicSummaryReport[]>;
   financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;
 
@@ -47,6 +49,8 @@ export class ExecutiveForecastsService {
     this.summaryValues$ = new BehaviorSubject([]);
     this.monthValues$ = new BehaviorSubject([]);
     this.kpiData$ = new BehaviorSubject([]);
+    this.kpiDataPDL$ = new BehaviorSubject([]);
+    this.kpiDataPL$ = new BehaviorSubject([]);
     this.graphicData$ = new BehaviorSubject([]);
     this.financialData$ = new BehaviorSubject([]);
 
@@ -92,6 +96,27 @@ export class ExecutiveForecastsService {
       .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())
       .subscribe((reports: MonthlySummaryReport[]) => {
         this.kpiData$.next(reports);
+        resolve();
+      }, () => reject());
+    });
+  }
+
+  initializeKpiValuesPDL(userId: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http
+      .get<MonthlySummaryReport[]>(this.BO.companyKpiStatsPDL(userId))
+      .subscribe((reports: MonthlySummaryReport[]) => {
+        this.kpiDataPDL$.next(reports);
+        resolve();
+      }, () => reject());
+    });
+  }
+  initializeKpiValuesPL(userId: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http
+      .get<MonthlySummaryReport[]>(this.BO.companyKpiStatsPL(userId))
+      .subscribe((reports: MonthlySummaryReport[]) => {
+        this.kpiDataPL$.next(reports);
         resolve();
       }, () => reject());
     });
@@ -158,6 +183,14 @@ export class ExecutiveForecastsService {
 
   getKpiData(): MonthlySummaryReport[] {
     return this.kpiData$.getValue();
+  }
+
+  getKpiPDLData(): MonthlySummaryReport[] {
+    return this.kpiDataPDL$.getValue();
+  }
+  
+  getKpiDataPL(): MonthlySummaryReport[] {
+    return this.kpiDataPL$.getValue();
   }
 
   getSummaryValues(): SummaryValues[] {

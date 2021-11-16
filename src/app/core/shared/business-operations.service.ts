@@ -229,6 +229,19 @@ export class BusinessOperationsService {
     return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats';
   }
 
+    /**
+   * returns kpi stats path
+   */
+     companyKpiStatsPDL(userId: number): string {
+      return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/1';
+    }
+        /**
+   * returns kpi stats path
+   */
+         companyKpiStatsPL(userId: number): string {
+          return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/2';
+        }
+
   /**
    * returns graphic stats path
    */
