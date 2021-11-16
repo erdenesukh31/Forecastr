@@ -48,10 +48,6 @@ export default class FlyingButtonComponent {
   public get classes(): string[] {
     const mode = `flying-button`;
 
-    console.log(this.type);
-    console.log(this.pressed);
-    console.log(this.pressed ?  `flying-button--pressed` : `flying-button--default`);
-    
     return [
     'flying-button', 
     this.pressed ?  `flying-button--pressed` : `flying-button--default`, 

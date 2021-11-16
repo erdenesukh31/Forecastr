@@ -20211,7 +20211,7 @@
         },
         {
             "name": "FlyingButtonComponent",
-            "id": "component-FlyingButtonComponent-60ea07c97559632988495360d3e673d5",
+            "id": "component-FlyingButtonComponent-a1895e426d79c93d75de40bc4c308159",
             "file": "src/stories/FlyingButton.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -20220,7 +20220,7 @@
             "providers": [],
             "selector": "fyling-button",
             "styleUrls": [
-                "./ButtonSaveCancel.css"
+                "./FlyingButton.css"
             ],
             "styles": [],
             "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
@@ -20243,15 +20243,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 766,
-                            "end": 780,
+                            "pos": 762,
+                            "end": 776,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 767,
-                                "end": 775,
+                                "pos": 763,
+                                "end": 771,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -20307,12 +20307,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'fyling-button',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./ButtonSaveCancel.css'],\r\n})\r\nexport default class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'addteam' | 'adduser' | 'addproject' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `flying-button`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);\r\n    \r\n    return [\r\n    'flying-button', \r\n    this.pressed ?  `flying-button--pressed` : `flying-button--default`, \r\n    mode];\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'fyling-button',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./FlyingButton.css'],\r\n})\r\nexport default class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'addteam' | 'adduser' | 'addproject' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `flying-button`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `flying-button--pressed` : `flying-button--default`);\r\n    \r\n    return [\r\n    'flying-button', \r\n    this.pressed ?  `flying-button--pressed` : `flying-button--default`, \r\n    mode];\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".button-save-cancel {\r\n  width: 70px;\r\n  height: 30px;\r\n}\r\n.button-save-cancel--save {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.button-save-cancel--cancel {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.button-save-cancel--save-default {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #0070ad;\r\n}\r\n.button-save-cancel--save-pressed {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #005482;\r\n}\r\n.button-save-cancel--cancel-default {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #f1f5f8;\r\n}\r\n.button-save-cancel--cancel-pressed {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #ffffff;\r\n}\r\n",
-                    "styleUrl": "./ButtonSaveCancel.css"
+                    "data": ".flying-button {\r\n/* Type=User, State=Default */\r\n\r\n\r\n/* Auto Layout */\r\n\r\ndisplay: flex;\r\nflex-direction: column;\r\nalign-items: flex-start;\r\npadding: 5.5px 10px;\r\n\r\nposition: absolute;\r\nwidth: 107px;\r\nheight: 35px;\r\nleft: 20px;\r\ntop: 20px;\r\n\r\n/* Capgemini Blue/Capgemini Blue */\r\n\r\nbackground: #0070AD;\r\nbox-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);\r\nborder-radius: 20px;\r\n}\r\n.flying-button--default {\r\n  background: #0070AD;\r\n}\r\n.flying-button--pressed {\r\n  background: #005482;\r\n}\r\n.flying-button--adduser {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.flying-button--addteam {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--addproject {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--csv {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--adduser--default {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.flying-button--adduser--pressed {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.flying-button--addteam--default {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--addteam--pressed {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--addproject--default {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--addproject--pressed {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--csv--default {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.flying-button--csv--pressed {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n",
+                    "styleUrl": "./FlyingButton.css"
                 }
             ],
             "stylesData": "",

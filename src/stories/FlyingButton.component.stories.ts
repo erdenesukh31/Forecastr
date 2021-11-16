@@ -41,7 +41,7 @@ export const AddProjectDefault = Template.bind({});
 AddProjectDefault.args = {
   type: 'addproject',
   pressed: false,
-  label: 'AddProject',
+  label: 'Add Project',
 };
 
 AddProjectDefault.parameters = {
@@ -55,7 +55,7 @@ export const AddTeamDefault = Template.bind({});
 AddTeamDefault.args = {
   type: 'addteam',
   pressed: false,
-  label: 'AddTeam',
+  label: 'Add Team',
 };
 
 AddTeamDefault.parameters = {
@@ -70,7 +70,7 @@ export const AddUserPressed = Template.bind({});
 AddUserPressed.args = {
   type: 'adduser',
   pressed: true,
-  label: 'AddUser',
+  label: 'Add User',
 };
 
 AddUserPressed.parameters = {
@@ -84,7 +84,7 @@ export const AddProjectPressed = Template.bind({});
 AddProjectPressed.args = {
   type: 'addproject',
   pressed: true,
-  label: 'AddProject',
+  label: 'Add Project',
 };
 
 AddProjectPressed.parameters = {
@@ -98,7 +98,7 @@ export const AddTeamPressed = Template.bind({});
 AddTeamPressed.args = {
   type: 'addteam',
   pressed: true,
-  label: 'AddTeam',
+  label: 'Add Team',
 };
 
 AddTeamPressed.parameters = {
