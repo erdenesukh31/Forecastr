@@ -13440,8 +13440,8 @@
         },
         {
             "name": "ButtonSaveCancelComponent",
-            "id": "component-ButtonSaveCancelComponent-025c65ed90ec51add05ee628d6305cec",
-            "file": "src/stories/Button_Save-Cancel.component.ts",
+            "id": "component-ButtonSaveCancelComponent-dcc6e57bac0e32f2cf1b08fb3f60b72d",
+            "file": "src/stories/ButtonSaveCancel.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -13449,7 +13449,7 @@
             "providers": [],
             "selector": "button-save-cancel",
             "styleUrls": [
-                "./Button_Save-Cancel.css"
+                "./ButtonSaveCancel.css"
             ],
             "styles": [],
             "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
@@ -13472,15 +13472,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 750,
-                            "end": 764,
+                            "pos": 748,
+                            "end": 762,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 751,
-                                "end": 759,
+                                "pos": 749,
+                                "end": 757,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -13536,12 +13536,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'button-save-cancel',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./Button_Save-Cancel.css'],\r\n})\r\nexport default class ButtonSaveCancelComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'save' | 'cancel';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `button-save-cancel--${this.type}`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);\r\n    \r\n    return [\r\n    'button-save-cancel', \r\n    this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`, \r\n    mode];\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'button-save-cancel',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./ButtonSaveCancel.css'],\r\n})\r\nexport default class ButtonSaveCancelComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'save' | 'cancel';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `button-save-cancel--${this.type}`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);\r\n    \r\n    return [\r\n    'button-save-cancel', \r\n    this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`, \r\n    mode];\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
                     "data": ".button-save-cancel {\r\n  width: 70px;\r\n  height: 30px;\r\n}\r\n.button-save-cancel--save {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.button-save-cancel--cancel {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.button-save-cancel--save-default {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #0070ad;\r\n}\r\n.button-save-cancel--save-pressed {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #005482;\r\n}\r\n.button-save-cancel--cancel-default {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #f1f5f8;\r\n}\r\n.button-save-cancel--cancel-pressed {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #ffffff;\r\n}\r\n",
-                    "styleUrl": "./Button_Save-Cancel.css"
+                    "styleUrl": "./ButtonSaveCancel.css"
                 }
             ],
             "stylesData": "",
@@ -20208,6 +20208,125 @@
                 "OnDestroy"
             ],
             "templateData": "<div class=\"second-header\">\r\n    <h1>\r\n        KPI Overview\r\n\r\n        <button class=\"executive-btn\" mat-raised-button color=\"primary\" (click)=\"exportCSV()\">\r\n            <mat-icon>insert_chart</mat-icon> Download CSV\r\n        </button>\r\n    </h1>\r\n</div>\r\n\r\n<div layout=\"row\" layout-wrap class=\"table-container\">\r\n\t<div flex=\"100\">\r\n\t\t<div class=\"mat-row accordion-header\">\r\n            <div>\r\n                KPI\r\n            </div>\r\n\t\t\t<div *ngFor=\"let c of columnsToDisplay2; let index=index;\">\r\n                <div>\r\n                    <span>{{ columnsToDisplay2[index] }}</span>\r\n                </div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n        <mat-divider></mat-divider>\r\n\t\t<mat-accordion displayMode=\"flat\" multi>\r\n            <mat-expansion-panel #panelH *ngFor=\"let kpi of kpis; let i = index\" [hideToggle]=\"showToggle(kpis[i])\" (opened)=\"openPanel(kpis[i])\" [disabled]=\"disable(kpis[i])\">\r\n                <mat-expansion-panel-header >\r\n                    <mat-panel-title>\r\n                        {{mapKpiToName(kpis[i])}}\r\n                    </mat-panel-title>\r\n                    <mat-panel-description *ngFor=\"let month of months\" style=\"margin-left: auto; margin-right: 0px; flex-grow: unset; width: 10%;\">\r\n                        <span class=\"mat-cell\">{{mapKpiToValue(kpis[i], month.id) | number: '1.0-2'}} {{mapKpiToUnit(kpis[i])}}</span>\r\n                    </mat-panel-description>\r\n                </mat-expansion-panel-header>\r\n\r\n                <table mat-table [dataSource]=\"grades\" style=\"margin-right: 0px; padding-right: 0px;\" id=\"\">\r\n                    <ng-container matColumnDef=\"kpi\">\r\n                        <th mat-header-cell *matHeaderCellDef>Grade</th>\r\n                        <td mat-cell *matCellDef=\"let element\">{{element}}</td>\r\n                    </ng-container>\r\n                    <ng-container matColumnDef=\"{{month.name}}\" *ngFor=\"let month of months\">\r\n                        <th mat-header-cell *matHeaderCellDef>{{month.name}}</th>\r\n                        <td mat-cell class=\"grade-content\" *matCellDef=\"let element\">{{mapGradeToValue(element, month.id, kpi) | number: '1.0-2'}} {{mapKpiToUnit(kpi)}}</td>\r\n                    </ng-container>\r\n                    <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\r\n                    <tr mat-row  *matRowDef=\"let row; columns: columnsToDisplay\"></tr>\r\n                </table>\r\n            </mat-expansion-panel>\r\n        </mat-accordion>\r\n    </div>\r\n</div>\r\n"
+        },
+        {
+            "name": "FlyingButtonComponent",
+            "id": "component-FlyingButtonComponent-60ea07c97559632988495360d3e673d5",
+            "file": "src/stories/FlyingButton.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "fyling-button",
+            "styleUrls": [
+                "./ButtonSaveCancel.css"
+            ],
+            "styles": [],
+            "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "backgroundColor",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "What background color to use",
+                    "description": "<p>What background color to use</p>\n",
+                    "line": 26,
+                    "type": "string"
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "'Button'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "pos": 766,
+                            "end": 780,
+                            "flags": 4227072,
+                            "modifierFlagsCache": 0,
+                            "transformFlags": 0,
+                            "kind": 322,
+                            "tagName": {
+                                "pos": 767,
+                                "end": 775,
+                                "flags": 4227072,
+                                "modifierFlagsCache": 0,
+                                "transformFlags": 0,
+                                "kind": 79,
+                                "escapedText": "required"
+                            },
+                            "comment": ""
+                        }
+                    ],
+                    "rawdescription": "Button contents",
+                    "description": "<p>Button contents</p>\n",
+                    "line": 40,
+                    "type": "string"
+                },
+                {
+                    "name": "pressed",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "How large should the button be?",
+                    "description": "<p>How large should the button be?</p>\n",
+                    "line": 32,
+                    "type": "boolean"
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "Is this the principal call to action on the page?",
+                    "description": "<p>Is this the principal call to action on the page?</p>\n",
+                    "line": 20,
+                    "type": "\"addteam\" | \"adduser\" | \"addproject\" | \"csv\""
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "onClick",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nOptional click handler\n",
+                    "description": "<p>Optional click handler</p>\n",
+                    "line": 46,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'fyling-button',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./ButtonSaveCancel.css'],\r\n})\r\nexport default class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'addteam' | 'adduser' | 'addproject' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `flying-button`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);\r\n    \r\n    return [\r\n    'flying-button', \r\n    this.pressed ?  `flying-button--pressed` : `flying-button--default`, \r\n    mode];\r\n  }\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".button-save-cancel {\r\n  width: 70px;\r\n  height: 30px;\r\n}\r\n.button-save-cancel--save {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.button-save-cancel--cancel {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.button-save-cancel--save-default {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #0070ad;\r\n}\r\n.button-save-cancel--save-pressed {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #005482;\r\n}\r\n.button-save-cancel--cancel-default {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #f1f5f8;\r\n}\r\n.button-save-cancel--cancel-pressed {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #ffffff;\r\n}\r\n",
+                    "styleUrl": "./ButtonSaveCancel.css"
+                }
+            ],
+            "stylesData": "",
+            "accessors": {
+                "classes": {
+                    "name": "classes",
+                    "getSignature": {
+                        "name": "classes",
+                        "type": "[]",
+                        "returnType": "string[]",
+                        "line": 48
+                    }
+                }
+            }
         },
         {
             "name": "FooterComponent",
@@ -28551,10 +28670,70 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "AddProjectDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "AddProjectPressed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "AddTeamDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "AddTeamPressed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "AddUserDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "AddUserPressed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "CancelDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28564,7 +28743,27 @@
                 "name": "CancelPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "CSVDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "CSVPressed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28680,7 +28879,7 @@
                 "name": "SaveDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28690,7 +28889,7 @@
                 "name": "SavePressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28730,11 +28929,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<ButtonSaveCancelComponent>",
                 "defaultValue": "(args: ButtonSaveCancelComponent) => ({\r\n  props: args,\r\n\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<FlyingButtonComponent>",
+                "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n\r\n})"
             },
             {
                 "name": "Template",
@@ -28830,42 +29039,82 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
-            "src/stories/Button_Save-Cancel.stories.ts": [
+            "src/stories/FlyingButton.component.stories.ts": [
                 {
-                    "name": "CancelDefault",
+                    "name": "AddProjectDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "CancelPressed",
+                    "name": "AddProjectPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "SaveDefault",
+                    "name": "AddTeamDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "SavePressed",
+                    "name": "AddTeamPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "AddUserDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "AddUserPressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "CSVDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "CSVPressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -28875,7 +29124,59 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<FlyingButtonComponent>",
+                    "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n\r\n})"
+                }
+            ],
+            "src/stories/ButtonSaveCancel.stories.ts": [
+                {
+                    "name": "CancelDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "CancelPressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SaveDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SavePressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<ButtonSaveCancelComponent>",
@@ -29271,7 +29572,7 @@
         ]
     },
     "coverage": {
-        "count": 46,
+        "count": 44,
         "status": "medium",
         "files": [
             {
@@ -30331,7 +30632,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.component.ts",
+                "filePath": "src/stories/ButtonSaveCancel.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "ButtonSaveCancelComponent",
@@ -30340,7 +30641,7 @@
                 "status": "very-good"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.stories.ts",
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -30350,7 +30651,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.stories.ts",
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -30360,7 +30661,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.stories.ts",
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -30370,7 +30671,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.stories.ts",
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -30380,7 +30681,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Button_Save-Cancel.stories.ts",
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -30388,6 +30689,105 @@
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FlyingButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
             },
             {
                 "filePath": "src/stories/Header.stories.ts",

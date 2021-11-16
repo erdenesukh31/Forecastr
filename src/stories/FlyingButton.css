@@ -1,0 +1,137 @@
+.flying-button {
+/* Type=User, State=Default */
+
+
+/* Auto Layout */
+
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 5.5px 10px;
+
+position: absolute;
+width: 107px;
+height: 35px;
+left: 20px;
+top: 20px;
+
+/* Capgemini Blue/Capgemini Blue */
+
+background: #0070AD;
+box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+border-radius: 20px;
+}
+.flying-button--default {
+  background: #0070AD;
+}
+.flying-button--pressed {
+  background: #005482;
+}
+.flying-button--adduser {
+  height: 16px;
+  width: 30px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+}
+.flying-button--addteam {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--addproject {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--csv {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--adduser--default {
+  height: 16px;
+  width: 30px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+}
+.flying-button--adduser--pressed {
+  height: 16px;
+  width: 30px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+}
+.flying-button--addteam--default {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--addteam--pressed {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--addproject--default {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--addproject--pressed {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--csv--default {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.flying-button--csv--pressed {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
