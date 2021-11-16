@@ -1,32 +1,44 @@
-.storybook-button {
-  position: relative;
-  width: 123px;
-  height: 215px;
-  
-  border: 1px dashed #7B61FF;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-.storybook-button--primary {
+.button-save-cancel {
+  width: 70px;
   height: 30px;
-  width: 83px;
-  border: 1px solid #0070ad;
-  background: #ffffff;
 }
-.storybook-button--secondary {
+.button-save-cancel--save {
+  height: 16px;
+  width: 30px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+}
+.button-save-cancel--cancel {
+  height: 16px;
+  width: 43px;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #0070ad; 
+}
+.button-save-cancel--save-default {
+  height: 30px;
+  width: 70px;
+  background: #0070ad;
+}
+.button-save-cancel--save-pressed {
   height: 30px;
   width: 70px;
   background: #005482;
 }
-.storybook-button--small {
-  font-size: 12px;
-  padding: 10px 16px;
+.button-save-cancel--cancel-default {
+  height: 30px;
+  width: 83px;
+  border: 1px solid #0070ad;
+  background: #f1f5f8;
 }
-.storybook-button--medium {
-  font-size: 14px;
-  padding: 11px 20px;
-}
-.storybook-button--large {
-  font-size: 16px;
-  padding: 12px 24px;
+.button-save-cancel--cancel-pressed {
+  height: 30px;
+  width: 83px;
+  border: 1px solid #0070ad;
+  background: #ffffff;
 }

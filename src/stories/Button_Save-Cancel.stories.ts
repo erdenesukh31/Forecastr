@@ -26,8 +26,9 @@ const Template: Story<ButtonSaveCancelComponent> = (args: ButtonSaveCancelCompon
 export const SaveDefault = Template.bind({});
 // More on args: https://storybook.js.org/docs/angular/writing-stories/args
 SaveDefault.args = {
-  primary: true,
-  label: 'ButtonSaveCancelComponent'
+  type: 'save',
+  pressed: false,
+  label: 'Save'
 };
 
 SaveDefault.parameters = {
@@ -39,7 +40,9 @@ SaveDefault.parameters = {
 
 export const SavePressed = Template.bind({});
 SavePressed.args = {
-  label: 'ButtonSaveCancelComponent',
+  type: 'save',
+  pressed: true,
+  label: 'Save',
 };
 
 SavePressed.parameters = {
@@ -51,7 +54,9 @@ SavePressed.parameters = {
 
 export const CancelPressed = Template.bind({});
 CancelPressed.args = {
-  label: 'ButtonSaveCancelComponent',
+  type: 'cancel',
+  pressed: true,
+  label: 'Cancel',
 };
 
 CancelPressed.parameters = {
@@ -64,7 +69,9 @@ CancelPressed.parameters = {
 
 export const CancelDefault = Template.bind({});
 CancelDefault.args = {
-  label: 'ButtonSaveCancelComponent',
+  type: 'cancel',
+  pressed: false,
+  label: 'Cancel',
 };
 
 CancelDefault.parameters = {

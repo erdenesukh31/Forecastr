@@ -13440,16 +13440,16 @@
         },
         {
             "name": "ButtonSaveCancelComponent",
-            "id": "component-ButtonSaveCancelComponent-89688ae959fd2fbcaaad02fb2d93ca01",
+            "id": "component-ButtonSaveCancelComponent-025c65ed90ec51add05ee628d6305cec",
             "file": "src/stories/Button_Save-Cancel.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "storybook-button",
+            "selector": "button-save-cancel",
             "styleUrls": [
-                "./button.css"
+                "./Button_Save-Cancel.css"
             ],
             "styles": [],
             "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
@@ -13472,15 +13472,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 757,
-                            "end": 771,
+                            "pos": 750,
+                            "end": 764,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 758,
-                                "end": 766,
+                                "pos": 751,
+                                "end": 759,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -13496,24 +13496,23 @@
                     "type": "string"
                 },
                 {
-                    "name": "primary",
+                    "name": "pressed",
                     "defaultValue": "false",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "rawdescription": "Is this the principal call to action on the page?",
-                    "description": "<p>Is this the principal call to action on the page?</p>\n",
-                    "line": 20,
-                    "type": "boolean"
-                },
-                {
-                    "name": "size",
-                    "defaultValue": "'medium'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "How large should the button be?",
                     "description": "<p>How large should the button be?</p>\n",
                     "line": 32,
-                    "type": "\"small\" | \"medium\" | \"large\""
+                    "type": "boolean"
+                },
+                {
+                    "name": "type",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "Is this the principal call to action on the page?",
+                    "description": "<p>Is this the principal call to action on the page?</p>\n",
+                    "line": 20,
+                    "type": "\"save\" | \"cancel\""
                 }
             ],
             "outputsClass": [
@@ -13537,12 +13536,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'storybook-button',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./button.css'],\r\n})\r\nexport default class ButtonSaveCancelComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  primary = false;\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';\r\n\r\n    return ['storybook-button', `storybook-button--${this.size}`, mode];\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'button-save-cancel',\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./Button_Save-Cancel.css'],\r\n})\r\nexport default class ButtonSaveCancelComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'save' | 'cancel';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = `button-save-cancel--${this.type}`;\r\n\r\n    console.log(this.type);\r\n    console.log(this.pressed);\r\n    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);\r\n    \r\n    return [\r\n    'button-save-cancel', \r\n    this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`, \r\n    mode];\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".storybook-button {\r\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n  font-weight: 700;\r\n  border: 0;\r\n  border-radius: 3em;\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  line-height: 1;\r\n}\r\n.storybook-button--primary {\r\n  color: white;\r\n  background-color: #1ea7fd;\r\n}\r\n.storybook-button--secondary {\r\n  color: #333;\r\n  background-color: transparent;\r\n  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\r\n}\r\n.storybook-button--small {\r\n  font-size: 12px;\r\n  padding: 10px 16px;\r\n}\r\n.storybook-button--medium {\r\n  font-size: 14px;\r\n  padding: 11px 20px;\r\n}\r\n.storybook-button--large {\r\n  font-size: 16px;\r\n  padding: 12px 24px;\r\n}\r\n",
-                    "styleUrl": "./button.css"
+                    "data": ".button-save-cancel {\r\n  width: 70px;\r\n  height: 30px;\r\n}\r\n.button-save-cancel--save {\r\n  height: 16px;\r\n  width: 30px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #ffffff;\r\n}\r\n.button-save-cancel--cancel {\r\n  height: 16px;\r\n  width: 43px;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: 400;\r\n  line-height: 16px;\r\n  color: #0070ad; \r\n}\r\n.button-save-cancel--save-default {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #0070ad;\r\n}\r\n.button-save-cancel--save-pressed {\r\n  height: 30px;\r\n  width: 70px;\r\n  background: #005482;\r\n}\r\n.button-save-cancel--cancel-default {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #f1f5f8;\r\n}\r\n.button-save-cancel--cancel-pressed {\r\n  height: 30px;\r\n  width: 83px;\r\n  border: 1px solid #0070ad;\r\n  background: #ffffff;\r\n}\r\n",
+                    "styleUrl": "./Button_Save-Cancel.css"
                 }
             ],
             "stylesData": "",
@@ -28552,6 +28551,26 @@
     "miscellaneous": {
         "variables": [
             {
+                "name": "CancelDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "CancelPressed",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -28608,16 +28627,6 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Large",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -28668,7 +28677,17 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Primary",
+                "name": "SaveDefault",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button_Save-Cancel.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "SavePressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button_Save-Cancel.stories.ts",
@@ -28688,30 +28707,10 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Secondary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Small",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Button_Save-Cancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28831,6 +28830,58 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
+            "src/stories/Button_Save-Cancel.stories.ts": [
+                {
+                    "name": "CancelDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "CancelPressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SaveDefault",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "SavePressed",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button_Save-Cancel.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ButtonSaveCancelComponent>",
+                    "defaultValue": "(args: ButtonSaveCancelComponent) => ({\r\n  props: args,\r\n\r\n})"
+                }
+            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -28935,58 +28986,6 @@
                     "deprecationMessage": "",
                     "type": "Story<Button>",
                     "defaultValue": "(args: Button) => ({\r\n  props: args,\r\n})"
-                }
-            ],
-            "src/stories/Button_Save-Cancel.stories.ts": [
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Secondary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Button_Save-Cancel.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<ButtonSaveCancelComponent>",
-                    "defaultValue": "(args: ButtonSaveCancelComponent) => ({\r\n  props: args,\r\n\r\n})"
                 }
             ],
             "src/stories/Header.stories.ts": [
@@ -30345,7 +30344,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Large",
+                "name": "CancelDefault",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -30355,7 +30354,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Primary",
+                "name": "CancelPressed",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -30365,7 +30364,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Secondary",
+                "name": "SaveDefault",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -30375,7 +30374,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Small",
+                "name": "SavePressed",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

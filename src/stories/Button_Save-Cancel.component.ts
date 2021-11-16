@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'storybook-button',
+  selector: 'button-save-cancel',
   template: ` <button
     type="button"
     (click)="onClick.emit($event)"
@@ -17,7 +17,7 @@ export default class ButtonSaveCancelComponent {
    * Is this the principal call to action on the page?
    */
   @Input()
-  primary = false;
+  type : 'save' | 'cancel';
 
   /**
    * What background color to use
@@ -29,7 +29,7 @@ export default class ButtonSaveCancelComponent {
    * How large should the button be?
    */
   @Input()
-  size: 'small' | 'medium' | 'large' = 'medium';
+  pressed = false;
 
   /**
    * Button contents
@@ -46,8 +46,15 @@ export default class ButtonSaveCancelComponent {
   onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    const mode = `button-save-cancel--${this.type}`;
 
-    return ['storybook-button', `storybook-button--${this.size}`, mode];
+    console.log(this.type);
+    console.log(this.pressed);
+    console.log(this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`);
+    
+    return [
+    'button-save-cancel', 
+    this.pressed ?  `button-save-cancel--${this.type}-pressed` : `button-save-cancel--${this.type}-default`, 
+    mode];
   }
 }
