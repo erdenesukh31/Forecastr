@@ -10,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   >
     {{ label }}
   </button>`,
-  styleUrls: ['./Button_Save-Cancel.css'],
+  styleUrls: ['./ButtonSaveCancel.css'],
 })
 export default class ButtonSaveCancelComponent {
   /**
