@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'fyling-button',
+  selector: 'app-flying-button',
   template: `
   <div [ngClass]=classes>
     <button
         type="button"
-        (click)="click($event)"
+        (click)="onClick.emit($event);"
         [ngClass]=stateDefault
         [ngStyle]="{ 'background-color': backgroundColor }"
       >
@@ -20,7 +20,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     </div>`,
   styleUrls: ['./FlyingButton.css'],
 })
-export default class FlyingButtonComponent {
+export class FlyingButtonComponent {
   /**
    * Is this the principal call to action on the page?
    */
@@ -52,11 +52,6 @@ export default class FlyingButtonComponent {
    */
   @Output()
   onClick = new EventEmitter<Event>();
-
-  private click(event: any){
-    this.onClick.emit(event);
-    console.log(event);
-  }
 
   public get classes(): string[] {
     return [

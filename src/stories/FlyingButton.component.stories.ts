@@ -1,6 +1,6 @@
 // also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import FlyingButtonComponent from './FlyingButton.component';
+import { FlyingButtonComponent } from './FlyingButton.component';
 import { withDesign } from 'storybook-addon-designs'
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule }from '@angular/material/button';

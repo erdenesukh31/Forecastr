@@ -51,7 +51,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     ReactiveFormsModule,
     AppRoutingModule,
     TranslateModule,
-    NgxPowerBiModule
+    NgxPowerBiModule,
   ],
   providers: [],
   declarations: [
@@ -82,6 +82,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     FinancialControllerComponent,
     FinancialControllerOverviewComponent,
   ],
-  exports: []
+  exports: [
+  ]
 })
 export class ForecastModule {}
