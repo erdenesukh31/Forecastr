@@ -1,3 +1,10 @@
+.Flying-Button {
+  position: fixed;
+  z-index: 100;
+  bottom: 32px;
+  right: 30px;
+}
+
 .Flying-Button mat-icon{
   width: 24px;
   height: 24px;

@@ -37,7 +37,7 @@ export class FlyingButtonComponent {
    * How large should the button be?
    */
   @Input()
-  pressed = false;
+  pressed? = false;
 
   /**
    * Button contents
