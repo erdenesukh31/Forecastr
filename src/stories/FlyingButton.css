@@ -1,157 +1,295 @@
-.flying-button {
-/* Type=User, State=Default */
+.Flying-Button mat-icon{
+  width: 24px;
+  height: 24px;
+  flex-grow: 0;
+  object-fit: contain;
+  color: #fff; 
+}
 
+.Flying-Button.user .Content {
+  width: 87px;
+  height: 24px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
 
-/* Auto Layout */
+.Flying-Button.user .TypeUser-StateDefault {
+  width: 107px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0070ad;
+  border: #0070ad;
+}
 
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 5.5px 10px;
+.Flying-Button.user .Add-User {
+  width: 58px;
+  height: 16px;
+  flex-grow: 0;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
 
-position: absolute;
-width: 107px;
-height: 35px;
-left: 20px;
-top: 20px;
+.Flying-Button.user .TypeUser-StateDefault:active{
+  width: 107px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
 
-/* Capgemini Blue/Capgemini Blue */
+.Flying-Button.user .TypeUser-StateOn-Click {
+  width: 107px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
 
-background: #0070AD;
-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
-border-radius: 20px;
+.Flying-Button.project .Content {
+  width: 104px;
+  height: 24px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
 
-/* position: static;
-width: 26px;
-height: 16px;
-left: 29px;
-top: 4px; */
+.Flying-Button.project .Add-Project {
+  width: 75px;
+  height: 16px;
+  flex-grow: 0;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
 
-font-family: Ubuntu;
-font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 16px;
-/* identical to box height */
+.Flying-Button.project .TypeProject-StateDefault {
+  width: 124px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0070ad;
+  border: #0070ad;
+}
 
-display: flex;
-align-items: center;
+.Flying-Button.team .Content {
+  width: 93px;
+  height: 24px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
 
-/* Black to White/White */
+.Flying-Button.team .Add-Team {
+  width: 64px;
+  height: 16px;
+  flex-grow: 0;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
 
-color: #FFFFFF;
+.Flying-Button.team .TypeTeam-StateDefault {
+  width: 113px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0070ad;
+  border: #0070ad;
 }
-.flying-button--default {
-  background: #0070AD;
+
+.Flying-Button.project .TypeProject-StateDefault:active {
+  width: 124px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
 }
-.flying-button--pressed {
-  background: #005482;
+
+.Flying-Button.project .TypeProject-StateOn-Click {
+  width: 124px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
 }
-.flying-button--adduser {
+
+.Flying-Button.team .TypeTeam-StateDefault:active {
+  width: 113px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
+
+.Flying-Button.team .TypeTeam-StateOn-Click {
+  width: 113px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
+
+.Flying-Button.csv .Content {
+  width: 55px;
+  height: 24px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
+
+.Flying-Button.csv .CSV {
+  width: 26px;
   height: 16px;
-  width: 30px;
+  flex-grow: 0;
   font-family: Ubuntu;
   font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #ffffff;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
 }
-.flying-button--addteam {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
+
+.Flying-Button.csv .TypeCSV-StateDefault {
+  width: 75px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0070ad;
+  border: #0070ad;
 }
-.flying-button--addproject {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
+
+.Flying-Button.csv .TypeCSV-StateDefault:active {
+  width: 75px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
 }
-.flying-button--csv {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--adduser--default {
-  height: 16px;
-  width: 30px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #ffffff;
-}
-.flying-button--adduser--pressed {
-  height: 16px;
-  width: 30px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #ffffff;
-}
-.flying-button--addteam--default {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--addteam--pressed {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--addproject--default {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--addproject--pressed {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--csv--default {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
-}
-.flying-button--csv--pressed {
-  height: 16px;
-  width: 43px;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  color: #0070ad; 
+
+.Flying-Button.csv .TypeCSV-StateOn-Click {
+  width: 75px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
 }

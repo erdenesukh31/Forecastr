@@ -42,6 +42,7 @@
     "ngx-powerbi": "^3.0.0",
     "powerbi-client": "^2.18.5",
     "rxjs": "6.6.7",
+    "storybook-zeplin": "^1.6.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

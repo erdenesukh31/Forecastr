@@ -2,6 +2,8 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import FlyingButtonComponent from './FlyingButton.component';
 import { withDesign } from 'storybook-addon-designs'
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule }from '@angular/material/button';
 
 // More on default export: https://storybook.js.org/docs/angular/writing-stories/introduction#default-export
 export default {
@@ -19,18 +21,24 @@ export default {
 // More on component templates: https://storybook.js.org/docs/angular/writing-stories/introduction#using-args
 const Template: Story<FlyingButtonComponent> = (args: FlyingButtonComponent) => ({
   props: args,
-
+  moduleMetadata: {
+    imports: [
+      MatIconModule,
+      MatButtonModule
+    ]
+  }
 });
 
 export const AddUserDefault = Template.bind({});
 // More on args: https://storybook.js.org/docs/angular/writing-stories/args
 AddUserDefault.args = {
-  type: 'adduser',
+  type: 'user',
   pressed: false,
-  label: 'AddUser'
+  label: 'Add User'
 };
 
 AddUserDefault.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9bf8b3cad17b276828e',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2247'
@@ -39,7 +47,7 @@ AddUserDefault.parameters = {
 
 export const AddProjectDefault = Template.bind({});
 AddProjectDefault.args = {
-  type: 'addproject',
+  type: 'project',
   pressed: false,
   label: 'Add Project',
 };
@@ -53,7 +61,7 @@ AddProjectDefault.parameters = {
 
 export const AddTeamDefault = Template.bind({});
 AddTeamDefault.args = {
-  type: 'addteam',
+  type: 'team',
   pressed: false,
   label: 'Add Team',
 };
@@ -68,7 +76,7 @@ AddTeamDefault.parameters = {
 
 export const AddUserPressed = Template.bind({});
 AddUserPressed.args = {
-  type: 'adduser',
+  type: 'user',
   pressed: true,
   label: 'Add User',
 };
@@ -82,7 +90,7 @@ AddUserPressed.parameters = {
 
 export const AddProjectPressed = Template.bind({});
 AddProjectPressed.args = {
-  type: 'addproject',
+  type: 'project',
   pressed: true,
   label: 'Add Project',
 };
@@ -96,7 +104,7 @@ AddProjectPressed.parameters = {
 
 export const AddTeamPressed = Template.bind({});
 AddTeamPressed.args = {
-  type: 'addteam',
+  type: 'team',
   pressed: true,
   label: 'Add Team',
 };
