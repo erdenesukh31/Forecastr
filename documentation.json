@@ -882,7 +882,156 @@
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914",
+            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62",
+            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "arve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 317
+                },
+                {
+                    "name": "benchDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 313
+                },
+                {
+                    "name": "billableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 308
+                },
+                {
+                    "name": "businessDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 312
+                },
+                {
+                    "name": "cor",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 316
+                },
+                {
+                    "name": "external",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 320
+                },
+                {
+                    "name": "fteCss",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 315
+                },
+                {
+                    "name": "monthId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 306
+                },
+                {
+                    "name": "nonBillableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 309
+                },
+                {
+                    "name": "probabilityId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 307
+                },
+                {
+                    "name": "ros",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 319
+                },
+                {
+                    "name": "trainingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 311
+                },
+                {
+                    "name": "urve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 318
+                },
+                {
+                    "name": "vacationDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 310
+                },
+                {
+                    "name": "workingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 314
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": []
+        },
+        {
+            "name": "SummaryValues",
+            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914-1",
             "file": "src/app/forecast/components/executive-chart/executive-chart.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1036,11 +1185,14 @@
             ],
             "indexSignatures": [],
             "kind": 164,
-            "methods": []
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "SummaryValues-1"
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-1",
+            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-2",
             "file": "src/app/forecast/components/executive-summary/executive-summary.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1181,158 +1333,6 @@
                     "optional": false,
                     "description": "",
                     "line": 121
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 164,
-            "methods": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "SummaryValues-1"
-        },
-        {
-            "name": "SummaryValues",
-            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62-2",
-            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
-            "properties": [
-                {
-                    "name": "arve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 317
-                },
-                {
-                    "name": "benchDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 313
-                },
-                {
-                    "name": "billableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 308
-                },
-                {
-                    "name": "businessDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 312
-                },
-                {
-                    "name": "cor",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 316
-                },
-                {
-                    "name": "external",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 320
-                },
-                {
-                    "name": "fteCss",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 315
-                },
-                {
-                    "name": "monthId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 306
-                },
-                {
-                    "name": "nonBillableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 309
-                },
-                {
-                    "name": "probabilityId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 307
-                },
-                {
-                    "name": "ros",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 319
-                },
-                {
-                    "name": "trainingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 311
-                },
-                {
-                    "name": "urve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 318
-                },
-                {
-                    "name": "vacationDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 310
-                },
-                {
-                    "name": "workingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 314
                 }
             ],
             "indexSignatures": [],
@@ -13321,7 +13321,7 @@
         {
             "name": "ButtonComponent",
             "id": "component-ButtonComponent-44f2f1e1b3a1e0ebc1e0edafd90d05c0",
-            "file": "src/stories/button.component.ts",
+            "file": "src/app/stories/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -13441,7 +13441,7 @@
         {
             "name": "ButtonSaveCancelComponent",
             "id": "component-ButtonSaveCancelComponent-dcc6e57bac0e32f2cf1b08fb3f60b72d",
-            "file": "src/stories/ButtonSaveCancel.component.ts",
+            "file": "src/app/stories/ButtonSaveCancel.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -20211,19 +20211,19 @@
         },
         {
             "name": "FlyingButtonComponent",
-            "id": "component-FlyingButtonComponent-c22acc005b34ae8625262564f86a47e5",
-            "file": "src/stories/FlyingButton.component.ts",
+            "id": "component-FlyingButtonComponent-d20d53d8f803bc37fe3368130bf21f21",
+            "file": "src/app/stories/FlyingButton.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "fyling-button",
+            "selector": "app-flying-button",
             "styleUrls": [
                 "./FlyingButton.css"
             ],
             "styles": [],
-            "template": "<div [ngClass]=classes>\n<mat-icon>mic</mat-icon>\n  <button\n      type=\"button\"\n      mat-button\n      (click)=\"onClick.emit($event)\"\n      class=\"TypeUser-StateDefault\"\n      [ngStyle]=\"{ 'background-color': backgroundColor }\"\n    >\n      <div class=\"Content\">\n      <mat-icon>mic</mat-icon>\n        <div class=\"Add-User\">\n          {{ label }}\n        </div>\n      </div>\n    </button>\n  </div>",
+            "template": "<div [ngClass]=classes>\n  <button\n      type=\"button\"\n      (click)=\"onClick.emit($event);\"\n      [ngClass]=stateDefault\n      [ngStyle]=\"{ 'background-color': backgroundColor }\"\n    >\n      <div class=\"Content\">\n        <mat-icon>{{icon}}</mat-icon>\n        <div [ngClass]=typeClass>\n          {{ label }}\n        </div>\n      </div>\n    </button>\n  </div>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
@@ -20233,7 +20233,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "What background color to use",
                     "description": "<p>What background color to use</p>\n",
-                    "line": 36,
+                    "line": 34,
                     "type": "string"
                 },
                 {
@@ -20243,15 +20243,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 1020,
-                            "end": 1034,
+                            "pos": 972,
+                            "end": 986,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 1021,
-                                "end": 1029,
+                                "pos": 973,
+                                "end": 981,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -20263,7 +20263,7 @@
                     ],
                     "rawdescription": "Button contents",
                     "description": "<p>Button contents</p>\n",
-                    "line": 50,
+                    "line": 48,
                     "type": "string"
                 },
                 {
@@ -20273,7 +20273,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "How large should the button be?",
                     "description": "<p>How large should the button be?</p>\n",
-                    "line": 42,
+                    "line": 40,
                     "type": "boolean"
                 },
                 {
@@ -20282,7 +20282,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "Is this the principal call to action on the page?",
                     "description": "<p>Is this the principal call to action on the page?</p>\n",
-                    "line": 30,
+                    "line": 28,
                     "type": "\"team\" | \"user\" | \"project\" | \"csv\""
                 }
             ],
@@ -20294,7 +20294,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nOptional click handler\n",
                     "description": "<p>Optional click handler</p>\n",
-                    "line": 56,
+                    "line": 54,
                     "type": "EventEmitter"
                 }
             ],
@@ -20307,11 +20307,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'fyling-button',\r\n  template: `\r\n  <div [ngClass]=classes>\r\n  <mat-icon>mic</mat-icon>\r\n    <button\r\n        type=\"button\"\r\n        mat-button\r\n        (click)=\"onClick.emit($event)\"\r\n        class=\"TypeUser-StateDefault\"\r\n        [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n      >\r\n        <div class=\"Content\">\r\n        <mat-icon>mic</mat-icon>\r\n          <div class=\"Add-User\">\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: ['./FlyingButton.css'],\r\n})\r\nexport default class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button', \r\n    this.type];\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-flying-button',\r\n  template: `\r\n  <div [ngClass]=classes>\r\n    <button\r\n        type=\"button\"\r\n        (click)=\"onClick.emit($event);\"\r\n        [ngClass]=stateDefault\r\n        [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n      >\r\n        <div class=\"Content\">\r\n          <mat-icon>{{icon}}</mat-icon>\r\n          <div [ngClass]=typeClass>\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: ['./FlyingButton.css'],\r\n})\r\nexport class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button', \r\n    this.type];\r\n  }\r\n\r\n  public get icon(): string{\r\n    switch(this.type){\r\n      case  'user':\r\n      case  'project':\r\n      case  'team':\r\n        return 'person_add';\r\n      case  'csv':\r\n        return 'file_download';\r\n    }\r\n  }\r\n\r\n  public get typeClass(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        return ['Add-User'];\r\n      case  'team':\r\n        return ['Add-Team'];\r\n      case  'project':\r\n        return ['Add-Project'];\r\n      case  'csv':\r\n        return ['CSV'];\r\n    }\r\n  }\r\n\r\n  public get stateDefault(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        if(this.pressed)\r\n          return ['TypeUser-StateOn-Click'];\r\n        else\r\n          return ['TypeUser-StateDefault'];\r\n      case  'team':\r\n        if(this.pressed)\r\n          return ['TypeTeam-StateOn-Click'];\r\n        else\r\n          return ['TypeTeam-StateDefault'];\r\n      case  'project':\r\n        if(this.pressed)\r\n          return ['TypeProject-StateOn-Click'];\r\n        else\r\n          return ['TypeProject-StateDefault'];\r\n      case  'csv':\r\n        if(this.pressed)\r\n          return ['TypeCSV-StateOn-Click'];\r\n        else\r\n          return ['TypeCSV-StateDefault'];\r\n    }\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".Flying-Button img.Icons {\r\n  width: 24px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  object-fit: contain;\r\n}\r\n\r\n.Flying-Button.user .Content {\r\n  width: 87px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n}\r\n\r\n.Flying-Button.user .Add-User {\r\n  width: 58px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.user.on-click .TypeUser-StateOn-Click {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n}\r\n\r\n.Flying-Button.project .Content {\r\n  width: 104px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.project .Add-Project {\r\n  width: 75px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n}\r\n\r\n.Flying-Button.team .Content {\r\n  width: 93px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.team .Add-Team {\r\n  width: 64px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n}\r\n\r\n.Flying-Button.project.on-click .TypeProject-StateOn-Click {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n}\r\n\r\n.Flying-Button.team.on-click .TypeTeam-StateOn-Click {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n}\r\n\r\n.Flying-Button.csv .Content {\r\n  width: 55px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.csv .CSV {\r\n  width: 26px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n}\r\n\r\n.Flying-Button.csv.on-click .TypeCSV-StateOn-Click {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n}",
+                    "data": ".Flying-Button mat-icon{\r\n  width: 24px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  object-fit: contain;\r\n  color: #fff; \r\n}\r\n\r\n.Flying-Button.user .Content {\r\n  width: 87px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.user .Add-User {\r\n  width: 58px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault:active{\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateOn-Click {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .Content {\r\n  width: 104px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.project .Add-Project {\r\n  width: 75px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.team .Content {\r\n  width: 93px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.team .Add-Team {\r\n  width: 64px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault:active {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateOn-Click {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault:active {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateOn-Click {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .Content {\r\n  width: 55px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.csv .CSV {\r\n  width: 26px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault:active {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateOn-Click {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}",
                     "styleUrl": "./FlyingButton.css"
                 }
             ],
@@ -20323,7 +20323,34 @@
                         "name": "classes",
                         "type": "[]",
                         "returnType": "string[]",
-                        "line": 58
+                        "line": 56
+                    }
+                },
+                "icon": {
+                    "name": "icon",
+                    "getSignature": {
+                        "name": "icon",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 62
+                    }
+                },
+                "typeClass": {
+                    "name": "typeClass",
+                    "getSignature": {
+                        "name": "typeClass",
+                        "type": "[]",
+                        "returnType": "string[]",
+                        "line": 73
+                    }
+                },
+                "stateDefault": {
+                    "name": "stateDefault",
+                    "getSignature": {
+                        "name": "stateDefault",
+                        "type": "[]",
+                        "returnType": "string[]",
+                        "line": 86
                     }
                 }
             }
@@ -21263,7 +21290,7 @@
         {
             "name": "HeaderComponent",
             "id": "component-HeaderComponent-c349aa42f2121da4b5737d60a50fa413",
-            "file": "src/stories/header.component.ts",
+            "file": "src/app/stories/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -22998,7 +23025,7 @@
         {
             "name": "PageComponent",
             "id": "component-PageComponent-458a0bd074cddd3932cfcb5b086aeb0d",
-            "file": "src/stories/page.component.ts",
+            "file": "src/app/stories/page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -28234,7 +28261,7 @@
                 "OnInit",
                 "OnDestroy"
             ],
-            "templateData": "<table mat-table matSort [dataSource]=\"user\">\r\n  <ng-container matColumnDef=\"active\">\r\n    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"flag-button\">\r\n      <mat-slide-toggle color=\"primary\" [checked]=\"user.active\" [(ngModel)]=\"user.active\" (change)=\"setUserActiveState(user.id, user.active)\"></mat-slide-toggle>\r\n    </td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"globalId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Capgemini ID</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.globalId}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"lastName\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.lastName}}, {{user.firstName}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"email\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Email</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{ user.email }}</td>\r\n  </ng-container>\r\n\r\n<!--   <ng-container  matColumnDef=\"fte\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>FTE</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.fte }}</td>\r\n  </ng-container> -->\r\n\r\n  <ng-container  matColumnDef=\"roleId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Role</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getRole(user.roleId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"gradeId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Grade</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getGrade(user.gradeId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"parentId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Teamlead</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getTeamlead(user.parentId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"admin\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Permissions</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.admin ? 'Administrator' : '-' }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"edit\">\r\n    <th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"action-button\" (click)=\"openUserDialog(user)\"><mat-icon>edit</mat-icon></td>\r\n  </ng-container>\r\n\r\n  <tr mat-header-row *matHeaderRowDef=\"[ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin', 'edit']\"></tr>\r\n  <tr mat-row  *matRowDef=\"let row; columns: [ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin','edit'];\" ></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n  <button mat-raised-button (click)=\"addNewUser()\" color=\"primary\">\r\n    <mat-icon>person_add</mat-icon> Add User\r\n  </button>\r\n</div>"
+            "templateData": "<table mat-table matSort [dataSource]=\"user\">\r\n  <ng-container matColumnDef=\"active\">\r\n    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"flag-button\">\r\n      <mat-slide-toggle color=\"primary\" [checked]=\"user.active\" [(ngModel)]=\"user.active\" (change)=\"setUserActiveState(user.id, user.active)\"></mat-slide-toggle>\r\n    </td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"globalId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Capgemini ID</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.globalId}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"lastName\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.lastName}}, {{user.firstName}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"email\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Email</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{ user.email }}</td>\r\n  </ng-container>\r\n\r\n<!--   <ng-container  matColumnDef=\"fte\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>FTE</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.fte }}</td>\r\n  </ng-container> -->\r\n\r\n  <ng-container  matColumnDef=\"roleId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Role</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getRole(user.roleId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"gradeId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Grade</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getGrade(user.gradeId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"parentId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Teamlead</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getTeamlead(user.parentId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"admin\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Permissions</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.admin ? 'Administrator' : '-' }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"edit\">\r\n    <th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"action-button\" (click)=\"openUserDialog(user)\"><mat-icon>edit</mat-icon></td>\r\n  </ng-container>\r\n\r\n  <tr mat-header-row *matHeaderRowDef=\"[ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin', 'edit']\"></tr>\r\n  <tr mat-row  *matRowDef=\"let row; columns: [ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin','edit'];\" ></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n  <app-flying-button type=\"user\" pressed=\"false\" label=\"Add User\"></app-flying-button>\r\n  <!-- <button mat-raised-button (click)=\"addNewUser()\" color=\"primary\">\r\n    <mat-icon>person_add</mat-icon> Add User\r\n  </button> -->\r\n</div>"
         }
     ],
     "modules": [
@@ -28317,13 +28344,13 @@
         },
         {
             "name": "AppModule",
-            "id": "module-AppModule-8d32dcf1b6c48c24f160f5ec66f562e5",
+            "id": "module-AppModule-c9b06d72a0d47b3f7c88f1cc800dd017",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { BrowserModule } from \"@angular/platform-browser\";\r\nimport { BrowserAnimationsModule } from \"@angular/platform-browser/animations\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { CoreModule } from \"./core/core.module\";\r\nimport { LayoutModule } from \"./layout/layout.module\";\r\nimport { ForecastModule } from \"./forecast/forecast.module\";\r\nimport { AdminModule } from \"./admin/admin.module\";\r\nimport { TranslateModule, TranslateLoader } from \"@ngx-translate/core\";\r\nimport { TranslateHttpLoader } from \"@ngx-translate/http-loader\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { FlexLayoutModule } from \"@angular/flex-layout\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { LoginComponent } from \"./login/login.component\";\r\nimport { DatePipe } from \"@angular/common\";\r\nimport { ReactiveFormsModule, FormsModule } from \"@angular/forms\";\r\nimport { SafeHtmlPipe } from \"./core/pipes/safe-html\";\r\nimport { ResetPasswordComponent } from \"./reset-password/reset-password.component\";\r\nimport { DeviceDetectorModule } from \"ngx-device-detector\";\r\n\r\n/**\r\n * AoT requires an exported function for factories\r\n */\r\nexport function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {\r\n  return new TranslateHttpLoader(http);\r\n}\r\n\r\n@NgModule({\r\n  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],\r\n  imports: [\r\n    BrowserModule,\r\n    FlexLayoutModule,\r\n    BrowserAnimationsModule,\r\n    LayoutModule,\r\n    AppRoutingModule,\r\n    ReactiveFormsModule,\r\n    CoreModule,\r\n    ForecastModule,\r\n    AdminModule,\r\n    FormsModule,\r\n    DeviceDetectorModule.forRoot(),\r\n    TranslateModule.forRoot({\r\n      loader: {\r\n        provide: TranslateLoader,\r\n        useFactory: HttpLoaderFactory,\r\n        deps: [HttpClient]\r\n      }\r\n    })\r\n  ],\r\n  providers: [DatePipe],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule {}\r\n",
+            "sourceCode": "import { BrowserModule } from \"@angular/platform-browser\";\r\nimport { BrowserAnimationsModule } from \"@angular/platform-browser/animations\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { CoreModule } from \"./core/core.module\";\r\nimport { LayoutModule } from \"./layout/layout.module\";\r\nimport { ForecastModule } from \"./forecast/forecast.module\";\r\nimport { AdminModule } from \"./admin/admin.module\";\r\nimport { TranslateModule, TranslateLoader } from \"@ngx-translate/core\";\r\nimport { TranslateHttpLoader } from \"@ngx-translate/http-loader\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { FlexLayoutModule } from \"@angular/flex-layout\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { LoginComponent } from \"./login/login.component\";\r\nimport { DatePipe } from \"@angular/common\";\r\nimport { ReactiveFormsModule, FormsModule } from \"@angular/forms\";\r\nimport { SafeHtmlPipe } from \"./core/pipes/safe-html\";\r\nimport { ResetPasswordComponent } from \"./reset-password/reset-password.component\";\r\nimport { DeviceDetectorModule } from \"ngx-device-detector\";\r\n\r\nimport { FlyingButtonComponent } from '../stories/FlyingButton.component';\r\n\r\n/**\r\n * AoT requires an exported function for factories\r\n */\r\nexport function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {\r\n  return new TranslateHttpLoader(http);\r\n}\r\n\r\n@NgModule({\r\n  declarations: [AppComponent, LoginComponent, ResetPasswordComponent, FlyingButtonComponent],\r\n  imports: [\r\n    BrowserModule,\r\n    FlexLayoutModule,\r\n    BrowserAnimationsModule,\r\n    LayoutModule,\r\n    AppRoutingModule,\r\n    ReactiveFormsModule,\r\n    CoreModule,\r\n    ForecastModule,\r\n    AdminModule,\r\n    FormsModule,\r\n    DeviceDetectorModule.forRoot(),\r\n    TranslateModule.forRoot({\r\n      loader: {\r\n        provide: TranslateLoader,\r\n        useFactory: HttpLoaderFactory,\r\n        deps: [HttpClient]\r\n      }\r\n    })\r\n  ],\r\n  providers: [DatePipe],\r\n  bootstrap: [AppComponent],\r\n})\r\nexport class AppModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -28334,6 +28361,9 @@
                     "elements": [
                         {
                             "name": "AppComponent"
+                        },
+                        {
+                            "name": "FlyingButtonComponent"
                         },
                         {
                             "name": "LoginComponent"
@@ -28474,13 +28504,13 @@
         },
         {
             "name": "ForecastModule",
-            "id": "module-ForecastModule-a50fc868677edcaaba0f353371c11ea6",
+            "id": "module-ForecastModule-8ecd9344c6b056b5a88e8e5145acc567",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/forecast/forecast.module.ts",
             "methods": [],
-            "sourceCode": "import { TranslateModule } from \"@ngx-translate/core\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { FormsModule, ReactiveFormsModule } from \"@angular/forms\";\r\nimport { AppRoutingModule } from \"../app-routing.module\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { CoreModule } from \"../core/core.module\";\r\nimport { LayoutModule } from \"../layout/layout.module\";\r\nimport { MatBottomSheetModule } from \"@angular/material/bottom-sheet\";\r\nimport { MatDialogModule } from \"@angular/material/dialog\";\r\n\r\nimport { ForecastComponent } from \"./forecast.component\";\r\nimport { IndividualComponent } from \"./pages/individual/individual.component\";\r\nimport { TeamComponent } from \"./pages/team/team.component\";\r\n\r\nimport { FcEntryComponent } from \"./components/fc-entry/fc-entry.component\";\r\nimport { FcProjectComponent } from \"./components/fc-project/fc-project.component\";\r\nimport { FcEntrySummaryComponent } from \"./components/fc-entry-summary/fc-entry-summary.component\";\r\nimport { TeamleadSummaryComponent } from \"./components/teamlead-summary/teamlead-summary.component\";\r\nimport { TeamleadMonthComponent } from \"./components/teamlead-month/teamlead-month.component\";\r\nimport { PracticeComponent } from \"./pages/practice/practice.component\";\r\n\r\nimport { ConfirmMessageDialog } from \"./dialogs/confirm-message/confirm-message.dialog\";\r\nimport { ExportCsvDialog } from \"./dialogs/export-csv/export-csv.dialog\";\r\nimport { ProjectRequestDialog } from \"./dialogs/add-project/project-request.dialog\";\r\nimport { ExecutiveComponent } from \"./pages/executive/executive.component\";\r\nimport { ExecutiveDetailComponent } from \"./components/executive-detail/executive-detail.component\";\r\nimport { ExecutiveSummaryComponent } from \"./components/executive-summary/executive-summary.component\";\r\n\r\nimport { NgxPowerBiModule } from \"ngx-powerbi\";\r\nimport { ExecutiveFcEntryComponent } from \"./dialogs/executive-fc-entry/executive-fc-entry.component\";\r\nimport { FcEntryDetailDialogComponent } from \"./components/executive-detail/fc-entry-detail-dialog.component\";\r\nimport { ExecutiveChartComponent } from \"./components/executive-chart/executive-chart.component\";\r\nimport { ExecutiveStatsComponent } from './components/executive-stats/executive-stats.component';\r\n\r\nimport { StaffingComponent } from \"./pages/staffing/staffing.component\";\r\nimport { StaffingOverviewComponent } from \"./components/staffing-overview/staffing-overview.component\";\r\nimport { HeadOfPracticesComponent } from \"./pages/head-of-practices/head-of-practices.component\";\r\nimport { PracticesComponent } from \"./pages/practices/practices.component\";\r\nimport { FinancialControllerComponent } from \"./pages/financial-controller/financial-controller.component\";\r\nimport { FinancialControllerOverviewComponent } from \"./components/financial-controller-overview/financial-controller-overview.component\";\r\nimport { FcEntrySummaryVacationWarningComponent } from \"./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component\";\r\n\r\n@NgModule({\r\n  imports: [\r\n    CommonModule,\r\n    MatDialogModule,\r\n    MatBottomSheetModule,\r\n    CoreModule,\r\n    LayoutModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    AppRoutingModule,\r\n    TranslateModule,\r\n    NgxPowerBiModule\r\n  ],\r\n  providers: [],\r\n  declarations: [\r\n    ForecastComponent,\r\n    IndividualComponent,\r\n    TeamComponent,\r\n    PracticeComponent,\r\n    FcEntryComponent,\r\n    FcProjectComponent,\r\n    FcEntrySummaryComponent,\r\n    TeamleadMonthComponent,\r\n    TeamleadSummaryComponent,\r\n    ExecutiveComponent,\r\n    ExecutiveDetailComponent,\r\n    ExecutiveSummaryComponent,\r\n    ConfirmMessageDialog,\r\n    ExportCsvDialog,\r\n    ProjectRequestDialog,\r\n    ExecutiveFcEntryComponent,\r\n    FcEntryDetailDialogComponent,\r\n    FcEntrySummaryVacationWarningComponent,\r\n    PracticesComponent,\r\n    ExecutiveChartComponent,\r\n    ExecutiveStatsComponent,\r\n    StaffingComponent,\r\n    StaffingOverviewComponent,\r\n    HeadOfPracticesComponent,\r\n    FinancialControllerComponent,\r\n    FinancialControllerOverviewComponent,\r\n  ],\r\n  exports: []\r\n})\r\nexport class ForecastModule {}\r\n",
+            "sourceCode": "import { TranslateModule } from \"@ngx-translate/core\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { FormsModule, ReactiveFormsModule } from \"@angular/forms\";\r\nimport { AppRoutingModule } from \"../app-routing.module\";\r\nimport { CommonModule } from \"@angular/common\";\r\nimport { CoreModule } from \"../core/core.module\";\r\nimport { LayoutModule } from \"../layout/layout.module\";\r\nimport { MatBottomSheetModule } from \"@angular/material/bottom-sheet\";\r\nimport { MatDialogModule } from \"@angular/material/dialog\";\r\n\r\nimport { ForecastComponent } from \"./forecast.component\";\r\nimport { IndividualComponent } from \"./pages/individual/individual.component\";\r\nimport { TeamComponent } from \"./pages/team/team.component\";\r\n\r\nimport { FcEntryComponent } from \"./components/fc-entry/fc-entry.component\";\r\nimport { FcProjectComponent } from \"./components/fc-project/fc-project.component\";\r\nimport { FcEntrySummaryComponent } from \"./components/fc-entry-summary/fc-entry-summary.component\";\r\nimport { TeamleadSummaryComponent } from \"./components/teamlead-summary/teamlead-summary.component\";\r\nimport { TeamleadMonthComponent } from \"./components/teamlead-month/teamlead-month.component\";\r\nimport { PracticeComponent } from \"./pages/practice/practice.component\";\r\n\r\nimport { ConfirmMessageDialog } from \"./dialogs/confirm-message/confirm-message.dialog\";\r\nimport { ExportCsvDialog } from \"./dialogs/export-csv/export-csv.dialog\";\r\nimport { ProjectRequestDialog } from \"./dialogs/add-project/project-request.dialog\";\r\nimport { ExecutiveComponent } from \"./pages/executive/executive.component\";\r\nimport { ExecutiveDetailComponent } from \"./components/executive-detail/executive-detail.component\";\r\nimport { ExecutiveSummaryComponent } from \"./components/executive-summary/executive-summary.component\";\r\n\r\nimport { NgxPowerBiModule } from \"ngx-powerbi\";\r\nimport { ExecutiveFcEntryComponent } from \"./dialogs/executive-fc-entry/executive-fc-entry.component\";\r\nimport { FcEntryDetailDialogComponent } from \"./components/executive-detail/fc-entry-detail-dialog.component\";\r\nimport { ExecutiveChartComponent } from \"./components/executive-chart/executive-chart.component\";\r\nimport { ExecutiveStatsComponent } from './components/executive-stats/executive-stats.component';\r\n\r\nimport { StaffingComponent } from \"./pages/staffing/staffing.component\";\r\nimport { StaffingOverviewComponent } from \"./components/staffing-overview/staffing-overview.component\";\r\nimport { HeadOfPracticesComponent } from \"./pages/head-of-practices/head-of-practices.component\";\r\nimport { PracticesComponent } from \"./pages/practices/practices.component\";\r\nimport { FinancialControllerComponent } from \"./pages/financial-controller/financial-controller.component\";\r\nimport { FinancialControllerOverviewComponent } from \"./components/financial-controller-overview/financial-controller-overview.component\";\r\nimport { FcEntrySummaryVacationWarningComponent } from \"./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component\";\r\n\r\n@NgModule({\r\n  imports: [\r\n    CommonModule,\r\n    MatDialogModule,\r\n    MatBottomSheetModule,\r\n    CoreModule,\r\n    LayoutModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    AppRoutingModule,\r\n    TranslateModule,\r\n    NgxPowerBiModule,\r\n  ],\r\n  providers: [],\r\n  declarations: [\r\n    ForecastComponent,\r\n    IndividualComponent,\r\n    TeamComponent,\r\n    PracticeComponent,\r\n    FcEntryComponent,\r\n    FcProjectComponent,\r\n    FcEntrySummaryComponent,\r\n    TeamleadMonthComponent,\r\n    TeamleadSummaryComponent,\r\n    ExecutiveComponent,\r\n    ExecutiveDetailComponent,\r\n    ExecutiveSummaryComponent,\r\n    ConfirmMessageDialog,\r\n    ExportCsvDialog,\r\n    ProjectRequestDialog,\r\n    ExecutiveFcEntryComponent,\r\n    FcEntryDetailDialogComponent,\r\n    FcEntrySummaryVacationWarningComponent,\r\n    PracticesComponent,\r\n    ExecutiveChartComponent,\r\n    ExecutiveStatsComponent,\r\n    StaffingComponent,\r\n    StaffingOverviewComponent,\r\n    HeadOfPracticesComponent,\r\n    FinancialControllerComponent,\r\n    FinancialControllerOverviewComponent,\r\n  ],\r\n  exports: [\r\n  ]\r\n})\r\nexport class ForecastModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -28627,9 +28657,6 @@
                             "name": "GetStarted"
                         },
                         {
-                            "name": "HeaderComponent"
-                        },
-                        {
                             "name": "OrganizationDialogComponent"
                         },
                         {
@@ -28673,7 +28700,7 @@
                 "name": "AddProjectDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28683,7 +28710,7 @@
                 "name": "AddProjectPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28693,7 +28720,7 @@
                 "name": "AddTeamDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28703,7 +28730,7 @@
                 "name": "AddTeamPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28713,7 +28740,7 @@
                 "name": "AddUserDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28723,7 +28750,7 @@
                 "name": "AddUserPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28733,7 +28760,7 @@
                 "name": "CancelDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28743,7 +28770,7 @@
                 "name": "CancelPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28753,7 +28780,7 @@
                 "name": "CSVDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28763,7 +28790,7 @@
                 "name": "CSVPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28819,7 +28846,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/app/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28829,7 +28856,7 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/app/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28839,7 +28866,7 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
+                "file": "src/app/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28849,7 +28876,7 @@
                 "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/app/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28859,7 +28886,7 @@
                 "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
+                "file": "src/app/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28869,7 +28896,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/app/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28879,7 +28906,7 @@
                 "name": "SaveDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28889,7 +28916,7 @@
                 "name": "SavePressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28899,7 +28926,7 @@
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/app/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28909,7 +28936,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/app/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28919,7 +28946,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Button.stories.ts",
+                "file": "src/app/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Button>",
@@ -28929,17 +28956,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/ButtonSaveCancel.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<ButtonSaveCancelComponent>",
-                "defaultValue": "(args: ButtonSaveCancelComponent) => ({\r\n  props: args,\r\n\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/FlyingButton.component.stories.ts",
+                "file": "src/app/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<FlyingButtonComponent>",
@@ -28949,7 +28966,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
+                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ButtonSaveCancelComponent>",
+                "defaultValue": "(args: ButtonSaveCancelComponent) => ({\r\n  props: args,\r\n\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Header>",
@@ -28959,7 +28986,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Page.stories.ts",
+                "file": "src/app/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Page>",
@@ -29039,12 +29066,12 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
-            "src/stories/FlyingButton.component.stories.ts": [
+            "src/app/stories/FlyingButton.component.stories.ts": [
                 {
                     "name": "AddProjectDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29054,7 +29081,7 @@
                     "name": "AddProjectPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29064,7 +29091,7 @@
                     "name": "AddTeamDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29074,7 +29101,7 @@
                     "name": "AddTeamPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29084,7 +29111,7 @@
                     "name": "AddUserDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29094,7 +29121,7 @@
                     "name": "AddUserPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29104,7 +29131,7 @@
                     "name": "CSVDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29114,7 +29141,7 @@
                     "name": "CSVPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29124,19 +29151,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/FlyingButton.component.stories.ts",
+                    "file": "src/app/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<FlyingButtonComponent>",
                     "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n  moduleMetadata: {\r\n    imports: [\r\n      MatIconModule,\r\n      MatButtonModule\r\n    ]\r\n  }\r\n})"
                 }
             ],
-            "src/stories/ButtonSaveCancel.stories.ts": [
+            "src/app/stories/ButtonSaveCancel.stories.ts": [
                 {
                     "name": "CancelDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29146,7 +29173,7 @@
                     "name": "CancelPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29156,7 +29183,7 @@
                     "name": "SaveDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29166,7 +29193,7 @@
                     "name": "SavePressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29176,7 +29203,7 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<ButtonSaveCancelComponent>",
@@ -29237,12 +29264,12 @@
                     "description": "<p>Data for getStarted</p>\n"
                 }
             ],
-            "src/stories/Button.stories.ts": [
+            "src/app/stories/Button.stories.ts": [
                 {
                     "name": "Large",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/app/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29252,7 +29279,7 @@
                     "name": "Primary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/app/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29262,7 +29289,7 @@
                     "name": "Secondary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/app/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29272,7 +29299,7 @@
                     "name": "Small",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/app/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29282,19 +29309,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Button.stories.ts",
+                    "file": "src/app/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Button>",
                     "defaultValue": "(args: Button) => ({\r\n  props: args,\r\n})"
                 }
             ],
-            "src/stories/Header.stories.ts": [
+            "src/app/stories/Header.stories.ts": [
                 {
                     "name": "LoggedIn",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
+                    "file": "src/app/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29304,7 +29331,7 @@
                     "name": "LoggedOut",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
+                    "file": "src/app/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29314,19 +29341,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
+                    "file": "src/app/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Header>",
                     "defaultValue": "(args: Header) => ({\r\n  props: args,\r\n})"
                 }
             ],
-            "src/stories/Page.stories.ts": [
+            "src/app/stories/Page.stories.ts": [
                 {
                     "name": "LoggedIn",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
+                    "file": "src/app/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29336,7 +29363,7 @@
                     "name": "LoggedOut",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
+                    "file": "src/app/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29346,7 +29373,7 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Page.stories.ts",
+                    "file": "src/app/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Page>",
@@ -30562,6 +30589,301 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Large",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Secondary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Small",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonSaveCancelComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CancelDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CancelPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SaveDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SavePressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/FlyingButton.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FlyingButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/app/stories/header.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "HeaderComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/stories/page.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
                 "filePath": "src/environments/environment.prod.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -30580,301 +30902,6 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Large",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Primary",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Secondary",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Small",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ButtonSaveCancelComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CancelDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CancelPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "SaveDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "SavePressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddProjectDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddProjectPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddTeamDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddTeamPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddUserDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddUserPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CSVDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CSVPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/FlyingButton.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "FlyingButtonComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/button.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ButtonComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/page.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "PageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
             }
         ]
     }

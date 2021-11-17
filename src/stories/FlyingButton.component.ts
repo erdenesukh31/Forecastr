@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-flying-button',
+  selector: "app-flying-button",
   template: `
   <div [ngClass]=classes>
     <button

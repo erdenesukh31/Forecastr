@@ -17,6 +17,9 @@ import { AddProjectDialog } from './dialogs/add-project/add-project.dialog';
 import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
+
+import { FlyingButtonComponent } from '../../stories/FlyingButton.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -39,6 +42,7 @@ import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.
     AddUserDialog,
     AddTeamDialog,
     ConfirmMessageDialog,
+    FlyingButtonComponent
   ],
   exports: [
     MatExpansionModule,

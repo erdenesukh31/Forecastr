@@ -18,8 +18,6 @@ import { SafeHtmlPipe } from "./core/pipes/safe-html";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { DeviceDetectorModule } from "ngx-device-detector";
 
-import { FlyingButtonComponent } from '../stories/FlyingButton.component';
-
 /**
  * AoT requires an exported function for factories
  */
@@ -28,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ResetPasswordComponent, FlyingButtonComponent],
+  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     FlexLayoutModule,
