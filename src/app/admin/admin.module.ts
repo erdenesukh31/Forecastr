@@ -18,7 +18,7 @@ import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
 
-import { FlyingButtonComponent } from '../../stories/FlyingButton.component';
+import { FlyingButtonComponent } from '../../stories/FlyingButton/FlyingButton.component';
 
 @NgModule({
   imports: [

@@ -13,12 +13,13 @@
     "projects": [
         "603f452486a2b41861334dd2"
     ],
-    "styleguides": [
-    ],
+    "styleguides": [],
     "components": [
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9bf8b3cad17b276828e"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9bf8b3cad17b276828e"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -27,8 +28,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9c00ac83412f6cbee15"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9c00ac83412f6cbee15"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -37,8 +40,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9bef2ab541516aff2a0"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9bef2ab541516aff2a0"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -47,8 +52,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9bfd2770f10af2f081f"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9bfd2770f10af2f081f"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -57,8 +64,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9c0a60011113007ec04"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9c0a60011113007ec04"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -67,8 +76,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["60f6b9bfeed29916c53a514c"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "60f6b9bfeed29916c53a514c"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -77,8 +88,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["6193c2bd02d9b5adca05a138"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "6193c2bd02d9b5adca05a138"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [
@@ -87,8 +100,10 @@
             }
         },
         {
-            "path": "src/stories/FlyingButton.component.ts",
-            "zeplinIds": ["6193c2bdc6b7b1a97541a886"],
+            "path": "src/stories/FlyingButton/FlyingButton.component.ts",
+            "zeplinIds": [
+                "6193c2bdc6b7b1a97541a886"
+            ],
             "storybook": {
                 "kind": "AdminDashboard/FlyingButton",
                 "stories": [

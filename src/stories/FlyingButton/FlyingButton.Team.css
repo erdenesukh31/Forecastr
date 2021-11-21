@@ -1,20 +1,5 @@
-.Flying-Button {
-  position: fixed;
-  z-index: 100;
-  bottom: 32px;
-  right: 30px;
-}
-
-.Flying-Button mat-icon{
-  width: 24px;
-  height: 24px;
-  flex-grow: 0;
-  object-fit: contain;
-  color: #fff; 
-}
-
-
-.Flying-Button .Content {
+.Flying-Button.team .Content {
+  width: 93px;
   height: 24px;
   flex-grow: 0;
   display: flex;
@@ -25,7 +10,8 @@
   padding: 0;
 }
 
-.Flying-Button .Label {
+.Flying-Button.team .Add-Team {
+  width: 64px;
   height: 16px;
   flex-grow: 0;
   font-family: Ubuntu;
@@ -39,7 +25,8 @@
   color: #fff;
 }
 
-.Flying-Button .StateDefault {
+.Flying-Button.team .TypeTeam-StateDefault {
+  width: 113px;
   height: 35px;
   display: flex;
   flex-direction: column;
@@ -53,7 +40,9 @@
   border: #0070ad;
 }
 
-.Flying-Button .StateDefault:active {
+
+.Flying-Button.team .TypeTeam-StateDefault:active {
+  width: 113px;
   height: 35px;
   display: flex;
   flex-direction: column;
@@ -67,7 +56,8 @@
   border: #005482;
 }
 
-.Flying-Button .StateOn-Click {
+.Flying-Button.team .TypeTeam-StateOn-Click {
+  width: 113px;
   height: 35px;
   display: flex;
   flex-direction: column;
@@ -80,5 +70,3 @@
   background-color: #005482;
   border: #005482;
 }
-
-

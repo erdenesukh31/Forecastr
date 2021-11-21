@@ -18,7 +18,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         </div>
       </button>
     </div>`,
-  styleUrls: ['./FlyingButton.css'],
+  styleUrls: [
+    './FlyingButton.css',
+    './FlyingButton.User.css',
+    './FlyingButton.Team.css',
+    './FlyingButton.Project.css',
+    './FlyingButton.CSV.css'
+  ],
 })
 export class FlyingButtonComponent {
   /**
@@ -26,12 +32,6 @@ export class FlyingButtonComponent {
    */
   @Input()
   type : 'team' | 'user' | 'project' | 'csv';
-
-  /**
-   * What background color to use
-   */
-  @Input()
-  backgroundColor?: string;
 
   /**
    * How large should the button be?
