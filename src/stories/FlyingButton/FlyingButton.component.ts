@@ -10,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         [ngClass]=stateDefault
       >
         <div class="Content">
-          <mat-icon>{{icon}}</mat-icon>
+          <mat-icon class="img">{{icon}}</mat-icon>
           <div class="Label">
             {{ label }}
           </div>
