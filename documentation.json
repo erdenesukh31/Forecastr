@@ -13321,7 +13321,7 @@
         {
             "name": "ButtonComponent",
             "id": "component-ButtonComponent-44f2f1e1b3a1e0ebc1e0edafd90d05c0",
-            "file": "src/app/stories/button.component.ts",
+            "file": "src/stories/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -13441,7 +13441,7 @@
         {
             "name": "ButtonSaveCancelComponent",
             "id": "component-ButtonSaveCancelComponent-dcc6e57bac0e32f2cf1b08fb3f60b72d",
-            "file": "src/app/stories/ButtonSaveCancel.component.ts",
+            "file": "src/stories/ButtonSaveCancel.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -20211,8 +20211,8 @@
         },
         {
             "name": "FlyingButtonComponent",
-            "id": "component-FlyingButtonComponent-d20d53d8f803bc37fe3368130bf21f21",
-            "file": "src/app/stories/FlyingButton.component.ts",
+            "id": "component-FlyingButtonComponent-79ba77f43384e0c7a28cfd27848f7877",
+            "file": "src/stories/FlyingButton.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -20243,15 +20243,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 972,
-                            "end": 986,
+                            "pos": 973,
+                            "end": 987,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 973,
-                                "end": 981,
+                                "pos": 974,
+                                "end": 982,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -20307,11 +20307,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-flying-button',\r\n  template: `\r\n  <div [ngClass]=classes>\r\n    <button\r\n        type=\"button\"\r\n        (click)=\"onClick.emit($event);\"\r\n        [ngClass]=stateDefault\r\n        [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n      >\r\n        <div class=\"Content\">\r\n          <mat-icon>{{icon}}</mat-icon>\r\n          <div [ngClass]=typeClass>\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: ['./FlyingButton.css'],\r\n})\r\nexport class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button', \r\n    this.type];\r\n  }\r\n\r\n  public get icon(): string{\r\n    switch(this.type){\r\n      case  'user':\r\n      case  'project':\r\n      case  'team':\r\n        return 'person_add';\r\n      case  'csv':\r\n        return 'file_download';\r\n    }\r\n  }\r\n\r\n  public get typeClass(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        return ['Add-User'];\r\n      case  'team':\r\n        return ['Add-Team'];\r\n      case  'project':\r\n        return ['Add-Project'];\r\n      case  'csv':\r\n        return ['CSV'];\r\n    }\r\n  }\r\n\r\n  public get stateDefault(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        if(this.pressed)\r\n          return ['TypeUser-StateOn-Click'];\r\n        else\r\n          return ['TypeUser-StateDefault'];\r\n      case  'team':\r\n        if(this.pressed)\r\n          return ['TypeTeam-StateOn-Click'];\r\n        else\r\n          return ['TypeTeam-StateDefault'];\r\n      case  'project':\r\n        if(this.pressed)\r\n          return ['TypeProject-StateOn-Click'];\r\n        else\r\n          return ['TypeProject-StateDefault'];\r\n      case  'csv':\r\n        if(this.pressed)\r\n          return ['TypeCSV-StateOn-Click'];\r\n        else\r\n          return ['TypeCSV-StateDefault'];\r\n    }\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: \"app-flying-button\",\r\n  template: `\r\n  <div [ngClass]=classes>\r\n    <button\r\n        type=\"button\"\r\n        (click)=\"onClick.emit($event);\"\r\n        [ngClass]=stateDefault\r\n        [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n      >\r\n        <div class=\"Content\">\r\n          <mat-icon>{{icon}}</mat-icon>\r\n          <div [ngClass]=typeClass>\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: ['./FlyingButton.css'],\r\n})\r\nexport class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv';\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed? = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button', \r\n    this.type];\r\n  }\r\n\r\n  public get icon(): string{\r\n    switch(this.type){\r\n      case  'user':\r\n      case  'project':\r\n      case  'team':\r\n        return 'person_add';\r\n      case  'csv':\r\n        return 'file_download';\r\n    }\r\n  }\r\n\r\n  public get typeClass(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        return ['Add-User'];\r\n      case  'team':\r\n        return ['Add-Team'];\r\n      case  'project':\r\n        return ['Add-Project'];\r\n      case  'csv':\r\n        return ['CSV'];\r\n    }\r\n  }\r\n\r\n  public get stateDefault(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        if(this.pressed)\r\n          return ['TypeUser-StateOn-Click'];\r\n        else\r\n          return ['TypeUser-StateDefault'];\r\n      case  'team':\r\n        if(this.pressed)\r\n          return ['TypeTeam-StateOn-Click'];\r\n        else\r\n          return ['TypeTeam-StateDefault'];\r\n      case  'project':\r\n        if(this.pressed)\r\n          return ['TypeProject-StateOn-Click'];\r\n        else\r\n          return ['TypeProject-StateDefault'];\r\n      case  'csv':\r\n        if(this.pressed)\r\n          return ['TypeCSV-StateOn-Click'];\r\n        else\r\n          return ['TypeCSV-StateDefault'];\r\n    }\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".Flying-Button mat-icon{\r\n  width: 24px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  object-fit: contain;\r\n  color: #fff; \r\n}\r\n\r\n.Flying-Button.user .Content {\r\n  width: 87px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.user .Add-User {\r\n  width: 58px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault:active{\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateOn-Click {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .Content {\r\n  width: 104px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.project .Add-Project {\r\n  width: 75px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.team .Content {\r\n  width: 93px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.team .Add-Team {\r\n  width: 64px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault:active {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateOn-Click {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault:active {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateOn-Click {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .Content {\r\n  width: 55px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.csv .CSV {\r\n  width: 26px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault:active {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateOn-Click {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}",
+                    "data": ".Flying-Button {\r\n  position: fixed;\r\n  z-index: 100;\r\n  bottom: 32px;\r\n  right: 30px;\r\n}\r\n\r\n.Flying-Button mat-icon{\r\n  width: 24px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  object-fit: contain;\r\n  color: #fff; \r\n}\r\n\r\n.Flying-Button.user .Content {\r\n  width: 87px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.user .Add-User {\r\n  width: 58px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateDefault:active{\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.user .TypeUser-StateOn-Click {\r\n  width: 107px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .Content {\r\n  width: 104px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.project .Add-Project {\r\n  width: 75px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.team .Content {\r\n  width: 93px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.team .Add-Team {\r\n  width: 64px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateDefault:active {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.project .TypeProject-StateOn-Click {\r\n  width: 124px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateDefault:active {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.team .TypeTeam-StateOn-Click {\r\n  width: 113px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .Content {\r\n  width: 55px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button.csv .CSV {\r\n  width: 26px;\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateDefault:active {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button.csv .TypeCSV-StateOn-Click {\r\n  width: 75px;\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}",
                     "styleUrl": "./FlyingButton.css"
                 }
             ],
@@ -21290,7 +21290,7 @@
         {
             "name": "HeaderComponent",
             "id": "component-HeaderComponent-c349aa42f2121da4b5737d60a50fa413",
-            "file": "src/app/stories/header.component.ts",
+            "file": "src/stories/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -23025,7 +23025,7 @@
         {
             "name": "PageComponent",
             "id": "component-PageComponent-458a0bd074cddd3932cfcb5b086aeb0d",
-            "file": "src/app/stories/page.component.ts",
+            "file": "src/stories/page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -28261,19 +28261,19 @@
                 "OnInit",
                 "OnDestroy"
             ],
-            "templateData": "<table mat-table matSort [dataSource]=\"user\">\r\n  <ng-container matColumnDef=\"active\">\r\n    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"flag-button\">\r\n      <mat-slide-toggle color=\"primary\" [checked]=\"user.active\" [(ngModel)]=\"user.active\" (change)=\"setUserActiveState(user.id, user.active)\"></mat-slide-toggle>\r\n    </td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"globalId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Capgemini ID</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.globalId}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"lastName\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.lastName}}, {{user.firstName}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"email\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Email</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{ user.email }}</td>\r\n  </ng-container>\r\n\r\n<!--   <ng-container  matColumnDef=\"fte\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>FTE</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.fte }}</td>\r\n  </ng-container> -->\r\n\r\n  <ng-container  matColumnDef=\"roleId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Role</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getRole(user.roleId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"gradeId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Grade</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getGrade(user.gradeId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"parentId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Teamlead</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getTeamlead(user.parentId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"admin\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Permissions</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.admin ? 'Administrator' : '-' }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"edit\">\r\n    <th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"action-button\" (click)=\"openUserDialog(user)\"><mat-icon>edit</mat-icon></td>\r\n  </ng-container>\r\n\r\n  <tr mat-header-row *matHeaderRowDef=\"[ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin', 'edit']\"></tr>\r\n  <tr mat-row  *matRowDef=\"let row; columns: [ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin','edit'];\" ></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n  <app-flying-button type=\"user\" pressed=\"false\" label=\"Add User\"></app-flying-button>\r\n  <!-- <button mat-raised-button (click)=\"addNewUser()\" color=\"primary\">\r\n    <mat-icon>person_add</mat-icon> Add User\r\n  </button> -->\r\n</div>"
+            "templateData": "<table mat-table matSort [dataSource]=\"user\">\r\n  <ng-container matColumnDef=\"active\">\r\n    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"flag-button\">\r\n      <mat-slide-toggle color=\"primary\" [checked]=\"user.active\" [(ngModel)]=\"user.active\" (change)=\"setUserActiveState(user.id, user.active)\"></mat-slide-toggle>\r\n    </td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"globalId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Capgemini ID</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.globalId}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"lastName\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{user.lastName}}, {{user.firstName}}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"email\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Email</th>\r\n    <td mat-cell  *matCellDef=\"let user\">{{ user.email }}</td>\r\n  </ng-container>\r\n\r\n<!--   <ng-container  matColumnDef=\"fte\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>FTE</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.fte }}</td>\r\n  </ng-container> -->\r\n\r\n  <ng-container  matColumnDef=\"roleId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Role</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getRole(user.roleId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"gradeId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Grade</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getGrade(user.gradeId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"parentId\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Teamlead</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ getTeamlead(user.parentId) }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container  matColumnDef=\"admin\">\r\n    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Permissions</th>\r\n    <td mat-cell *matCellDef=\"let user\">{{ user.admin ? 'Administrator' : '-' }}</td>\r\n  </ng-container>\r\n\r\n  <ng-container matColumnDef=\"edit\">\r\n    <th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n    <td mat-cell *matCellDef=\"let user\" class=\"action-button\" (click)=\"openUserDialog(user)\"><mat-icon>edit</mat-icon></td>\r\n  </ng-container>\r\n\r\n  <tr mat-header-row *matHeaderRowDef=\"[ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin', 'edit']\"></tr>\r\n  <tr mat-row  *matRowDef=\"let row; columns: [ 'active', 'globalId', 'lastName', 'email', 'roleId', 'gradeId', 'parentId', 'admin','edit'];\" ></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n  <app-flying-button type=\"user\" label=\"Add User\" (click)=\"addNewUser()\"></app-flying-button>\r\n  <!-- <button mat-raised-button (click)=\"addNewUser()\" color=\"primary\">\r\n    <mat-icon>person_add</mat-icon> Add User\r\n  </button> -->\r\n</div>"
         }
     ],
     "modules": [
         {
             "name": "AdminModule",
-            "id": "module-AdminModule-3b9767d69e1ddc632cf3bab57aca3d44",
+            "id": "module-AdminModule-ebe6b16590cbfd0aa2d375c47bce3ff0",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/admin/admin.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\nimport { AppRoutingModule } from '../app-routing.module';\r\nimport { CommonModule } from '@angular/common';\r\nimport { CoreModule } from '../core/core.module';\r\nimport { LayoutModule } from '../layout/layout.module';\r\n\r\nimport { AdminComponent } from './admin.component';\r\nimport { UsersComponent  } from './components/users/users.component';\r\nimport { ProjectsComponent } from './components/projects/projects.component';\r\nimport { MonthsComponent } from './components/months/months.component';\r\nimport { TeamsComponent } from './components/teams/teams.component';\r\nimport { MatExpansionModule } from '@angular/material/expansion';\r\nimport { MatDialogModule } from '@angular/material/dialog';\r\nimport { AddMonthDialog } from './dialogs/add-month/add-month.dialog';\r\nimport { AddProjectDialog } from './dialogs/add-project/add-project.dialog';\r\nimport { AddUserDialog } from './dialogs/add-user/add-user.dialog';\r\nimport { AddTeamDialog } from './dialogs/add-team/add-team.dialog';\r\nimport { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';\r\n@NgModule({\r\n  imports: [\r\n    CommonModule,\r\n    CoreModule,\r\n    LayoutModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    AppRoutingModule,\r\n    MatDialogModule,\r\n  ],\r\n  providers: [],\r\n  declarations: [\r\n\t\tAdminComponent,\r\n\t\tUsersComponent,\r\n    ProjectsComponent,\r\n    MonthsComponent,\r\n    TeamsComponent,\r\n    AddProjectDialog,\r\n    AddMonthDialog,\r\n    AddUserDialog,\r\n    AddTeamDialog,\r\n    ConfirmMessageDialog,\r\n  ],\r\n  exports: [\r\n    MatExpansionModule,\r\n  ],\r\n})\r\nexport class AdminModule {}\r\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\r\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\nimport { AppRoutingModule } from '../app-routing.module';\r\nimport { CommonModule } from '@angular/common';\r\nimport { CoreModule } from '../core/core.module';\r\nimport { LayoutModule } from '../layout/layout.module';\r\n\r\nimport { AdminComponent } from './admin.component';\r\nimport { UsersComponent  } from './components/users/users.component';\r\nimport { ProjectsComponent } from './components/projects/projects.component';\r\nimport { MonthsComponent } from './components/months/months.component';\r\nimport { TeamsComponent } from './components/teams/teams.component';\r\nimport { MatExpansionModule } from '@angular/material/expansion';\r\nimport { MatDialogModule } from '@angular/material/dialog';\r\nimport { AddMonthDialog } from './dialogs/add-month/add-month.dialog';\r\nimport { AddProjectDialog } from './dialogs/add-project/add-project.dialog';\r\nimport { AddUserDialog } from './dialogs/add-user/add-user.dialog';\r\nimport { AddTeamDialog } from './dialogs/add-team/add-team.dialog';\r\nimport { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';\r\n\r\nimport { FlyingButtonComponent } from '../../stories/FlyingButton.component';\r\n\r\n@NgModule({\r\n  imports: [\r\n    CommonModule,\r\n    CoreModule,\r\n    LayoutModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    AppRoutingModule,\r\n    MatDialogModule,\r\n  ],\r\n  providers: [],\r\n  declarations: [\r\n\t\tAdminComponent,\r\n\t\tUsersComponent,\r\n    ProjectsComponent,\r\n    MonthsComponent,\r\n    TeamsComponent,\r\n    AddProjectDialog,\r\n    AddMonthDialog,\r\n    AddUserDialog,\r\n    AddTeamDialog,\r\n    ConfirmMessageDialog,\r\n    FlyingButtonComponent\r\n  ],\r\n  exports: [\r\n    MatExpansionModule,\r\n  ],\r\n})\r\nexport class AdminModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -28299,6 +28299,9 @@
                         },
                         {
                             "name": "ConfirmMessageDialog"
+                        },
+                        {
+                            "name": "FlyingButtonComponent"
                         },
                         {
                             "name": "MonthsComponent"
@@ -28344,13 +28347,13 @@
         },
         {
             "name": "AppModule",
-            "id": "module-AppModule-c9b06d72a0d47b3f7c88f1cc800dd017",
+            "id": "module-AppModule-51b32bb38b825ae613d3533147195ae4",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { BrowserModule } from \"@angular/platform-browser\";\r\nimport { BrowserAnimationsModule } from \"@angular/platform-browser/animations\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { CoreModule } from \"./core/core.module\";\r\nimport { LayoutModule } from \"./layout/layout.module\";\r\nimport { ForecastModule } from \"./forecast/forecast.module\";\r\nimport { AdminModule } from \"./admin/admin.module\";\r\nimport { TranslateModule, TranslateLoader } from \"@ngx-translate/core\";\r\nimport { TranslateHttpLoader } from \"@ngx-translate/http-loader\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { FlexLayoutModule } from \"@angular/flex-layout\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { LoginComponent } from \"./login/login.component\";\r\nimport { DatePipe } from \"@angular/common\";\r\nimport { ReactiveFormsModule, FormsModule } from \"@angular/forms\";\r\nimport { SafeHtmlPipe } from \"./core/pipes/safe-html\";\r\nimport { ResetPasswordComponent } from \"./reset-password/reset-password.component\";\r\nimport { DeviceDetectorModule } from \"ngx-device-detector\";\r\n\r\nimport { FlyingButtonComponent } from '../stories/FlyingButton.component';\r\n\r\n/**\r\n * AoT requires an exported function for factories\r\n */\r\nexport function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {\r\n  return new TranslateHttpLoader(http);\r\n}\r\n\r\n@NgModule({\r\n  declarations: [AppComponent, LoginComponent, ResetPasswordComponent, FlyingButtonComponent],\r\n  imports: [\r\n    BrowserModule,\r\n    FlexLayoutModule,\r\n    BrowserAnimationsModule,\r\n    LayoutModule,\r\n    AppRoutingModule,\r\n    ReactiveFormsModule,\r\n    CoreModule,\r\n    ForecastModule,\r\n    AdminModule,\r\n    FormsModule,\r\n    DeviceDetectorModule.forRoot(),\r\n    TranslateModule.forRoot({\r\n      loader: {\r\n        provide: TranslateLoader,\r\n        useFactory: HttpLoaderFactory,\r\n        deps: [HttpClient]\r\n      }\r\n    })\r\n  ],\r\n  providers: [DatePipe],\r\n  bootstrap: [AppComponent],\r\n})\r\nexport class AppModule {}\r\n",
+            "sourceCode": "import { BrowserModule } from \"@angular/platform-browser\";\r\nimport { BrowserAnimationsModule } from \"@angular/platform-browser/animations\";\r\nimport { NgModule } from \"@angular/core\";\r\nimport { AppRoutingModule } from \"./app-routing.module\";\r\nimport { CoreModule } from \"./core/core.module\";\r\nimport { LayoutModule } from \"./layout/layout.module\";\r\nimport { ForecastModule } from \"./forecast/forecast.module\";\r\nimport { AdminModule } from \"./admin/admin.module\";\r\nimport { TranslateModule, TranslateLoader } from \"@ngx-translate/core\";\r\nimport { TranslateHttpLoader } from \"@ngx-translate/http-loader\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { FlexLayoutModule } from \"@angular/flex-layout\";\r\nimport { AppComponent } from \"./app.component\";\r\nimport { LoginComponent } from \"./login/login.component\";\r\nimport { DatePipe } from \"@angular/common\";\r\nimport { ReactiveFormsModule, FormsModule } from \"@angular/forms\";\r\nimport { SafeHtmlPipe } from \"./core/pipes/safe-html\";\r\nimport { ResetPasswordComponent } from \"./reset-password/reset-password.component\";\r\nimport { DeviceDetectorModule } from \"ngx-device-detector\";\r\n\r\n/**\r\n * AoT requires an exported function for factories\r\n */\r\nexport function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {\r\n  return new TranslateHttpLoader(http);\r\n}\r\n\r\n@NgModule({\r\n  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],\r\n  imports: [\r\n    BrowserModule,\r\n    FlexLayoutModule,\r\n    BrowserAnimationsModule,\r\n    LayoutModule,\r\n    AppRoutingModule,\r\n    ReactiveFormsModule,\r\n    CoreModule,\r\n    ForecastModule,\r\n    AdminModule,\r\n    FormsModule,\r\n    DeviceDetectorModule.forRoot(),\r\n    TranslateModule.forRoot({\r\n      loader: {\r\n        provide: TranslateLoader,\r\n        useFactory: HttpLoaderFactory,\r\n        deps: [HttpClient]\r\n      }\r\n    })\r\n  ],\r\n  providers: [DatePipe],\r\n  bootstrap: [AppComponent],\r\n})\r\nexport class AppModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -28361,9 +28364,6 @@
                     "elements": [
                         {
                             "name": "AppComponent"
-                        },
-                        {
-                            "name": "FlyingButtonComponent"
                         },
                         {
                             "name": "LoginComponent"
@@ -28657,6 +28657,9 @@
                             "name": "GetStarted"
                         },
                         {
+                            "name": "HeaderComponent"
+                        },
+                        {
                             "name": "OrganizationDialogComponent"
                         },
                         {
@@ -28700,7 +28703,7 @@
                 "name": "AddProjectDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28710,7 +28713,7 @@
                 "name": "AddProjectPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28720,7 +28723,7 @@
                 "name": "AddTeamDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28730,7 +28733,7 @@
                 "name": "AddTeamPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28740,7 +28743,7 @@
                 "name": "AddUserDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28750,7 +28753,7 @@
                 "name": "AddUserPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28760,7 +28763,7 @@
                 "name": "CancelDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28770,7 +28773,7 @@
                 "name": "CancelPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28780,7 +28783,7 @@
                 "name": "CSVDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28790,7 +28793,7 @@
                 "name": "CSVPressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28846,7 +28849,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Button.stories.ts",
+                "file": "src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28856,7 +28859,7 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Header.stories.ts",
+                "file": "src/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28866,7 +28869,7 @@
                 "name": "LoggedIn",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Page.stories.ts",
+                "file": "src/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28876,7 +28879,7 @@
                 "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Header.stories.ts",
+                "file": "src/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28886,7 +28889,7 @@
                 "name": "LoggedOut",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Page.stories.ts",
+                "file": "src/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28896,7 +28899,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Button.stories.ts",
+                "file": "src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28906,7 +28909,7 @@
                 "name": "SaveDefault",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28916,7 +28919,7 @@
                 "name": "SavePressed",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28926,7 +28929,7 @@
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Button.stories.ts",
+                "file": "src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28936,7 +28939,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Button.stories.ts",
+                "file": "src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -28946,7 +28949,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Button.stories.ts",
+                "file": "src/stories/Button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Button>",
@@ -28956,17 +28959,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/FlyingButton.component.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<FlyingButtonComponent>",
-                "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n  moduleMetadata: {\r\n    imports: [\r\n      MatIconModule,\r\n      MatButtonModule\r\n    ]\r\n  }\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                "file": "src/stories/ButtonSaveCancel.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<ButtonSaveCancelComponent>",
@@ -28976,7 +28969,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Header.stories.ts",
+                "file": "src/stories/FlyingButton.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<FlyingButtonComponent>",
+                "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n  moduleMetadata: {\r\n    imports: [\r\n      MatIconModule,\r\n      MatButtonModule\r\n    ]\r\n  }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Header>",
@@ -28986,7 +28989,7 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/stories/Page.stories.ts",
+                "file": "src/stories/Page.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<Page>",
@@ -29066,12 +29069,12 @@
         "typealiases": [],
         "enumerations": [],
         "groupedVariables": {
-            "src/app/stories/FlyingButton.component.stories.ts": [
+            "src/stories/FlyingButton.component.stories.ts": [
                 {
                     "name": "AddProjectDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29081,7 +29084,7 @@
                     "name": "AddProjectPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29091,7 +29094,7 @@
                     "name": "AddTeamDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29101,7 +29104,7 @@
                     "name": "AddTeamPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29111,7 +29114,7 @@
                     "name": "AddUserDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29121,7 +29124,7 @@
                     "name": "AddUserPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29131,7 +29134,7 @@
                     "name": "CSVDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29141,7 +29144,7 @@
                     "name": "CSVPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29151,19 +29154,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/FlyingButton.component.stories.ts",
+                    "file": "src/stories/FlyingButton.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<FlyingButtonComponent>",
                     "defaultValue": "(args: FlyingButtonComponent) => ({\r\n  props: args,\r\n  moduleMetadata: {\r\n    imports: [\r\n      MatIconModule,\r\n      MatButtonModule\r\n    ]\r\n  }\r\n})"
                 }
             ],
-            "src/app/stories/ButtonSaveCancel.stories.ts": [
+            "src/stories/ButtonSaveCancel.stories.ts": [
                 {
                     "name": "CancelDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29173,7 +29176,7 @@
                     "name": "CancelPressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29183,7 +29186,7 @@
                     "name": "SaveDefault",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29193,7 +29196,7 @@
                     "name": "SavePressed",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29203,7 +29206,7 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/ButtonSaveCancel.stories.ts",
+                    "file": "src/stories/ButtonSaveCancel.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<ButtonSaveCancelComponent>",
@@ -29264,12 +29267,12 @@
                     "description": "<p>Data for getStarted</p>\n"
                 }
             ],
-            "src/app/stories/Button.stories.ts": [
+            "src/stories/Button.stories.ts": [
                 {
                     "name": "Large",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Button.stories.ts",
+                    "file": "src/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29279,7 +29282,7 @@
                     "name": "Primary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Button.stories.ts",
+                    "file": "src/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29289,7 +29292,7 @@
                     "name": "Secondary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Button.stories.ts",
+                    "file": "src/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29299,7 +29302,7 @@
                     "name": "Small",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Button.stories.ts",
+                    "file": "src/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29309,19 +29312,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Button.stories.ts",
+                    "file": "src/stories/Button.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Button>",
                     "defaultValue": "(args: Button) => ({\r\n  props: args,\r\n})"
                 }
             ],
-            "src/app/stories/Header.stories.ts": [
+            "src/stories/Header.stories.ts": [
                 {
                     "name": "LoggedIn",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Header.stories.ts",
+                    "file": "src/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29331,7 +29334,7 @@
                     "name": "LoggedOut",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Header.stories.ts",
+                    "file": "src/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29341,19 +29344,19 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Header.stories.ts",
+                    "file": "src/stories/Header.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Header>",
                     "defaultValue": "(args: Header) => ({\r\n  props: args,\r\n})"
                 }
             ],
-            "src/app/stories/Page.stories.ts": [
+            "src/stories/Page.stories.ts": [
                 {
                     "name": "LoggedIn",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Page.stories.ts",
+                    "file": "src/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29363,7 +29366,7 @@
                     "name": "LoggedOut",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Page.stories.ts",
+                    "file": "src/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -29373,7 +29376,7 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/stories/Page.stories.ts",
+                    "file": "src/stories/Page.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<Page>",
@@ -30589,301 +30592,6 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Large",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Primary",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Secondary",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Small",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Button.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ButtonSaveCancelComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CancelDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CancelPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "SaveDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "SavePressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/ButtonSaveCancel.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddProjectDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddProjectPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddTeamDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddTeamPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddUserDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "AddUserPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CSVDefault",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "CSVPressed",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/FlyingButton.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "FlyingButtonComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/app/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/Page.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/button.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ButtonComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/app/stories/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/stories/page.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "PageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
                 "filePath": "src/environments/environment.prod.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -30902,6 +30610,301 @@
                 "coveragePercent": 100,
                 "coverageCount": "1/1",
                 "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Large",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Secondary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Small",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonSaveCancelComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CancelDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CancelPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SaveDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "SavePressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/ButtonSaveCancel.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddProjectPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddTeamPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddUserPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVDefault",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CSVPressed",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/FlyingButton.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FlyingButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/header.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "HeaderComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/page.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
             }
         ]
     }
