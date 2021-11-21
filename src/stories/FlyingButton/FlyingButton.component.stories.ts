@@ -11,7 +11,6 @@ export default {
   component: FlyingButtonComponent,
   // More on argTypes: https://storybook.js.org/docs/angular/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' },
   },
   decorators: [withDesign],
   parameters: {
@@ -53,6 +52,7 @@ AddProjectDefault.args = {
 };
 
 AddProjectDefault.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9c00ac83412f6cbee15',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2249'
@@ -67,6 +67,7 @@ AddTeamDefault.args = {
 };
 
 AddTeamDefault.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9bef2ab541516aff2a0',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2254'
@@ -82,6 +83,7 @@ AddUserPressed.args = {
 };
 
 AddUserPressed.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9bfd2770f10af2f081f',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2259'
@@ -96,6 +98,7 @@ AddProjectPressed.args = {
 };
 
 AddProjectPressed.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9c0a60011113007ec04',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2263'
@@ -110,6 +113,7 @@ AddTeamPressed.args = {
 };
 
 AddTeamPressed.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=60f6b9bfeed29916c53a514c',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=426%3A2267'
@@ -124,6 +128,7 @@ CSVDefault.args = {
 };
 
 CSVDefault.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=6193c2bd02d9b5adca05a138',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=534%3A3107'
@@ -138,6 +143,7 @@ CSVPressed.args = {
 };
 
 CSVPressed.parameters = {
+  zeplinLink:'zpl://components?pid=603f452486a2b41861334dd2&coid=6193c2bdc6b7b1a97541a886',
   design: {
     type: 'experimental-figspec',
     url: 'https://www.figma.com/file/BRHSpCecBd34FTyZAwtYFQ/Forecastr-Design?node-id=534%3A3112'

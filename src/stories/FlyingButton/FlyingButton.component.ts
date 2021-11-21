@@ -8,22 +8,17 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         type="button"
         (click)="onClick.emit($event);"
         [ngClass]=stateDefault
-        [ngStyle]="{ 'background-color': backgroundColor }"
       >
         <div class="Content">
           <mat-icon>{{icon}}</mat-icon>
-          <div [ngClass]=typeClass>
+          <div class="Label">
             {{ label }}
           </div>
         </div>
       </button>
     </div>`,
   styleUrls: [
-    './FlyingButton.css',
-    './FlyingButton.User.css',
-    './FlyingButton.Team.css',
-    './FlyingButton.Project.css',
-    './FlyingButton.CSV.css'
+    './FlyingButton.css'
   ],
 })
 export class FlyingButtonComponent {
@@ -55,8 +50,8 @@ export class FlyingButtonComponent {
 
   public get classes(): string[] {
     return [
-    'Flying-Button', 
-    this.type];
+    'Flying-Button'
+    ];
   }
 
   public get icon(): string{
@@ -70,41 +65,10 @@ export class FlyingButtonComponent {
     }
   }
 
-  public get typeClass(): string[] {
-    switch(this.type){
-      case  'user':
-        return ['Add-User'];
-      case  'team':
-        return ['Add-Team'];
-      case  'project':
-        return ['Add-Project'];
-      case  'csv':
-        return ['CSV'];
-    }
-  }
-
   public get stateDefault(): string[] {
-    switch(this.type){
-      case  'user':
-        if(this.pressed)
-          return ['TypeUser-StateOn-Click'];
-        else
-          return ['TypeUser-StateDefault'];
-      case  'team':
-        if(this.pressed)
-          return ['TypeTeam-StateOn-Click'];
-        else
-          return ['TypeTeam-StateDefault'];
-      case  'project':
-        if(this.pressed)
-          return ['TypeProject-StateOn-Click'];
-        else
-          return ['TypeProject-StateDefault'];
-      case  'csv':
-        if(this.pressed)
-          return ['TypeCSV-StateOn-Click'];
-        else
-          return ['TypeCSV-StateDefault'];
-    }
+    if(this.pressed)
+    return ['StateOn-Click'];
+  else
+    return ['StateDefault'];
   }
 }
