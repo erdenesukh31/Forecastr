@@ -26,7 +26,7 @@ export class FlyingButtonComponent {
    * Is this the principal call to action on the page?
    */
   @Input()
-  type : 'team' | 'user' | 'project' | 'csv';
+  type : 'team' | 'user' | 'project' | 'csv' | 'month';
 
   /**
    * How large should the button be?
@@ -62,6 +62,8 @@ export class FlyingButtonComponent {
         return 'person_add';
       case  'csv':
         return 'file_download';
+      case 'month':
+        return 'playlist_add'
     }
   }
 
