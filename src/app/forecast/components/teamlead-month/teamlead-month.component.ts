@@ -13,6 +13,8 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 import { Project } from "../../../core/interfaces/project";
 import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
+import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 /**
  * teamlead view component
@@ -60,6 +62,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    * teamlead component constructor
    */
   constructor(
+    private dialog: MatDialog,
     private userService: UserService,
     private teamService: TeamUserService,
     private authService: AuthService,
@@ -117,8 +120,32 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
 
     this.teamFcSubscription = this.teamForecastService
       .getTeamForecast(this.userId, this.month.id, level)
-      .subscribe((fcEntries: FcEntry[]) => {
+      .subscribe((fcEntries: any[]) => {
+        
         this.forecastService.addForecasts(fcEntries);
+        fcEntries.forEach(entry =>{
+          if((entry.suggestedData) &&
+          entry.suggestedData.projects.length > 0 ){
+            // || entry.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId 
+          /**
+           * For the next release in the future, the copy data functionality will be added
+           */
+
+          let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+            data: {
+              message: 'Copy data from last month submitted?',
+              button: { cancel: 'No', submit: 'Yes' },
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((add: boolean) => {
+            if (add === true) {
+              this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.SuggestedData);
+            }
+          });
+
+          }
+        })
       });
   }
 
