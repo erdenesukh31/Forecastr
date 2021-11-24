@@ -68,7 +68,7 @@
             <mat-button-toggle *ngIf="isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="head-of-practices">
               <mat-icon>grid_on</mat-icon> Overview
             </mat-button-toggle>
-            <mat-button-toggle *ngIf="isMSLLevelRole('HOP')" class="sm-hop-button-toggle" value="individual">
+            <mat-button-toggle *ngIf="isMSLLevelRole('HOP') || isMSLLevelRole('SM')" class="sm-hop-button-toggle" value="individual">
               <mat-icon>person</mat-icon> Me
             </mat-button-toggle>
             <mat-button-toggle *ngIf="mslHasPractice()" class="sm-hop-button-toggle" value="practice">
