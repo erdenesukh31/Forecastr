@@ -29,7 +29,7 @@ export class FlyingButtonComponent {
   type : 'team' | 'user' | 'project' | 'csv' | 'month';
 
   /**
-   * How large should the button be?
+   * Storybook selector
    */
   @Input()
   pressed? = false;
@@ -69,8 +69,8 @@ export class FlyingButtonComponent {
 
   public get stateDefault(): string[] {
     if(this.pressed)
-    return ['StateOn-Click'];
-  else
-    return ['StateDefault'];
-  }
+      return ['StateOn-Click'];
+    else
+      return ['StateDefault'];
+    }
 }

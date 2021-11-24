@@ -882,7 +882,156 @@
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914",
+            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62",
+            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "arve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 317
+                },
+                {
+                    "name": "benchDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 313
+                },
+                {
+                    "name": "billableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 308
+                },
+                {
+                    "name": "businessDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 312
+                },
+                {
+                    "name": "cor",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 316
+                },
+                {
+                    "name": "external",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 320
+                },
+                {
+                    "name": "fteCss",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 315
+                },
+                {
+                    "name": "monthId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 306
+                },
+                {
+                    "name": "nonBillableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 309
+                },
+                {
+                    "name": "probabilityId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 307
+                },
+                {
+                    "name": "ros",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 319
+                },
+                {
+                    "name": "trainingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 311
+                },
+                {
+                    "name": "urve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 318
+                },
+                {
+                    "name": "vacationDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 310
+                },
+                {
+                    "name": "workingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 314
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": []
+        },
+        {
+            "name": "SummaryValues",
+            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914-1",
             "file": "src/app/forecast/components/executive-chart/executive-chart.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1036,11 +1185,14 @@
             ],
             "indexSignatures": [],
             "kind": 164,
-            "methods": []
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "SummaryValues-1"
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-1",
+            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-2",
             "file": "src/app/forecast/components/executive-summary/executive-summary.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1181,158 +1333,6 @@
                     "optional": false,
                     "description": "",
                     "line": 121
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 164,
-            "methods": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "SummaryValues-1"
-        },
-        {
-            "name": "SummaryValues",
-            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62-2",
-            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
-            "properties": [
-                {
-                    "name": "arve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 317
-                },
-                {
-                    "name": "benchDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 313
-                },
-                {
-                    "name": "billableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 308
-                },
-                {
-                    "name": "businessDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 312
-                },
-                {
-                    "name": "cor",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 316
-                },
-                {
-                    "name": "external",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 320
-                },
-                {
-                    "name": "fteCss",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 315
-                },
-                {
-                    "name": "monthId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 306
-                },
-                {
-                    "name": "nonBillableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 309
-                },
-                {
-                    "name": "probabilityId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 307
-                },
-                {
-                    "name": "ros",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 319
-                },
-                {
-                    "name": "trainingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 311
-                },
-                {
-                    "name": "urve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 318
-                },
-                {
-                    "name": "vacationDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 310
-                },
-                {
-                    "name": "workingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 314
                 }
             ],
             "indexSignatures": [],
@@ -20211,7 +20211,7 @@
         },
         {
             "name": "FlyingButtonComponent",
-            "id": "component-FlyingButtonComponent-d244548060d95aef61f01aae0631534d",
+            "id": "component-FlyingButtonComponent-317d45038689ac13b4da010fb1f7d190",
             "file": "src/stories/FlyingButton/FlyingButton.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -20223,7 +20223,7 @@
                 "./FlyingButton.css"
             ],
             "styles": [],
-            "template": "<div [ngClass]=classes>\n  <button\n      type=\"button\"\n      (click)=\"onClick.emit($event);\"\n      [ngClass]=stateDefault\n      [ngStyle]=\"{ 'background-color': backgroundColor }\"\n    >\n      <div class=\"Content\">\n        <mat-icon>{{icon}}</mat-icon>\n        <div class=\"Label\">\n          {{ label }}\n        </div>\n      </div>\n    </button>\n  </div>",
+            "template": "<div [ngClass]=classes>\n  <button\n      type=\"button\"\n      (click)=\"onClick.emit($event);\"\n      [ngClass]=stateDefault\n    >\n      <div class=\"Content\">\n        <mat-icon class=\"img\">{{icon}}</mat-icon>\n        <div class=\"Label\">\n          {{ label }}\n        </div>\n      </div>\n    </button>\n  </div>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
@@ -20234,15 +20234,15 @@
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
-                            "pos": 1027,
-                            "end": 1041,
+                            "pos": 833,
+                            "end": 847,
                             "flags": 4227072,
                             "modifierFlagsCache": 0,
                             "transformFlags": 0,
                             "kind": 322,
                             "tagName": {
-                                "pos": 1028,
-                                "end": 1036,
+                                "pos": 834,
+                                "end": 842,
                                 "flags": 4227072,
                                 "modifierFlagsCache": 0,
                                 "transformFlags": 0,
@@ -20254,7 +20254,7 @@
                     ],
                     "rawdescription": "Button contents",
                     "description": "<p>Button contents</p>\n",
-                    "line": 48,
+                    "line": 43,
                     "type": "string"
                 },
                 {
@@ -20262,9 +20262,9 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "How large should the button be?",
-                    "description": "<p>How large should the button be?</p>\n",
-                    "line": 40,
+                    "rawdescription": "Storybook selector",
+                    "description": "<p>Storybook selector</p>\n",
+                    "line": 35,
                     "type": "boolean"
                 },
                 {
@@ -20273,8 +20273,8 @@
                     "deprecationMessage": "",
                     "rawdescription": "Is this the principal call to action on the page?",
                     "description": "<p>Is this the principal call to action on the page?</p>\n",
-                    "line": 34,
-                    "type": "\"team\" | \"user\" | \"project\" | \"csv\""
+                    "line": 29,
+                    "type": "\"team\" | \"user\" | \"project\" | \"csv\" | \"month\""
                 }
             ],
             "outputsClass": [
@@ -20285,7 +20285,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nOptional click handler\n",
                     "description": "<p>Optional click handler</p>\n",
-                    "line": 54,
+                    "line": 49,
                     "type": "EventEmitter"
                 }
             ],
@@ -20298,11 +20298,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: \"app-flying-button\",\r\n  template: `\r\n  <div [ngClass]=classes>\r\n    <button\r\n        type=\"button\"\r\n        (click)=\"onClick.emit($event);\"\r\n        [ngClass]=stateDefault\r\n        [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n      >\r\n        <div class=\"Content\">\r\n          <mat-icon>{{icon}}</mat-icon>\r\n          <div class=\"Label\">\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: [\r\n    './FlyingButton.css',\r\n    // './FlyingButton.User.css',\r\n    // './FlyingButton.Team.css',\r\n    // './FlyingButton.Project.css',\r\n    // './FlyingButton.CSV.css'\r\n  ],\r\n})\r\nexport class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv';\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  pressed? = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button'\r\n    ];\r\n  }\r\n\r\n  public get icon(): string{\r\n    switch(this.type){\r\n      case  'user':\r\n      case  'project':\r\n      case  'team':\r\n        return 'person_add';\r\n      case  'csv':\r\n        return 'file_download';\r\n    }\r\n  }\r\n\r\n  public get typeClass(): string[] {\r\n    switch(this.type){\r\n      case  'user':\r\n        return ['Add-User'];\r\n      case  'team':\r\n        return ['Add-Team'];\r\n      case  'project':\r\n        return ['Add-Project'];\r\n      case  'csv':\r\n        return ['CSV'];\r\n    }\r\n  }\r\n\r\n  public get stateDefault(): string[] {\r\n    if(this.pressed)\r\n    return ['StateOn-Click'];\r\n  else\r\n    return ['StateDefault'];\r\n    switch(this.type){\r\n      case  'user':\r\n        if(this.pressed)\r\n          return ['TypeUser-StateOn-Click'];\r\n        else\r\n          return ['TypeUser-StateDefault'];\r\n      case  'team':\r\n        if(this.pressed)\r\n          return ['TypeTeam-StateOn-Click'];\r\n        else\r\n          return ['TypeTeam-StateDefault'];\r\n      case  'project':\r\n        if(this.pressed)\r\n          return ['TypeProject-StateOn-Click'];\r\n        else\r\n          return ['TypeProject-StateDefault'];\r\n      case  'csv':\r\n        if(this.pressed)\r\n          return ['TypeCSV-StateOn-Click'];\r\n        else\r\n          return ['TypeCSV-StateDefault'];\r\n    }\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: \"app-flying-button\",\r\n  template: `\r\n  <div [ngClass]=classes>\r\n    <button\r\n        type=\"button\"\r\n        (click)=\"onClick.emit($event);\"\r\n        [ngClass]=stateDefault\r\n      >\r\n        <div class=\"Content\">\r\n          <mat-icon class=\"img\">{{icon}}</mat-icon>\r\n          <div class=\"Label\">\r\n            {{ label }}\r\n          </div>\r\n        </div>\r\n      </button>\r\n    </div>`,\r\n  styleUrls: [\r\n    './FlyingButton.css'\r\n  ],\r\n})\r\nexport class FlyingButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  type : 'team' | 'user' | 'project' | 'csv' | 'month';\r\n\r\n  /**\r\n   * Storybook selector\r\n   */\r\n  @Input()\r\n  pressed? = false;\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    return [\r\n    'Flying-Button'\r\n    ];\r\n  }\r\n\r\n  public get icon(): string{\r\n    switch(this.type){\r\n      case  'user':\r\n      case  'project':\r\n      case  'team':\r\n        return 'person_add';\r\n      case  'csv':\r\n        return 'file_download';\r\n      case 'month':\r\n        return 'playlist_add'\r\n    }\r\n  }\r\n\r\n  public get stateDefault(): string[] {\r\n    if(this.pressed)\r\n      return ['StateOn-Click'];\r\n    else\r\n      return ['StateDefault'];\r\n    }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".Flying-Button {\r\n  position: fixed;\r\n  z-index: 100;\r\n  bottom: 32px;\r\n  right: 30px;\r\n}\r\n\r\n.Flying-Button mat-icon{\r\n  width: 24px;\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  object-fit: contain;\r\n  color: #fff; \r\n}\r\n\r\n\r\n.Flying-Button .Content {\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n.Flying-Button .Label {\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n.Flying-Button .StateDefault {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n.Flying-Button .StateDefault:active {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n.Flying-Button .StateOn-Click {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n\r\n",
+                    "data": "/* Added */\r\n.Flying-Button {\r\n  position: fixed;\r\n  z-index: 100;\r\n  bottom: 32px;\r\n  right: 30px;\r\n}\r\n\r\n/* Added mat-icon instead of img.Icons */\r\n.Flying-Button  mat-icon{\r\n  width: 24px !important;\r\n  height: 24px !important;\r\n  flex-grow: 0 !important;\r\n  font-size: 22px !important;\r\n  object-fit: contain !important;\r\n  color: #fff !important; \r\n}\r\n\r\n/* Removed width */\r\n.Flying-Button .Content {\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n/* Removed width and renamed from specific to Label */\r\n.Flying-Button .Label {\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: red;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateDefault {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n/* Added class :active */\r\n.Flying-Button .StateDefault:active {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateOn-Click {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n\r\n",
                     "styleUrl": "./FlyingButton.css"
                 }
             ],
@@ -20314,7 +20314,7 @@
                         "name": "classes",
                         "type": "[]",
                         "returnType": "string[]",
-                        "line": 56
+                        "line": 51
                     }
                 },
                 "icon": {
@@ -20323,16 +20323,7 @@
                         "name": "icon",
                         "type": "string",
                         "returnType": "string",
-                        "line": 62
-                    }
-                },
-                "typeClass": {
-                    "name": "typeClass",
-                    "getSignature": {
-                        "name": "typeClass",
-                        "type": "[]",
-                        "returnType": "string[]",
-                        "line": 73
+                        "line": 57
                     }
                 },
                 "stateDefault": {
@@ -20341,7 +20332,7 @@
                         "name": "stateDefault",
                         "type": "[]",
                         "returnType": "string[]",
-                        "line": 86
+                        "line": 70
                     }
                 }
             }
@@ -22809,7 +22800,7 @@
                 "OnInit",
                 "OnDestroy"
             ],
-            "templateData": "<table mat-table matSort [dataSource]=\"months\">\r\n\r\n\t<ng-container matColumnDef=\"active\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n\t\t<td mat-cell *matCellDef=\"let month\" class=\"flag-button\">\r\n\t\t\t<mat-slide-toggle color=\"primary\" [checked]=\"month.active\" [(ngModel)]=\"month.active\" (change)=\"setMonthActiveState(month.id, month.active)\"></mat-slide-toggle>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"name\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.name }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"workingdays\">\r\n\t\t<th mat-header-cell *matHeaderCellDef>Working Days</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.workingdays }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"time\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Month</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.time | date: 'MMMM yyyy' }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"edit\">\r\n\t\t<th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n\t\t<td mat-cell *matCellDef=\"let month\" class=\"action-button\"><mat-icon *ngIf=\"month.active\" (click)=\"updateMonth(month.id)\">edit</mat-icon></td>\r\n\t</ng-container>\r\n\t\r\n\t<tr mat-header-row *matHeaderRowDef=\"['active', 'name', 'workingdays', 'time', 'edit']\"></tr>\r\n\t<tr mat-row *matRowDef=\"let row; columns: ['active', 'name', 'workingdays', 'time', 'edit'];\" [ngClass]=\"{'inactive': (!row.active)}\"></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n\t<button mat-raised-button color=\"primary\" (click)=\"addMonth()\">\r\n\t\t<mat-icon>playlist_add</mat-icon> Add Month\r\n\t</button>\r\n</div>"
+            "templateData": "<table mat-table matSort [dataSource]=\"months\">\r\n\r\n\t<ng-container matColumnDef=\"active\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n\t\t<td mat-cell *matCellDef=\"let month\" class=\"flag-button\">\r\n\t\t\t<mat-slide-toggle color=\"primary\" [checked]=\"month.active\" [(ngModel)]=\"month.active\" (change)=\"setMonthActiveState(month.id, month.active)\"></mat-slide-toggle>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"name\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.name }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"workingdays\">\r\n\t\t<th mat-header-cell *matHeaderCellDef>Working Days</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.workingdays }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"time\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Month</th>\r\n\t\t<td mat-cell *matCellDef=\"let month\">{{ month.time | date: 'MMMM yyyy' }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"edit\">\r\n\t\t<th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n\t\t<td mat-cell *matCellDef=\"let month\" class=\"action-button\"><mat-icon *ngIf=\"month.active\" (click)=\"updateMonth(month.id)\">edit</mat-icon></td>\r\n\t</ng-container>\r\n\t\r\n\t<tr mat-header-row *matHeaderRowDef=\"['active', 'name', 'workingdays', 'time', 'edit']\"></tr>\r\n\t<tr mat-row *matRowDef=\"let row; columns: ['active', 'name', 'workingdays', 'time', 'edit'];\" [ngClass]=\"{'inactive': (!row.active)}\"></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n\t<app-flying-button type=\"month\" label=\"Add Month\" (click)=\"addMonth()\"></app-flying-button>\r\n\t<!-- <button mat-raised-button color=\"primary\" (click)=\"addMonth()\">\r\n\t\t<mat-icon>playlist_add</mat-icon> Add Month\r\n\t</button> -->\r\n</div>"
         },
         {
             "name": "OrganizationDialogComponent",
@@ -24294,7 +24285,7 @@
                 "OnInit",
                 "OnDestroy"
             ],
-            "templateData": "<table mat-table matSort [dataSource]=\"projects\">\r\n\r\n\t<ng-container matColumnDef=\"active\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n\t\t<td mat-cell *matCellDef=\"let project\" class=\"flag-button\">\r\n\t\t\t<mat-slide-toggle color=\"primary\" [checked]=\"project.active\" [(ngModel)]=\"project.active\" (change)=\"setProjectActiveState(project.id, project.active)\"></mat-slide-toggle>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"code\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Code</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">{{ project.code }}</td>\r\n\t</ng-container>\r\n\t\r\n\t<ng-container matColumnDef=\"name\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">{{ project.name }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"mandatory\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Mandatory</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.mandatory\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"'Y'\">Mandatory</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"'N'\">Not Mandatory</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"billable\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Billable</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.billable\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"true\">Billable</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"false\">Non-billable</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"projectType\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.projectType\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"0\">Default</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"5\">Non-billable / No COR</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"1\">Business Development Days</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"2\">Training</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"3\">Vacation</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"4\">Bench Time</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"edit\">\r\n\t\t<th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n\t\t<td mat-cell *matCellDef=\"let project\" class=\"action-button\"><mat-icon *ngIf=\"project.active\" (click)=\"updateProject(project.id)\">edit</mat-icon></td>\r\n\t</ng-container>\r\n\t\r\n\t<tr mat-header-row *matHeaderRowDef=\"['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit']\"></tr>\r\n\t<tr mat-row *matRowDef=\"let row; columns: ['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit'];\" [ngClass]=\"{'inactive': (!row.active)}\"></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n\t<button mat-raised-button color=\"primary\" (click)=\"addProject()\">\r\n\t\t<mat-icon>playlist_add</mat-icon> Add Project\r\n\t</button>\r\n</div>"
+            "templateData": "<table mat-table matSort [dataSource]=\"projects\">\r\n\r\n\t<ng-container matColumnDef=\"active\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef></th>\r\n\t\t<td mat-cell *matCellDef=\"let project\" class=\"flag-button\">\r\n\t\t\t<mat-slide-toggle color=\"primary\" [checked]=\"project.active\" [(ngModel)]=\"project.active\" (change)=\"setProjectActiveState(project.id, project.active)\"></mat-slide-toggle>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"code\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Code</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">{{ project.code }}</td>\r\n\t</ng-container>\r\n\t\r\n\t<ng-container matColumnDef=\"name\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">{{ project.name }}</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"mandatory\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Mandatory</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.mandatory\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"'Y'\">Mandatory</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"'N'\">Not Mandatory</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"billable\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Billable</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.billable\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"true\">Billable</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"false\">Non-billable</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"projectType\">\r\n\t\t<th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>\r\n\t\t<td mat-cell *matCellDef=\"let project\">\r\n\t\t\t<ng-container [ngSwitch]=\"project.projectType\">\r\n\t\t\t\t<ng-container *ngSwitchCase=\"0\">Default</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"5\">Non-billable / No COR</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"1\">Business Development Days</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"2\">Training</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"3\">Vacation</ng-container>\r\n\t\t\t\t<ng-container *ngSwitchCase=\"4\">Bench Time</ng-container>\r\n\t\t\t</ng-container>\r\n\t\t</td>\r\n\t</ng-container>\r\n\r\n\t<ng-container matColumnDef=\"edit\">\r\n\t\t<th mat-header-cell *matHeaderCellDef class=\"action-button\"></th>\r\n\t\t<td mat-cell *matCellDef=\"let project\" class=\"action-button\"><mat-icon *ngIf=\"project.active\" (click)=\"updateProject(project.id)\">edit</mat-icon></td>\r\n\t</ng-container>\r\n\t\r\n\t<tr mat-header-row *matHeaderRowDef=\"['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit']\"></tr>\r\n\t<tr mat-row *matRowDef=\"let row; columns: ['active', 'code', 'name', 'mandatory', 'billable', 'projectType', 'edit'];\" [ngClass]=\"{'inactive': (!row.active)}\"></tr>\r\n</table>\r\n\r\n<div class=\"button-row\">\r\n\t<app-flying-button type=\"project\" label=\"Add Project\" (click)=\"addProject()\"></app-flying-button>\r\n\t<!-- <button mat-raised-button color=\"primary\" (click)=\"addProject()\">\r\n\t\t<mat-icon>playlist_add</mat-icon> Add Project\r\n\t</button> -->\r\n</div>"
         },
         {
             "name": "ResetPasswordComponent",
@@ -27747,7 +27738,7 @@
                 "OnInit",
                 "OnDestroy"
             ],
-            "templateData": "<mat-accordion displayMode=\"flat\" multi>\r\n  <mat-expansion-panel *ngFor=\"let team of teams\">\r\n    <mat-expansion-panel-header>\r\n      <mat-panel-title>\r\n        {{team.name}}\r\n      </mat-panel-title>\r\n      <mat-panel-description class=\"mat-row\">\r\n        <mat-icon (click)=\"deleteTeam(team)\">delete</mat-icon>\r\n        <mat-icon (click)=\"updateTeam(team)\">edit</mat-icon>\r\n      </mat-panel-description>\r\n    </mat-expansion-panel-header>\r\n\r\n    <table mat-table [dataSource]=\"getTeamMembers(team.teamLeadId)\" class=\"mat-elevation-z8\">\r\n\t\t\t\t<ng-container matColumnDef=\"name\">\r\n\t\t\t\t\t<td mat-cell *matCellDef=\"let user; let i = index\"> {{user.lastName}}, {{user.firstName}} \r\n            <ng-container *ngIf=\"i == 0\">(Teamlead)</ng-container>\r\n          </td>\r\n\t\t\t\t</ng-container>\r\n\r\n\t\t\t\t<tr mat-row *matRowDef=\"let row; columns: ['name'];\"></tr>\r\n\t\t\t</table>\r\n\t</mat-expansion-panel>\r\n</mat-accordion>\r\n\r\n<div class=\"button-row\">\r\n  <button mat-raised-button color=\"primary\" (click)=\"addTeam()\">\r\n    <mat-icon>playlist_add</mat-icon> Add Team\r\n  </button>\r\n</div>"
+            "templateData": "<mat-accordion displayMode=\"flat\" multi>\r\n  <mat-expansion-panel *ngFor=\"let team of teams\">\r\n    <mat-expansion-panel-header>\r\n      <mat-panel-title>\r\n        {{team.name}}\r\n      </mat-panel-title>\r\n      <mat-panel-description class=\"mat-row\">\r\n        <mat-icon (click)=\"deleteTeam(team)\">delete</mat-icon>\r\n        <mat-icon (click)=\"updateTeam(team)\">edit</mat-icon>\r\n      </mat-panel-description>\r\n    </mat-expansion-panel-header>\r\n\r\n    <table mat-table [dataSource]=\"getTeamMembers(team.teamLeadId)\" class=\"mat-elevation-z8\">\r\n\t\t\t\t<ng-container matColumnDef=\"name\">\r\n\t\t\t\t\t<td mat-cell *matCellDef=\"let user; let i = index\"> {{user.lastName}}, {{user.firstName}} \r\n            <ng-container *ngIf=\"i == 0\">(Teamlead)</ng-container>\r\n          </td>\r\n\t\t\t\t</ng-container>\r\n\r\n\t\t\t\t<tr mat-row *matRowDef=\"let row; columns: ['name'];\"></tr>\r\n\t\t\t</table>\r\n\t</mat-expansion-panel>\r\n</mat-accordion>\r\n\r\n<div class=\"button-row\">\r\n\t<app-flying-button type=\"team\" label=\"Add Team\" (click)=\"addTeam()\"></app-flying-button>\r\n  <!-- <button mat-raised-button color=\"primary\" (click)=\"addTeam()\">\r\n    <mat-icon>playlist_add</mat-icon> Add Team\r\n  </button> -->\r\n</div>"
         },
         {
             "name": "UsersComponent",
