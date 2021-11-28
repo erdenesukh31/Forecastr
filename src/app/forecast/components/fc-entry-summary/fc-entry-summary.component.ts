@@ -17,7 +17,7 @@ import { DataSharingService } from '../../../core/shared/data-sharing.service';
 import { SummaryDataProject, SummaryData } from '../../../core/interfaces/summaryData';
 import { User } from '../../../core/interfaces/user';
 import { FcEntrySummaryVacationWarningComponent } from './vacation-warning/fc-entry-summary-vacation-warning.component';
-
+import { FcEntrySummaryRemDaysWarningComponent } from './remdays-warning/fc-entry-summary-remdays-warning.component';
 /**
  * forecast-entry individual summary component
  */
@@ -124,16 +124,30 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
   /**
    * Calls save forecast in forecast-service.
    */
-  saveForecast(): void {
+   saveForecast(): void {
     let vacationProject = this.projects.find(p => p.name === "0IDVAC793 - Austria Vacation");
     let vacationForecast = this.forecast.projects.find(p => p.projectId === vacationProject.id);
-    if(vacationForecast.plannedProjectDays <= 0){
+    let benchProject = this.projects.find(p => p.name === "100528772 - Bench Time_non-client_APPS");
+    let benchForecast = this.forecast.projects.find(p => p.projectId === benchProject.id);
+    var remDays =  this.forecast.totalDays - (this.forecast.billableDays + this.forecast.nonbillableDays);
+
+    if(vacationForecast.plannedProjectDays <= 0 || benchForecast.plannedProjectDays <= 0){
+      if(vacationForecast.plannedProjectDays <= 0){
       this.showVacationWarning().then(result=>{
         if(result){
           this.uploadSavedForecast();
         }
-      });
-    }else{
+      });      
+      }
+      if(remDays > 0){
+        this.showRemDaysWarning().then(result=>{
+          if(result){
+            this.uploadSavedForecast();
+          }
+        });     
+      }   
+    }
+    else{
       this.uploadSavedForecast();
     }
   }
@@ -228,6 +242,13 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
   }
   showVacationWarning(): Promise<boolean> {
     let dialogRef: any = this.dialog.open(FcEntrySummaryVacationWarningComponent,{
+      height: 'auto',
+      width: 'auto'
+    });
+    return dialogRef.afterClosed().toPromise();
+  }
+  showRemDaysWarning(): Promise<boolean> {
+    let dialogRef: any = this.dialog.open(FcEntrySummaryRemDaysWarningComponent,{
       height: 'auto',
       width: 'auto'
     });

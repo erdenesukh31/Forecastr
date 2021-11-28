@@ -47,7 +47,7 @@ import { PracticesComponent } from "./pages/practices/practices.component";
 import { FinancialControllerComponent } from "./pages/financial-controller/financial-controller.component";
 import { FinancialControllerOverviewComponent } from "./components/financial-controller-overview/financial-controller-overview.component";
 import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component";
-
+import { FcEntrySummaryRemDaysWarningComponent } from "./components/fc-entry-summary/remdays-warning/fc-entry-summary-remdays-warning.component";
 import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart/subco-executive-chart.component";
 @NgModule({
   imports: [
@@ -90,6 +90,7 @@ import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart
     ExecutiveFcEntryComponent,
     FcEntryDetailDialogComponent,
     FcEntrySummaryVacationWarningComponent,
+    FcEntrySummaryRemDaysWarningComponent,
     PracticesComponent,
     ExecutiveChartComponent,
     ExecutiveStatsComponent,
