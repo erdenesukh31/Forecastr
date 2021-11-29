@@ -15,6 +15,7 @@ import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { fchmod } from "fs";
 
 /**
  * teamlead view component
@@ -80,26 +81,10 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
     this.firstTime = true;
     this.fcSubscription = this.forecastService.forecasts$
     .subscribe((forecasts: FcEntry[]) => {
-      // let length = this.fcEntries.length;
       this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
-      // if(this.fcEntries.length > length){
-      //   let level: number = 1;
-      //   if (this.role === 'practice') {
-      //     level = 2;
-      //   }
-      //   this.subscribeTeamForecasts(level)
-      // }
     });
-      this.subscribeTeam();
-      let level: number = 1;
-      if (this.role === 'practice') {
-        level = 2;
-      }
-      this.subscribeTeamForecasts(level);
-
-
-
-    
+    this.subscribeTeam();
+    this.subscribeTeamForecasts();
   }
 
   subscribeTeam(): void {
@@ -134,33 +119,36 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
     }
   }
 
-  subscribeTeamForecasts(level: number): void {
+  subscribeTeamForecasts(): void {
+    let level: number = 1;
+    if (this.role === 'practice') {
+      level = 2;
+    }
     this.teamFcSubscription = this.teamForecastService
       .getTeamForecast(this.userId, this.month.id, level)
       .subscribe((fcEntries: any[]) => {
         
-        this.forecastService.addForecasts(fcEntries,false, this.month.id);
+        this.forecastService.addForecasts(fcEntries, false, this.month.id);
+        let showDialog = true;
         fcEntries.forEach(entry =>{
           if((entry.suggestedData) &&
-          entry.suggestedData.projects.length > 0 ){
-            // || entry.suggestedData.fte !== this.forecast.fte || res.suggestedData.gradeId !== this.forecast.gradeId 
-          /**
-           * For the next release in the future, the copy data functionality will be added
-           */
-
-          let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-            data: {
-              message: 'Copy data from last month submitted?',
-              button: { cancel: 'No', submit: 'Yes' },
-            },
-          });
-
-          dialogRef.afterClosed().subscribe((add: boolean) => {
-            if (add === true) {
-              this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
-            }
-          });
-
+          (entry.suggestedData.projects.length > 0 || entry.suggestedData.fte !== entry.fte || entry.suggestedData.gradeId !== entry.gradeId )){
+            // 
+          //showDialog only one time 
+          if(showDialog){
+            let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+              data: {
+                message: 'Copy data from last month submitted for all user?',
+                button: { cancel: 'No', submit: 'Yes' },
+              },
+            });
+            dialogRef.afterClosed().subscribe((add: boolean) => {
+              if (add === true) {
+                this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+              }
+            });
+            showDialog = false;
+          }
           }
         })
       });
