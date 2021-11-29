@@ -132,9 +132,8 @@ export class TeamForecastService {
 
         if (fcEntry.projects) {
           fcEntry.projects.forEach((fcProject: FcProject) => {
-            summaryData.revenue += (fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;
+           
             let project: Project = this.projects.find((p: Project) => p.id === fcProject.projectId);
-
        
             summaryData.days
               .filter((sd: SummaryDataProject) => sd.type === (project ? project.projectType : 0))
@@ -143,11 +142,10 @@ export class TeamForecastService {
                   sd.days += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
               });
 
-            summaryData.extRevenue += (fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
-            summaryData.intRevenue += (!fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
-
-
             if (fcProject.billable && fcEntry.isRelevant) {
+              summaryData.revenue += (fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;
+              summaryData.extRevenue += (fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
+              summaryData.intRevenue += (!fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
               summaryData.billableDays += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
             }  else if (!fcProject.billable && fcEntry.isRelevant) {
               summaryData.nonbillableDays += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
