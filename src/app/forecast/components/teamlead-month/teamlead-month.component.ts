@@ -13,6 +13,8 @@ import { UtilitiesService } from "../../../core/services/utilities.service";
 import { Project } from "../../../core/interfaces/project";
 import { environment as env } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
+import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 /**
  * teamlead view component
@@ -60,6 +62,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
    * teamlead component constructor
    */
   constructor(
+    private dialog: MatDialog,
     private userService: UserService,
     private teamService: TeamUserService,
     private authService: AuthService,
@@ -76,10 +79,14 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.firstTime = true;
     this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
-      });
+    .subscribe((forecasts: FcEntry[]) => {
+      this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
+    });
+    this.subscribeTeam();
+    this.subscribeTeamForecasts();
+  }
 
+  subscribeTeam(): void {
     if (this.role === 'practice') {
       this.teamSubscription = this.teamService.teamPL$
         .subscribe((team: User[]) => {
@@ -109,17 +116,45 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
           this.team = team;
         });
     }
+  }
 
+  subscribeTeamForecasts(): void {
     let level: number = 1;
     if (this.role === 'practice') {
       level = 2;
     }
-
     this.teamFcSubscription = this.teamForecastService
       .getTeamForecast(this.userId, this.month.id, level)
-      .subscribe((fcEntries: FcEntry[]) => {
-        this.forecastService.addForecasts(fcEntries);
-      });
+      .subscribe((fcEntries: any[]) => {
+        
+        this.forecastService.addForecasts(fcEntries, false, this.month.id);
+        let showDialog = true;
+        fcEntries.forEach(entry =>{
+          if((entry.suggestedData) &&
+          (entry.suggestedData.projects.length > 0 || entry.suggestedData.fte !== entry.fte || entry.suggestedData.gradeId !== entry.gradeId )){
+          //showDialog only one time 
+          if(showDialog){
+            let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+              data: {
+                message: 'Copy data from last month submitted for all user?',
+                button: { cancel: 'No', submit: 'Yes' },
+              },
+            });
+            dialogRef.afterClosed().subscribe((add: boolean) => {
+              if (add === true) {
+                //dialog is shown only one time, so add all forecasts
+                fcEntries.forEach(entry =>{
+                  if(entry.suggestedData){
+                    this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+                  }
+                });
+              }
+            });
+            showDialog = false;
+          }
+        }
+      })
+    });
   }
 
   /**
