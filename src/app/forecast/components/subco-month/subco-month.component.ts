@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output,EventEmitter, HostListener } from "@angular/core";
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FcEntry } from "../../../core/interfaces/fcEntry";
 import { UserService } from "../../../core/services/user.service";
 import { User } from "../../../core/interfaces/user";
@@ -17,8 +18,9 @@ import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoPreview } from "../../../core/interfaces/subCoPreview";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
-import { MatDialog } from '@angular/material/dialog';
 import { AddSubcoDialogEm } from "../../dialogs/add-subco-em/add-subco-em.dialog";
+import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-message.dialog';
+
 /**
  * teamlead view component
  */
@@ -62,6 +64,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   subcoFcSubscription: Subscription; //TODO: Probably do not need that
   firstTime: boolean;
   isStepping: boolean;
+  showDialog: boolean;
 
   /**
    * teamlead component constructor
@@ -84,7 +87,8 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.firstTime = true;
     this.isStepping = false;
-    this.subcoForecastService.initSubCoForecastByMonth(this.month.id, this.userId);
+    this.showDialog = true;
+    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id, this.userId);
     this.subcoService.initSubCoPreviewById(this.userId);
 
     this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) =>{
@@ -92,12 +96,31 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     });
     this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => {
       this.subcosDetails = subcos;
+      this.showCopyDataDialog(subcos);
     });
+  }
 
-    let level: number = 1;
-    if (this.role === 'practice') {
-      level = 2;
-    }
+  showCopyDataDialog(subcosDetails): void{
+    subcosDetails.forEach(subco =>{
+      if(this.showDialog && subco.projectName === 'Placeholder'){
+        let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+          data: {
+            message: 'Copy data from last month submitted?',
+            button: { cancel: 'No', submit: 'Yes' },
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((add: boolean) => {
+          if (add === false) {
+            this.subcosDetails.forEach(details => {
+              if(subco.projectName === 'Placeholder')
+                details.projectId = 0;
+            })
+          }
+        });
+        this.showDialog = false;
+      }
+    });
   }
 
   /**
