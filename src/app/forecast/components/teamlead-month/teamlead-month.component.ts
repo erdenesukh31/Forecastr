@@ -145,15 +145,17 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
               if (add === true) {
                 //dialog is shown only one time, so add all forecasts
                 fcEntries.forEach(entry =>{
-                  this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+                  if(entry.suggestedData){
+                    this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+                  }
                 });
               }
             });
             showDialog = false;
           }
-          }
-        })
-      });
+        }
+      })
+    });
   }
 
   /**
