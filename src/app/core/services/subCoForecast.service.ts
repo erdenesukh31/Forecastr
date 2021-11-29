@@ -82,16 +82,16 @@ export class SubCoForecastService {
    * Returns data instantly if they already exist, otherwise: loads them from the server first
    * @param monthId
    */
-  initSubCoForecastByMonth(monthId: number,emId: number): Promise<FcEntry[]> {
+  initSubCoDetailsByMonth(monthId: number,emId: number): Promise<FcEntry[]> {
     let promise: Promise<FcEntry[]> = new Promise((resolve: any, reject: any) => {
       let fcEntries: SubCoDetails[] = this.subcoDetails$.getValue().filter((fc: SubCoDetails) => fc.monthId === monthId && fc.engagementManagerId === emId);
       if (fcEntries.length > 0) {
         resolve(fcEntries);
       } else {
-        this.http.get<SubCoDetails[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).subscribe((fc: SubCoDetails[]) => {
-          this.subcoDetails$.next(fc);
-          this.subcoDetails = fc;
-          resolve(fc);
+        this.http.get<SubCoDetails[]>(this.BO.getSubCoDetails(monthId, this.authService.getUserId())).subscribe((details: SubCoDetails[]) => {
+          this.subcoDetails$.next(details);
+          this.subcoDetails = details;
+          resolve(details);
         });
       }
     });
@@ -178,7 +178,7 @@ export class SubCoForecastService {
       }
 
       getForecastPromise(monthId: number) : Promise<SubCoDetails[]> {
-        return this.http.get<SubCoDetails[]>(this.BO.getSubCoForecasts(monthId, this.authService.getUserId())).toPromise();
+        return this.http.get<SubCoDetails[]>(this.BO.getSubCoDetails(monthId, this.authService.getUserId())).toPromise();
       }
 
       unlockForecast(forecastId: number) {
