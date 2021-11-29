@@ -85,9 +85,20 @@ export class ForecastService {
    * @param forecasts
    * @param loadHistory
    */
-  addForecasts(forecasts: FcEntry[], loadHistory: boolean = false): void {
+  addForecasts(forecasts: FcEntry[], loadHistory: boolean = false, monthId: number = 0): void {
     forecasts.forEach((forecast: FcEntry) => {
-      this.setForecast(forecast, loadHistory, false);
+      if(forecast && forecast.forecastId >= 0){
+        this.setForecast(forecast, loadHistory, false);
+
+      } else {
+        this.createNewForecast(forecast.userId, monthId);
+        // if (fcEntry && fcEntry.suggestedData) {
+        //   resolve({showDialog: true, suggestedData: fcEntry.suggestedData });
+        // } else {
+        //   resolve({showDialog: false });
+        // }
+      }
+      
     });
   }
 

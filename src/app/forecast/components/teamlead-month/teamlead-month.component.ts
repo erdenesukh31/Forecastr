@@ -79,10 +79,30 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.firstTime = true;
     this.fcSubscription = this.forecastService.forecasts$
-      .subscribe((forecasts: FcEntry[]) => {
-        this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
-      });
+    .subscribe((forecasts: FcEntry[]) => {
+      // let length = this.fcEntries.length;
+      this.fcEntries = forecasts.filter((fc: FcEntry) => fc.monthId === this.month.id);
+      // if(this.fcEntries.length > length){
+      //   let level: number = 1;
+      //   if (this.role === 'practice') {
+      //     level = 2;
+      //   }
+      //   this.subscribeTeamForecasts(level)
+      // }
+    });
+      this.subscribeTeam();
+      let level: number = 1;
+      if (this.role === 'practice') {
+        level = 2;
+      }
+      this.subscribeTeamForecasts(level);
 
+
+
+    
+  }
+
+  subscribeTeam(): void {
     if (this.role === 'practice') {
       this.teamSubscription = this.teamService.teamPL$
         .subscribe((team: User[]) => {
@@ -112,17 +132,14 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
           this.team = team;
         });
     }
+  }
 
-    let level: number = 1;
-    if (this.role === 'practice') {
-      level = 2;
-    }
-
+  subscribeTeamForecasts(level: number): void {
     this.teamFcSubscription = this.teamForecastService
       .getTeamForecast(this.userId, this.month.id, level)
       .subscribe((fcEntries: any[]) => {
         
-        this.forecastService.addForecasts(fcEntries);
+        this.forecastService.addForecasts(fcEntries,false, this.month.id);
         fcEntries.forEach(entry =>{
           if((entry.suggestedData) &&
           entry.suggestedData.projects.length > 0 ){
@@ -140,7 +157,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
 
           dialogRef.afterClosed().subscribe((add: boolean) => {
             if (add === true) {
-              this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.SuggestedData);
+              this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
             }
           });
 
