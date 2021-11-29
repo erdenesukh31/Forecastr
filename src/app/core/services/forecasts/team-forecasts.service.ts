@@ -56,12 +56,12 @@ export class TeamForecastService {
   getTeamForecastPromise(userId: number, monthId: number, levelId: number): Promise<FcEntry[]> {
     return new Promise<any>((resolve: any, reject: any) => {
       this.http
-      .get<FcEntry[]>(this.BO.teamForecast(userId, monthId, levelId))
-      .subscribe((forecasts: FcEntry[]) => {
-        resolve(forecasts);
-      }, (e: any) => {
-        reject();
-      });
+        .get<FcEntry[]>(this.BO.teamForecast(userId, monthId, levelId))
+        .subscribe((forecasts: FcEntry[]) => {
+          resolve(forecasts);
+        }, (e: any) => {
+          reject();
+        });
     });
   }
 
@@ -73,7 +73,7 @@ export class TeamForecastService {
    */
   getMonthlyForecast(exportValues: Export): Observable<Export> {
     const httpOptions: object = {
-      responseType:  'blob' as 'json',
+      responseType: 'blob' as 'json',
     };
 
     return this.http
@@ -88,7 +88,7 @@ export class TeamForecastService {
    */
   getPeriodForecast(exportValues: Export[]): Observable<Export[]> {
     const httpOptions: object = {
-      responseType:  'blob' as 'json',
+      responseType: 'blob' as 'json',
     };
 
     return this.http
@@ -102,17 +102,18 @@ export class TeamForecastService {
    * @param workingDays
    * @param team
    */
-	getSummaryData(fcEntries: FcEntry[], workingDays: number, team: User[]): SummaryData {
+  getSummaryData(fcEntries: FcEntry[], workingDays: number, team: User[]): SummaryData {
+  //  console.log("Get Summary Data")
     let summaryData: SummaryData = {
-			days: this.getEmptyData(),
-			revenue: 0,
+      days: this.getEmptyData(),
+      revenue: 0,
       workingDays: 0,
       billableDays: 0,
       nonbillableDays: 0,
-			arve: 0,
+      arve: 0,
       urve: 0,
-      extRevenue : 0,
-      intRevenue : 0
+      extRevenue: 0,
+      intRevenue: 0,
     };
 
     team.forEach((user: User) => {
@@ -131,23 +132,22 @@ export class TeamForecastService {
 
         if (fcEntry.projects) {
           fcEntry.projects.forEach((fcProject: FcProject) => {
-            summaryData.revenue += (fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;
+           
             let project: Project = this.projects.find((p: Project) => p.id === fcProject.projectId);
-
+       
             summaryData.days
               .filter((sd: SummaryDataProject) => sd.type === (project ? project.projectType : 0))
               .forEach((sd: SummaryDataProject) => {
-                sd.days += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
+               
+                  sd.days += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
               });
-            
-            
-            summaryData.extRevenue += (fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
-            summaryData.intRevenue += (!fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
-            
 
-            if (fcProject.billable ) {
+            if (fcProject.billable && fcEntry.isRelevant) {
+              summaryData.revenue += (fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;
+              summaryData.extRevenue += (fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
+              summaryData.intRevenue += (!fcProject.externalRevenue && fcProject.cor && fcProject.plannedProjectDays) ? (fcProject.cor * fcProject.plannedProjectDays) : 0;;
               summaryData.billableDays += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
-            } else {
+            }  else if (!fcProject.billable && fcEntry.isRelevant) {
               summaryData.nonbillableDays += (fcProject.plannedProjectDays ? fcProject.plannedProjectDays : 0);
             }
           });
@@ -159,29 +159,11 @@ export class TeamForecastService {
     summaryData.days.forEach((sd: SummaryDataProject) => {
       totalDays = totalDays + sd.days;
     });
-
+  
     summaryData.arve = 0;
     summaryData.urve = 0;
-    let teamsize: number = 0;
-    team.forEach((u: User) => {
 
-      let fcEntry: FcEntry = fcEntries.find((fc: FcEntry) => fc.userId === u.id);
-      if (fcEntry) {
-        teamsize += (fcEntry.fte ? fcEntry.fte : 0); //teamsize += (fcEntry.fte ? fcEntry.fte : 1); problem that ARVE URVE calc false when persons with 0 fte get 1 instead
-
-        if (fcEntry.isRelevant) {
-          summaryData.arve += fcEntry.arve ? (fcEntry.arve * (fcEntry.fte ? fcEntry.fte : 1)) : 0;
-          summaryData.urve += fcEntry.urve ? (fcEntry.urve * (fcEntry.fte ? fcEntry.fte : 1)) : 0;
-        }
-      } else {
-        teamsize += (u.fte ? u.fte : 0); //teamsize += (u.fte ? u.fte : 1); same problem then above
-      }
-    });
-
-    summaryData.arve /= teamsize;
-    summaryData.urve /= teamsize;
-
-//----------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
 
     let proDays = 0
     let bilDays = 0
@@ -189,46 +171,35 @@ export class TeamForecastService {
     let vacDays = 0
 
     fcEntries.forEach((fe: FcEntry) => {
-      if(fe.isRelevant) 
-      {
+      if (fe.isRelevant) {
         proDays += fe.projectDays
         bilDays += fe.billableDays
         nobilDays += fe.nonbillableDays
         vacDays += fe.vacationDays
-      } 
+      }
     });
 
-   // console.log("billable Days: " +bilDays)
-    //console.log("non Billable days: " + nobilDays)
-    //console.log("project Days: " + proDays)
-    //console.log("vacation Days: " + vacDays)
-
-    let vacationDays = 0; 
+    let vacationDays = 0;
     let projektDays = 0;
 
-    summaryData.days.forEach((vacD : SummaryDataProject) => {
-      if(vacD.title == "Vacation days")
-      {
-         vacationDays  = vacD.days;
-        
+    summaryData.days.forEach((vacD: SummaryDataProject) => {
+      if (vacD.title == "Vacation days") {
+        vacationDays = vacD.days;
+
       }
-      if (vacD.title == "Project days" ) {
-        projektDays= vacD.days;
+      if (vacD.title == "Project days") {
+        projektDays = vacD.days;
       }
-      
+
     }
     );
 
+    //let denominator = summaryData.billableDays + summaryData.nonbillableDays - vacationDays;
 
-    //console.log("2 billable Days: " +summaryData.billableDays)
-    //console.log("2 non Billable days: " + summaryData.nonbillableDays)
-    //console.log("2 project Days: " + projektDays)
-    //console.log("2 vacation Days: " + vacationDays)
+    let denominator = bilDays + nobilDays - vacDays;
 
-    let denominator = summaryData.billableDays + summaryData.nonbillableDays - vacationDays;
-    
-    summaryData.arve = projektDays / denominator;
-    summaryData.urve = summaryData.billableDays  / denominator;
+    summaryData.arve = proDays / denominator;
+    summaryData.urve = bilDays/ denominator;
     return summaryData;
   }
 
@@ -240,8 +211,8 @@ export class TeamForecastService {
    * @param monthId
    * @param workingDays
    */
-	getMonthlyExportData(fcEntries: FcEntry[], user: User[], monthId: number, workingDays: number): Export {
-		let csvExportItem: Export = new Export();
+  getMonthlyExportData(fcEntries: FcEntry[], user: User[], monthId: number, workingDays: number): Export {
+    let csvExportItem: Export = new Export();
     csvExportItem.monthId = monthId;
 
     user.forEach((u: User) => {
@@ -251,43 +222,43 @@ export class TeamForecastService {
       temp.workingDays = 0;
       temp.ros = 0;
 
-			let userForecast: FcEntry = fcEntries.find((fc: FcEntry) => fc.userId === u.id);
+      let userForecast: FcEntry = fcEntries.find((fc: FcEntry) => fc.userId === u.id);
 
-			temp.name = u.firstName + ' ' + u.lastName;
-			if (userForecast) {
-				temp.urve = parseFloat((userForecast.urve * 100).toFixed(0));
-				temp.arve = parseFloat((userForecast.arve * 100).toFixed(0));
-        
-        if(userForecast.projects.length > 0) {
-  				temp.workingDays = userForecast.projects
-  					.map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
-  					.reduce((pSum: number, a: number) => pSum + a);
-  				temp.ros = userForecast.projects
-  					.map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0)))
+      temp.name = u.firstName + ' ' + u.lastName;
+      if (userForecast) {
+        temp.urve = parseFloat((userForecast.urve * 100).toFixed(0));
+        temp.arve = parseFloat((userForecast.arve * 100).toFixed(0));
+
+        if (userForecast.projects.length > 0) {
+          temp.workingDays = userForecast.projects
+            .map((p: FcProject) => (p.plannedProjectDays ? p.plannedProjectDays : 0))
+            .reduce((pSum: number, a: number) => pSum + a);
+          temp.ros = userForecast.projects
+            .map((p: FcProject) => ((p.plannedProjectDays ? p.plannedProjectDays : 0) * (p.cor ? p.cor : 0)))
             .reduce((pSum: number, a: number) => pSum + a);
         }
       }
-			
-			csvExportItem.employeeEntry.push(temp);
+
+      csvExportItem.employeeEntry.push(temp);
     });
-  
-		let summaryData: SummaryData = this.getSummaryData(fcEntries, workingDays, user);
-		csvExportItem.summary.projectDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 0).days;
-		csvExportItem.summary.businessDevelopmentDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 1).days;
-		csvExportItem.summary.trainingDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 2).days;
+
+    let summaryData: SummaryData = this.getSummaryData(fcEntries, workingDays, user);
+    csvExportItem.summary.projectDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 0).days;
+    csvExportItem.summary.businessDevelopmentDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 1).days;
+    csvExportItem.summary.trainingDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 2).days;
     csvExportItem.summary.vacationDays = summaryData.days.find((sd: SummaryDataProject) => sd.type === 3).days;
     csvExportItem.summary.billableDays = summaryData.billableDays;
-		csvExportItem.summary.nonbillableDays = summaryData.nonbillableDays;
+    csvExportItem.summary.nonbillableDays = summaryData.nonbillableDays;
 
-		csvExportItem.summary.totalWorkingDays = summaryData.workingDays;
-		csvExportItem.summary.arve = parseInt((summaryData.arve * 100).toFixed(0), 10);
-		csvExportItem.summary.urve = parseInt((summaryData.urve * 100).toFixed(0), 10);
+    csvExportItem.summary.totalWorkingDays = summaryData.workingDays;
+    csvExportItem.summary.arve = parseInt((summaryData.arve * 100).toFixed(0), 10);
+    csvExportItem.summary.urve = parseInt((summaryData.urve * 100).toFixed(0), 10);
     csvExportItem.summary.ros = summaryData.revenue;
 
-		return csvExportItem;
-	}
+    return csvExportItem;
+  }
 
-	/**
+  /**
    * inits the summarydata-projects with empty data
    */
   getEmptyData(): SummaryDataProject[] {
@@ -302,11 +273,11 @@ export class TeamForecastService {
   setForecastsLockState(monthId: number, level: number, lockState: boolean): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       this.http.put(this.BO.setTeamLockState(monthId, level), { lockState: lockState })
-      .subscribe((forecasts: FcEntry[]) => {
-        resolve(forecasts);
-      }, (e: any) => {
-        reject();
-      });
+        .subscribe((forecasts: FcEntry[]) => {
+          resolve(forecasts);
+        }, (e: any) => {
+          reject();
+        });
     });
   }
 }
