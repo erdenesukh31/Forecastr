@@ -82,6 +82,8 @@ export class ForecastService {
 
   /**
    * adds new forecasts
+   * monthId can be used if new placeholder forecasts need to be added 
+   * to the service forecast cache if e.g. copying data from last month
    * @param forecasts
    * @param loadHistory
    */
@@ -91,14 +93,9 @@ export class ForecastService {
         this.setForecast(forecast, loadHistory, false);
 
       } else {
+        //create new Placeholder
         this.createNewForecast(forecast.userId, monthId);
-        // if (fcEntry && fcEntry.suggestedData) {
-        //   resolve({showDialog: true, suggestedData: fcEntry.suggestedData });
-        // } else {
-        //   resolve({showDialog: false });
-        // }
       }
-      
     });
   }
 

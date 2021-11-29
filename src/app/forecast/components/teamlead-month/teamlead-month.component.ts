@@ -133,7 +133,6 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
         fcEntries.forEach(entry =>{
           if((entry.suggestedData) &&
           (entry.suggestedData.projects.length > 0 || entry.suggestedData.fte !== entry.fte || entry.suggestedData.gradeId !== entry.gradeId )){
-            // 
           //showDialog only one time 
           if(showDialog){
             let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
@@ -144,7 +143,10 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
             });
             dialogRef.afterClosed().subscribe((add: boolean) => {
               if (add === true) {
-                this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+                //dialog is shown only one time, so add all forecasts
+                fcEntries.forEach(entry =>{
+                  this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
+                });
               }
             });
             showDialog = false;
