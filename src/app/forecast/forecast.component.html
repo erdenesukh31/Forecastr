@@ -33,6 +33,10 @@
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
+          <button mat-raised-button color="primary" mat-raised-button class="dashboard-button power-bi-dashboard"
+           (click)="openPowerBiDashboard()">
+            <mat-icon>insert_chart</mat-icon> Power Bi
+          </button>
         </div>
 
 
@@ -55,7 +59,7 @@
       </div>
 
       <div *ngIf="isMSLLevelRole('HOP') || isMSLLevelRole('SM') || isMSLLevelRole('SMCSS')" class="role-header">
-        <button mat-raised-button color="primary" (click)="openDashboard()">
+        <button mat-raised-button color="primary" (click)="openPowerBiDashboard()">
           <mat-icon>insert_chart</mat-icon> KPI Overview
         </button>
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">

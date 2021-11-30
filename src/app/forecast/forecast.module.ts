@@ -39,6 +39,7 @@ import { PracticesComponent } from "./pages/practices/practices.component";
 import { FinancialControllerComponent } from "./pages/financial-controller/financial-controller.component";
 import { FinancialControllerOverviewComponent } from "./components/financial-controller-overview/financial-controller-overview.component";
 import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component";
+import { PowerBi } from "./components/power-bi/power-bi.component";
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-su
     HeadOfPracticesComponent,
     FinancialControllerComponent,
     FinancialControllerOverviewComponent,
+    PowerBi
   ],
   exports: []
 })

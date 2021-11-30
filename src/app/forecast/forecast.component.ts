@@ -21,6 +21,7 @@ import { Month } from "../core/interfaces/month";
 import { TeamService } from "../core/services/admin/team.service";
 import { TeamUserService } from "../core/services/forecasts/team-user.service";
 import { Team } from "../core/interfaces/team";
+import { PowerBi } from "./components/power-bi/power-bi.component";
 
 /**
  * forecast component
@@ -346,6 +347,22 @@ export class ForecastComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+    /**Open dialog for executive chart */
+    openPowerBiDashboard(): void {
+      if (this.authService.hasRole(env.roles.pdl)) {
+        const dialogRef = this.dialog.open(PowerBi, {
+          height: "90%",
+          width: "68%",
+          panelClass: "custom-dialog-container",
+          data: {},
+        });
+  
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log("The dialog was closed");
+        });
+      }
+    }
 
   /**
    * Check if init-request are open
