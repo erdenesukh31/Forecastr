@@ -164,7 +164,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
    * Test is forecast is locked for logged-in user
    */
   fcIsLocked(): boolean {
-    if (this.subCoDetails && this.subCoDetails.lockState !== 'Unlocked') {
+    if (this.subCoDetails && (this.subCoDetails.lockState !== 'Unlocked') {
       return true;
     }
     return false;

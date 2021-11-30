@@ -33,7 +33,7 @@ export class SubCoDetails {
         this.subcontractorId = null;
         this.subcontractorTypeId = null;
         this.subcontractorTypeName = '';
-	    this.resourceName = '';	
+	      this.resourceName = '';	
         this.projectName = '';
         this.projectId = null;
         this.customer = '';
