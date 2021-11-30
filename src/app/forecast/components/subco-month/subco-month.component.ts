@@ -91,10 +91,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.subcoService.initSubCoPreviewById(this.userId);
 
     this.subcoPreviewSubscription = this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) =>{
-      this.subcos = subcos;
+      this.subcos = subcos.filter(subco => subco.subcontractorEmId == this.userId);
     });
     this.subcoDetailSubscription = this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => {
-      this.subcosDetails = subcos;
+      this.subcosDetails = subcos.filter(subco => subco.engagementManagerId == this.userId);
       this.showCopyDataDialog(subcos);
     });
   }
