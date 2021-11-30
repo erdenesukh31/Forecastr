@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   })
   export class PowerBi implements OnInit {
 
-    app: string = 'C2C';
+    app: string = 'KPI';
 
     ngOnInit(): void {
         throw new Error("Method not implemented.");
