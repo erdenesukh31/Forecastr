@@ -153,8 +153,6 @@ export class SubCoService {
   * Rquests subcototals for a month range from server
   */
   initializeSubcoDetailTotalsForMonthRange(startMonthId: number, endMonthId: number): Promise<void> {
-    console.log(this.BO.getSubCoDetailTotalsMonthRange(startMonthId, endMonthId))
-
     return new Promise<void>((resolve, reject) => {
       this.http.get<SubCoDetailTotals[]>(this.BO.getSubCoDetailTotalsMonthRange(startMonthId, endMonthId))
         .subscribe((subCoDetailTotals$: SubCoDetailTotals[]) => {
@@ -248,7 +246,6 @@ export class SubCoService {
       contribution: 0,
       cp: 0,
     }
-    console.log(subcos);
     subcos.forEach(sub => {
       let revenue: number;
       let cost: number;
