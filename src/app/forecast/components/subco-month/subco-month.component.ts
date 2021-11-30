@@ -59,9 +59,8 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    */
   scrollToIndex : number;
 
-  fcSubscription: Subscription;
-  subcoSubscription: Subscription;
-  subcoFcSubscription: Subscription; //TODO: Probably do not need that
+  subcoPreviewSubscription: Subscription;
+  subcoDetailSubscription: Subscription; //TODO: Probably do not need that
   firstTime: boolean;
   isStepping: boolean;
   showDialog: boolean;
@@ -91,10 +90,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.subcoForecastService.initSubCoDetailsByMonth(this.month.id, this.userId);
     this.subcoService.initSubCoPreviewById(this.userId);
 
-    this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) =>{
+    this.subcoPreviewSubscription = this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) =>{
       this.subcos = subcos;
     });
-    this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => {
+    this.subcoDetailSubscription = this.subcoForecastService.subcoDetails$.subscribe((subcos: SubCoDetails[]) => {
       this.subcosDetails = subcos;
       this.showCopyDataDialog(subcos);
     });
@@ -102,7 +101,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
 
   showCopyDataDialog(subcosDetails): void{
     subcosDetails.forEach(subco =>{
-      if(this.showDialog && subco.projectName === 'Placeholder'){
+      if(this.showDialog && subco.projectName === 'Placeholder' && subco.monthId === this.month.id){
         let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
           data: {
             message: 'Copy data from last month submitted?',
@@ -113,8 +112,11 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((add: boolean) => {
           if (add === false) {
             this.subcosDetails.forEach(details => {
-              if(subco.projectName === 'Placeholder')
+              if(subco.projectName === 'Placeholder'){}
                 details.projectId = 0;
+                details.cor = null;
+                details.manDay = null;
+                details.costRate = null;
             })
           }
         });
@@ -142,6 +144,8 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
    * Unsubscribe services when component gets destroyed
    */
   ngOnDestroy(): void {
+    this.subcoPreviewSubscription.unsubscribe();
+    this.subcoDetailSubscription.unsubscribe();
   }
 
   /**
