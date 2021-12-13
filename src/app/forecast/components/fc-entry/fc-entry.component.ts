@@ -18,6 +18,7 @@ import { ConfirmMessageDialog } from '../../dialogs/confirm-message/confirm-mess
 import { DataSharingService } from '../../../core/shared/data-sharing.service';
 import { ExecutiveForecastsService } from '../../../core/services/forecasts/executive-forecasts.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Console } from 'console';
 
 
 /**
@@ -171,6 +172,21 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.fcSubscription.unsubscribe();
+    if(this.forecastService.checkForecastState('edited',this.month.id, this.userId)){
+      let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
+        width: '250px',
+        data: {
+               message: `Save data for ${this.month.name}?`,
+               button: { cancel: 'No', submit: 'Yes' },
+               },
+      });
+      dialogRef.afterClosed().subscribe((save: boolean) => {
+        if (save) {
+          console.log('Save Forecast')
+          this.saveForecast();
+        }
+      });
+    }
   }
 
   /**
