@@ -171,6 +171,9 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.fcSubscription.unsubscribe();
+    if(this.forecastService.checkForecastState('edited',this.month.id, this.userId)){
+      this.saveForecast();
+    }
   }
 
   /**
