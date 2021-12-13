@@ -33,7 +33,7 @@
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button mat-raised-button color="primary" mat-raised-button class="dashboard-button power-bi-dashboard"
+          <button *ngIf="isPractice()" mat-raised-button color="primary" mat-raised-button class="dashboard-button power-bi-dashboard"
            (click)="openPowerBiDashboard()">
             <mat-icon>insert_chart</mat-icon> Power Bi
           </button>
