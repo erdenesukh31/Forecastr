@@ -336,7 +336,6 @@ export class ForecastComponent implements OnInit, OnDestroy {
   openDashboard(): void {
     if (this.authService.hasRole(env.roles.pdl)) {
       const dialogRef = this.dialog.open(ExecutiveChartComponent, {
-        height: "90%",
         width: "90%",
         panelClass: "custom-dialog-container",
         data: {},
