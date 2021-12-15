@@ -85,7 +85,7 @@ export class SubcoFcProjectComponent implements OnInit {
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
     );
-    this.availableProbabilities = this.utilitiesService.getProbabilities();
+    this.availableProbabilities = this.utilitiesService.getSubcoProbabilities();
 
     this.dataSharingService.setProjectInputValid(true);
     this.validateProjects();

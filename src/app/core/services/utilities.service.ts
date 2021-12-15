@@ -148,6 +148,13 @@ export class UtilitiesService {
     return this.probabilities$.getValue();
   }
 
+    /**
+   * returns all probabilities
+   */
+    getSubcoProbabilities(): Probability[] {
+      return this.probabilities$.getValue().filter(p => p.name != 'Unnamed');
+    }
+
   /**
    * returns all teams
    */
