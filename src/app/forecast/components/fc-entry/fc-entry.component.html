@@ -41,7 +41,8 @@
   <div class="summary-warning error" *ngIf="totalDays() > (forecast.totalDays | number: '1.0-2')">
     <mat-icon class="icon">error</mat-icon>
     It is not possible to assign more than <strong>{{forecast.totalDays | number: '1.0-2': 'de'}} days</strong> for this month!<br>
-    There are currently <strong>{{totalDays() | number: '1.0-2': 'de'}} days</strong> assigned.
+    No more than <strong>{{benchtime}} days </strong>  can be subtract from bench time.<br>
+  	There are currently <strong>{{((forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays - benchtime)))*-1| number: '1.0-2': 'de'}} days</strong> too much.
   </div>
 </div>
 

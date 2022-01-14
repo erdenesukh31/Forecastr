@@ -68,6 +68,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   hasProjectInputFocus: boolean;
   isProjectInputValid: boolean;
   isCorValueBiggerThanZero: boolean;
+  benchtime: number;
 
   /**
    * forecast-entry component constructor
@@ -172,7 +173,14 @@ export class FcEntryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.fcSubscription.unsubscribe();
     if(this.forecastService.checkForecastState('edited',this.month.id, this.userId)){
-      this.saveForecast();
+      if(!(this.totalDays() > this.forecast.totalDays)){
+       console.log("Auto forecast");
+     
+        this.saveForecast();
+      } else {
+        this.snackBar.open('Forecast cannot be saved due to one or more invalid data fields.', 'OK', { duration: 5000, });
+        return;
+      }
     }
   }
 
@@ -180,6 +188,9 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    * Saves forecast
    */
   saveForecast(): void {
+    // let trainingDays: FcProject = this.forecast.projects
+    // .find((p: FcProject) => (p.projectType === env.projectTypes.trainingdays+1));
+   
     this.forecastService.saveForecast(this.month.id, this.userId, false);
   }
 
@@ -240,7 +251,11 @@ export class FcEntryComponent implements OnInit, OnDestroy {
    * Calculates the total number of days for projects.
    */
   totalDays(): number {
-    return this.forecast.billableDays + this.forecast.nonbillableDays;
+    this.benchtime  = this.forecast.projects
+    .find((p: FcProject) => (p.projectType === env.projectTypes.benchdays+1))
+    .plannedProjectDays;
+
+  return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
   }
 
   /**
