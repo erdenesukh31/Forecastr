@@ -33,11 +33,11 @@
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-practice-dashboard"
+          <button *ngIf="isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-practice-dashboard" style="display: none;"
            (click)="openPowerBiDashboard()">
             <mat-icon>insert_chart</mat-icon> Power Bi
           </button>
-          <button *ngIf="!isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-pdl-dashboard"
+          <button *ngIf="!isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-pdl-dashboard" style="display: none;"
           (click)="openPowerBiDashboard()">
            <mat-icon>insert_chart</mat-icon> Power Bi
          </button>
@@ -66,7 +66,7 @@
         <button mat-raised-button color="primary" (click)="openDashboard()" class="ms-dashboard-button">
           <mat-icon>insert_chart</mat-icon> KPI Overview
         </button>
-        <button *ngIf="!isMSLLevelRole('SM')" mat-raised-button color="primary" class="ms-dashboard-button power-bi-ms-dashboard" (click)="openPowerBiDashboard()">
+        <button *ngIf="!isMSLLevelRole('SM')" mat-raised-button color="primary" class="ms-dashboard-button power-bi-ms-dashboard" (click)="openPowerBiDashboard()" style="display: none;">
          <mat-icon>insert_chart</mat-icon> Power Bi
        </button>  
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
