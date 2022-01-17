@@ -20,7 +20,7 @@ import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-mess
 import { TeamForecastService } from "../../../core/services/forecasts/team-forecasts.service";
 import { PageStateService } from "../../../core/shared/page-state.service";
 import { AuthService } from "../../../core/security/auth.service";
-import { environment } from "../../../../environments/environment";
+import { environment as env } from "../../../../environments/environment";
 import { DatePipe } from "@angular/common";
 import { SubCoFcIntExt } from "../../../core/interfaces/subCoFcIntExt";
 import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
@@ -225,6 +225,17 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     this.getValues();
   }
 
+  isFinancialController(): boolean {
+    return this.authService.getRoleId() === env.roles.fc;
+  }
+
+  IsExecutive(): boolean {
+    return this.authService.hasRole(env.roles.msl);
+  }
+
+
+
+
   /**
    * Return value for given type (used for arve + urve + revenue + workingdays)
    * @param type
@@ -241,6 +252,14 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    */
   changeView(status: string): void {
     this.viewSwitch.emit(status);
+  }
+
+  submitAll(): void{
+
+  }
+
+  unlockAll(): void{
+    
   }
 
   /**
