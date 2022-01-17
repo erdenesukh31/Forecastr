@@ -33,10 +33,14 @@
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="isPractice()" mat-raised-button color="primary" mat-raised-button class="dashboard-button power-bi-dashboard"
+          <button *ngIf="isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-practice-dashboard"
            (click)="openPowerBiDashboard()">
             <mat-icon>insert_chart</mat-icon> Power Bi
           </button>
+          <button *ngIf="!isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-pdl-dashboard"
+          (click)="openPowerBiDashboard()">
+           <mat-icon>insert_chart</mat-icon> Power Bi
+         </button>
         </div>
 
 
@@ -59,9 +63,12 @@
       </div>
 
       <div *ngIf="isMSLLevelRole('HOP') || isMSLLevelRole('SM') || isMSLLevelRole('SMCSS')" class="role-header">
-        <button mat-raised-button color="primary" (click)="openPowerBiDashboard()">
+        <button mat-raised-button color="primary" (click)="openDashboard()" class="ms-dashboard-button">
           <mat-icon>insert_chart</mat-icon> KPI Overview
         </button>
+        <button *ngIf="!isMSLLevelRole('SM')" mat-raised-button color="primary" class="ms-dashboard-button power-bi-ms-dashboard" (click)="openPowerBiDashboard()">
+         <mat-icon>insert_chart</mat-icon> Power Bi
+       </button>  
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
           <mat-button-toggle-group class="sm-hop-button-toggle-group" appearance="legacy" aria-label="Role"
             #group="matButtonToggleGroup" [value]="page" (change)="goToPage(group.value)">
