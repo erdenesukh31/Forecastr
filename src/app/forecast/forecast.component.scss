@@ -71,6 +71,21 @@
     }
   }
 
+  .ms-dashboard-button {
+    width: 180px;
+    top: 0;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 20px;
+    background-color: map-get($font-colors, blue);
+    color: map-get($font-colors, white);
+    box-shadow: 0px 1px 5px grey;
+
+    .mat-icon {
+      color: map-get($font-colors, white);
+    }
+  }
+
   .practice-dashboard {
     right: 375px;
   }
@@ -79,8 +94,16 @@
     right: 250px;
   }
 
-  .power-bi-dashboard {
+  .power-bi-practice-dashboard {
     right: 575px;
+  }
+
+  .power-bi-pdl-dashboard {
+    right: 450px;
+  }
+
+  .power-bi-ms-dashboard {
+    left: 25px;
   }
 
   .sm-hop-button-toggle-group {
