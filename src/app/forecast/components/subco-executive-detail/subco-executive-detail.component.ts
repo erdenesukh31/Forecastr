@@ -32,6 +32,7 @@ import { ExecutiveChartComponent } from "../executive-chart/executive-chart.comp
 import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-executive-chart.component";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 /**
  * teamlead summary component
  */
@@ -139,6 +140,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   constructor(
     private subcoFinancialControllerService: SubCoFinancialControllerService,
     private subcoService: SubCoService,
+    private subcoForecastService: SubCoForecastService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private authService: AuthService,
@@ -181,6 +183,8 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     if (this.switchState) {
       this.filter = this.switchState;
     }
+
+    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id, 193);
 
     this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5),
       this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
@@ -259,7 +263,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   }
 
   unlockAll(): void{
-    
+
   }
 
   /**

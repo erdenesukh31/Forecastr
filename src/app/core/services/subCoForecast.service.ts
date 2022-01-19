@@ -88,7 +88,7 @@ export class SubCoForecastService {
       if (fcEntries.length > 0) {
         resolve(fcEntries);
       } else {
-        this.http.get<SubCoDetails[]>(this.BO.getSubCoDetails(monthId, this.authService.getUserId())).subscribe((details: SubCoDetails[]) => {
+        this.http.get<SubCoDetails[]>(this.BO.getSubCoDetails(monthId, emId)).subscribe((details: SubCoDetails[]) => {
           this.subcoDetails$.next(details);
           this.subcoDetails = details;
           resolve(details);
