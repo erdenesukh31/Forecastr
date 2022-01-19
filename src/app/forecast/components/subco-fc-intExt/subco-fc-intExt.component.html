@@ -1,0 +1,92 @@
+<div style="margin: 10px;">
+	<h3 class="headermargin">Subcontractors</h3>
+	<div class="fte" style="position: absolute; right: 0px;">
+		<span> FTE {{fte | number: '1.0-1': 'de'}} </span>
+	</div>
+</div>
+<mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="filter"
+	(change)="teamFilterUpdate(group.value)">
+	<mat-button-toggle value="Internal" (click)="changeView('Internal')">
+		<mat-icon>supervisor_account</mat-icon> Internal
+	</mat-button-toggle>
+	<mat-button-toggle value="External" (click)="changeView('External')">
+		<mat-icon>supervisor_account</mat-icon> External
+	</mat-button-toggle>
+    <mat-button-toggle value="Offshore" (click)="changeView('Offshore')">      <!-- WIP reference to offshore view-->
+		<mat-icon>supervisor_account</mat-icon> Offshore
+	</mat-button-toggle>
+</mat-button-toggle-group>
+<button mat-stroked-button class="mat-primary-reversed" (click)="submitAll()"
+	style="position: absolute; right: 220px; margin-right: 120px; margin: 20px;">
+	<mat-icon>lock</mat-icon> Submit all Forecasts
+</button>
+<button mat-stroked-button class="mat-primary-reversed" (click)="unlockAll()"
+	style="position: absolute; right: 0px; margin-right: 30px; margin: 20px;">
+	<mat-icon>lock_open</mat-icon> Unlock all forecasts
+</button>
+
+
+
+<div layout="row" layout-wrap *ngIf="subCos.length > 0">
+	<div flex="100">
+		<div class="mat-row accordion-header">
+			<div>Name</div>
+			<div>
+				<span>Resource name</span>
+				<span>Project code</span>
+				<span>Project name</span>
+				<span>Engagement manager</span>
+				<span>Customer</span>
+				<span>Location</span>
+				<span>Revenue</span>
+				<span>Cost</span>
+				<span>Contribution</span>
+				<span>CP%</span>
+			</div>
+		</div>
+     
+		<mat-accordion displayMode="flat" multi>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>Total</mat-panel-title>
+					<mat-panel-description>					
+                        <span class="mat-cell">&euro;{{totals.revenue | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">&euro;{{totals.cost | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">&euro;   {{totals.contribution | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">{{totals.cp | number: '1.0-1': 'de' }}%</span>					
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+			</mat-expansion-panel>
+       
+
+			<mat-expansion-panel *ngFor="let subCo of subCos; let i = index">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{subCo.Resource}}
+					</mat-panel-title>
+					<mat-panel-description>
+						<span class="mat-cell" >{{subco.resourceName}}</span>
+						<span class="mat-cell">{{subco.projectCode | number: '1.0-1': 'de'}}</span>
+						<span class="mat-cell">{{subco.projectName}}</span>
+						<span class="mat-cell">{{subco.emId | number: '1.0-1': 'de'}}</span>
+						<span class="mat-cell">{{subco.customer }}</span>
+                        <span class="mat-cell">{{subco.isEasterEurope }}</span>
+                        <span class="mat-cell">&euro;{{subco.revenue | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">&euro;{{subco.cost | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">&euro;   {{subco.contribution | number: '1.0-1': 'de' }}</span>
+                        <span class="mat-cell">{{subco.cp | number: '1.0-1': 'de' }}%</span>					
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+
+			
+			</mat-expansion-panel>
+		</mat-accordion>
+	</div>
+
+	<div layout="row" layout-wrap>
+		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
+			(click)="exportCSV()">
+			<mat-icon>insert_drive_file</mat-icon> Export CSV
+		</button>
+	</div>
+</div>

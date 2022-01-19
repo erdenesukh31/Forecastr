@@ -1,0 +1,81 @@
+<div style="height: 72vh; overflow: auto;"  (scroll)="onScroll($event)">
+  <div class="no-data" *ngIf="subcos.length == 0">
+    <h3>No user assigned.</h3>
+  </div>
+
+  <div layout="row" layout-wrap *ngIf="subcos.length > 0">
+    <div flex="100" flex-gt-md="75">
+      <div class="mat-row accordion-header">
+        <div>Name</div>
+        <div>
+          <span></span>
+          <span>Cost Rate</span>
+          <span>COR</span>
+          <span>ManDay</span>
+          <span>Revenue</span>
+          <span>Costs</span>
+          <span>Contribution</span>
+          <span>CP%</span>
+        </div>
+      </div>
+
+      <mat-accordion displayMode="flat" multi >
+        <!--order of events closed and opened is important-->
+        <mat-expansion-panel *ngFor="let s of subcos; let i = index" id="{{'panel-' + i}}" [expanded]="step === i" (opened)="setStep(i)" (closed)="ExpPanelClicked()" >
+          <mat-expansion-panel-header *ngIf='working(s, month)'>
+            <mat-panel-title>
+              {{s.resourceName}}
+            </mat-panel-title>
+            <mat-panel-description class="mat-row">
+                <span class="mat-cell">
+                  <mat-icon *ngIf="forecastState('locked', s.subcontractorId)" class="icon-locked"
+                  matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
+                  lock</mat-icon>
+                  <ng-container *ngIf="forecastState('locked-sub', s.subcontractorId)">
+                    <mat-icon class="icon-locked-sublevel"
+                    matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
+                      lock_open</mat-icon>
+                    <div class="locked-leveldesc">{{forecastState('locklevel', s.subcontractorId)}}</div>
+                  </ng-container>
+                  <mat-icon *ngIf="forecastState('saved', s.subcontractorId)" 
+                  matTooltip="{{getValue('history', s.subcontractorId)}}" matTooltipPosition="above" matTooltipDisabled="{{!getValue('history', s.subcontractorId)}}">
+                  save</mat-icon>
+                  <mat-icon *ngIf="forecastState('edited', s.subcontractorId)" class="icon-edited">radio_button_checked</mat-icon>
+                </span>
+                <span class="mat-cell">{{getValue('costRate', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cor', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('manDay', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('revenue', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('costs', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('contribution', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+                <span class="mat-cell">{{getValue('cp', s.subcontractorId) | number: '1.0-2': 'de'}}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+        
+          <ng-template matExpansionPanelContent>
+            <app-subco-fc-entry class="tab-container" [subcoId]="s.subcontractorId" [month]="month"></app-subco-fc-entry>
+          </ng-template>
+          
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()" *ngIf="i > 0">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()" *ngIf="i < (subcos.length-1)">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div flex="100" flex-gt-md="25" class="summary-box-container">
+      <app-subco-summary [role]="role" [month]="month"></app-subco-summary>
+      <!-- <div class="button-row" style="padding-left: 15px;">
+        <button mat-raised-button (click)="addNewSubco()" color="primary" style="width: 144px;">
+          <mat-icon>person_add</mat-icon> Add Subco
+        </button> 
+    </div> -->
+    </div>
+  </div>
+</div>
+  <div layout="row" layout-wrap>
+    <button mat-raised-button (click)="addNewSubco()" color="primary" style="width: 144px;">
+      <mat-icon>person_add</mat-icon> Add Subco
+    </button>
+</div>

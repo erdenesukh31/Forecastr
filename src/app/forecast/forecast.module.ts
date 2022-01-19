@@ -11,17 +11,25 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ForecastComponent } from "./forecast.component";
 import { IndividualComponent } from "./pages/individual/individual.component";
 import { TeamComponent } from "./pages/team/team.component";
+import { SubcosComponent } from "./pages/subcos/subcos.component";
+import { SubcosExecutiveComponent } from "./pages/subcos-executive/subcos-executive.component";
 
 import { FcEntryComponent } from "./components/fc-entry/fc-entry.component";
 import { FcProjectComponent } from "./components/fc-project/fc-project.component";
 import { FcEntrySummaryComponent } from "./components/fc-entry-summary/fc-entry-summary.component";
 import { TeamleadSummaryComponent } from "./components/teamlead-summary/teamlead-summary.component";
 import { TeamleadMonthComponent } from "./components/teamlead-month/teamlead-month.component";
+import { SubcoMonthComponent } from "./components/subco-month/subco-month.component";
+import { SubcoSummaryComponent } from "./components/subco-summary/subco-summary.component";
+import { SubcoFcEntryComponent } from "./components/subco-fc-entry/subco-fc-entry.component"
+import { SubcoFcProjectComponent } from "./components/subco-fc-project/subco-fc-project.component"
+import { SubcoExecutiveDetailComponent } from "./components/subco-executive-detail/subco-executive-detail.component"
 import { PracticeComponent } from "./pages/practice/practice.component";
 
 import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
 import { ExportCsvDialog } from "./dialogs/export-csv/export-csv.dialog";
 import { ProjectRequestDialog } from "./dialogs/add-project/project-request.dialog";
+import { AddSubcoDialogEm} from "./dialogs/add-subco-em/add-subco-em.dialog";
 import { ExecutiveComponent } from "./pages/executive/executive.component";
 import { ExecutiveDetailComponent } from "./components/executive-detail/executive-detail.component";
 import { ExecutiveSummaryComponent } from "./components/executive-summary/executive-summary.component";
@@ -30,6 +38,8 @@ import { NgxPowerBiModule } from "ngx-powerbi";
 import { ExecutiveFcEntryComponent } from "./dialogs/executive-fc-entry/executive-fc-entry.component";
 import { FcEntryDetailDialogComponent } from "./components/executive-detail/fc-entry-detail-dialog.component";
 import { ExecutiveChartComponent } from "./components/executive-chart/executive-chart.component";
+import { ExecutiveChartPdlComponent} from "./components/executive-chart-pdl/executive-chart-pdl.component";
+import { ExecutiveChartPlComponent} from "./components/executive-chart-pl/executive-chart-pl.component";
 import { ExecutiveStatsComponent } from './components/executive-stats/executive-stats.component';
 
 import { StaffingComponent } from "./pages/staffing/staffing.component";
@@ -41,6 +51,8 @@ import { FinancialControllerOverviewComponent } from "./components/financial-con
 import { FcEntrySummaryVacationWarningComponent } from "./components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component";
 import { PowerBi } from "./components/power-bi/power-bi.component";
 
+import { FcEntrySummaryRemDaysWarningComponent } from "./components/fc-entry-summary/remdays-warning/fc-entry-summary-remdays-warning.component";
+import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart/subco-executive-chart.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -59,11 +71,18 @@ import { PowerBi } from "./components/power-bi/power-bi.component";
     ForecastComponent,
     IndividualComponent,
     TeamComponent,
+    SubcosComponent,
+    SubcosExecutiveComponent,
     PracticeComponent,
     FcEntryComponent,
     FcProjectComponent,
     FcEntrySummaryComponent,
     TeamleadMonthComponent,
+    SubcoFcEntryComponent,
+    SubcoFcProjectComponent,
+    SubcoExecutiveDetailComponent,
+    SubcoMonthComponent,
+    SubcoSummaryComponent,
     TeamleadSummaryComponent,
     ExecutiveComponent,
     ExecutiveDetailComponent,
@@ -71,18 +90,23 @@ import { PowerBi } from "./components/power-bi/power-bi.component";
     ConfirmMessageDialog,
     ExportCsvDialog,
     ProjectRequestDialog,
+    AddSubcoDialogEm,
     ExecutiveFcEntryComponent,
     FcEntryDetailDialogComponent,
     FcEntrySummaryVacationWarningComponent,
+    FcEntrySummaryRemDaysWarningComponent,
     PracticesComponent,
     ExecutiveChartComponent,
+    ExecutiveChartPdlComponent,
+    ExecutiveChartPlComponent,
     ExecutiveStatsComponent,
     StaffingComponent,
     StaffingOverviewComponent,
     HeadOfPracticesComponent,
     FinancialControllerComponent,
     FinancialControllerOverviewComponent,
-    PowerBi
+    PowerBi,
+    SubcoExecutiveChartComponent,
   ],
   exports: []
 })

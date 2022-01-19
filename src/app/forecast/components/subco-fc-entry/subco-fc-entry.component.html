@@ -1,0 +1,29 @@
+<div class="loading-overlay" [ngClass]="{'hide': fcLoaded}"></div>
+
+<div class="spinner-container" [ngClass]="{'active': loadingActive}">
+    <mat-progress-spinner class="progress-spinner" color="primary" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<!-- <mat-divider></mat-divider> -->
+
+<div class="project-list" >
+    <app-subco-fc-project [subCoDetails]="subCoDetails" [project]="project" [monthId]="month.id" [subcoId]="subcoId" [lastEditor]="lastEditor"></app-subco-fc-project>
+</div>
+
+<div class="button-row">
+
+  <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
+    (click)="submitForecast()" [disabled]="subCoDetails.manDay > month.workingdays">
+    <mat-icon>lock</mat-icon> Submit
+  </button>
+
+  <button mat-stroked-button *ngIf="!fcIsLocked()" class="mat-primary-reversed align-right"
+    (click)="saveForecast()" [disabled]="subCoDetails.manDay > month.workingdays">
+    <mat-icon>save</mat-icon> Save
+  </button>
+
+  <button mat-stroked-button *ngIf="fcIsLocked()" class="mat-primary-reversed align-right"
+    (click)="unlockForecast()">
+    <mat-icon>lock_open</mat-icon> Unlock
+  </button>
+</div>
