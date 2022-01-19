@@ -17,10 +17,14 @@ import {
   SummaryValues,
 } from "../core/services/forecasts/executive-forecasts.service";
 import { ExecutiveChartComponent } from "./components/executive-chart/executive-chart.component";
+import { ExecutiveChartPdlComponent } from "./components/executive-chart-pdl/executive-chart-pdl.component";
+import { ExecutiveChartPlComponent } from "./components/executive-chart-pl/executive-chart-pl.component";
+import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart/subco-executive-chart.component";
 import { Month } from "../core/interfaces/month";
 import { TeamService } from "../core/services/admin/team.service";
 import { TeamUserService } from "../core/services/forecasts/team-user.service";
 import { Team } from "../core/interfaces/team";
+import { PowerBi } from "./components/power-bi/power-bi.component";
 
 /**
  * forecast component
@@ -180,7 +184,17 @@ export class ForecastComponent implements OnInit, OnDestroy {
       this.checkRequests("teams");
     }
 
-    if (this.authService.hasRole(env.roles.pdl)) {
+    if (this.authService.getRoleId() == env.roles.pdl){
+      this.executiveService.initializeKpiValuesPDL(this.authService.getUserId()).then(() => {
+        this.checkRequests("kpi");
+      })
+    }
+    if (this.authService.getRoleId() == env.roles.pl){
+      this.executiveService.initializeKpiValuesPL(this.authService.getUserId()).then(() => {
+        this.checkRequests("kpi");
+      })
+    }
+    if (this.authService.hasRole(env.roles.msl)) {
       this.executiveService.initializeKpiValues().then(() => {
         this.checkRequests("kpi");
       })
@@ -267,6 +281,10 @@ export class ForecastComponent implements OnInit, OnDestroy {
         return "practices";
       } else if (params[1] === "financial-controller") {
         return "financial-controller";
+      } else if (params[1] === "subcos") {
+        return "subcos";
+      } else if (params[1] === "subcos-exectuive") {
+        return "subcos-exectuive";
       }
       else {
         return "individual";
@@ -281,8 +299,8 @@ export class ForecastComponent implements OnInit, OnDestroy {
    * @param page
    */
   goToPage(page: string): void {
-    this.page = page;
-    this.router.navigate(["/forecast/" + page + "/active"]);
+      this.page = page;
+      this.router.navigate(["/forecast/" + page + "/active"]);
   }
 
   isMSLLevelRole(roleName: string): boolean {
@@ -319,6 +337,14 @@ export class ForecastComponent implements OnInit, OnDestroy {
     return this.authService.hasRole(env.roles.pdl);
   }
 
+  isEm(): boolean {
+    return this.authService.isEngagementManager();
+  }
+
+  isEmAndHasNoLeadRole(): boolean {
+    return this.authService.isEngagementManager() && !this.authService.hasRole(env.roles.pdl);
+  }
+
   isPractice(): boolean {
     return this.authService.hasRole(env.roles.pl);
   }
@@ -333,9 +359,36 @@ export class ForecastComponent implements OnInit, OnDestroy {
 
   /**Open dialog for executive chart */
   openDashboard(): void {
-    if (this.authService.hasRole(env.roles.pdl)) {
-      const dialogRef = this.dialog.open(ExecutiveChartComponent, {
+
+    if (this.authService.getRoleId() == env.roles.pdl){
+ 
+      const dialogRef = this.dialog.open(ExecutiveChartPdlComponent, {
         height: "90%",
+        width: "90%",
+        panelClass: "custom-dialog-container",
+        data: {},
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log("The dialog was closed");
+      });
+     
+    }
+    if (this.authService.getRoleId() == env.roles.pl){
+
+      const dialogRef = this.dialog.open(ExecutiveChartPlComponent, {
+        height: "90%",
+        width: "90%",
+        panelClass: "custom-dialog-container",
+        data: {},
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log("The dialog was closed");
+      });
+    }
+    if (this.authService.hasRole(env.roles.msl)) {
+      const dialogRef = this.dialog.open(ExecutiveChartComponent, {
         width: "90%",
         panelClass: "custom-dialog-container",
         data: {},
@@ -347,6 +400,39 @@ export class ForecastComponent implements OnInit, OnDestroy {
     }
   }
 
+    /**Open dialog for executive chart */
+    openPowerBiDashboard(): void {
+      if (this.authService.hasRole(env.roles.pdl)) {
+        const dialogRef = this.dialog.open(PowerBi, {
+          height: "90%",
+          width: "68%",
+          panelClass: "custom-dialog-container",
+          data: {},
+        });
+  
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log("The dialog was closed");
+        });
+      }
+    }
+
+
+
+  /**Open dialog for subco executive chart */
+  openDashboardSubco(): void {
+    if (this.authService.hasRole(env.roles.pdl)) {
+      const dialogRef = this.dialog.open(SubcoExecutiveChartComponent, {
+        height: "90%",
+        width: "90%",
+        panelClass: "custom-dialog-container",
+        data: {},
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log("The dialog was closed");
+      });
+    }
+  }
   /**
    * Check if init-request are open
    * If not: sets forecastr ready + hides spinner

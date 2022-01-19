@@ -106,11 +106,7 @@ export class ExecutiveStatsComponent implements OnInit {
   }
 
   initCharts() {
-    let daysChartCanvas = this.elementRef.nativeElement.querySelector(
-      `#daysChart`
-    );
-    let daysChartRef = daysChartCanvas.getContext("2d");
-    this.daysChart = new Chart(daysChartRef, {
+    this.daysChart = new Chart("daysChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -132,6 +128,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -149,8 +149,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -177,12 +175,7 @@ export class ExecutiveStatsComponent implements OnInit {
         }
       }
     });
-
-    let probabilitiesChartCanvas = this.elementRef.nativeElement.querySelector(
-      `#probabilitiesChart`
-    );
-    let probabilitiesChartRef = probabilitiesChartCanvas.getContext("2d");
-    this.probabilitiesChart = new Chart(probabilitiesChartRef, {
+    this.probabilitiesChart = new Chart("probabilitiesChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -204,6 +197,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -221,8 +218,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -249,12 +244,7 @@ export class ExecutiveStatsComponent implements OnInit {
         }
       }
     });
-
-    let arveUrveChartCanvas = this.elementRef.nativeElement.querySelector(
-      `#arveUrveChart`
-    );
-    let arveUrveChartRef = arveUrveChartCanvas.getContext("2d");
-    this.arveUrveChart = new Chart(arveUrveChartRef, {
+    this.arveUrveChart = new Chart("arveUrveChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -270,6 +260,10 @@ export class ExecutiveStatsComponent implements OnInit {
             data: this.urve
           }
         ]
+      },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
       },
       options: {
         legend: {
@@ -288,8 +282,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -317,12 +309,7 @@ export class ExecutiveStatsComponent implements OnInit {
         }
       }
     });
-
-    let revenueChartCanvas = this.elementRef.nativeElement.querySelector(
-      `#revenueChart`
-    );
-    let revenueChartRef = revenueChartCanvas.getContext("2d");
-    this.revenueChart = new Chart(revenueChartRef, {
+    this.revenueChart = new Chart("revenueChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -344,6 +331,10 @@ export class ExecutiveStatsComponent implements OnInit {
           }
         ]
       },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
+      },
       options: {
         legend: {
           display: true,
@@ -361,8 +352,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5,
               scaleLabel:  {
                 display: true,
                 labelString: "Teams/Practices",
@@ -389,12 +378,7 @@ export class ExecutiveStatsComponent implements OnInit {
         }
       }
     });
-
-    let corChartCanvas = this.elementRef.nativeElement.querySelector(
-      `#corChart`
-    );
-    let corChartRef = corChartCanvas.getContext("2d");
-    this.corChart = new Chart(corChartRef, {
+    this.corChart = new Chart("corChart", {
       type: "bar",
       data: {
         labels: this.teamLabels,
@@ -405,6 +389,10 @@ export class ExecutiveStatsComponent implements OnInit {
             data: this.cor
           }
         ]
+      },
+      dataset: {
+        barPercentage: 0.7,
+        categoryPercentage: 0.5
       },
       options: {
         legend: {
@@ -423,8 +411,6 @@ export class ExecutiveStatsComponent implements OnInit {
               gridLines: {
                 display: false
               },
-              barPercentage: 0.7,
-              categoryPercentage: 0.5
             }
           ],
           yAxes: [

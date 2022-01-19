@@ -39,6 +39,11 @@ export class AuthService {
    */
   private admin: boolean;
 
+    /**
+   * user isEngagementManager flag (extracted from token)
+   */
+  private engagementManager: boolean;
+
   /**
    * getstated (extracted from token)
    * true if user loggs in the first time or hasn't logged in for 2 months
@@ -100,6 +105,7 @@ export class AuthService {
       this.setAdminPermission(tokenContent.admin ? tokenContent.admin : false);
       this.setLogged(true);
       this.setToken(token);
+      this.setIsEngagementManager(tokenContent.isEM);
 
       return true;
     } catch (e) {
@@ -180,12 +186,20 @@ export class AuthService {
     return this.token;
   }
 
+    /**
+   * get is engagement manager
+   */
+  public isEngagementManager(): boolean{
+    return this.engagementManager;
+  }
+
   /**
    * get admin permission flag
    */
   private hasAdminPermission(): boolean {
     return this.admin;
   }
+
 
   /**
    * set user id
@@ -201,6 +215,14 @@ export class AuthService {
    */
   private setRoleId(id: number): void {
     this.roleId = id;
+  }
+
+  /**
+   * set is engagementManager
+   * @param id
+   */
+  private setIsEngagementManager(isEM: boolean): void{
+    this.engagementManager = isEM;
   }
 
   /**

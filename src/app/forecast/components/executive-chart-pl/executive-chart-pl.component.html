@@ -1,0 +1,135 @@
+<div>
+  <div
+    mat-dialog-title
+    class="fix"
+    layout="row"
+    layout-align="space-between center"
+    style="margin-bottom: 0px; padding-bottom: 0;"
+  >
+    <span>KPI Overview PL</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+
+    <button mat-icon-button (click)="onNoClick()">
+      <mat-icon class="white">close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <div layout="row" layout-wrap *ngIf="showComponent">
+      <div flex="100" class="px-16 pt-5">
+        Overview/Summary of the KPIs for the next 6 Months. COR is averaged in the
+        months over the days. ARVE/URVE and COR are averaged in the TOTAL Column
+        (i. e. the average over the 6 months).
+
+        <table class="border-collapse w-100 h-100">
+          <thead class="border-line color-grey">
+            <tr>
+              <td class="stats-table-header">KPI</td>
+              <td *ngFor="let m of monthLabels" class="stats-table-header">
+                {{ m }}
+              </td>
+              <td class="stats-table-header">TOTAL</td>
+            </tr>
+          </thead>
+          <tbody>
+            <!--ARVE -->
+            <tr class="border-line">
+              <td class="stats-table-cell">ARVE</td>
+              <td class="stats-table-cell" *ngFor="let a of arve">
+                {{ a.toFixed(2) | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ average(arve).toFixed(2) | number: '1.0-2': 'de'}}</td>
+            </tr>
+
+            <!--URVE -->
+            <tr class="border-line">
+              <td class="stats-table-cell">URVE</td>
+              <td class="stats-table-cell" *ngFor="let u of urve">
+                {{ u.toFixed(2) | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ average(urve).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--COR -->
+            <tr class="border-line">
+              <td class="stats-table-cell">COR</td>
+              <td class="stats-table-cell" *ngFor="let c of cor">
+                {{ c.toFixed(2) | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ average(cor).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Internal Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Int. Revenue</td>
+              <td class="stats-table-cell" *ngFor="let i of intRev">
+                {{ i.toFixed(2) | number: '1.0-2': 'de' }}
+              </td>
+              <td class="stats-table-cell">{{ total(intRev).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--External Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Ext. Revenue</td>
+              <td class="stats-table-cell" *ngFor="let e of extRev">
+                {{ e.toFixed(2) | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ total(extRev).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--Total Revenue -->
+            <tr class="border-line">
+              <td class="stats-table-cell">Total Revenue</td>
+              <td class="stats-table-cell" *ngFor="let t of totalRev">
+                {{ t.toFixed(2) | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ total(totalRev).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+
+            <!--FTE -->
+            <tr class="border-line">
+              <td class="stats-table-cell">FTE</td>
+              <td class="stats-table-cell" *ngFor="let f of fte">
+                {{ f.toFixed(2) | number: '1.0-2': 'de'}}
+              </td>
+              <td class="stats-table-cell">{{ total(fte).toFixed(2) | number: '1.0-2': 'de' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div layout="row" layout-wrap>
+      <div flex="33" class="p-16" top-margin="20px">
+        <h3>
+          <span style="color: #95e616;">ARVE</span> /
+          <span style="color: #ff304c;">URVE</span>
+        </h3>
+        <canvas class="w-100" id="arve-urve"></canvas>
+      </div>
+      <div flex="33" class="p-16">
+        <h3>COR</h3>
+        <canvas class="w-100" id="cor"></canvas>
+      </div>
+      <div flex="33" class="p-16">
+        <h3>REVENUE</h3>
+        <canvas class="w-100" id="revenue"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions
+    style="background-color: #0070ad; margin-bottom: 0px;"
+    layout="row" 
+    layout-align="space-between center"  
+    class="fix" >
+        <button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary" style="background-color: white;" (click)="exportCSV()">
+          <mat-icon>insert_drive_file</mat-icon> Export CSV
+        </button>
+  </div>

@@ -135,7 +135,7 @@ export class AddUserDialog implements OnInit, OnDestroy {
       if (role) {
         permission = role.permissionType;
       }
-      return this.user.filter((u: User) => this.roles.find((r: Role) => r.roleId === u.roleId).permissionType > permission);
+      return this.user.filter((u: User) => this.roles.find((r: Role) => r.roleId === u.roleId).permissionType > permission || this.roles.find((r: Role) => r.roleId === u.roleId).roleId == 7);
     }
 
     roleUpdate(): void {

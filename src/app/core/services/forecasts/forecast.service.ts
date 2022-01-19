@@ -82,12 +82,20 @@ export class ForecastService {
 
   /**
    * adds new forecasts
+   * monthId can be used if new placeholder forecasts need to be added 
+   * to the service forecast cache if e.g. copying data from last month
    * @param forecasts
    * @param loadHistory
    */
-  addForecasts(forecasts: FcEntry[], loadHistory: boolean = false): void {
+  addForecasts(forecasts: FcEntry[], loadHistory: boolean = false, monthId: number = 0): void {
     forecasts.forEach((forecast: FcEntry) => {
-      this.setForecast(forecast, loadHistory, false);
+      if(forecast && forecast.forecastId >= 0){
+        this.setForecast(forecast, loadHistory, false);
+
+      } else {
+        //create new Placeholder
+        this.createNewForecast(forecast.userId, monthId);
+      }
     });
   }
 

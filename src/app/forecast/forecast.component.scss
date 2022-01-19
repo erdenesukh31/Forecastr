@@ -56,7 +56,22 @@
   }
 
   .dashboard-button {
-    position: absolute;
+    position: absolute  ;
+    width: 180px;
+    top: 0;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 20px;
+    background-color: map-get($font-colors, blue);
+    color: map-get($font-colors, white);
+    box-shadow: 0px 1px 5px grey;
+
+    .mat-icon {
+      color: map-get($font-colors, white);
+    }
+  }
+
+  .ms-dashboard-button {
     width: 180px;
     top: 0;
     height: 34px;
@@ -77,6 +92,32 @@
 
   .pdl-dashboard {
     right: 250px;
+  }
+
+  .power-bi-practice-dashboard {
+    right: 575px;
+  }
+
+  .practice-em-dashboard {
+    right: 500px;
+  }
+
+  .pdl-em-dashboard {
+    right: 375px;
+  }
+  .subco-totals-dashboard {
+    width: 220px;
+    top: 0;
+    height: 36px;
+    line-height: 36px;
+    left: 170px;
+  }
+  .power-bi-pdl-dashboard {
+    right: 450px;
+  }
+
+  .power-bi-ms-dashboard {
+    left: 25px;
   }
 
   .sm-hop-button-toggle-group {

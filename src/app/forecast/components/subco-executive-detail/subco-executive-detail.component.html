@@ -1,0 +1,143 @@
+<!-- <div style="margin: 10px;">
+	<h3 class="headermargin">Teams</h3>
+	<div class="fte" style="position: absolute; right: 0px;">
+		<span> FTE {{fte | number: '1.0-1': 'de'}} </span>
+	</div>
+</div> -->
+<mat-button-toggle-group appearance="legacy" aria-label="Role" #group="matButtonToggleGroup" [value]="filter"
+	(change)="filterUpdate(group.value)">
+	
+	<mat-button-toggle value="internal" (click)="changeView('internal')">
+		<mat-icon>supervisor_account</mat-icon> Internal
+	</mat-button-toggle>
+	<mat-button-toggle value="external" (click)="changeView('external')">
+		<mat-icon>supervisor_account</mat-icon> External
+	</mat-button-toggle>
+	<mat-button-toggle value="offshore" (click)="changeView('offshore')">
+		<mat-icon>supervisor_account</mat-icon> Offshore
+	</mat-button-toggle>
+	
+</mat-button-toggle-group>
+<button mat-raised-button class="dashboard-button practice-em-dashboard"
+	(click)="openDashboardSubco()">
+	<mat-icon>insert_chart</mat-icon> Subco Totals Overview
+   </button>
+<!-- <button mat-stroked-button class="mat-primary-reversed" (click)="submitAll()"
+	style="position: absolute; right: 220px; margin-right: 120px; margin: 20px;">
+	<mat-icon>lock</mat-icon> Submit all Forecasts
+</button>
+<button mat-stroked-button class="mat-primary-reversed" (click)="unlockAll()"
+	style="position: absolute; right: 0px; margin-right: 30px; margin: 20px;">
+	<mat-icon>lock_open</mat-icon> Unlock all forecasts
+</button> -->
+
+
+<div layout="row" layout-wrap>
+	<div flex="100" flex-gt-md="75">
+		<div class="mat-row accordion-header">
+			<div *ngIf="filter !== 'offshore'">Resource Name</div>
+			<div *ngIf="filter === 'offshore'">Project Name</div>
+			<div>
+				<span>Engagement Manager</span>
+				<span *ngIf="filter !== 'offshore'">Project Name</span>
+				<span *ngIf="filter !== 'offshore'">Customer</span>
+				<span *ngIf="filter === 'internal'">Eastern Europe(?)</span>
+				<span>Man Day</span>
+				<span>Revenue</span>
+				<span>Cost</span>
+				<span>Contribution</span>
+				<span>CP</span>
+			</div>
+
+		</div>
+
+
+		<div *ngIf="filter !== 'offshore'">
+			<mat-accordion displayMode="flat" multi>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Total</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell"></span>
+							<span class="mat-cell"></span>
+							<span class="mat-cell"></span>
+							<span class="mat-cell" *ngIf="filter === 'internal'"></span>
+							<span class="mat-cell">{{totals.manday | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totals.cost | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totals.contribution | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totals.cp | number:'1.0-2':'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+
+				<mat-expansion-panel *ngFor="let subco of internalExternal; let i = index">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{subco.resourceName}}
+						</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell">{{subco.engagementManagerName}}</span>
+							<span class="mat-cell">{{subco.projectName}}</span>
+							<span class="mat-cell">{{subco.customer}}</span>
+							<span class="mat-cell"
+								*ngIf="filter === 'internal' && subco.isEasternEurope=== true">Yes</span>
+							<span class="mat-cell"
+								*ngIf="filter === 'internal' && subco.isEasternEurope=== false">No</span>
+							<span class="mat-cell">{{subco.manDay | number: '1.0-1': 'de'}}</span>
+							<span class="mat-cell">{{subco.revenue | number: '1.0-1': 'de'}}</span>
+							<span class="mat-cell">{{subco.cost | number: '1.0-1': 'de' }}</span>
+							<span class="mat-cell">{{subco.contribution | number: '1.0-1': 'de' }}</span>
+							<span class="mat-cell">{{subco.cp * 100  | number: '1.0-2': 'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+			</mat-accordion>
+		</div>
+
+		<div *ngIf="filter === 'offshore'">
+			<mat-accordion displayMode="flat" multi>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Total</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell"></span>
+							<span class="mat-cell">{{totalsOffshore.manday | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.revenue | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.cost | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.contribution | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalsOffshore.cp | number:'1.0-2':'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+
+				<mat-expansion-panel *ngFor="let totalProject of offshoreTotals; let i = index">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{totalProject.projectName}}
+						</mat-panel-title>
+						<mat-panel-description>
+							<span class="mat-cell">{{totalProject.engagementManagerName}}</span>
+							<span class="mat-cell">{{totalProject.totalManDays | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalRevenue | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalCost | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalContribution | number:'1.0-2':'de'}}</span>
+							<span class="mat-cell">{{totalProject.totalCp * 100 | number:'1.0-2':'de'}}%</span>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+				</mat-expansion-panel>
+			</mat-accordion>
+		</div>
+	</div>
+
+	<div flex="100" flex-gt-md="25" class="summary-box-container">
+		<app-subco-summary [role]="role" [month]="month"></app-subco-summary>
+	</div>
+
+	<div layout="row" layout-wrap>
+		<button mat-stroked-button class="mat-primary-reversed" class="button-rows" color="primary"
+			(click)="exportCSV()">
+			<mat-icon>insert_drive_file</mat-icon> Export CSV
+		</button>
+	</div>
+</div>

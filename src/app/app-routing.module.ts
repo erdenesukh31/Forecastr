@@ -13,12 +13,14 @@ import { TeamComponent } from './forecast/pages/team/team.component';
 import { environment as env } from '../environments/environment';
 import { PracticeComponent } from './forecast/pages/practice/practice.component';
 import { ExecutiveComponent } from './forecast/pages/executive/executive.component';
+import { SubcosComponent } from './forecast/pages/subcos/subcos.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffingComponent } from './forecast/pages/staffing/staffing.component';
 import { HeadOfPracticesComponent } from './forecast/pages/head-of-practices/head-of-practices.component';
 import { PracticesComponent } from './forecast/pages/practices/practices.component';
 import { CanActivate } from '@angular/router';
 import { FinancialControllerComponent } from './forecast/pages/financial-controller/financial-controller.component';
+import { SubcosExecutiveComponent } from './forecast/pages/subcos-executive/subcos-executive.component';
 
 const routes: Routes = [
   {
@@ -108,6 +110,22 @@ const routes: Routes = [
       {
         path: "financial-controller/:id",
         component: FinancialControllerComponent,
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole: 4, //env.roles.fc
+        },
+      },
+      {
+        path: "subcos/:id",
+        component: SubcosComponent,
+        canActivate: [RoleGuard],
+        data: {
+          expectedRole:  0, // env.roles.css,
+        },
+      },
+      {
+        path: "subcos-executive/:id",
+        component: SubcosExecutiveComponent,
         canActivate: [RoleGuard],
         data: {
           expectedRole: 4, //env.roles.fc
