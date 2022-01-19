@@ -57,6 +57,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
   summaryData: MatTableDataSource<any>;
 
   user: User;
+  benchtime: number;
 
   /**
    * forecast-entry summary constructor
@@ -226,6 +227,18 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
       return ""
     }
   }
+
+ /**
+   * Calculates the total number of days for projects.
+   */
+  totalDays(): number {
+     this.benchtime  = this.forecast.projects
+    .find((p: FcProject) => (p.projectType === env.projectTypes.benchdays+1))
+    .plannedProjectDays;
+
+  return (this.forecast.billableDays + this.forecast.nonbillableDays) - this.benchtime;
+  }
+
   showVacationWarning(): Promise<boolean> {
     let dialogRef: any = this.dialog.open(FcEntrySummaryVacationWarningComponent,{
       height: 'auto',
