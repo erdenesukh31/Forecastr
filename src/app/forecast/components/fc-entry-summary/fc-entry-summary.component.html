@@ -59,12 +59,12 @@
 		</div>
 
 		<button mat-stroked-button class="mat-primary-reversed" 
-			*ngIf="!fcIsLocked()" (click)="saveForecast()" [disabled]="((forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays) || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+			*ngIf="!fcIsLocked()" (click)="saveForecast()" [disabled]="totalDays() > forecast.totalDays  || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
 			<mat-icon>save</mat-icon> Save
 		</button>
 
 		<button mat-stroked-button class="mat-primary-reversed align-right"
-			*ngIf="!fcIsLocked()" (click)="submitForecast(forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays))" [disabled]="((forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays) || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
+			*ngIf="!fcIsLocked()" (click)="submitForecast(forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays))" [disabled]="totalDays() > forecast.totalDays || hasProjectInputFocus || !isProjectInputValid || !isCorValueBiggerThanZero">
 			<mat-icon>lock</mat-icon> Submit
 		</button>
 		
@@ -75,10 +75,11 @@
 		  </div>
 
 		<div class="card-section button-row" *ngIf="!fcIsLocked()">
-			<div class="summary-warning error" *ngIf="(forecast.billableDays + forecast.nonbillableDays) > forecast.totalDays">
+			<div class="summary-warning error" *ngIf="totalDays() > (forecast.totalDays | number: '1.0-2') ">
 				<mat-icon class="icon">warning</mat-icon>
-				It is not possible to assign more than <strong>{{forecast.totalDays}} days</strong> for this month!<br>
-				There are currently <strong>{{(forecast.billableDays + forecast.nonbillableDays)}} days</strong> assigned.
+				It is not possible to assign more than <strong>{{forecast.totalDays | number: '1.0-2': 'de'}} days</strong> for this month!<br>
+				No more than <strong>{{benchtime}} days </strong>  can be subtract from bench time.<br>
+				There are currently <strong>{{((forecast.totalDays - (forecast.billableDays + forecast.nonbillableDays - benchtime)))*-1| number: '1.0-2': 'de'}} days</strong> too much.
 			</div>
 		</div>
 
