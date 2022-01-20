@@ -139,14 +139,7 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
           this.uploadSavedForecast();
         }
       });      
-      }
-      if(remDays > 0){
-        this.showRemDaysWarning().then(result=>{
-          if(result){
-            this.uploadSavedForecast();
-          }
-        });     
-      }   
+      } 
     }
     else{
       this.uploadSavedForecast();
@@ -246,8 +239,8 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
    * Calculates the total number of days for projects.
    */
   totalDays(): number {
-     this.benchtime  = this.forecast.projects
-    .find((p: FcProject) => (p.projectType === env.projectTypes.benchdays+1))
+    this.benchtime  =  this.forecast.projects
+    .find((p: FcProject) => (p.projectId === 317))
     .plannedProjectDays;
 
   return (this.forecast.billableDays + this.forecast.nonbillableDays) - this.benchtime;
@@ -260,13 +253,13 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     });
     return dialogRef.afterClosed().toPromise();
   }
-  showRemDaysWarning(): Promise<boolean> {
-    let dialogRef: any = this.dialog.open(FcEntrySummaryRemDaysWarningComponent,{
-      height: 'auto',
-      width: 'auto'
-    });
-    return dialogRef.afterClosed().toPromise();
-  }
+  // showRemDaysWarning(): Promise<boolean> {
+  //   let dialogRef: any = this.dialog.open(FcEntrySummaryRemDaysWarningComponent,{
+  //     height: 'auto',
+  //     width: 'auto'
+  //   });
+  //   return dialogRef.afterClosed().toPromise();
+  // }
 }
 
 
