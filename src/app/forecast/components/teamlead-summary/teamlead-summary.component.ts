@@ -23,6 +23,7 @@ import { environment as env } from '../../../../environments/environment';
 import { TeamUserService } from "../../../core/services/forecasts/team-user.service";
 import { ExportCsvDialog } from "../../dialogs/export-csv/export-csv.dialog";
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
+import { FcProject } from "../../../core/interfaces/fcProject";
 
 /**
  * teamlead summary component
@@ -175,6 +176,21 @@ export class TeamleadSummaryComponent implements OnInit, OnDestroy {
    */
   percentageValue(value: number): number {
     return parseFloat((value * 100).toFixed(0));
+  }
+
+  allForecastsValid(): boolean {
+    let disbaled = false;
+    this.fcEntries.forEach((e: FcEntry)=> {
+      e.projects.forEach((p: FcProject) =>{
+        if(p.probabilityId === null || e.updated){
+          disbaled = true;
+        }
+      })
+      if(e.fte === null || e.updated){
+        disbaled = true;
+      }
+    });
+    return disbaled;
   }
 
   /**
