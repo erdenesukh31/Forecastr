@@ -256,7 +256,7 @@ export class FcEntryComponent implements OnInit, OnDestroy {
     .find((p: FcProject) => (p.projectId === 317))
     .plannedProjectDays;
     
-  return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
+    return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
   }
 
   /**
