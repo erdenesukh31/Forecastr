@@ -255,12 +255,11 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
    * Calculates the total number of days for projects.
    */
   totalDays(): number {
-
-    this.benchtime = this.forecast.projects
-      .find((p: FcProject) => (p.projectId === 317))
-      .plannedProjectDays;
-
-    return (this.forecast.billableDays + this.forecast.nonbillableDays) - this.benchtime;
+    this.benchtime  =  this.forecast.projects
+    .find((p: FcProject) => (p.projectId === 317))
+    .plannedProjectDays;
+    
+    return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
   }
 
   /**
