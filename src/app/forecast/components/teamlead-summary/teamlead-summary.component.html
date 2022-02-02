@@ -42,7 +42,7 @@
     </div>
     <div class="card-section">
     <!-- <div class="card-section button-rows"> -->
-      <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="submitAll()">
+      <button mat-stroked-button [disabled]= allForecastsValid() class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="submitAll()">
         <mat-icon>lock</mat-icon> Submit all forecasts
       </button>
       <!-- <button mat-stroked-button class="mat-primary-reversed button-row" *ngIf="role == 'practice' && hasPracticeLeadRole()" (click)="resetAll()"> DEACTIVATED
