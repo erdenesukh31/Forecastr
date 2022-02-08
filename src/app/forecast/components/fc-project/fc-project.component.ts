@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { ForecastService } from "../../../core/services/forecasts/forecast.service";
@@ -30,6 +30,9 @@ export class FcProjectComponent implements OnInit {
   @Input("monthId") monthId: number;
   @Input("userId") userId: number;
   @Input("lastEditor") lastEditor: string;
+  @Input("hundredPercent") hundredPercent: boolean;
+  @Output() valueUpdate = new EventEmitter<boolean>();
+  @Input("fiveTenFifteen") fiveTenFifteen: boolean;
 
   /**
    * list of all probabilities
@@ -66,7 +69,7 @@ export class FcProjectComponent implements OnInit {
     private utilitiesService: UtilitiesService,
     private forecastService: ForecastService,
     private dataSharingService: DataSharingService
-  ) {}
+  ) { }
 
   /**
    * Initializes forecast entry component.
@@ -196,6 +199,8 @@ export class FcProjectComponent implements OnInit {
    * Passes updated data to the summary
    */
   callDataUpdate(): void {
+    console.log(this.hundredPercent)
+    console.log(this.fiveTenFifteen)
     if (this.project.projectId !== this.projectControl.value) {
       this.project.projectId =
         this.projectControl.value === ""
@@ -215,12 +220,61 @@ export class FcProjectComponent implements OnInit {
         this.project.cor = 0;
         this.project.externalRevenue = false;
       }
+      if (this.hundredPercent) {
+        this.setHundredPercentToProject()
+        this.forecast.isHundredPercent = true;
+        this.forecast.rangeHundredPercent = 4;
+        this.valueUpdate.emit(this.hundredPercent = false);
+      }
+      if (this.fiveTenFifteen) {
+        this.setFiveTenFifteenToProject()
+        this.forecast.isFiveTenFifteen = true;
+        this.valueUpdate.emit(this.fiveTenFifteen = false);
+  
+      }
     }
 
     this.forecastService.setForecast(this.forecast, false, true);
     this.validateProjects();
   }
+  setHundredPercentToProject(): void {
+    var tempProjects = this.forecast.projects.filter(project => project.mandatory == 'Y' || project.projectId == this.project.projectId);
+    tempProjects.forEach(function (entry) {
 
+      entry.probabilityId = 1
+      if (entry.projectId == 317) {
+        entry.plannedProjectDays = 1
+      }
+      else {
+        entry.plannedProjectDays = 0
+
+      }
+
+    })
+    this.forecast.projects = tempProjects;
+    this.project.plannedProjectDays = this.forecast.totalDays - 1;
+    this.project.probabilityId = 1;
+
+  }
+
+  setFiveTenFifteenToProject(): void {
+
+    var tempProjects = this.forecast.projects.filter(project => project.mandatory == 'Y' || project.projectId == this.project.projectId);
+   var benchdays = this.forecast.totalDays -5;
+    tempProjects.forEach(function (entry) {
+      entry.probabilityId = 1
+      if (entry.projectId == 317) {
+        entry.plannedProjectDays = benchdays;
+      }
+      else {
+        entry.plannedProjectDays = 0
+      }
+    })
+    this.forecast.projects = tempProjects;
+    this.project.plannedProjectDays = 5;
+    this.project.probabilityId = 1;
+
+  }
   switchBillable(): string {
     if (this.project.billable) {
       if (this.project.billable.valueOf()) {

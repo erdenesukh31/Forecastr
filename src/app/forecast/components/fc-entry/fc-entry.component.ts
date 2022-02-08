@@ -64,6 +64,9 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   fcLoaded: boolean = false;
   fcSubscription: Subscription;
   loadingActive: boolean = false;
+  hundredPercent: boolean = false;
+  fiveTenFifteen: boolean = false;
+  monthRangeHundredPercent: number;
 
   hasProjectInputFocus: boolean;
   isProjectInputValid: boolean;
@@ -194,7 +197,7 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   saveForecast(): void {
     // let trainingDays: FcProject = this.forecast.projects
     // .find((p: FcProject) => (p.projectType === env.projectTypes.trainingdays+1));
-
+console.log("save fc entry component")
     this.forecastService.saveForecast(this.month.id, this.userId, false);
   }
 
@@ -231,6 +234,44 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
       const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
       el.querySelector('.mat-input-element').focus();
     }, 100);
+  }
+
+
+  addProjectToForecastHundredPercent(): void {
+
+    // temp range - get value from datepicker when implemented
+    this.monthRangeHundredPercent = 4
+    this.hundredPercent = true;
+    this.forecastService.addProject(
+      this.month.id,
+      this.userId,
+      new FcProject(),
+    );
+
+    // Sets the focus to newly added project
+    setTimeout(() => {
+      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
+      el.querySelector('.mat-input-element').focus();
+    }, 100);
+  }
+  addProjectToForecastFiveTenFifteen(): void {
+    this.fiveTenFifteen = true
+    this.forecastService.addProject(
+      this.month.id,
+      this.userId,
+      new FcProject(),
+    );
+    // Sets the focus to newly added project
+    setTimeout(() => {
+      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
+      el.querySelector('.mat-input-element').focus();
+    }, 100);
+  }
+
+  getUpdatedValue($event){
+    this.hundredPercent = $event; 
+    this.fiveTenFifteen = $event;  
+
   }
 
   fteSliderValueUpdate(): void {
