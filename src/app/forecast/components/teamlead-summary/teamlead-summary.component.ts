@@ -314,8 +314,8 @@ export class TeamleadSummaryComponent implements OnInit, OnDestroy {
     let header = "Name;Grade;FTE;Paid Days;Project Days;Billable Days;Vacation Days;Training Days;Business Development Days;Bench Days;ARVE;URVE;External Revenue;Internal Revenue;Revenue;Weighted COR" + lineEnding;
     let summaryHeader = "FTE;Paid Days;Project Days;Billable Days;Vacation Days;Training Days;Business Development Days;Bench Days;ARVE;URVE;External Revenue;Internal Revenue;Revenue;Weighted COR" + lineEnding;
 
-    this.utilitiesService.getMonths().forEach((month: Month) => {
-      if (csvExportMonths.indexOf(month.id) >= 0) {
+    this.utilitiesService.getMonths().filter((m: Month) => m.active === true).forEach((month: Month) => {
+      if (csvExportMonths.includes(month.id)) {
         this.teamForecastService.getTeamForecastPromise(this.userId, month.id, level).then((fcEntries: FcEntry[]) => {
           let monthSummary: string = "Month;" + month.name + lineEnding + "Working Days;" + month.workingdays + lineEnding;
           monthSummary += header;
@@ -338,6 +338,8 @@ export class TeamleadSummaryComponent implements OnInit, OnDestroy {
           let totalCOR: number = 0;
 
           for(var fc of fcEntries) {
+            if(fc.forecastId == -1)
+              continue;
             let user = this.userService.getUser(fc.userId);
             let userName = user.firstName + " " + user.lastName;
             
