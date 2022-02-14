@@ -188,6 +188,7 @@ export class SubCoForecastService {
               sd.contribution = sd.revenue - sd.cost;
               sd.cp = sd.contribution / sd.revenue;
               sd.projectId = subCoDetails.projectId;
+              sd.updated = updated;
             });
         } else {
           //TODO: AddLocked
