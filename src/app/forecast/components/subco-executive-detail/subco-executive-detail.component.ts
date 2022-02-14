@@ -184,13 +184,13 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.filter = this.switchState;
     }
 
-    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id, 193);
+    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id);
 
     this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5),
-      this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
-      this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
+    this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
+    this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
 
-      this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
     this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
     this.getValues();
   }
