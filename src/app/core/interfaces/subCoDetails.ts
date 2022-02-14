@@ -18,6 +18,7 @@ export class SubCoDetails {
     cp: number;
     engagementManagerId: number;
     probabilityId: number;
+    updated: boolean;
 
   /**
      * List of errors if validation was unsuccessful

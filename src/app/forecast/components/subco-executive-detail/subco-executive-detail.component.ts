@@ -33,6 +33,7 @@ import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-exe
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
+import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 /**
  * teamlead summary component
  */
@@ -186,9 +187,19 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
 
     this.subcoForecastService.initSubCoDetailsByMonth(this.month.id);
 
-    this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5),
-    this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
-    this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
+    this.subcoForecastService.subcoDetails$.subscribe(
+      (details: SubCoDetails[]) =>{
+        //only call this if all details have been submitted to the backend
+        if(!details.some(d => d.updated)){
+          this.subcoFinancialControllerService.initSubCoExternalForMonth(this.month.id);
+          this.subcoFinancialControllerService.initSubCoInternalForMonth(this.month.id);
+        }
+      }
+    );
+
+    this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5);
 
     this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
     this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
