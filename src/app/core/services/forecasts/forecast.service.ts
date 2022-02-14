@@ -240,10 +240,9 @@ export class ForecastService {
     let forecast: FcEntry = new FcEntry();
     forecast.monthId = monthId;
     forecast.userId = userId;
-    forecast.fte = 0;
     let u: User = this.userService.getUser(userId);
     forecast.gradeId = u ? u.gradeId : 0;
-
+    forecast.fte = u ? u.fte : 0;
     if (u.gradeId === 7) {
       forecast.isRelevant = false;
     }
