@@ -55,7 +55,7 @@
     color="primary" (click)="addProjectToForecastHundredPercent()">
     <mat-icon>playlist_add</mat-icon> Add Project 100%
   </button>
-  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()  && singleView"
+  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()  && singleView && isUserFullTime()"
     color="primary" (click)="addProjectToForecastFiveTenFifteen()">
     <mat-icon>playlist_add</mat-icon> Add Project 5-10-15
   </button>

@@ -197,7 +197,6 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   saveForecast(): void {
     // let trainingDays: FcProject = this.forecast.projects
     // .find((p: FcProject) => (p.projectType === env.projectTypes.trainingdays+1));
-console.log("save fc entry component")
     this.forecastService.saveForecast(this.month.id, this.userId, false);
   }
 
@@ -303,6 +302,12 @@ console.log("save fc entry component")
     return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
   }
 
+  isUserFullTime(): boolean {
+    if(this.forecast.fte == 1)
+    return true;
+    else
+    return false;
+  }
   /**
    * Test if user fulfills certain role criteria
    */
