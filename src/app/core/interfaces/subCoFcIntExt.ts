@@ -12,6 +12,7 @@ export class SubCoFcIntExt {
     contribution: number;
     cp: number;
     monthId: number;
+    subcontractorId: number;
 
     constructor() {
         this.resourceName = "";
@@ -26,5 +27,6 @@ export class SubCoFcIntExt {
         this.cp = 0;
         this.manDay = 0;
         this.monthId = 0;
+        this.subcontractorId = 0;
     }
 }

@@ -318,6 +318,10 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/'  + subCoId;
   }
 
+  getSubCoDetailsMonth(monthId: number): string {
+    return env.api + 'subcos' + '/'  + 'forecasts' + '/month/' + monthId;
+  }  
+
   getSubCoDetails(monthId: number, emId: number): string {
     return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + '/' + emId;
   }  

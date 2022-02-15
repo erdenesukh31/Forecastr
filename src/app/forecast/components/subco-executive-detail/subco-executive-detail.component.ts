@@ -20,7 +20,7 @@ import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-mess
 import { TeamForecastService } from "../../../core/services/forecasts/team-forecasts.service";
 import { PageStateService } from "../../../core/shared/page-state.service";
 import { AuthService } from "../../../core/security/auth.service";
-import { environment } from "../../../../environments/environment";
+import { environment as env } from "../../../../environments/environment";
 import { DatePipe } from "@angular/common";
 import { SubCoFcIntExt } from "../../../core/interfaces/subCoFcIntExt";
 import { SubCoFcOffshore } from "../../../core/interfaces/subCoFcOffshore";
@@ -32,6 +32,8 @@ import { ExecutiveChartComponent } from "../executive-chart/executive-chart.comp
 import { SubcoExecutiveChartComponent } from "../subco-executive-chart/subco-executive-chart.component";
 import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
+import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
+import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
 /**
  * teamlead summary component
  */
@@ -139,6 +141,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
   constructor(
     private subcoFinancialControllerService: SubCoFinancialControllerService,
     private subcoService: SubCoService,
+    private subcoForecastService: SubCoForecastService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private authService: AuthService,
@@ -182,11 +185,23 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
       this.filter = this.switchState;
     }
 
-    this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5),
-      this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5),
-      this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5),
+    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id);
 
-      this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoForecastService.subcoDetails$.subscribe(
+      (details: SubCoDetails[]) =>{
+        //only call this if all details have been submitted to the backend
+        if(!details.some(d => d.updated)){
+          this.subcoFinancialControllerService.initSubCoExternalForMonth(this.month.id);
+          this.subcoFinancialControllerService.initSubCoInternalForMonth(this.month.id);
+        }
+      }
+    );
+
+    this.subcoFinancialControllerService.initSubCoExternalForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoFinancialControllerService.initSubCoInternalForMonthRange(this.month.id, this.month.id + 5);
+    this.subcoFinancialControllerService.initSubCoOffshoreForMonthRange(this.month.id, this.month.id + 5);
+
+    this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
     this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
     this.getValues();
   }
@@ -225,6 +240,17 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     this.getValues();
   }
 
+  isFinancialController(): boolean {
+    return this.authService.getRoleId() === env.roles.fc;
+  }
+
+  IsExecutive(): boolean {
+    return this.authService.hasRole(env.roles.msl);
+  }
+
+
+
+
   /**
    * Return value for given type (used for arve + urve + revenue + workingdays)
    * @param type
@@ -241,6 +267,14 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
    */
   changeView(status: string): void {
     this.viewSwitch.emit(status);
+  }
+
+  submitAll(): void{
+
+  }
+
+  unlockAll(): void{
+
   }
 
   /**

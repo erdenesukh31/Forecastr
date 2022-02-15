@@ -87,7 +87,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.firstTime = true;
     this.isStepping = false;
     this.showDialog = true;
-    this.subcoForecastService.initSubCoDetailsByMonth(this.month.id, this.userId);
+    this.subcoForecastService.initSubCoDetailsByMonthAndEm(this.month.id, this.userId);
     this.subcoService.initSubCoPreviewById(this.userId);
 
     this.subcoPreviewSubscription = this.subcoService.subCoPreviews$.subscribe((subcos: SubCoPreview[]) =>{

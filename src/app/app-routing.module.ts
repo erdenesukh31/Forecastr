@@ -128,7 +128,7 @@ const routes: Routes = [
         component: SubcosExecutiveComponent,
         canActivate: [RoleGuard],
         data: {
-          expectedRole: 4, //env.roles.fc
+          expectedRole: 3, //env.roles.hop | sm
         },
       },
     ],
