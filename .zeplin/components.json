@@ -1,0 +1,228 @@
+{
+    "plugins": [
+        {
+            "name": "@zeplin/cli-connect-angular-plugin",
+            "config": {
+                "useFullSnippet": true,
+                "useFullDescription": true
+            }
+        }
+    ],
+    "projects": [
+        "603f452486a2b41861334dd2"
+    ],
+    "components": [
+        {
+            "path": "src/app/layout/organizationModal/organization-dialog.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/header/header.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/footer/footer.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/getStartedModal/get-started.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/dialogs/feedback/feedback-dialog.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/faq-modal/faq-modal.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/layout/faq-modal/faq-modal.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/reset-password/reset-password.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/reset-password/reset-password.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/app.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/forecast.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/login/login.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/app.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/individual/individual.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/teamlead-summary/teamlead-summary.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/teamlead-month/teamlead-month.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/teamlead-summary/teamlead-summary.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/staffing-overview/staffing-overview.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/teamlead-month/teamlead-month.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/staffing-overview/staffing-overview.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/financial-controller-overview/financial-controller-overview.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-project/fc-project.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-project/fc-project.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-entry-summary/fc-entry-summary.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-entry-summary/fc-entry-summary.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-detail/executive-detail.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-detail/fc-entry-detail-dialog.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-stats/executive-stats.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-stats/executive-stats.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-summary/executive-summary.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-entry/fc-entry.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-entry/fc-entry.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-chart/executive-chart.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/executive-chart/executive-chart.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/components/fc-entry-summary/vacation-warning/fc-entry-summary-vacation-warning.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/team/team.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/staffing/staffing.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/practices/practices.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/staffing/staffing.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/practice/practice.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/practice/practice.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/head-of-practices/head-of-practices.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/dialogs/executive-fc-entry/executive-fc-entry.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/dialogs/executive-fc-entry/executive-fc-entry.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/financial-controller/financial-controller.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/executive/executive.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/forecast/pages/executive/executive.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/admin.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/components/users/users.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/components/users/users.component.spec.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/components/teams/teams.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/components/projects/projects.component.ts",
+            "zeplinIds": []
+        },
+        {
+            "path": "src/app/admin/components/months/months.component.ts",
+            "zeplinIds": []
+        }
+    ]
+}

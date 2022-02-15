@@ -10,7 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "npx compodoc -p src/tsconfig.app.json -n \"Documentation\" -d src/assets/documentation/"
+    "compodoc": "npx compodoc -p src/tsconfig.app.json -n \"Documentation\" -d src/assets/documentation/",
+    "zeplin-connect": "zeplin connect",
+    "zeplin-connect-dev-mode": "zeplin connect --dev"
   },
   "private": true,
   "dependencies": {
@@ -53,6 +55,8 @@
     "@types/jasminewd2": "^2.0.10",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "@zeplin/cli": "1.1.12",
+    "@zeplin/cli-connect-angular-plugin": "0.1.8",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.4.1",
