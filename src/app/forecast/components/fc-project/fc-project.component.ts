@@ -199,8 +199,6 @@ export class FcProjectComponent implements OnInit {
    * Passes updated data to the summary
    */
   callDataUpdate(): void {
-    console.log(this.hundredPercent)
-    console.log(this.fiveTenFifteen)
     if (this.project.projectId !== this.projectControl.value) {
       this.project.projectId =
         this.projectControl.value === ""
@@ -220,23 +218,24 @@ export class FcProjectComponent implements OnInit {
         this.project.cor = 0;
         this.project.externalRevenue = false;
       }
+      this.forecast.rangeHundredPercent = 0;
       if (this.hundredPercent) {
         this.setHundredPercentToProject()
         this.forecast.isHundredPercent = true;
-        this.forecast.rangeHundredPercent = 4;
+        this.forecast.isFiveTenFifteen = false;   
         this.valueUpdate.emit(this.hundredPercent = false);
       }
       if (this.fiveTenFifteen) {
         this.setFiveTenFifteenToProject()
         this.forecast.isFiveTenFifteen = true;
+        this.forecast.isHundredPercent = false;
         this.valueUpdate.emit(this.fiveTenFifteen = false);
-  
       }
     }
-
     this.forecastService.setForecast(this.forecast, false, true);
     this.validateProjects();
   }
+
   setHundredPercentToProject(): void {
     var tempProjects = this.forecast.projects.filter(project => project.mandatory == 'Y' || project.projectId == this.project.projectId);
     tempProjects.forEach(function (entry) {
@@ -247,9 +246,7 @@ export class FcProjectComponent implements OnInit {
       }
       else {
         entry.plannedProjectDays = 0
-
       }
-
     })
     this.forecast.projects = tempProjects;
     this.project.plannedProjectDays = this.forecast.totalDays - 1;

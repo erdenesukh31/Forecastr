@@ -27,7 +27,7 @@
 <mat-divider></mat-divider>
 
 <div class="project-list" [ngClass]="{'height-fix': !singleView && hasMSLRole()}">
-    <app-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor" [(hundredPercent)]="hundredPercent" [(fiveTenFifteen)]="fiveTenFifteen" (valueUpdate)="getUpdatedValue($event)"></app-fc-project>
+    <app-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor" [(hundredPercent)]="hundredPercent" [(fiveTenFifteen)]="fiveTenFifteen"  (valueUpdate)="getUpdatedValue($event)"></app-fc-project>
 </div>
 
 <div class="multi-view-box" *ngIf="!singleView">

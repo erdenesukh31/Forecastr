@@ -198,6 +198,8 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
     // let trainingDays: FcProject = this.forecast.projects
     // .find((p: FcProject) => (p.projectType === env.projectTypes.trainingdays+1));
     this.forecastService.saveForecast(this.month.id, this.userId, false);
+    if(this.singleView && (this.forecast.isHundredPercent || this.forecast.isFiveTenFifteen))
+    this.reloadCurrentPage();
   }
 
   /**
@@ -213,7 +215,10 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   unlockForecast(): void {
     this.forecastService.unlockForecast(this.month.id, this.userId);
   }
-
+   
+  reloadCurrentPage(): void{
+    window.location.reload();
+  }
   /**
    * Adds a new project.
    * Sets the cursor focus at the beginning of the newly added project.
@@ -235,11 +240,9 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
     }, 100);
   }
 
-
+ 
   addProjectToForecastHundredPercent(): void {
-
     // temp range - get value from datepicker when implemented
-    this.monthRangeHundredPercent = 4
     this.hundredPercent = true;
     this.forecastService.addProject(
       this.month.id,
@@ -270,14 +273,12 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   getUpdatedValue($event){
     this.hundredPercent = $event; 
     this.fiveTenFifteen = $event;  
-
   }
 
   fteSliderValueUpdate(): void {
 
     this.forecast.fte = parseFloat((this.fteSliderValue / 100).toFixed(3));
     this.forecastService.setForecast(this.forecast, false, true);
-
   }
 
   settingsUpdate(): void {

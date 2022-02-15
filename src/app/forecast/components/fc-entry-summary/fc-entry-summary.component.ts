@@ -156,7 +156,10 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     
     this.forecastService.saveForecast(this.month.id, this.userId);
     if ((navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
+    if(this.forecast.isHundredPercent || this.forecast.isFiveTenFifteen)
+    this.reloadCurrentPage();
   }
+
 
   /**
    * Submits forecast (save + lock)
@@ -174,6 +177,10 @@ export class FcEntrySummaryComponent implements OnInit, OnDestroy {
     if ((navigator.userAgent.indexOf("Firefox") > -1)) window.location.reload();
   }
 
+   
+  reloadCurrentPage(): void{
+    window.location.reload();
+  }
   /**
    * Unlock a forecast
    */

@@ -77,7 +77,6 @@
               matTooltipPosition="above"
               matTooltipDisabled="{{ !history('days', i) }}"
             />
-
             <mat-slide-toggle
               color="primary"
               name="billable-{{ monthId }}-{{ i }}"
@@ -92,7 +91,24 @@
             </mat-slide-toggle>
           </mat-form-field>
         </div>
-
+        <div flex="15" class="project-element" *ngIf="!isFixedInternal(project.projectId)">
+          <mat-form-field appearance="outline">
+            <mat-label>{{
+              "Range for 100%"
+            }}</mat-label>
+            <input
+              type="number"
+              onClick="this.select()"
+              matInput
+              name="rangeHundredPercent"
+              [(ngModel)]="forecast.rangeHundredPercent"
+              min="0"
+              (ngModelChange)="callDataUpdate()"
+              [disabled]="fcIsLocked()"
+              (blur)="onProjectDaysBlur($event)"
+            />
+          </mat-form-field>
+        </div>
         <div
           flex="15"
           *ngIf="hasLeadRole() || hasPLRole()"
@@ -127,7 +143,6 @@
               min="1"
               (ngModelChange)="callDataUpdate()"
             />
-
             <mat-slide-toggle
               color="primary"
               name="revenue-{{ monthId }}-{{ i }}"
