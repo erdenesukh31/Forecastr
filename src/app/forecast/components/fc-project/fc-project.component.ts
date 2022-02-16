@@ -92,6 +92,7 @@ export class FcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputValid(true);
     this.validateProjects();
     this.checkCORValueBiggerThanZero();
+    this.forecastService.months
   }
 
   /**
@@ -110,6 +111,10 @@ export class FcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputFocus(true);
   }
 
+  getActiveMonths() {
+
+   return  this.forecastService.months.filter((item) => item.id > this.monthId && item.id < this.monthId +6);
+  }
   onProjectInputBlur(): void {
     this.dataSharingService.setProjectInputFocus(false);
 
@@ -199,6 +204,7 @@ export class FcProjectComponent implements OnInit {
    * Passes updated data to the summary
    */
   callDataUpdate(): void {
+
     if (this.project.projectId !== this.projectControl.value) {
       this.project.projectId =
         this.projectControl.value === ""
@@ -218,18 +224,19 @@ export class FcProjectComponent implements OnInit {
         this.project.cor = 0;
         this.project.externalRevenue = false;
       }
-      this.forecast.rangeHundredPercent = 0;
+     // this.forecast.rangeHundredPercent = 0;
+
       if (this.hundredPercent) {
         this.setHundredPercentToProject()
         this.forecast.isHundredPercent = true;
         this.forecast.isFiveTenFifteen = false;   
         this.valueUpdate.emit(this.hundredPercent = false);
       }
-      if (this.fiveTenFifteen) {
+       if (this.fiveTenFifteen) {
         this.setFiveTenFifteenToProject()
         this.forecast.isFiveTenFifteen = true;
         this.forecast.isHundredPercent = false;
-        this.valueUpdate.emit(this.fiveTenFifteen = false);
+       this.valueUpdate.emit(this.fiveTenFifteen = false);
       }
     }
     this.forecastService.setForecast(this.forecast, false, true);
