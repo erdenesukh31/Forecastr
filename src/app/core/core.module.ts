@@ -49,6 +49,7 @@ import { CovalentPagingModule } from '@covalent/core/paging';
 import { CovalentDialogsModule } from '@covalent/core/dialogs';
 import { CovalentNotificationsModule } from '@covalent/core/notifications';
 import { CovalentCommonModule } from '@covalent/core/common';
+import 'hammerjs';
 
 import { HttpRequestInterceptorService } from './security/httpRequestInterceptor.service';
 import { RoleGuard } from './security/role-guard.service';
