@@ -13,6 +13,9 @@ export class FcEntry {
     fte: number;
     gradeId: number;
     isRelevant: boolean;
+    isHundredPercent: boolean;
+    isFiveTenFifteen: boolean;
+    rangeHundredPercent: number;
 
     /**
      * forecast entry cannot be edited if locked-level is >= permission-level
@@ -99,5 +102,8 @@ export class FcEntry {
         this.vacationDays = 0;
         this.businessDays = 0;
         this.totalDays = 0;
+        this.isHundredPercent = false;
+        this.isFiveTenFifteen = false;
+        this.rangeHundredPercent = 0;
     }
 }

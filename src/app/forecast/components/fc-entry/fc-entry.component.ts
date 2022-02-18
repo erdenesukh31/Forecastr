@@ -64,6 +64,9 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   fcLoaded: boolean = false;
   fcSubscription: Subscription;
   loadingActive: boolean = false;
+  hundredPercent: boolean = false;
+  fiveTenFifteen: boolean = false;
+  monthRangeHundredPercent: number;
 
   hasProjectInputFocus: boolean;
   isProjectInputValid: boolean;
@@ -194,8 +197,9 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   saveForecast(): void {
     // let trainingDays: FcProject = this.forecast.projects
     // .find((p: FcProject) => (p.projectType === env.projectTypes.trainingdays+1));
-
     this.forecastService.saveForecast(this.month.id, this.userId, false);
+    if(this.singleView && (this.forecast.isHundredPercent || this.forecast.isFiveTenFifteen))
+    this.reloadCurrentPage();
   }
 
   /**
@@ -211,7 +215,10 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
   unlockForecast(): void {
     this.forecastService.unlockForecast(this.month.id, this.userId);
   }
-
+   
+  reloadCurrentPage(): void{
+    window.location.reload();
+  }
   /**
    * Adds a new project.
    * Sets the cursor focus at the beginning of the newly added project.
@@ -233,11 +240,45 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
     }, 100);
   }
 
+ 
+  addProjectToForecastHundredPercent(): void {
+    // temp range - get value from datepicker when implemented
+    this.hundredPercent = true;
+    this.forecastService.addProject(
+      this.month.id,
+      this.userId,
+      new FcProject(),
+    );
+
+    // Sets the focus to newly added project
+    setTimeout(() => {
+      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
+      el.querySelector('.mat-input-element').focus();
+    }, 100);
+  }
+  addProjectToForecastFiveTenFifteen(): void {
+    this.fiveTenFifteen = true
+    this.forecastService.addProject(
+      this.month.id,
+      this.userId,
+      new FcProject(),
+    );
+    // Sets the focus to newly added project
+    setTimeout(() => {
+      const el: any = document.querySelector('#project-' + this.month.id + '-' + (this.forecast.projects.length - 1));
+      el.querySelector('.mat-input-element').focus();
+    }, 100);
+  }
+
+  getUpdatedValue($event){
+    this.hundredPercent = $event; 
+    this.fiveTenFifteen = $event;  
+  }
+
   fteSliderValueUpdate(): void {
 
     this.forecast.fte = parseFloat((this.fteSliderValue / 100).toFixed(3));
     this.forecastService.setForecast(this.forecast, false, true);
-
   }
 
   settingsUpdate(): void {
@@ -262,6 +303,12 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
     return (this.forecast.billableDays + this.forecast.nonbillableDays) -  this.benchtime;
   }
 
+  isUserFullTime(): boolean {
+    if(this.forecast.fte == 1)
+    return true;
+    else
+    return false;
+  }
   /**
    * Test if user fulfills certain role criteria
    */

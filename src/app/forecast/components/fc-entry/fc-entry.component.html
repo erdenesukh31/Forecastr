@@ -27,7 +27,7 @@
 <mat-divider></mat-divider>
 
 <div class="project-list" [ngClass]="{'height-fix': !singleView && hasMSLRole()}">
-    <app-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor"></app-fc-project>
+    <app-fc-project *ngFor="let project of forecast.projects; let index = index" [forecast]="forecast" [project]="project" [monthId]="month.id" [userId]="userId" [index]="index" [lastEditor]="lastEditor" [(hundredPercent)]="hundredPercent" [(fiveTenFifteen)]="fiveTenFifteen"  (valueUpdate)="getUpdatedValue($event)"></app-fc-project>
 </div>
 
 <div class="multi-view-box" *ngIf="!singleView">
@@ -51,7 +51,14 @@
     color="primary" (click)="addProjectToForecast()">
     <mat-icon>playlist_add</mat-icon> Add Project
   </button>
-
+  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked() && singleView"
+    color="primary" (click)="addProjectToForecastHundredPercent()">
+    <mat-icon>playlist_add</mat-icon> Add Project 100%
+  </button>
+  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()  && singleView && isUserFullTime()"
+    color="primary" (click)="addProjectToForecastFiveTenFifteen()">
+    <mat-icon>playlist_add</mat-icon> Add Project 5-10-15
+  </button>
   <button mat-stroked-button *ngIf="singleView && !fcIsLocked()" class="mat-primary-reversed align-right"
   (click)="copyData()">
     <mat-icon>content_copy</mat-icon> Copy Data
