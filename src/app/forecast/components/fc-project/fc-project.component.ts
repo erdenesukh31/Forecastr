@@ -92,7 +92,6 @@ export class FcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputValid(true);
     this.validateProjects();
     this.checkCORValueBiggerThanZero();
-    this.forecastService.months
   }
 
   /**
@@ -111,10 +110,6 @@ export class FcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputFocus(true);
   }
 
-  getActiveMonths() {
-
-   return  this.forecastService.months.filter((item) => item.id > this.monthId && item.id < this.monthId +6);
-  }
   onProjectInputBlur(): void {
     this.dataSharingService.setProjectInputFocus(false);
 
