@@ -61,7 +61,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="sd" placeholder="Start Date" formControlName="startDate" (click)="sd.open()">
+      <input matInput [matDatepicker]="sd" placeholder="Start Date" formControlName="startDate" (click)="sd.open()" required>
       <mat-datepicker #sd startView="year" disabled="false" (closed)="datepickerClosed(true)"></mat-datepicker>
     </mat-form-field>
 

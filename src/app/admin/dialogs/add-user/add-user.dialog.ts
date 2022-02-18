@@ -84,7 +84,7 @@ export class AddUserDialog implements OnInit, OnDestroy {
           parentId: fb.control(data.parentId),
           admin: fb.control(data.admin, Validators.required),
           active: fb.control((typeof data.active !== 'undefined') ? data.active : true),
-          startDate: fb.control(data.startDate),
+          startDate: fb.control(data.startDate, Validators.required),
           endDate: fb.control(data.endDate),
         });
       } else {
@@ -103,7 +103,7 @@ export class AddUserDialog implements OnInit, OnDestroy {
           parentId: fb.control(data.parentId),
           admin: fb.control(data.admin, Validators.required),
           active: fb.control((typeof data.active !== 'undefined') ? data.active : true),
-          startDate: fb.control(data.startDate),
+          startDate: fb.control(data.startDate, Validators.required),
           endDate: fb.control(data.endDate),
         });
       }
