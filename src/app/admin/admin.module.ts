@@ -19,6 +19,7 @@ import { AddSubcoDialog } from './dialogs/add-subco/add-subco.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
 import { SubcosComponent } from './components/subcos/subcos.component';
+
 @NgModule({
   imports: [
     CommonModule,

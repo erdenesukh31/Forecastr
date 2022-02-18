@@ -1,3 +1,30 @@
+<div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name or ID">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="no-label-field">
+      <mat-label>Roles</mat-label>
+      <mat-select [formControl]="roleFilter" multiple>
+        <mat-option *ngFor="let role of roles" [value]="role.roleId">{{role.shortcut}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="no-label-field">
+      <mat-label>Grades</mat-label>
+      <mat-select [formControl]="gradeFilter" multiple>
+        <mat-option *ngFor="let grade of grades" [value]="grade.gradeId">{{grade.shortcut}}</mat-option>
+      </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="no-label-field">
+    <mat-label>Teamleads</mat-label>
+    <mat-select [formControl]="teamleadFilter" multiple>
+      <mat-option *ngFor="let teamlead of teamleads" [value]="teamlead.id">
+        {{teamlead.lastName}}, {{teamlead.firstName}} 
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="clearFilter()"> Clear Filter</button>
+</div>
+
 <table mat-table matSort [dataSource]="user">
   <ng-container matColumnDef="active">
     <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
