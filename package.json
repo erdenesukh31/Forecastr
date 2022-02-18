@@ -57,9 +57,9 @@
     "@types/jasmine": "^2.8.18",
     "@types/jasminewd2": "^2.0.10",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.1.2",
     "@zeplin/cli": "1.1.12",
     "@zeplin/cli-connect-angular-plugin": "0.1.8",
+
     "@angular/elements": "9.1.13",
     "@babel/core": "^7.15.0",
     "@storybook/addon-actions": "^6.3.7",
@@ -79,6 +79,7 @@
     "protractor-junit-xml-plugin": "^2.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "webpack-env": "^0.8.0"
   }
 }
