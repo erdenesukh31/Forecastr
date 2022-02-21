@@ -437,20 +437,6 @@ export class FcProjectComponent implements OnInit {
     }
     return false;
   }
-  addProjectMail() {
-    let dialogRef: MatDialogRef<ProjectRequestDialog> = this.dialog.open(
-      ProjectRequestDialog,
-      {
-        data: {
-          width: "30%",
-          maxHeight: "20%",
-        },
-      }
-    );
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-    });
-  }
 
   /**
    * Turns an error test into a css class
