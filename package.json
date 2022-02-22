@@ -59,7 +59,6 @@
     "@types/node": "^12.11.1",
     "@zeplin/cli": "1.1.12",
     "@zeplin/cli-connect-angular-plugin": "0.1.8",
-
     "@angular/elements": "9.1.13",
     "@babel/core": "^7.15.0",
     "@storybook/addon-actions": "^6.3.7",
