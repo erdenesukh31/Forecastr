@@ -58,6 +58,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
   teamFcSubscription: Subscription;
   firstTime: boolean;
   isStepping: boolean;
+  showCopyDialog: boolean;  //Dialog could be shown for every suggested data. This prevents this and only opens the dialog one time when the component is opened.
 
   /**
    * teamlead component constructor
@@ -72,6 +73,7 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
     private teamForecastService: TeamForecastService,
   ) {
     this.userId = this.authService.getUserId();
+    this.showCopyDialog = true;
   }
 
   /**
@@ -130,12 +132,11 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
       .subscribe((fcEntries: any[]) => {
         
         this.forecastService.addForecasts(fcEntries, false, this.month.id);
-        let showDialog = true;
         fcEntries.forEach(entry =>{
           if((entry.suggestedData) &&
           (entry.suggestedData.projects.length > 0 || entry.suggestedData.fte !== entry.fte || entry.suggestedData.gradeId !== entry.gradeId )){
           //showDialog only one time 
-          if(showDialog){
+          if(this.showCopyDialog && this.teamForecastService.getShowDialogForMonth(this.month.id)){
             let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
               data: {
                 message: 'Copy data from last month submitted for all user?',
@@ -150,9 +151,10 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
                     this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
                   }
                 });
+                this.teamForecastService.setShowDialogForMonth(this.month.id, false);
               }
             });
-            showDialog = false;
+            this.showCopyDialog = false;
           }
         }
       })
