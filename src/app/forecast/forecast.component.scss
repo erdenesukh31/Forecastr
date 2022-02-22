@@ -1,7 +1,9 @@
 @import "../../assets/styles/variables.scss";
 
 .role-header {
-  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
   height: 37px;
   margin: 20px 0px 30px 0px;
 
@@ -9,6 +11,7 @@
     line-height: 37px;
     font-size: 1.8em;
     margin: 0;
+    margin-right: auto;
   }
 
   .mat-button-toggle-group {
@@ -47,16 +50,12 @@
   }
 
   .switch-role-toggle {
-    position: absolute;
-    right: 0px;
-    top: 0;
     height: 34px;
     line-height: 34px;
     border-radius: 0;
   }
 
   .dashboard-button {
-    position: absolute  ;
     width: 180px;
     top: 0;
     height: 34px;
@@ -86,25 +85,7 @@
     }
   }
 
-  .practice-dashboard {
-    right: 375px;
-  }
-
-  .pdl-dashboard {
-    right: 250px;
-  }
-
-  .power-bi-practice-dashboard {
-    right: 575px;
-  }
-
-  .practice-em-dashboard {
-    right: 500px;
-  }
-
-  .pdl-em-dashboard {
-    right: 375px;
-  }
+ 
   .subco-totals-dashboard {
     width: 220px;
     height: 36px;
