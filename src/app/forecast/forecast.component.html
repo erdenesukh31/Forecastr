@@ -24,34 +24,35 @@
       <div *ngIf="!isExecutive()" class="role-header">
         <h1>Monthly Forecast</h1>
 
-        <div *ngIf="hasLeadRole()">
-          <button *ngIf="isPractice() && !isEm()" mat-raised-button class="dashboard-button practice-dashboard"
+        <div class="switch-role-toggle" *ngIf="hasLeadRole()">
+          <button *ngIf="isPractice() && !isEm()" mat-raised-button class="dashboard-button"
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="!isPractice() && !isEm()" mat-raised-button class="dashboard-button pdl-dashboard"
+          <button *ngIf="!isPractice() && !isEm()" mat-raised-button class="dashboard-button"
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="isPractice() && isEm()" mat-raised-button class="dashboard-button practice-em-dashboard"
+          <button *ngIf="isPractice() && isEm()" mat-raised-button class="dashboard-button"
           (click)="openDashboard()">
           <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>        
-          <button *ngIf="!isPractice() && isEm()" mat-raised-button class="dashboard-button pdl-em-dashboard"
+          <button *ngIf="!isPractice() && isEm()" mat-raised-button class="dashboard-button"
             (click)="openDashboard()">
             <mat-icon>insert_chart</mat-icon> KPI Overview
           </button>
-          <button *ngIf="isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-practice-dashboard"
+        </div>
+
+        <div class="switch-role-toggle" *ngIf="hasLeadRole()">
+          <button *ngIf="isPractice()" mat-raised-button color="primary" class="dashboard-button"
            (click)="openPowerBiDashboard()">
             <mat-icon>insert_chart</mat-icon> Power Bi
           </button>
-          <button *ngIf="!isPractice()" mat-raised-button color="primary" class="dashboard-button power-bi-pdl-dashboard"
+          <button *ngIf="!isPractice()" mat-raised-button color="primary" class="dashboard-button"
           (click)="openPowerBiDashboard()">
            <mat-icon>insert_chart</mat-icon> Power Bi
          </button>
         </div>
-
-
 
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
       
