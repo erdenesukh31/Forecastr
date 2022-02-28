@@ -1,3 +1,26 @@
+<div>
+	<mat-form-field>
+	  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name">
+	</mat-form-field>
+	<mat-form-field appearance="fill" class="no-label-field">
+	  <mat-label>Type</mat-label>
+	  <mat-select [formControl]="subCoTypeFilter" multiple>
+      <mat-option *ngFor="let type of types" [value]="type.subcontractorTypeId">{{type.subcontractorTypeName}}</mat-option>
+	  </mat-select>
+	</mat-form-field>
+  <mat-form-field appearance="fill" class="no-label-field">
+	  <mat-label>Engement Manager</mat-label>
+	  <mat-select [formControl]="managerFilter" multiple>
+      <mat-option *ngFor="let id of engagementManagerIds" 
+              [value]="id">
+              {{id}}</mat-option>
+	  </mat-select>
+	</mat-form-field>
+	<button mat-raised-button color="primary" (click)="clearFilter()">Clear Filter</button>
+</div>
+
+
+
 <table mat-table matSort [dataSource]="subco" style="padding-left: 60px;">
     <ng-container  matColumnDef="name" >
       <th mat-header-cell  mat-sort-header *matHeaderCellDef>Name</th>
