@@ -882,156 +882,7 @@
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62",
-            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
-            "properties": [
-                {
-                    "name": "arve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 317
-                },
-                {
-                    "name": "benchDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 313
-                },
-                {
-                    "name": "billableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 308
-                },
-                {
-                    "name": "businessDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 312
-                },
-                {
-                    "name": "cor",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 316
-                },
-                {
-                    "name": "external",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 320
-                },
-                {
-                    "name": "fteCss",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 315
-                },
-                {
-                    "name": "monthId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 306
-                },
-                {
-                    "name": "nonBillableDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 309
-                },
-                {
-                    "name": "probabilityId",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 307
-                },
-                {
-                    "name": "ros",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 319
-                },
-                {
-                    "name": "trainingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 311
-                },
-                {
-                    "name": "urve",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 318
-                },
-                {
-                    "name": "vacationDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 310
-                },
-                {
-                    "name": "workingDays",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "number",
-                    "optional": false,
-                    "description": "",
-                    "line": 314
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 164,
-            "methods": []
-        },
-        {
-            "name": "SummaryValues",
-            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914-1",
+            "id": "interface-SummaryValues-24b61e416c085ccde162ec5a5b7fc914",
             "file": "src/app/forecast/components/executive-chart/executive-chart.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1185,14 +1036,11 @@
             ],
             "indexSignatures": [],
             "kind": 164,
-            "methods": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "SummaryValues-1"
+            "methods": []
         },
         {
             "name": "SummaryValues",
-            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-2",
+            "id": "interface-SummaryValues-e140403c9fc2222a100fadf86fe41ef3-1",
             "file": "src/app/forecast/components/executive-summary/executive-summary.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -1333,6 +1181,158 @@
                     "optional": false,
                     "description": "",
                     "line": 121
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "SummaryValues-1"
+        },
+        {
+            "name": "SummaryValues",
+            "id": "interface-SummaryValues-f6d9fe4e1899318738f5f81428271e62-2",
+            "file": "src/app/core/services/forecasts/executive-forecasts.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport { HttpClient } from \"@angular/common/http\";\r\nimport { BusinessOperationsService } from \"../../shared/business-operations.service\";\r\nimport { BehaviorSubject, Observable } from \"rxjs\";\r\nimport { UtilitiesService } from \"../utilities.service\";\r\nimport { Month } from \"../../interfaces/month\";\r\nimport { ForecastService } from \"./forecast.service\";\r\nimport { FcEntry } from \"../../interfaces/fcEntry\";\r\nimport { User } from \"../../interfaces/user\";\r\nimport { FcProject } from \"../../interfaces/fcProject\";\r\nimport { Project } from \"../../interfaces/project\";\r\nimport { environment } from \"../../../../environments/environment\";\r\nimport { Team } from \"../../interfaces/team\";\r\nimport { MonthlySummaryReport } from \"../../interfaces/kpiData\";\r\nimport { GraphicSummaryReport } from \"../../interfaces/graphicData\";\r\nimport { HierarchyNode } from \"../../interfaces/hierarchyNode\";\r\nimport { FinancialControllerSummaryAPPS } from \"../../interfaces/financialAppsSummary\";\r\nimport { PageStateService } from '../../shared/page-state.service';\r\nimport { reject } from \"q\";\r\n/**\r\n * executive service\r\n */\r\n@Injectable({\r\n  providedIn: \"root\",\r\n})\r\nexport class ExecutiveForecastsService {\r\n  summaryValues$: BehaviorSubject<SummaryValues[]>;\r\n  monthValues$: BehaviorSubject<SummaryValues[]>;\r\n  kpiData$: BehaviorSubject<MonthlySummaryReport[]>;\r\n  graphicData$: BehaviorSubject<GraphicSummaryReport[]>;\r\n  financialData$: BehaviorSubject<FinancialControllerSummaryAPPS[]>;\r\n\r\n  monthId: number = 1;\r\n  months: Month[];\r\n  projects: Project[];\r\n  teams: Team[];\r\n  hierarchy: HierarchyNode;\r\n\r\n  constructor(\r\n    private http: HttpClient,\r\n    private BO: BusinessOperationsService,\r\n    private us: UtilitiesService,\r\n    private pageState: PageStateService,\r\n    private forecastService: ForecastService,\r\n    private utilitiesService: UtilitiesService\r\n  ) {\r\n    this.summaryValues$ = new BehaviorSubject([]);\r\n    this.monthValues$ = new BehaviorSubject([]);\r\n    this.kpiData$ = new BehaviorSubject([]);\r\n    this.graphicData$ = new BehaviorSubject([]);\r\n    this.financialData$ = new BehaviorSubject([]);\r\n\r\n    this.initProjects();\r\n    this.initTeams();\r\n    this.initHierarchy();\r\n  }\r\n\r\n  initProjects(): void {\r\n    this.utilitiesService.projects$.subscribe((projects: Project[]) => {\r\n      this.projects = projects;\r\n    });\r\n  }\r\n\r\n  initTeams(): void {\r\n    this.utilitiesService.teams$.subscribe((teams: Team[]) => {\r\n      this.teams = teams;\r\n    });\r\n  }\r\n\r\n  initHierarchy(): void {\r\n    this.utilitiesService.hierarchy$.subscribe((hierarchy: HierarchyNode) => {\r\n      this.hierarchy = hierarchy;\r\n    });\r\n  }\r\n\r\n  getHierarchy(): any {\r\n    return this.hierarchy;\r\n  }\r\n\r\n  getCurrentMonth(): void {\r\n    this.months = this.us.getMonths();\r\n  }\r\n\r\n  resetSummaryValues(): void {\r\n    this.summaryValues$.next([]);\r\n    this.monthValues$.next([]);\r\n  }\r\n\r\n  initializeKpiValues(): Promise<void> {\r\n    return new Promise<void>((resolve, reject) => {\r\n      this.http\r\n      .get<MonthlySummaryReport[]>(this.BO.companyKpiStats())\r\n      .subscribe((reports: MonthlySummaryReport[]) => {\r\n        this.kpiData$.next(reports);\r\n        resolve();\r\n      }, () => reject());\r\n    });\r\n  }\r\n\r\n  initalizeGraphicData(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companyGraphicStats(monthIdFrom, monthIdTo))\r\n      .subscribe((reports: GraphicSummaryReport[]) => {\r\n        this.graphicData$.next(reports);\r\n      });\r\n  }\r\n\r\n  initializeSummaryValues(monthIdFrom: number, monthIdTo: number): void {\r\n    this.http\r\n      .get(this.BO.companySummary(monthIdFrom, monthIdTo))\r\n      .subscribe((values: ProValues) => {\r\n        this.summaryValues$.next(values.period);\r\n        this.monthValues$.next(values.months);\r\n      });\r\n  }\r\n\r\n  initializeDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n        .get(this.BO.companyDetails(monthId))\r\n        .subscribe((forecasts: FcEntry[]) => {\r\n          this.forecastService.addForecasts(forecasts);\r\n          resolve(forecasts);\r\n        });\r\n    });\r\n    return promise;\r\n  }\r\n\r\n  initializeProbabilityDetailValues(monthId: number): Promise<FcEntry[]> {\r\n    let promise = new Promise<FcEntry[]>((resolve: any, reject: any) => {\r\n      this.http\r\n      .get<FcEntry[]>(this.BO.companyDetails(monthId))\r\n      .subscribe((forecasts: FcEntry[]) => {\r\n        resolve(forecasts);\r\n      });\r\n    });\r\n\r\n    return promise;\r\n  }\r\n\r\n  initializeFinancialData(monthIdFrom: number, monthIdTo): Promise<FinancialControllerSummaryAPPS[]> {​​​​​​​​\r\n    let promise = new Promise<FinancialControllerSummaryAPPS[]>((resolve: any, reject: any) => {​​​​​​​​\r\n    this.http\r\n          .get<FinancialControllerSummaryAPPS[]>(this.BO.financialSummary(monthIdFrom,monthIdTo))\r\n          .subscribe((financialSummary: FinancialControllerSummaryAPPS[]) => {​​​​​​​​\r\n          this.financialData$.next(financialSummary);\r\n          resolve(financialSummary);\r\n          }​​​​​​​​);\r\n        }​​​​​​​​);\r\n    return promise;\r\n  }\r\n  \r\n  \r\n\r\n  getGraphicData(): GraphicSummaryReport[] {\r\n    return this.graphicData$.getValue();\r\n  }\r\n\r\n  getKpiData(): MonthlySummaryReport[] {\r\n    return this.kpiData$.getValue();\r\n  }\r\n\r\n  getSummaryValues(): SummaryValues[] {\r\n    return this.summaryValues$.getValue();\r\n  }\r\n\r\n  getMonthValues(): SummaryValues[] {\r\n    return this.monthValues$.getValue();\r\n  }\r\n\r\n  getFinancialData(): FinancialControllerSummaryAPPS[] {\r\n    return this.financialData$.getValue();\r\n  }\r\n\r\n  calculateTeamleadValues(filter: string, team: any[]): any[] {\r\n    let teamleads: any[] = [];\r\n\r\n    if (filter === \"pl\") {\r\n      team\r\n        .filter((u: User) => u.permission === environment.roles.pl || u.roleId === 7 ) //pl or hop\r\n        .forEach((p: User) => {\r\n          let childs: number[] = team\r\n            .filter((c: User) => c.parentId === p.id)\r\n            .map((c: User) => c.id);\r\n          this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName);\r\n          \r\n          teamleads.push({\r\n            id: p.id,\r\n            name: this.getTeamnameForPL(p.id, p.firstName + \" \" + p.lastName),\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => childs.indexOf(c.parentId) >= 0)\r\n                .map((c: User) => c.id)\r\n                .concat(childs)\r\n            ),\r\n          });\r\n        });\r\n    } else {\r\n      team\r\n        .filter(\r\n          (u: User) =>\r\n            u.permission === environment.roles.pdl ||\r\n            u.permission === environment.roles.pl\r\n        )\r\n        .forEach((p: User) => {\r\n          teamleads.push({\r\n            id: p.id,\r\n            name: p.firstName + \" \" + p.lastName,\r\n            prodUnitCode : p.prodUnitCode,\r\n            childs: [p.id].concat(\r\n              team\r\n                .filter((c: User) => c.parentId === p.id)\r\n                .map((c: User) => c.id)\r\n            ),\r\n          });\r\n        });\r\n    }\r\n\r\n    teamleads.forEach((teamlead: any) => {\r\n      teamlead.projectDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.projectDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.billableDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.billableDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.vacationDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.vacationDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.totalDays = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.totalDays)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      teamlead.ros = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.ros)\r\n        .reduce((a, b) => a + b, 0);\r\n\r\n      let fteCss: number = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => u.fte)\r\n        .reduce((a, b) => a + b, 0);\r\n      \r\n      teamlead.fte = fteCss;\r\n\r\n      teamlead.cor = teamlead.ros / teamlead.billableDays;\r\n\r\n      teamlead.arve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.arve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.arve = (teamlead.arve / fteCss).toFixed(0);\r\n\r\n      teamlead.urve = team\r\n        .filter((u: any) => teamlead.childs.indexOf(u.id) >= 0)\r\n        .map((u: any) => parseInt(u.urve, 10))\r\n        .reduce((a, b) => a + b, 0);\r\n      teamlead.urve = (teamlead.urve / fteCss).toFixed(0);\r\n    });\r\n\r\n    return teamleads;\r\n  }\r\n\r\n  getTeamnameForPL(teamLeadId: number, teamLeadName: string): string {\r\n    let t: Team[] = this.teams.filter(\r\n      (team: Team) => team.teamLeadId == teamLeadId\r\n    );\r\n    if (t.length > 0) {\r\n      return t[0].name;\r\n    } else {\r\n      return teamLeadName;\r\n    }\r\n  }\r\n\r\n  /**\r\n   * Returns an observable of the period forecast data for the company\r\n   * Used for csv export\r\n   *\r\n   * @param exportValues\r\n   */\r\n  getCsvExportData(monthIdFrom: number, monthIdTo: number): Observable<any> {\r\n    const httpOptions: object = {\r\n      responseType: \"blob\" as \"json\",\r\n    };\r\n\r\n    return this.http.get<any>(\r\n      this.BO.companyCsvExport(monthIdFrom, monthIdTo),\r\n      httpOptions\r\n    );\r\n  }\r\n}\r\n\r\nexport interface ProValues {\r\n  period: SummaryValues[];\r\n  months: SummaryValues[];\r\n}\r\n\r\nexport interface SummaryValues {\r\n  monthId: number;\r\n  probabilityId: number;\r\n  billableDays: number;\r\n  nonBillableDays: number;\r\n  vacationDays: number;\r\n  trainingDays: number;\r\n  businessDays: number;\r\n  benchDays: number;\r\n  workingDays: number;\r\n  fteCss: number;\r\n  cor: number;\r\n  arve: number;\r\n  urve: number;\r\n  ros: number;\r\n  external: number;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "arve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 317
+                },
+                {
+                    "name": "benchDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 313
+                },
+                {
+                    "name": "billableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 308
+                },
+                {
+                    "name": "businessDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 312
+                },
+                {
+                    "name": "cor",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 316
+                },
+                {
+                    "name": "external",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 320
+                },
+                {
+                    "name": "fteCss",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 315
+                },
+                {
+                    "name": "monthId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 306
+                },
+                {
+                    "name": "nonBillableDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 309
+                },
+                {
+                    "name": "probabilityId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 307
+                },
+                {
+                    "name": "ros",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 319
+                },
+                {
+                    "name": "trainingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 311
+                },
+                {
+                    "name": "urve",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 318
+                },
+                {
+                    "name": "vacationDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 310
+                },
+                {
+                    "name": "workingDays",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 314
                 }
             ],
             "indexSignatures": [],
@@ -20302,7 +20302,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "/* Added */\r\n.Flying-Button {\r\n  position: fixed;\r\n  z-index: 100;\r\n  bottom: 32px;\r\n  right: 30px;\r\n}\r\n\r\n/* Added mat-icon instead of img.Icons */\r\n.Flying-Button  mat-icon{\r\n  width: 24px !important;\r\n  height: 24px !important;\r\n  flex-grow: 0 !important;\r\n  font-size: 22px !important;\r\n  object-fit: contain !important;\r\n  color: #fff !important; \r\n}\r\n\r\n/* Removed width */\r\n.Flying-Button .Content {\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n/* Removed width and renamed from specific to Label */\r\n.Flying-Button .Label {\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: red;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateDefault {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n/* Added class :active */\r\n.Flying-Button .StateDefault:active {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateOn-Click {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n\r\n",
+                    "data": "/* Added */\r\n.Flying-Button {\r\n  position: fixed;\r\n  z-index: 100;\r\n  bottom: 32px;\r\n  right: 30px;\r\n}\r\n\r\n/* Added mat-icon instead of img.Icons */\r\n.Flying-Button  mat-icon{\r\n  width: 24px !important;\r\n  height: 24px !important;\r\n  flex-grow: 0 !important;\r\n  font-size: 22px !important;\r\n  object-fit: contain !important;\r\n  color: #fff !important; \r\n}\r\n\r\n/* Removed width */\r\n.Flying-Button .Content {\r\n  height: 24px;\r\n  flex-grow: 0;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: center;\r\n  align-items: center;\r\n  gap: 5px;\r\n  padding: 0;\r\n}\r\n\r\n/* Removed width and renamed from specific to Label */\r\n.Flying-Button .Label {\r\n  height: 16px;\r\n  flex-grow: 0;\r\n  font-family: Ubuntu;\r\n  font-size: 14px;\r\n  font-weight: normal;\r\n  font-stretch: normal;\r\n  font-style: normal;\r\n  line-height: normal;\r\n  letter-spacing: normal;\r\n  text-align: left;\r\n  color: #fff;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateDefault {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #0070ad;\r\n  border: #0070ad;\r\n}\r\n\r\n/* Added class :active */\r\n.Flying-Button .StateDefault:active {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n/* Removed Type* from name\r\n  added border\r\n  removed width*/\r\n.Flying-Button .StateOn-Click {\r\n  height: 35px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: flex-start;\r\n  align-items: flex-start;\r\n  gap: 10px;\r\n  padding: 5.5px 10px;\r\n  border-radius: 20px;\r\n  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);\r\n  background-color: #005482;\r\n  border: #005482;\r\n}\r\n\r\n\r\n",
                     "styleUrl": "./FlyingButton.css"
                 }
             ],
@@ -28801,7 +28801,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "literal type",
-                "defaultValue": "{\r\n  production: false,\r\n  version: 'dev',\r\n  api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',\r\n  security: 'jwt',\r\n  authPath: 'auth',\r\n  usersPath: 'users',\r\n  utilsPath: 'utilities',\r\n  teamUtilsPath: 'teams',\r\n  projectsPath: 'projects',\r\n  monthsPath: 'months',\r\n  rolePath: 'roles',\r\n  gradePath: 'grades',\r\n  forecastsPath: 'forecasts',\r\n  lockedPath: 'locked',\r\n  savedPath: 'saved',\r\n  teamPath: 'team',\r\n  executivePath: 'company',\r\n  resetPasswordPath: 'password/reset',\r\n  roles: {\r\n    css: 0,\r\n    pdl: 1,\r\n    pl: 2,\r\n    msl: 3,\r\n    fc: 4,\r\n    sm: 5,\r\n    hop: 6,\r\n    admin: 100,\r\n  },\r\n  routes: {\r\n    admin: 'admin',\r\n  },\r\n  projectTypes: {\r\n    default: 0,\r\n    businessdays: 1,\r\n    trainingdays: 2,\r\n    vacationdays: 3,\r\n    benchdays: 4,\r\n    nonbillable: 5,\r\n  },\r\n}",
+                "defaultValue": "{\r\n  production: false,\r\n  version: 'dev',\r\n  // api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',\r\n  api: 'https://localhost:62345/api/v1/',\r\n  security: 'jwt',\r\n  authPath: 'auth',\r\n  usersPath: 'users',\r\n  utilsPath: 'utilities',\r\n  teamUtilsPath: 'teams',\r\n  projectsPath: 'projects',\r\n  monthsPath: 'months',\r\n  rolePath: 'roles',\r\n  gradePath: 'grades',\r\n  forecastsPath: 'forecasts',\r\n  lockedPath: 'locked',\r\n  savedPath: 'saved',\r\n  teamPath: 'team',\r\n  executivePath: 'company',\r\n  resetPasswordPath: 'password/reset',\r\n  roles: {\r\n    css: 0,\r\n    pdl: 1,\r\n    pl: 2,\r\n    msl: 3,\r\n    fc: 4,\r\n    sm: 5,\r\n    hop: 6,\r\n    admin: 100,\r\n  },\r\n  routes: {\r\n    admin: 'admin',\r\n  },\r\n  projectTypes: {\r\n    default: 0,\r\n    businessdays: 1,\r\n    trainingdays: 2,\r\n    vacationdays: 3,\r\n    benchdays: 4,\r\n    nonbillable: 5,\r\n  },\r\n}",
                 "rawdescription": "Define global environment variables",
                 "description": "<p>Define global environment variables</p>\n"
             },
@@ -29218,7 +29218,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type",
-                    "defaultValue": "{\r\n  production: false,\r\n  version: 'dev',\r\n  api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',\r\n  security: 'jwt',\r\n  authPath: 'auth',\r\n  usersPath: 'users',\r\n  utilsPath: 'utilities',\r\n  teamUtilsPath: 'teams',\r\n  projectsPath: 'projects',\r\n  monthsPath: 'months',\r\n  rolePath: 'roles',\r\n  gradePath: 'grades',\r\n  forecastsPath: 'forecasts',\r\n  lockedPath: 'locked',\r\n  savedPath: 'saved',\r\n  teamPath: 'team',\r\n  executivePath: 'company',\r\n  resetPasswordPath: 'password/reset',\r\n  roles: {\r\n    css: 0,\r\n    pdl: 1,\r\n    pl: 2,\r\n    msl: 3,\r\n    fc: 4,\r\n    sm: 5,\r\n    hop: 6,\r\n    admin: 100,\r\n  },\r\n  routes: {\r\n    admin: 'admin',\r\n  },\r\n  projectTypes: {\r\n    default: 0,\r\n    businessdays: 1,\r\n    trainingdays: 2,\r\n    vacationdays: 3,\r\n    benchdays: 4,\r\n    nonbillable: 5,\r\n  },\r\n}",
+                    "defaultValue": "{\r\n  production: false,\r\n  version: 'dev',\r\n  // api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',\r\n  api: 'https://localhost:62345/api/v1/',\r\n  security: 'jwt',\r\n  authPath: 'auth',\r\n  usersPath: 'users',\r\n  utilsPath: 'utilities',\r\n  teamUtilsPath: 'teams',\r\n  projectsPath: 'projects',\r\n  monthsPath: 'months',\r\n  rolePath: 'roles',\r\n  gradePath: 'grades',\r\n  forecastsPath: 'forecasts',\r\n  lockedPath: 'locked',\r\n  savedPath: 'saved',\r\n  teamPath: 'team',\r\n  executivePath: 'company',\r\n  resetPasswordPath: 'password/reset',\r\n  roles: {\r\n    css: 0,\r\n    pdl: 1,\r\n    pl: 2,\r\n    msl: 3,\r\n    fc: 4,\r\n    sm: 5,\r\n    hop: 6,\r\n    admin: 100,\r\n  },\r\n  routes: {\r\n    admin: 'admin',\r\n  },\r\n  projectTypes: {\r\n    default: 0,\r\n    businessdays: 1,\r\n    trainingdays: 2,\r\n    vacationdays: 3,\r\n    benchdays: 4,\r\n    nonbillable: 5,\r\n  },\r\n}",
                     "rawdescription": "Define global environment variables",
                     "description": "<p>Define global environment variables</p>\n"
                 }
