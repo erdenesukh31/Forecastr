@@ -11,11 +11,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "compodoc": "npx compodoc -p src/tsconfig.app.json -n \"Documentation\" -d src/assets/documentation/",
-<<<<<<< HEAD
-    "zeplin-connect": "zeplin connect",
-    "zeplin-connect-dev-mode": "zeplin connect --dev",
-=======
->>>>>>> storybook
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "yarn docs:json && start-storybook -p 6006",
     "build-storybook": "yarn docs:json && build-storybook"
@@ -66,24 +61,10 @@
     "@storybook/angular": "^6.3.12",
     "@types/jasmine": "^2.8.19",
     "@types/jasminewd2": "^2.0.10",
-<<<<<<< HEAD
-    "@types/node": "^12.11.1",
-    "@zeplin/cli": "1.1.12",
-    "@zeplin/cli-connect-angular-plugin": "0.1.8",
-    "@angular/elements": "9.1.13",
-    "@babel/core": "^7.15.0",
-    "@storybook/addon-actions": "^6.3.7",
-    "@storybook/addon-essentials": "^6.3.7",
-    "@storybook/addon-links": "^6.3.7",
-    "@storybook/angular": "^6.3.7",
-    "@webcomponents/custom-elements": "^1.5.0",
-    "babel-loader": "^8.2.2",
-=======
     "@types/node": "^12.20.46",
     "@webcomponents/custom-elements": "^1.5.0",
     "babel-loader": "^8.2.2",
     "codelyzer": "^5.1.2",
->>>>>>> storybook
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.4.1",

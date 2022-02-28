@@ -5,12 +5,8 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-<<<<<<< HEAD
-    "@storybook/addon-essentials"
-=======
     "@storybook/addon-essentials",
     "storybook-addon-designs",
     "storybook-zeplin/register",
->>>>>>> storybook
   ]
 }

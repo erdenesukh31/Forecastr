@@ -13,11 +13,6 @@
     "src/**/*.d.ts"
   ],
   "exclude": [
-<<<<<<< HEAD
-    "test.ts",
-    "**/*.spec.ts",
-=======
->>>>>>> storybook
     "**/*.stories.*"
   ]
 }
