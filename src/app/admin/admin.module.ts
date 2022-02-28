@@ -18,7 +18,12 @@ import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
 import { AddSubcoDialog } from './dialogs/add-subco/add-subco.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
+<<<<<<< HEAD
 import { SubcosComponent } from './components/subcos/subcos.component';
+=======
+
+import { FlyingButtonComponent } from '../../stories/FlyingButton/FlyingButton.component';
+>>>>>>> storybook
 
 @NgModule({
   imports: [
@@ -43,7 +48,11 @@ import { SubcosComponent } from './components/subcos/subcos.component';
     AddSubcoDialog,
     AddTeamDialog,
     ConfirmMessageDialog,
+<<<<<<< HEAD
     SubcosComponent
+=======
+    FlyingButtonComponent
+>>>>>>> storybook
   ],
   exports: [
     MatExpansionModule,

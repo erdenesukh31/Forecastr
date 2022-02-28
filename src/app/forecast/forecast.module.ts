@@ -64,7 +64,7 @@ import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart
     ReactiveFormsModule,
     AppRoutingModule,
     TranslateModule,
-    NgxPowerBiModule
+    NgxPowerBiModule,
   ],
   providers: [],
   declarations: [
@@ -108,6 +108,7 @@ import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart
     PowerBi,
     SubcoExecutiveChartComponent,
   ],
-  exports: []
+  exports: [
+  ]
 })
 export class ForecastModule {}

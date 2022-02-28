@@ -24,6 +24,10 @@ const Template: Story<Page> = (args: Page) => ({
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
+<<<<<<< HEAD
+=======
+  // More on composing args: https://storybook.js.org/docs/angular/writing-stories/args#args-composition
+>>>>>>> storybook
   ...HeaderStories.LoggedIn.args,
 };
 
