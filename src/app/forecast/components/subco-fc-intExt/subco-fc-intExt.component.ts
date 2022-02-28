@@ -29,10 +29,10 @@ import { DatePipe } from "@angular/common";
  */
 @Component({
   selector: "app-subco-fc-internal",
-  templateUrl: "./subco-fc-internal.html",
-  styleUrls: ["./subco-fc-internal.scss"]
+  templateUrl: "./subco-fc-intExt.component.html",
+  styleUrls: ["./subco-fc-intExt.component.scss"]
 })
-export class ExecutiveDetailComponent implements OnInit, OnDestroy {
+export class SubcoExecutiveIntExtDetailComponent implements OnInit, OnDestroy {
   /**
    * month (received as input)
    */

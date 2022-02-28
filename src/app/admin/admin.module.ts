@@ -9,6 +9,7 @@ import { AdminComponent } from './admin.component';
 import { UsersComponent  } from './components/users/users.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { MonthsComponent } from './components/months/months.component';
+import { SubcosComponent } from "./components/subcos/subcos.component";
 import { TeamsComponent } from './components/teams/teams.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -18,7 +19,8 @@ import { AddUserDialog } from './dialogs/add-user/add-user.dialog';
 import { AddSubcoDialog } from './dialogs/add-subco/add-subco.dialog';
 import { AddTeamDialog } from './dialogs/add-team/add-team.dialog';
 import { ConfirmMessageDialog } from './dialogs/confirm-message/confirm-message.dialog';
-import { SubcosComponent } from './components/subcos/subcos.component';
+
+import { FlyingButtonComponent } from '../../stories/FlyingButton/FlyingButton.component';
 
 @NgModule({
   imports: [
@@ -43,6 +45,7 @@ import { SubcosComponent } from './components/subcos/subcos.component';
     AddSubcoDialog,
     AddTeamDialog,
     ConfirmMessageDialog,
+    FlyingButtonComponent,
     SubcosComponent
   ],
   exports: [
