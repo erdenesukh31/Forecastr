@@ -4,6 +4,13 @@
  */
 export const getStartedData = {
 
+    "firstLogin":[
+        {
+            "title":"Required Information",
+            "html": `<p>Please fill in the missing data to use forecastr.<br>`,
+            "image": "2_css.png"
+        }
+    ],
     "css":[
         {
             "title":"Get Started",
