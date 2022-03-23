@@ -14,7 +14,7 @@ import { environment as env } from "../../../../environments/environment";
 import { ConfirmMessageDialog } from "../../dialogs/confirm-message/confirm-message.dialog";
 import { ProjectRequestDialog } from "../../dialogs/add-project/project-request.dialog";
 import { DataSharingService } from "../../../core/shared/data-sharing.service";
-
+import { Month } from '../../../core/interfaces/month';
 /**
  * forecast-entry component
  */
@@ -43,6 +43,8 @@ export class FcProjectComponent implements OnInit {
    * list of all projects
    */
   availableProjects: Project[] = [];
+
+  availableMonthRange: Month[] = []
 
   /**
    * list of filtered projects
@@ -92,8 +94,25 @@ export class FcProjectComponent implements OnInit {
     this.dataSharingService.setProjectInputValid(true);
     this.validateProjects();
     this.checkCORValueBiggerThanZero();
+    this.initAvailableMonthRange();
+
   }
 
+  initAvailableMonthRange(): void {
+    this.availableMonthRange = this.utilitiesService.getMonths();
+    this.availableMonthRange  = this.availableMonthRange.filter((month: Month) => month.active === true);
+
+    var today = new Date();
+    var todayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    this.availableMonthRange =  this.availableMonthRange.filter((m: Month) => new Date(m.time) >= todayMonth);
+
+    if (this.availableMonthRange.length > 7) {
+      this.availableMonthRange = this.availableMonthRange.slice(1, 7);
+    }
+
+    this.availableMonthRange = this.availableMonthRange.filter((m: Month) => m.id >= this.monthId )
+  }
   /**
    * apply filter method for material autocomplete to only show filtered values
    * @param value
@@ -219,21 +238,21 @@ export class FcProjectComponent implements OnInit {
         this.project.cor = 0;
         this.project.externalRevenue = false;
       }
-     // this.forecast.rangeHundredPercent = 0;
 
       if (this.hundredPercent) {
         this.setHundredPercentToProject()
         this.forecast.isHundredPercent = true;
-        this.forecast.isFiveTenFifteen = false;   
+        this.forecast.isFiveTenFifteen = false;
         this.valueUpdate.emit(this.hundredPercent = false);
       }
-       if (this.fiveTenFifteen) {
+      if (this.fiveTenFifteen) {
         this.setFiveTenFifteenToProject()
         this.forecast.isFiveTenFifteen = true;
         this.forecast.isHundredPercent = false;
-       this.valueUpdate.emit(this.fiveTenFifteen = false);
+        this.valueUpdate.emit(this.fiveTenFifteen = false);
       }
     }
+    this.forecast.rangeHundredPercent += 1;
     this.forecastService.setForecast(this.forecast, false, true);
     this.validateProjects();
   }
@@ -259,7 +278,7 @@ export class FcProjectComponent implements OnInit {
   setFiveTenFifteenToProject(): void {
 
     var tempProjects = this.forecast.projects.filter(project => project.mandatory == 'Y' || project.projectId == this.project.projectId);
-   var benchdays = this.forecast.totalDays -5;
+    var benchdays = this.forecast.totalDays - 5;
     tempProjects.forEach(function (entry) {
       entry.probabilityId = 1
       if (entry.projectId == 317) {
