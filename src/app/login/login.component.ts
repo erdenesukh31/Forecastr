@@ -90,7 +90,7 @@ export class LoginComponent {
 
           if (response) {
             let firstTime = true;
-            this.missingDataService.initMissingData();
+            this.missingDataService.initializeMissingUserData(this.loginEmail.value);
 
             this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
 

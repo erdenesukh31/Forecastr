@@ -52,6 +52,7 @@ export class GetStarted implements OnInit {
      */
     ngOnInit(): void {
         this.tutorialData = [];
+
         if (this.auth.hasRole(env.roles.pl)) {
             this.tutorialData = getStartedData.pl;
         } else if (this.auth.hasRole(env.roles.pdl)) {
@@ -59,18 +60,17 @@ export class GetStarted implements OnInit {
         } else {
             this.tutorialData = getStartedData.css;
         }
+
         this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
             this.isMissingUserData = data;
 
             if (this.isMissingUserData.isMissingEngagementManager || this.isMissingUserData.isMissingProdUnitCode ||
                 this.isMissingUserData.isMissingStartDate || this.isMissingUserData.workingHours == 0) {
                 this.isDataMissing = true;
-                this.workingHoursValue = this.isMissingUserData.workingHours;
-                this.workingHoursSliderValue = this.workingHoursValue;
                 this.tutorialData.unshift(getStartedData.firstLogin[0])
                 const currentYear = new Date().getFullYear();
                 this.minDate = new Date(currentYear - 10, 0, 1);
-                this.maxDate = new Date(currentYear + 1, 11, 31);
+                this.maxDate = new Date(currentYear + 2, 11, 31);
             }
         })
     }
@@ -88,7 +88,6 @@ export class GetStarted implements OnInit {
             } else {
                 this.isValid = false;
             }
-
         } else {
             this.isValid = false;
         }
@@ -120,6 +119,5 @@ export class GetStarted implements OnInit {
 
         this.missingDataService.setMissingUserData(this.missingPersonData);
         this.isDataMissing = false;
-
     }
 }

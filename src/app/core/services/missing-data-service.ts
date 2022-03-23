@@ -6,7 +6,6 @@ import { MissingUserData } from '../interfaces/missingPersonData';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateMissingPersonData } from '../interfaces/updateMissingPersonData';
 import { User } from '../interfaces/user';
-import { UserService } from './user.service';
 
 /**
  * missing data service
@@ -29,24 +28,9 @@ export class MissingDataService {
     private http: HttpClient,
     private BO: BusinessOperationsService,
     private snackBar: MatSnackBar,
-    private userService: UserService,
   ) {
 
     this.missingUserData$ = new BehaviorSubject(new MissingUserData());
-  }
-
-  initMissingData(): void {
-    this.userService.initUser();
-    this.userService.user$.subscribe((date: User) => {
-      let user = date;
-      if (user.id != undefined) {
-        this.initializeMissingUserData(user.email);
-    }
-    })
-  }
-
-  getMissingUserData(): MissingUserData {
-    return this.missingUserData$.getValue();
   }
 
   initializeMissingUserData(email: string): Promise<void> {
@@ -78,4 +62,3 @@ export class MissingDataService {
     );
   }
 }
-
