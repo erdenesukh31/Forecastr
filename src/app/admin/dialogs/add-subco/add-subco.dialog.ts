@@ -72,7 +72,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
 
       this.typeSubscription = this.subcoService.types$
         .subscribe((types: SubCoType[]) => {
-          this.types = types;     
+          this.types = types;   
         }); 
   }
 
