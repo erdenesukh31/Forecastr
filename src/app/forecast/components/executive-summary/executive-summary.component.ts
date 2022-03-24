@@ -60,7 +60,6 @@ export class ExecutiveSummaryComponent implements OnInit {
   exportCSV(): void {
     this.pageState.showSpinner();
     let lineEnding = "\r\n";
-console.log(this.probabilitySummary);
     let header = "KPI;" + this.probabilitySummary.probabilites.map(x => x.name).join(";") + ";Total" + lineEnding;
     let body = "ARVE;" + this.probabilitySummary.probabilites.map(x => this.numberToString(x.arve)).join(";") + ";" + this.numberToString(this.probabilitySummary.arve) + lineEnding
       + "URVE;" + this.probabilitySummary.probabilites.map(x => this.numberToString(x.urve)).join(";") + ";" + this.numberToString(this.probabilitySummary.urve) + lineEnding
