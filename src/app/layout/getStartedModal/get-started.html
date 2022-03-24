@@ -8,12 +8,32 @@
     {{index}}
   </ng-template>
 
-  <mat-step *ngFor="let item of tutorialData; let last = last" [stepControl]="false">
+  <mat-step *ngFor="let item of tutorialData; let last = last; let first = first" [stepControl]="false">
     <div layout="column">
-      <div flex="80" class="imageContainer">
+      <div flex="80" class="imageContainer" *ngIf="!isDataMissing">
         <img class="image" src="{{ 'assets/img/steps/Step_'}}{{item.image}}" alt="Step 1">
       </div>
-      
+
+      <div layout="column" *ngIf="isDataMissing">
+      <div flex="80" class="padding" layout-fill >
+        <mat-slider thumbLabel color="primary" min="8" max="40" step="1" [(ngModel)]="workingHoursValue" (change)="validateValues()" class="slider" ></mat-slider>
+        <span class="slider-text">{{workingHoursValue}} working hours</span>
+      </div>
+      <div flex="60"  class="padding">
+        <mat-slide-toggle [(ngModel)]="isEngagementManager" color="primary" >Engagement Manager</mat-slide-toggle>
+      </div>
+      <mat-form-field appearance="outline" *ngIf="isMissingUserData.isMissingProdUnitCode">
+        <mat-label>Product Unit Code</mat-label>
+        <input matInput placeholder="Product Unit Code" type="string" [(ngModel)]="prodUnitCode" (change)="validateValues()" required  />
+      </mat-form-field>
+     
+
+      <mat-form-field appearance="outline" *ngIf="isMissingUserData.isMissingStartDate ">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="sd" placeholder="Start Date"  [min]="minDate" [max]="maxDate"  (click)="sd.open()"  [(ngModel)]="startDate" (change)="validateValues()" required>
+        <mat-datepicker #sd startView="year" disabled="false" (closed)="datepickerClosed(true)"></mat-datepicker>
+      </mat-form-field>
+  </div>
       <div layout="row" [ngClass]="{'content-news' : item.news, 'content': !item.news}" flex="20">
         <div flex="70">
           <h1 class="title">{{item.title}}</h1>
@@ -21,9 +41,12 @@
         </div>
 
         <div class="button-container" flex="30">
-          <button *ngIf="!last" mat-stroked-button class="mat-primary-reversed next-button" matStepperNext>Next</button>
-          <button *ngIf="!last" mat-stroked-button class="mat-primary-reversed close-button" (click)="onNoClick()">Close</button>
-          <button *ngIf="last" mat-stroked-button class="mat-primary-reversed" (click)="onNoClick()">
+          <button *ngIf="isDataMissing" mat-stroked-button class="mat-primary-reversed" matStepperNext (click)="submitData()" [disabled]="!validateValues()">
+            <span class="green-text">Submit</span>
+          </button>
+          <button *ngIf="!last && !isDataMissing" mat-stroked-button class="mat-primary-reversed next-button" matStepperNext>Next</button>
+          <button *ngIf="!last && !isDataMissing" mat-stroked-button class="mat-primary-reversed close-button" (click)="onNoClick()">Close</button>
+          <button *ngIf="last " mat-stroked-button class="mat-primary-reversed" (click)="onNoClick()">
             <span class="green-text">Start</span>
           </button>
         </div>
