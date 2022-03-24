@@ -87,6 +87,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     projectDays: 0, 
     billableDays: 0, 
     vacationDays: 0, 
+    businessDevelopDays:0,
+    trainingDays:0,
     totalDays: 0,
     ros: 0,
     fte: 0,
