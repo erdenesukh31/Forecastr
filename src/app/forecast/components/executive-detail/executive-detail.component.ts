@@ -87,6 +87,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     projectDays: 0, 
     billableDays: 0, 
     vacationDays: 0, 
+    businessDevelopDays:0,
+      trainingDays:0,
     totalDays: 0,
     ros: 0,
     fte: 0,
@@ -122,6 +124,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
       projectDays: 0, 
       billableDays: 0, 
       vacationDays: 0, 
+      businessDevelopDays:0,
+      trainingDays:0,
       totalDays: 0,
       ros: 0,
       fte: 0,
@@ -150,6 +154,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
         projectDays: 0, 
         billableDays: 0, 
         vacationDays: 0, 
+        businessDevelopDays:0,
+      trainingDays:0,
         totalDays: 0,
         ros: 0,
         fte: 0,
@@ -420,6 +426,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
         user.billableDays = 0;
         user.vacationDays = 0;
         user.totalDays = 0;
+        user.businessDevelopDays = 0;
+        user.trainingDays = 0;
         user.cor = 0;
         user.ros = 0;
         user.arve = 0;
@@ -431,10 +439,16 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
              .filter((fcp: FcProject) => this.projects.find((p: Project) => (p.id === fcp.projectId && (p.projectType === 0 || p.projectType === 5))))
              .map((fcp: FcProject) => this.projects.find(p => p.id === fcp.projectId).name)
            : [];
+
         user.projectDays = forecast.billableDays + forecast.nonbillableProjectDays;
         user.billableDays = forecast.billableDays;
         user.vacationDays = forecast.vacationDays;
         user.totalDays = forecast.totalDays;
+        user.businessDevelopDays = forecast.businessDays;
+
+        user.trainingDays = forecast.projects.find((fcp: FcProject) => 
+        this.projects.find((p: Project) => (p.id === fcp.projectId && (p.projectType === 2)))).plannedProjectDays;
+         
         user.cor = forecast.cor ? forecast.cor : 0;
         user.ros = forecast.ros ? forecast.ros : 0;
         user.arve = (forecast.arve * 100).toFixed(0);
@@ -460,17 +474,20 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
         this.totals.vacationDays += user.vacationDays;
         this.totals.totalDays += user.totalDays;
         this.totals.billableDays += user.billableDays;
+        this.totals.businessDevelopDays += user.businessDevelopDays;
+        this.totals.trainingDays += user.trainingDays;
       }
     });
   }
 
   exportCSV(): void {
+    console.log("exportCSV");
     this.pageState.showSpinner();
 
     let lineEnding = "\r\n";
     let header: string = "Month;" + this.month.name + lineEnding
       + "Working Days;" + this.month.workingdays + lineEnding
-      + "Name;Global ID;Prod Unit Code;FTE;Paid Days;Project Days;Billable Days;Vacation Days;ARVE;URVE;Revenue;COR"
+      + "Name;Global ID;Prod Unit Code;FTE;Paid Days;Project Days;Billable Days;Vacation Days;Business Development Days; Training Days;ARVE;URVE;Revenue;COR"
       + lineEnding;
     
     let body = "";
@@ -492,6 +509,8 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
         + this.numberToString(user.projectDays) + ";" //Project Days
         + this.numberToString(user.billableDays) + ";" //Billable Days
         + this.numberToString(user.vacationDays) + ";" //Vactaion Days
+        + this.numberToString(user.businessDevelopDays) + ";" //Business Development Days
+        + this.numberToString(user.trainingDays) + ";" //Training Days
         + this.numberToString(user.arve / 100, 4) + ";" //ARVE
         + this.numberToString(user.urve / 100, 4) + ";" //URVE
         + this.numberToString(user.ros) + ";" //ROS
@@ -507,13 +526,15 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     });
 
     let summaryHeader = "Summary;" + this.month.name + lineEnding
-      + "FTE;Paid Days;Project Days;Billable Days;Vacation Days;ARVE;URVE;Revenue;Weighted COR" 
+      + "FTE;Paid Days;Project Days;Billable Days;Vacation Days;Business Development Days; Training Days;ARVE;URVE;Revenue;Weighted COR" 
       + lineEnding;
     let summaryLine = this.numberToString(this.totals.fte) + ";" 
       + this.numberToString(this.totals.totalDays) + ";" 
       + this.numberToString(this.totals.projectDays) + ";" 
       + this.numberToString(this.totals.billableDays) + ";" 
       + this.numberToString(this.totals.vacationDays) + ";" 
+      + this.numberToString(this.totals.businessDevelopDays) + ";" 
+      + this.numberToString(this.totals.trainingDays) + ";" 
       + this.numberToString((this.totals.projectDays) / (this.totals.totalDays - this.totals.vacationDays), 4) + ";"
       + this.numberToString(this.totals.billableDays / (this.totals.totalDays - this.totals.vacationDays), 4) + ";"
       + this.numberToString(this.totals.ros) + ";"
