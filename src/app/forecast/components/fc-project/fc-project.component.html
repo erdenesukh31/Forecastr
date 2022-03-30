@@ -89,7 +89,7 @@
             </mat-slide-toggle>
           </mat-form-field>
         </div>
-        <div flex="15" class="project-element" *ngIf="!isFixedInternal(project.projectId)">
+        <div flex="15" class="project-element" *ngIf="!isFixedInternal(project.projectId) && forecast.isHundredPercent">
           <mat-form-field appearance="outline">
             <mat-label>{{
               "Range for 100%"
