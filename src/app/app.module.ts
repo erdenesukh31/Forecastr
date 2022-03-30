@@ -17,6 +17,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { SafeHtmlPipe } from "./core/pipes/safe-html";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { DeviceDetectorModule } from "ngx-device-detector";
+import { CustomDateAdapter } from './layout/custom-date-adapter';
+import { DateAdapter } from "@angular/material/core";
 
 /**
  * AoT requires an exported function for factories
@@ -47,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     })
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,  {provide: DateAdapter, useClass: CustomDateAdapter}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
