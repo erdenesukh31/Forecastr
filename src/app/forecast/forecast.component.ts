@@ -404,8 +404,8 @@ export class ForecastComponent implements OnInit, OnDestroy {
     openPowerBiDashboard(): void {
       if (this.authService.hasRole(env.roles.pdl)) {
         const dialogRef = this.dialog.open(PowerBi, {
-          height: "90%",
-          width: "68%",
+          width: "960px",
+          height: "568px",
           panelClass: "custom-dialog-container",
           data: {},
         });

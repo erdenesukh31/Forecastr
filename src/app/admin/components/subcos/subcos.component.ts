@@ -9,6 +9,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SubCoPreview } from '../../../core/interfaces/subCoPreview';
 import { SubCoService } from '../../../core/services/subCo.service';
 import { AddSubcoDialog } from '../../dialogs/add-subco/add-subco.dialog';
+import { SubCoType } from '../../../core/interfaces/subCoType';
+import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-admin-subcos',
   templateUrl: './subcos.component.html',
@@ -27,6 +30,26 @@ export class SubcosComponent implements OnInit {
    */
    subcoSubscription: Subscription;
 
+  /**
+    * subco types subscription
+    */
+   typeSubscription: Subscription;
+
+   /**
+     * list of types (for type select)
+     */
+    types: SubCoType[];
+
+    engagementManagerIds: Number[];
+
+    subCoTypeFilter = new FormControl('');
+    managerFilter = new FormControl('');
+    filterValues : any = {
+      name:'',
+      type: [],
+      enManager:[]
+    }
+
   constructor(private dialog: MatDialog,
               private userAdminService: UserAdminService,
               private subcoService: SubCoService) { 
@@ -35,13 +58,22 @@ export class SubcosComponent implements OnInit {
 
   ngOnInit(): void {
     this.subcoService.initializeAllSubCoPreviews();
-
+    this.subcoService.initializeTypes();
     //load all subcos
     this.subcoSubscription = this.subcoService.allSubCoPreviews$
       .subscribe((subco: SubCoPreview[]) => {
         this.subco = new MatTableDataSource(subco);
+        this.engagementManagerIds = [...new Set(subco.map(item => item.subcontractorEmId))];
+        this.subco.filterPredicate = this.createFilter();
         this.subco.sort = this.sort;
       });
+
+    this.typeSubscription = this.subcoService.types$
+        .subscribe((types: SubCoType[]) => {
+          this.types = types;
+        }); 
+    
+    this.fieldListener();
   }
 
   /**
@@ -79,5 +111,65 @@ export class SubcosComponent implements OnInit {
    /*getType(typeId: number): string {
     return this.roles.find((r: Role) => r.typeId === typeId) ? this.roles.find((r: any) => r.roleId === roleId).name : '-';
   }*/
+
+  // Filters
+  applyFilter(filterValue) {
+    this.filterValues.name = filterValue.trim().toLowerCase();
+    this.subco.filter = JSON.stringify(this.filterValues);
+  }
+  private fieldListener() {
+    this.subCoTypeFilter.valueChanges
+      .subscribe(
+        type => {
+          this.filterValues.type = type;
+          this.subco.filter = JSON.stringify(this.filterValues);
+        }
+      );
+      this.managerFilter.valueChanges
+      .subscribe(
+        id => {
+          this.filterValues.enManager = id;
+          this.subco.filter = JSON.stringify(this.filterValues);
+        }
+      )
+  }
+    // custom filter to overwrite the filter predicate
+    private createFilter(){
+      const filterFunction = function (subco: SubCoPreview, filter): boolean {
+        //match different filters with user
+        let match = true;
+        let matchType= false;
+        let matchManager= false;
+        // User's inputs
+        let searchTerms = JSON.parse(filter);
+        if(searchTerms.name){
+          return (subco.resourceName.toLowerCase()).split(' ').join('')
+          .includes(searchTerms.name);
+        } 
+        if(searchTerms.type.length>0){
+          searchTerms.type.forEach(element => {
+            if(element)
+                matchType = matchType || subco.subcontractorTypeId == element;
+          });
+          match = match && (matchType);
+        }
+        if(searchTerms.enManager.length>0){
+          searchTerms.enManager.forEach(element => {
+            if(element)
+                matchManager = matchManager || subco.subcontractorEmId == element;
+          });
+         match = match && (matchManager);
+        }
+        return match;
+      }
+  
+      return filterFunction;
+    }
+
+    clearFilter(){
+      this.subCoTypeFilter.setValue([]);
+      this.managerFilter.setValue([]);
+    }
+
 
 }

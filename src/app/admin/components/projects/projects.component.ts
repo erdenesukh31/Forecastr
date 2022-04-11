@@ -7,6 +7,7 @@ import { ProjectService } from '../../../core/services/admin/projects.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddProjectDialog } from '../../dialogs/add-project/add-project.dialog';
+import { FormControl } from '@angular/forms';
 
 /**
  * project-admin component
@@ -39,6 +40,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
   ) {}
 
+  // Filter Projects
+  mandatoryFilter = new FormControl('');
+  billableFilter = new FormControl('');
+  typeFilter = new FormControl('');
+  filterValues : any = {
+    name:'', // name or code of the project
+    mandatory: null,
+    billable: null,
+    type: []
+  }
   /**
    * Subscribe to projects at component init
    */
@@ -49,7 +60,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       .subscribe((projects: Project[]) => {
         this.projects = new MatTableDataSource(projects);
         this.projects.sort = this.sort;
+        this.projects.filterPredicate = this.createFilter();
       });
+      this.fieldListener();
   }
 
   /**
@@ -100,4 +113,75 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  //Filter logic
+  applyFilter(filterValue) {
+    this.filterValues.name = filterValue.trim().toLowerCase();
+    this.projects.filter = JSON.stringify(this.filterValues);
+
+  }
+  private fieldListener() {
+    this.mandatoryFilter.valueChanges
+      .subscribe(
+        isMandatory => {
+          this.filterValues.mandatory = isMandatory;
+          this.projects.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.billableFilter.valueChanges
+      .subscribe(
+        isBillable => {
+          this.filterValues.billable = isBillable;
+          this.projects.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.typeFilter.valueChanges
+      .subscribe(
+        type => {
+          this.filterValues.type = type;
+          this.projects.filter = JSON.stringify(this.filterValues);
+        }
+      )
+  }
+
+   // custom filter to overwrite the filter predicate
+   private createFilter(){
+    const filterFunction = function (project: Project, filter): boolean {
+      
+      let match = true;
+      let matchType = false;
+
+      let searchTerms = JSON.parse(filter);
+
+      console.log(searchTerms);
+      if(searchTerms.name){
+        return (project.code.toLowerCase() + project.name.toLowerCase()).split(' ').join('')
+        .includes(searchTerms.name);
+      } 
+      if(searchTerms.mandatory !=null){
+       match = match && project.mandatory == searchTerms.mandatory;
+      }
+      if(searchTerms.billable != null){
+        match = match && project.billable == searchTerms.billable;
+      }
+      if(searchTerms.type.length>0){
+      searchTerms.type.forEach(element => {
+          if(element != null)
+          matchType = matchType || project.projectType == element;
+        }); 
+        match = match && (matchType);
+      }
+      return match;
+    }
+
+    return filterFunction;
+  }
+
+  clearFilter(){
+    this.mandatoryFilter.setValue(null);
+    this.billableFilter.setValue(null);
+    this.typeFilter.setValue([]);
+  }
+
+
 }

@@ -23,6 +23,11 @@ export class TeamForecastService {
    * contains all projects
    */
   projects: Project[];
+  
+  /**
+   * Dicitonary if the copy data dialoug should be shown for a month.
+   */
+  shouldShowCopyDialogForMonth: { [monthID: number]: boolean  };
 
   /**
    * constructor for team-forecast service
@@ -36,6 +41,7 @@ export class TeamForecastService {
     private BO: BusinessOperationsService,
     private utilitiesService: UtilitiesService,
   ) {
+    this.shouldShowCopyDialogForMonth = {};
     this.utilitiesService.projects$
       .subscribe((projects: Project[]) => {
         this.projects = projects;
@@ -49,6 +55,8 @@ export class TeamForecastService {
    * @param monthId
    */
   getTeamForecast(userId: number, monthId: number, levelId: number): Observable<FcEntry[]> {
+    if(!(monthId in this.shouldShowCopyDialogForMonth))
+      this.shouldShowCopyDialogForMonth[monthId] = true;
     return this.http
       .get<FcEntry[]>(this.BO.teamForecast(userId, monthId, levelId));
   }
@@ -279,5 +287,13 @@ export class TeamForecastService {
           reject();
         });
     });
+  }
+
+  setShowDialogForMonth(monthId:number, show: boolean){
+    this.shouldShowCopyDialogForMonth[monthId] = show;
+  }
+
+  getShowDialogForMonth(monthId: number){
+    return this.shouldShowCopyDialogForMonth[monthId];
   }
 }

@@ -9,9 +9,6 @@ import { environment as env } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class BusinessOperationsService {
- 
-  
- 
   /**
    * returns login-path
    */
@@ -158,6 +155,13 @@ export class BusinessOperationsService {
   getProbabilities(): string {
     return env.api + env.utilsPath + '/probabilities';
   }
+  getMissingUserData(email:string): string {
+    return env.api +env.usersPath + '/missing/' + email;
+  }
+
+  setMissingUserData(): string {
+    return env.api +env.usersPath + '/missing';
+  }
 
   /**
    * returns get single forecast path
@@ -229,18 +233,18 @@ export class BusinessOperationsService {
     return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats';
   }
 
-    /**
-   * returns kpi stats path
-   */
-     companyKpiStatsPDL(userId: number): string {
-      return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/1';
-    }
-        /**
-   * returns kpi stats path
-   */
-         companyKpiStatsPL(userId: number): string {
-          return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/2';
-        }
+  /**
+ * returns kpi stats path
+ */
+  companyKpiStatsPDL(userId: number): string {
+    return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/1';
+  }
+  /**
+* returns kpi stats path
+*/
+  companyKpiStatsPL(userId: number): string {
+    return env.api + env.forecastsPath + '/' + env.executivePath + '/kpi-stats-pdl-pl/' + userId + '/2';
+  }
 
   /**
    * returns graphic stats path
@@ -271,15 +275,15 @@ export class BusinessOperationsService {
   }
 
   financialSummary(monthIdFrom: number, monthIdTo: number): string {
-   return env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo;
-}
+    return env.api + env.forecastsPath + '/' + env.executivePath + '/financial-summary/' + monthIdFrom + '/' + monthIdTo;
+  }
 
   getSubcoPreviews(): string {
     return env.api + 'subcos';
   }
 
-  getSubcoPreviewsByEmId(emId:number): string {
-    return env.api + 'subcos'+ '/' + emId;
+  getSubcoPreviewsByEmId(emId: number): string {
+    return env.api + 'subcos' + '/' + emId;
   }
 
   getSubcoDetails(): string {
@@ -295,11 +299,11 @@ export class BusinessOperationsService {
   }
 
   updateSubCoPreview(subCoId: number): string {
-    return env.api + 'subcos' + '/'   + subCoId;
+    return env.api + 'subcos' + '/' + subCoId;
   }
 
   updateSubCoDetail(subCoId: number): string {
-    return env.api + 'subcos' + '/'   + subCoId;
+    return env.api + 'subcos' + '/' + subCoId;
   }
 
   addSubCoPreview(): string {
@@ -311,69 +315,73 @@ export class BusinessOperationsService {
   }
 
   deleteSubCoPreview(subCoId: number): string {
-    return env.api + 'subcos' + '/'  + subCoId;
+    return env.api + 'subcos' + '/' + subCoId;
   }
 
   deleteSubCoDetail(subCoId: number): string {
-    return env.api + 'subcos' + '/'  + subCoId;
+    return env.api + 'subcos' + '/' + subCoId;
+  }
+
+  getSubCoDetailsMonth(monthId: number): string {
+    return env.api + 'subcos' + '/' + 'forecasts' + '/month/' + monthId;
   }
 
   getSubCoDetails(monthId: number, emId: number): string {
-    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + monthId + '/' + emId;
-  }  
-  
+    return env.api + 'subcos' + '/' + 'forecasts' + '/' + monthId + '/' + emId;
+  }
+
   getSubCoTypes(): string {
     return env.api + 'subcos' + '/' + 'type';
   }
 
   getSubCoForecastsMonthRange(startMonthId: number, endMonthId: number, emId: number): string {
-    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + startMonthId+ '/' + endMonthId+ '/'+emId;
-  }  
-
-  updateSubCoForecasts(subCoForecastId: number): string {
-    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + subCoForecastId;
-  }  
-
-  addSubCoForecasts(subCoForecastId: number): string {
-    return env.api + 'subcos' + '/'  + 'forecasts';
+    return env.api + 'subcos' + '/' + 'forecasts' + '/' + startMonthId + '/' + endMonthId + '/' + emId;
   }
 
-  setSubcoForecastUnlocked(forecastid : number){
-    return env.api + 'subcos' + '/'  + 'forecasts' + '/' + forecastid + '/' + 'unlock';
+  updateSubCoForecasts(subCoForecastId: number): string {
+    return env.api + 'subcos' + '/' + 'forecasts' + '/' + subCoForecastId;
+  }
+
+  addSubCoForecasts(subCoForecastId: number): string {
+    return env.api + 'subcos' + '/' + 'forecasts';
+  }
+
+  setSubcoForecastUnlocked(forecastid: number) {
+    return env.api + 'subcos' + '/' + 'forecasts' + '/' + forecastid + '/' + 'unlock';
   }
 
   subcoForecast(subcontractorForecastId: number): string {
-    return env.api + 'subcos' + '/'  + 'forecasts' +'/' + subcontractorForecastId ;
+    return env.api + 'subcos' + '/' + 'forecasts' + '/' + subcontractorForecastId;
   }
-  
+
   createSubcoForecast(): string {
-    return env.api + 'subcos' + '/'  + 'forecasts';
+    return env.api + 'subcos' + '/' + 'forecasts';
   }
 
   getSubCoInternalForMonth(monthId: number): string {
-    return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId ;
+    return env.api + 'subcos' + '/' + 'internal' + '/' + monthId;
   }
 
   getSubCoExternalForMonth(monthId: number): string {
-    return env.api + 'subcos' + '/'  + 'external' +'/' + monthId ;
+    return env.api + 'subcos' + '/' + 'external' + '/' + monthId;
   }
 
 
   getSubCoOffshoreForMonth(monthId: number): string {
-    return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId ;
+    return env.api + 'subcos' + '/' + 'offshore' + '/' + monthId;
   }
 
-  getSubCoInternalForMonthRange(monthId: number, endMonthId:number): string {
-    return env.api + 'subcos' + '/'  + 'internal' +'/' + monthId +'/' + endMonthId;
+  getSubCoInternalForMonthRange(monthId: number, endMonthId: number): string {
+    return env.api + 'subcos' + '/' + 'internal' + '/' + monthId + '/' + endMonthId;
   }
 
-  getSubCoExternalForMonthRange(monthId: number, endMonthId:number): string {
-    return env.api + 'subcos' + '/'  + 'external' +'/' + monthId +'/' + endMonthId;
+  getSubCoExternalForMonthRange(monthId: number, endMonthId: number): string {
+    return env.api + 'subcos' + '/' + 'external' + '/' + monthId + '/' + endMonthId;
   }
 
 
-  getSubCoOffshoreForMonthRange(monthId: number, endMonthId:number): string {
-    return env.api + 'subcos' + '/'  + 'offshore' +'/' + monthId +'/' + endMonthId;
+  getSubCoOffshoreForMonthRange(monthId: number, endMonthId: number): string {
+    return env.api + 'subcos' + '/' + 'offshore' + '/' + monthId + '/' + endMonthId;
   }
 
   //for Avg FTE Summary Financial Controller
@@ -383,7 +391,7 @@ export class BusinessOperationsService {
 
   //for Subco Total Summary HOP and Financial Controller
   getSubCoDetailTotalsMonthRange(startMonthId: number, endMonthId: number): string {
-    return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId +'/'+ endMonthId;
+    return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId + '/' + endMonthId;
   }
 
 }

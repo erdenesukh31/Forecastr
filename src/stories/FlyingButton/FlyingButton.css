@@ -1,0 +1,95 @@
+/* Added */
+.Flying-Button {
+  position: fixed;
+  z-index: 100;
+  bottom: 32px;
+  right: 30px;
+}
+
+/* Added mat-icon instead of img.Icons */
+.Flying-Button  mat-icon{
+  width: 24px !important;
+  height: 24px !important;
+  flex-grow: 0 !important;
+  font-size: 22px !important;
+  object-fit: contain !important;
+  color: #fff !important; 
+}
+
+/* Removed width */
+.Flying-Button .Content {
+  height: 24px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+}
+
+/* Removed width and renamed from specific to Label */
+.Flying-Button .Label {
+  height: 16px;
+  flex-grow: 0;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fff;
+}
+
+/* Removed Type* from name
+  added border
+  removed width*/
+.Flying-Button .StateDefault {
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0070ad;
+  border: #0070ad;
+}
+
+/* Added class :active */
+.Flying-Button .StateDefault:active {
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
+
+/* Removed Type* from name
+  added border
+  removed width*/
+.Flying-Button .StateOn-Click {
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5.5px 10px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #005482;
+  border: #005482;
+}
+
+

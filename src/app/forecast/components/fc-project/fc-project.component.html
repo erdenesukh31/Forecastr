@@ -35,9 +35,7 @@
                   p.name
                 }}</mat-option>
               </ng-container>
-              <mat-option class="request-project-btn" (click)="addProjectMail()"
-                >Request Project</mat-option
-              >
+
             </mat-autocomplete>
           </ng-container>
 
@@ -77,7 +75,6 @@
               matTooltipPosition="above"
               matTooltipDisabled="{{ !history('days', i) }}"
             />
-
             <mat-slide-toggle
               color="primary"
               name="billable-{{ monthId }}-{{ i }}"
@@ -92,7 +89,18 @@
             </mat-slide-toggle>
           </mat-form-field>
         </div>
-
+        <div flex="15" class="project-element" *ngIf="!isFixedInternal(project.projectId) && forecast.isHundredPercent">
+          <mat-form-field appearance="outline">
+            <mat-label>{{
+              "Range for 100%"
+            }}</mat-label>
+            <mat-select [(value)]="forecast.rangeHundredPercent"   (closed)="callDataUpdate()">
+              <mat-option *ngFor="let month of availableMonthRange; let indexofelement=index;" [value]="indexofelement">
+                Until {{month.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div
           flex="15"
           *ngIf="hasLeadRole() || hasPLRole()"
@@ -127,7 +135,6 @@
               min="1"
               (ngModelChange)="callDataUpdate()"
             />
-
             <mat-slide-toggle
               color="primary"
               name="revenue-{{ monthId }}-{{ i }}"
