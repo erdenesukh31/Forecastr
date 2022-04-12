@@ -243,6 +243,7 @@ export class FcProjectComponent implements OnInit {
         this.setHundredPercentToProject()
         this.forecast.isHundredPercent = true;
         this.forecast.isFiveTenFifteen = false;
+        this.forecast.rangeHundredPercent = 0;
         this.valueUpdate.emit(this.hundredPercent = false);
       }
       if (this.fiveTenFifteen) {
@@ -252,7 +253,7 @@ export class FcProjectComponent implements OnInit {
         this.valueUpdate.emit(this.fiveTenFifteen = false);
       }
     }
-    this.forecast.rangeHundredPercent += 1;
+    console.log(this.forecast.rangeHundredPercent);
     this.forecastService.setForecast(this.forecast, false, true);
     this.validateProjects();
   }
