@@ -26,7 +26,6 @@
           </mat-form-field>
 
           <button class="login-button" mat-raised-button color="primary" type="submit" [disabled]="!loginFormGroup.valid || loginActive">Login</button>
-          <a class="reset-link" (click)="resetPassword()">Forgot your password?</a>
         </form>
         
         <div class="spinner-container" [ngClass]="{'active': loginActive}">

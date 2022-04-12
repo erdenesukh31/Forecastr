@@ -14,7 +14,6 @@ import { environment as env } from '../environments/environment';
 import { PracticeComponent } from './forecast/pages/practice/practice.component';
 import { ExecutiveComponent } from './forecast/pages/executive/executive.component';
 import { SubcosComponent } from './forecast/pages/subcos/subcos.component'
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StaffingComponent } from './forecast/pages/staffing/staffing.component';
 import { HeadOfPracticesComponent } from './forecast/pages/head-of-practices/head-of-practices.component';
 import { PracticesComponent } from './forecast/pages/practices/practices.component';
@@ -26,10 +25,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-  },
-  {
-    path: 'reset-password/:token',
-    component: ResetPasswordComponent,
   },
   {
     path: 'admin', // env.routes.admin
