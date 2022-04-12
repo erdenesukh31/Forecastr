@@ -55,17 +55,6 @@
     .login-button {
       margin-bottom: 12px;
     }
-
-    .reset-link {
-      font-size: 0.85rem;
-      color: map-get($font-colors, blue);
-      text-align: center;
-      
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    }    
     
   }
 }

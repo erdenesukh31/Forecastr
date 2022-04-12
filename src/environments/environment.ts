@@ -19,7 +19,6 @@ export const environment: {
   savedPath: string;
   teamPath: string;
   executivePath: string;
-  resetPasswordPath: string;
   roles: {
     css: number,
     pdl: number,
@@ -44,8 +43,8 @@ export const environment: {
 } = {
   production: false,
   version: 'dev',
-  // api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',
-  api: 'https://localhost:62345/api/v1/',
+  api: 'https://defrvm02821533.corp.capgemini.com/forecastr-api/api/v1/',
+  // api: 'https://localhost:62345/api/v1/',
   security: 'jwt',
   authPath: 'auth',
   usersPath: 'users',
@@ -60,7 +59,6 @@ export const environment: {
   savedPath: 'saved',
   teamPath: 'team',
   executivePath: 'company',
-  resetPasswordPath: 'password/reset',
   roles: {
     css: 0,
     pdl: 1,
