@@ -15,7 +15,6 @@ import { LoginComponent } from "./login/login.component";
 import { DatePipe } from "@angular/common";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { SafeHtmlPipe } from "./core/pipes/safe-html";
-import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { DeviceDetectorModule } from "ngx-device-detector";
 import { CustomDateAdapter } from './layout/custom-date-adapter';
 import { DateAdapter } from "@angular/material/core";
@@ -28,7 +27,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ResetPasswordComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     FlexLayoutModule,
