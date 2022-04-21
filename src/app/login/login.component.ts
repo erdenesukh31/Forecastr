@@ -9,7 +9,6 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmMessageDialog } from '../forecast/dialogs/confirm-message/confirm-message.dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ResetPasswordService } from '../core/security/resetPassword.service';
 import { GetStarted } from "../layout//getStartedModal/get-started.component";
 import { MissingDataService } from '../core/services/missing-data-service';
 import { MissingUserData } from "../core/interfaces/missingPersonData";
@@ -58,7 +57,6 @@ export class LoginComponent {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private resetPasswordService: ResetPasswordService,
     private missingDataService: MissingDataService
   ) {
     if (this.authService.isLogged()) {
@@ -150,43 +148,6 @@ export class LoginComponent {
     dialogRef.afterClosed().subscribe((result) => {
       this.routeToHomePage();
     });
-  }
-
-  resetPassword(): void {
-    this.isEmailFieldEmpty = this.loginEmail.invalid;
-    this.formSubmitError = undefined;
-
-    if (this.isEmailFieldEmpty) {
-      this.emailInvalidError = "Please enter your e-mail address.";
-    }
-    else {
-      this.isEmailFieldEmpty = false;
-      let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
-        data: {
-          message: "Are you sure you want to reset your password for the following e-mail address: " + this.loginEmail.value + "?",
-          button: { cancel: 'Cancel', submit: 'Reset' },
-        },
-      });
-
-      dialogRef.afterClosed().subscribe((remove: boolean) => {
-        this.loginActive = true;
-        if (remove === true) {
-          this.resetPasswordService.resetPassword(this.loginEmail.value).subscribe(
-            (response: any) => {
-              this.loginActive = false;
-              this.snackBar.open("A reset link has been sent to " + this.loginEmail.value + ". Please check your e-mail inbox.", "", { duration: 5000, });
-            },
-            (error: any) => {
-              this.loginActive = false;
-              this.snackBar.open("Problem occured while resetting your password. Please check if you typed your e-mail address correctly.", "", { duration: 5000, });
-            }
-          );
-        }
-        else {
-          this.loginActive = false;
-        }
-      });
-    }
   }
 
   /**

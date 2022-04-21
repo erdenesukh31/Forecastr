@@ -19,7 +19,6 @@ export const environment: {
   savedPath: string;
   teamPath: string;
   executivePath: string;
-  resetPasswordPath: string;
   roles: {
     css: number,
     pdl: number,
@@ -57,7 +56,6 @@ export const environment: {
   savedPath: 'saved',
   teamPath: 'team',
   executivePath: 'company',
-  resetPasswordPath: 'password/reset',
   roles: {
     css: 0,
     pdl: 1,
