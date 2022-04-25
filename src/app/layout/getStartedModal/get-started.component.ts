@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnChanges, ModuleWithComponentFactories } from "@angular/core";
+import { Component, Inject, OnInit, OnChanges, ModuleWithComponentFactories, Input } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AuthService } from "../../core/security/auth.service";
 
@@ -23,7 +23,7 @@ export class GetStarted implements OnInit {
     isEngagementManager: boolean = false;
 
     workingHoursSliderValue: number = 0;
-    workingHoursValue: number = 0;
+    @Input('workingHoursValue') workingHoursValue: number = 0;
     prodUnitCode: string;
     startDate: string;
     isValid: boolean = false;
