@@ -151,9 +151,9 @@ export class TeamleadMonthComponent implements OnInit, OnDestroy {
                     this.forecastService.addProjectsToForecast(entry.userId, this.month.id, entry.suggestedData);
                   }
                 });
-                this.teamForecastService.setShowDialogForMonth(this.month.id, false);
               }
             });
+            this.teamForecastService.setShowDialogForMonth(this.month.id, false);
             this.showCopyDialog = false;
           }
         }

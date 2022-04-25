@@ -244,7 +244,6 @@ export class ForecastService {
     forecast.monthId = monthId;
     forecast.userId = userId;
     let user: User = this.userService.getUser(userId);
-    console.log(fte);
     forecast.gradeId = user ? user.gradeId : 0;
     forecast.fte = fte;
     if (user.gradeId === 7) {
