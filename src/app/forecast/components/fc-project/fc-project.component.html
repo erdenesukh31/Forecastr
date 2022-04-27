@@ -95,7 +95,7 @@
               "Range for 100%"
             }}</mat-label>
             <mat-select [(value)]="forecast.rangeHundredPercent"   (closed)="callDataUpdate()">
-              <mat-option *ngFor="let month of availableMonthRange; let indexofelement=index;" [value]="indexofelement">
+              <mat-option *ngFor="let month of availableMonthRange; let indexofelement=index;" [value]="indexofelement+1">
                 Until {{month.name}}
               </mat-option>
             </mat-select>
