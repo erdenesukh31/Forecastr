@@ -29,6 +29,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   roleFilter = new FormControl('');
   gradeFilter = new FormControl('');
   teamleadFilter = new FormControl('');
+  searchFilter: String = " ";
   filterValues : any = {
     name:'', //used for id as well
     teamlead: [],
@@ -251,6 +252,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     clearFilter(){
+      this.searchFilter = "";
+      this.filterValues.name =  this.searchFilter;
       this.roleFilter.setValue([]);
       this.gradeFilter.setValue([]);
       this.teamleadFilter.setValue([]);
