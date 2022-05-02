@@ -96,6 +96,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user = new MatTableDataSource(user);
         this.user.sort = this.sort;
         this.user.filterPredicate = this.createFilter(); // custom filter
+        this.applyFilter(this.filterValues.name);
       });
 
     this.roleSubscription = this.userService.roles$
@@ -243,7 +244,6 @@ export class UsersComponent implements OnInit, OnDestroy {
           }); 
           match = match && (matchGrade);
         }
-        console.log('from match', match);
         return match;
       }
   
