@@ -228,20 +228,20 @@ export class SubcoFcProjectComponent implements OnInit {
     }
     return false;
   }
-  addProjectMail() {
-    let dialogRef: MatDialogRef<ProjectRequestDialog> = this.dialog.open(
-      ProjectRequestDialog,
-      {
-        data: {
-          width: "30%",
-          maxHeight: "20%",
-        },
-      }
-    );
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-    });
-  }
+  // addProjectMail() {
+  //   let dialogRef: MatDialogRef<ProjectRequestDialog> = this.dialog.open(
+  //     ProjectRequestDialog,
+  //     {
+  //       data: {
+  //         width: "30%",
+  //         maxHeight: "20%",
+  //       },
+  //     }
+  //   );
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log("The dialog was closed");
+  //   });
+  // }
 
   checkCORValueBiggerThanZero(): void {
     if (this.project.billable) {
