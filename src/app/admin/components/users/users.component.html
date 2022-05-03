@@ -1,6 +1,6 @@
 <div>
   <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name or ID">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name or ID" [value]="searchFilter">
   </mat-form-field>
   <mat-form-field appearance="fill" class="no-label-field">
       <mat-label>Roles</mat-label>
@@ -11,7 +11,7 @@
   <mat-form-field appearance="fill" class="no-label-field">
       <mat-label>Grades</mat-label>
       <mat-select [formControl]="gradeFilter" multiple>
-        <mat-option *ngFor="let grade of grades" [value]="grade.gradeId">{{grade.shortcut}}</mat-option>
+        <mat-option *ngFor="let grade of grades" [value]="grade.gradeId">{{grade.name}}</mat-option>
       </mat-select>
   </mat-form-field>
   <mat-form-field appearance="fill" class="no-label-field">
