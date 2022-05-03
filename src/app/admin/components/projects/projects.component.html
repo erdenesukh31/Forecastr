@@ -1,6 +1,6 @@
 <div>
 	<mat-form-field>
-	  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name or Code">
+	  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="search by Name or Code" [(ngModel)]="searchFilter">
 	</mat-form-field>
 	<mat-form-field appearance="fill" class="no-label-field">
 		<mat-label>Mandatory</mat-label>
