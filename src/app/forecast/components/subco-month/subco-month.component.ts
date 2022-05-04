@@ -87,6 +87,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.firstTime = true;
     this.isStepping = false;
     this.showDialog = true;
+    console.log(this.month)
     this.subcoForecastService.initSubCoDetailsByMonthAndEm(this.month.id, this.userId);
     this.subcoService.initSubCoPreviewById(this.userId);
 
@@ -117,6 +118,10 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
                 details.manDay = null;
                 details.costRate = null;
               }
+            })
+          } else{
+            this.subcosDetails.forEach(details => {
+              this.subcoForecastService.setForecast(details, false, true);
             })
           }
         });
