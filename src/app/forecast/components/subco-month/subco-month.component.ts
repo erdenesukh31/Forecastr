@@ -100,7 +100,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   }
 
   showCopyDataDialog(subcosDetails): void{
-    subcosDetails.forEach(subco =>{
+    subcosDetails.forEach((subco:SubCoDetails) =>{
       if(this.showDialog && subco.projectName === 'Placeholder' && subco.monthId === this.month.id){
         let dialogRef: MatDialogRef<ConfirmMessageDialog> = this.dialog.open(ConfirmMessageDialog, {
           data: {
@@ -111,12 +111,12 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((add: boolean) => {
           if (add === false) {
-            this.subcosDetails.forEach(details => {
-              if(subco.projectName === 'Placeholder'){}
-                details.projectId = 0;
+            this.subcosDetails.forEach((details:SubCoDetails) => {
+              if(subco.projectName === 'Placeholder'){
                 details.cor = null;
                 details.manDay = null;
                 details.costRate = null;
+              }
             })
           }
         });
