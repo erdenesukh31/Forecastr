@@ -84,18 +84,11 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Initializes forecast entry component.
    */
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.fcLoaded = true;
     this.loadingActive = true;
 
-    //only subscribe to forecasts if there is none
-    //since changing of months in handeled in the ngOnChanges function
-    if(!this.subCoDetails)
-      this.subscribeForcasts();
-    if(this.subCoDetails.projectId && !this.project)
-      this.project = this.utilitiesService.getProjects().find(p => p.id === this.subCoDetails.projectId);
-    else 
-      this.project = new Project();
+    this.subscribeForcasts();
 
     this.dataSharingService.hasProjectInputFocus().subscribe(hasFocus => this.hasProjectInputFocus = hasFocus);
     this.dataSharingService.isProjectInputValid().subscribe(isValid => this.isProjectInputValid = isValid);
@@ -105,7 +98,12 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
   subscribeForcasts():void {
     this.fcSubscription = this.subcoForecastService.subcoDetails$
     .subscribe((forecasts: SubCoDetails[]) => {
-      this.subCoDetails = forecasts.find((fc: SubCoDetails) => fc.monthId === this.month.id && fc.subcontractorId === this.subcoId);
+      this.subCoDetails = forecasts.find((fc: SubCoDetails) =>  fc.subcontractorId === this.subcoId);
+      if(this.subCoDetails.projectId && !this.project)
+        this.project = this.utilitiesService.getProjects().find(p => p.id === this.subCoDetails.projectId);
+      else
+        this.project = new Project();
+
       if (!this.subCoDetails) {
         //Add Empty Forecast
         this.subCoDetails = new SubCoDetails();
