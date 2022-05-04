@@ -44,6 +44,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   mandatoryFilter = new FormControl('');
   billableFilter = new FormControl('');
   typeFilter = new FormControl('');
+  searchFilter: String = " ";
   filterValues : any = {
     name:'', // name or code of the project
     mandatory: null,
@@ -61,6 +62,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         this.projects = new MatTableDataSource(projects);
         this.projects.sort = this.sort;
         this.projects.filterPredicate = this.createFilter();
+        this.applyFilter(this.filterValues.name);
       });
       this.fieldListener();
   }
@@ -178,10 +180,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   clearFilter(){
+    this.searchFilter = "";
+    this.filterValues.name =  this.searchFilter;
     this.mandatoryFilter.setValue(null);
     this.billableFilter.setValue(null);
     this.typeFilter.setValue([]);
   }
-
-
 }
