@@ -113,10 +113,11 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((add: boolean) => {
           if (add === false) {
             this.subcosDetails.forEach((details:SubCoDetails) => {
-              if(subco.projectName === 'Placeholder'){
-                details.cor = null;
-                details.manDay = null;
-                details.costRate = null;
+              if(details.projectName === 'Placeholder'){
+                details.projectId = 0;// possibly remove again
+                details.cor = 0;
+                details.manDay = 0;
+                details.costRate = 0;
               }
             })
           } else{
@@ -151,6 +152,9 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subcoPreviewSubscription.unsubscribe();
     this.subcoDetailSubscription.unsubscribe();
+
+    //Just a workaround to fix the empty projectname when switching months
+    this.ExpPanelClicked();
   }
 
   /**
