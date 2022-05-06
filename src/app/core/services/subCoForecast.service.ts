@@ -122,6 +122,7 @@ export class SubCoForecastService {
     return promise;
   }
 
+
    /**
    * returns promise of all forecasts a month range
    * Returns data instantly if they already exist, otherwise: loads them from the server first
@@ -163,7 +164,26 @@ export class SubCoForecastService {
     
         return promise;
       }
-      
+  
+ 
+      checkForecastState(type: string, monthId: number, subcoId: number): boolean {
+        let subcoDetail: SubCoDetails = this.subcoDetails.find((sd: SubCoDetails) =>  sd.monthId === monthId && sd.subcontractorId === subcoId);
+        if (!subcoDetail) {
+          return false;
+        }
+
+        if (type === 'locked' && subcoDetail.lockState =="LockedState1") {
+          return true;
+        }  else if (type === 'edited' && subcoDetail.updated) {
+          return true;
+        } else if (type === 'saved' && subcoDetail.lockState == "Unlocked" && subcoDetail.projectName != "Placeholder") {
+
+              return true;
+          }
+    
+        return false;
+      }     
+
       setForecast(subCoDetails: SubCoDetails, loadHistory: boolean, updated: boolean = false): void { //TODO: add LoadHistory
         if (!subCoDetails.subcontractorId || !subCoDetails.monthId || !subCoDetails.projectId) {
           return;
@@ -188,6 +208,7 @@ export class SubCoForecastService {
               sd.contribution = sd.revenue - sd.cost;
               sd.cp = sd.contribution / sd.revenue;
               sd.projectId = subCoDetails.projectId;
+              sd.projectName = subCoDetails.projectName;
               sd.updated = updated;
             });
         } else {
@@ -233,6 +254,11 @@ export class SubCoForecastService {
           subcoDetails.lockState = 'LockedState1';
         } else {
           subcoDetails.lockState = 'Unlocked';
+        }
+
+        if( subcoDetails.projectName == "Placeholder"){
+          var project = this.projects.find(pro => pro.id == subcoDetails.projectId)
+          subcoDetails.projectName = project.name;
         }
     
         //TODO: Add History
