@@ -122,7 +122,9 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
             })
           } else{
             this.subcosDetails.forEach(details => {
-              this.subcoForecastService.setForecast(details, false, true);
+              if(details.projectName === 'Placeholder'){
+                this.subcoForecastService.setForecast(details, false, true);
+              }
             })
           }
         });
@@ -175,7 +177,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
   }
 
   forecastState(type: string, userId: number): boolean | string {
-    return false;
+    return this.subcoForecastService.checkForecastState(type, this.month.id, userId);
   }
 
   working(user: SubCoPreview, month: Month): boolean {
