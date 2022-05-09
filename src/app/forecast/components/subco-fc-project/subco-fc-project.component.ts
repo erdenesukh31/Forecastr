@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, SimpleChanges } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import { ForecastService } from "../../../core/services/forecasts/forecast.service";
@@ -23,7 +23,7 @@ import { Probability } from "../../../core/interfaces/probability";
   templateUrl: "./subco-fc-project.component.html",
   styleUrls: ["./subco-fc-project.component.scss"],
 })
-export class SubcoFcProjectComponent implements OnInit {
+export class SubcoFcProjectComponent implements OnInit, OnDestroy {
   @Input("subCoDetails") subcoDetails: SubCoDetails;
   @Input("project") project: FcProject;
   @Input("monthId") monthId: number;
@@ -72,24 +72,27 @@ export class SubcoFcProjectComponent implements OnInit {
    * Initializes forecast entry component.
    */
   ngOnInit(): void {
-    this.projectControl = this.fb.control(
-      {
-        value: this.subcoDetails.projectId,
-        disabled: 
-            this.subcoDetails.lockState === 'LoackedState1'
-      },
-      Validators.required
-    );
-  
     this.availableProjects = this.utilitiesService.getProjects();
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) => p.active === true
-    );
-    this.availableProbabilities = this.utilitiesService.getSubcoProbabilities();
+      );
+      this.availableProbabilities = this.utilitiesService.getSubcoProbabilities();
+      
+      this.dataSharingService.setProjectInputValid(true);
+      this.validateProjects();
+      this.checkCORValueBiggerThanZero();
 
-    this.dataSharingService.setProjectInputValid(true);
-    this.validateProjects();
-    this.checkCORValueBiggerThanZero();
+      this.projectControl = this.fb.control(
+        {
+          value: this.subcoDetails.projectId,
+          disabled: 
+              this.subcoDetails.lockState === 'LoackedState1'
+        },
+        Validators.required
+      );
+  }
+
+  ngOnDestroy(): void{
   }
 
   /**
@@ -144,7 +147,7 @@ export class SubcoFcProjectComponent implements OnInit {
    * @param projectId
    */
   displayProjectName(projectId?: number): string {
-    return projectId ? this.projectName(projectId) : "";
+    return projectId ? this.projectName(projectId) : '';
   }
 
   setProjectInputValidness(): void {
@@ -262,6 +265,17 @@ export class SubcoFcProjectComponent implements OnInit {
   toErrorClass(errtext): string {
     let result = errtext.toLowerCase().split(".").join("");
     return result.replace(/\s/gi, "-");
+  }
+
+  ngOnChanges(changes: SimpleChanges): void{
+    this.projectControl = this.fb.control(
+      {
+        value: this.subcoDetails.projectId,
+        disabled: 
+            this.subcoDetails.lockState === 'LoackedState1'
+      },
+      Validators.required
+    );
   }
 }
 
