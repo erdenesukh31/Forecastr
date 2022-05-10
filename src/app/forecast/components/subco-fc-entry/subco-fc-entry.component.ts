@@ -98,7 +98,7 @@ export class SubcoFcEntryComponent implements OnInit, OnDestroy, OnChanges {
   subscribeForcasts():void {
     this.fcSubscription = this.subcoForecastService.subcoDetails$
     .subscribe((forecasts: SubCoDetails[]) => {
-      this.subCoDetails = forecasts.find((fc: SubCoDetails) =>  fc.subcontractorId === this.subcoId);
+      this.subCoDetails = forecasts.find((fc: SubCoDetails) =>  fc.subcontractorId === this.subcoId && fc.monthId == this.month.id);
       if(this.subCoDetails && this.subCoDetails.projectId && !this.project)
         this.project = this.utilitiesService.getProjects().find(p => p.id === this.subCoDetails.projectId);
       else

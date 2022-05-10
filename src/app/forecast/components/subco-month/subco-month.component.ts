@@ -155,7 +155,7 @@ export class SubcoMonthComponent implements OnInit, OnDestroy {
     this.subcoDetailSubscription.unsubscribe();
 
     //Just a workaround to fix the empty projectname when switching months
-    this.ExpPanelClicked();
+    // this.ExpPanelClicked();
   }
 
   /**
