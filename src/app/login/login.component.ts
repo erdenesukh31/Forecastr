@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GetStarted } from "../layout//getStartedModal/get-started.component";
 import { MissingDataService } from '../core/services/missing-data-service';
 import { MissingUserData } from "../core/interfaces/missingPersonData";
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 /**
  * Handles login page + initiates login process
@@ -21,6 +22,14 @@ import { MissingUserData } from "../core/interfaces/missingPersonData";
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  /**
+   * Indicates to show the get started form without missing data
+   */
+  showGetStarted : boolean = false;
+  /**
+   * Prevents showing get started on logout
+   */
+  firstTime: boolean = false;
   /**
    * Contains error message if an error happened at the login
    */
@@ -43,8 +52,12 @@ export class LoginComponent {
   loginFormGroup: FormGroup;
   loginEmail: AbstractControl;
   loginPassword: AbstractControl;
+  /**
+   * Subscription for missing user Data
+   */
+  missingUserDataSubscribtion: Subscription;
 
-  isMissingUserData: MissingUserData;
+  missingUserData: MissingUserData;
 
   /**
    * login component constructor
@@ -65,7 +78,37 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
+
     this.initializeLoginForm();
+
+    this.missingUserDataSubscribtion =  this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
+
+      if (data != null  && data != undefined) {
+        this.missingUserData = data;
+        if (data.isMissingEngagementManager != undefined &&(data.isMissingEngagementManager || data.isMissingProdUnitCode ||
+          data.isMissingStartDate || data.workingHours <= 0)) {
+          if (this.firstTime) {
+            this.openStepper();
+            this.firstTime = false;
+          }
+        }
+        else if(data.isMissingEngagementManager != undefined && !data.isMissingEngagementManager && !data.isMissingProdUnitCode &&
+          !data.isMissingStartDate && data.workingHours != 0) {
+            if (this.firstTime) {
+              if (this.showGetStarted) {
+                 this.authService.setGetStarted(this.showGetStarted);
+              }
+              this.routeToHomePage();
+              this.showGetStarted = false;
+              this.firstTime = false;
+            }
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+      this.missingUserDataSubscribtion.unsubscribe();
   }
 
 
@@ -85,33 +128,12 @@ export class LoginComponent {
       .subscribe(
         (res: any) => {
           const response: any = this.authService.useToken(res.headers.get('Authorization'));
-
           if (response) {
-            let firstTime = true;
+            this.firstTime = true;
             this.missingDataService.initializeMissingUserData(this.loginEmail.value);
-
-            this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
-
-              if (data != null  && data != undefined) {
-                if (data.isMissingEngagementManager != undefined &&(data.isMissingEngagementManager || data.isMissingProdUnitCode ||
-                  data.isMissingStartDate || data.workingHours == 0)) {
-                  if (firstTime) {
-                    this.openStepper();
-                    firstTime = false;
-                  }
-                }
-                else if(data.isMissingEngagementManager != undefined && !data.isMissingEngagementManager && !data.isMissingProdUnitCode &&
-                  !data.isMissingStartDate && data.workingHours != 0) {
-                    if (firstTime) {
-                      if (typeof res.body.showGetStarted !== 'undefined') {
-                         this.authService.setGetStarted(res.body.showGetStarted);
-                      }
-                      this.routeToHomePage();
-                      firstTime = false;
-                    }
-                }
-              }
-            })
+            if (typeof res.body.showGetStarted !== 'undefined'){
+              this.showGetStarted = res.body.showGetStarted
+            }
           } else {
             this.formSubmitError = 'Invalid user token.';
           }
@@ -143,8 +165,9 @@ export class LoginComponent {
       width: "60vw",
       panelClass: "getSartedStepper-no-padding-dialog",
       data: {},
-      disableClose: true
+      disableClose: true,
     });
+    dialogRef.componentInstance.workingHoursValue = this.missingUserData.workingHours;
     dialogRef.afterClosed().subscribe((result) => {
       this.routeToHomePage();
     });

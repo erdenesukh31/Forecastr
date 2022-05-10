@@ -29,6 +29,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   roleFilter = new FormControl('');
   gradeFilter = new FormControl('');
   teamleadFilter = new FormControl('');
+  searchFilter: String = " ";
   filterValues : any = {
     name:'', //used for id as well
     teamlead: [],
@@ -96,6 +97,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user = new MatTableDataSource(user);
         this.user.sort = this.sort;
         this.user.filterPredicate = this.createFilter(); // custom filter
+        this.applyFilter(this.filterValues.name);
       });
 
     this.roleSubscription = this.userService.roles$
@@ -243,7 +245,6 @@ export class UsersComponent implements OnInit, OnDestroy {
           }); 
           match = match && (matchGrade);
         }
-        console.log('from match', match);
         return match;
       }
   
@@ -251,6 +252,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     clearFilter(){
+      this.searchFilter = "";
+      this.filterValues.name =  this.searchFilter;
       this.roleFilter.setValue([]);
       this.gradeFilter.setValue([]);
       this.teamleadFilter.setValue([]);

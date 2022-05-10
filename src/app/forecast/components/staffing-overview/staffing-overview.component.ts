@@ -395,6 +395,15 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         if (forecast) {
             return forecast.fte.toString();
         } else {
+
+            if (user.endDate) {
+                let endDate = new Date(user.endDate);
+                let currentDate = new Date(month.time);
+                if (currentDate > endDate) {
+                    return "0";
+                }
+
+            }
             return user.fte.toString();
         }
     }

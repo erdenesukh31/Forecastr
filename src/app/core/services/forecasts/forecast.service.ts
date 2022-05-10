@@ -224,6 +224,9 @@ export class ForecastService {
             resolve({showDialog: false});
 
           } else {
+            if(fcEntry && fcEntry.suggestedData)
+             this.createNewForecastWithSuggestionFTE(fcEntry.suggestedData.fte,userId, monthId);
+            else
             this.createNewForecast(userId, monthId);
 
             if (fcEntry && fcEntry.suggestedData) {
@@ -234,6 +237,20 @@ export class ForecastService {
           }
         });
     });
+  }
+
+  createNewForecastWithSuggestionFTE(fte: number, userId: number, monthId: number): void {
+    let forecast: FcEntry = new FcEntry();
+    forecast.monthId = monthId;
+    forecast.userId = userId;
+    let user: User = this.userService.getUser(userId);
+    forecast.gradeId = user ? user.gradeId : 0;
+    forecast.fte = fte;
+    if (user.gradeId === 7) {
+      forecast.isRelevant = false;
+    }
+
+    this.setForecast(forecast, false, false);
   }
 
   createNewForecast(userId: number, monthId: number): void {

@@ -42,11 +42,11 @@
 
         <div class="button-container" flex="30">
           <button *ngIf="isDataMissing" mat-stroked-button class="mat-primary-reversed" matStepperNext (click)="submitData()" [disabled]="!validateValues()">
-            <span class="green-text">Submit</span>
+           Submit
           </button>
           <button *ngIf="!last && !isDataMissing" mat-stroked-button class="mat-primary-reversed next-button" matStepperNext>Next</button>
           <button *ngIf="!last && !isDataMissing" mat-stroked-button class="mat-primary-reversed close-button" (click)="onNoClick()">Close</button>
-          <button *ngIf="last " mat-stroked-button class="mat-primary-reversed" (click)="onNoClick()">
+          <button *ngIf="last " mat-stroked-button class="mat-primary-reversed" (click)="onNoClick()" >
             <span class="green-text">Start</span>
           </button>
         </div>
