@@ -23,7 +23,7 @@ import { Probability } from "../../../core/interfaces/probability";
   templateUrl: "./subco-fc-project.component.html",
   styleUrls: ["./subco-fc-project.component.scss"],
 })
-export class SubcoFcProjectComponent implements OnInit, OnDestroy {
+export class SubcoFcProjectComponent implements OnInit, OnDestroy, OnChanges  {
   @Input("subCoDetails") subcoDetails: SubCoDetails;
   @Input("project") project: FcProject;
   @Input("monthId") monthId: number;
