@@ -30,7 +30,7 @@
               (opened)="clearProjectId()"
               (closed)="callDataUpdate()"
             >
-              <ng-container *ngFor="let p of filteredProjects">
+              <ng-container *ngFor="let p of filteredProjects | async">
                 <mat-option [value]="p.id">{{
                   p.name
                 }}</mat-option>
