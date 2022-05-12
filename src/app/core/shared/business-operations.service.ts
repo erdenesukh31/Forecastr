@@ -394,4 +394,15 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId + '/' + endMonthId;
   }
 
+  getUserByRoleId(roleId: number): string{
+    return env.api + 'users/byrole/'+ roleId;
+  }
+
+  setRepresentative(): string{
+    return env.api + 'representative/set';
+  }
+
+  removeRepresentative(): string{
+    return env.api + 'representative/remove';
+  }
 }

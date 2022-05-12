@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Set Representative</h2>
+<form [formGroup]="representationForm" >
+  <div class="dialog-content" >
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a Representative</mat-label>
+      <mat-select formControlName="representativeId"  id="representativeId" (selectionChange)="representativeUpdate()">
+        <mat-option [value]="null">-</mat-option>
+        <ng-container *ngFor="let t of getTeamleads()">
+          <mat-option *ngIf="t.id !== representative.id" [value]="t.id">{{t.lastName}}, {{t.firstName}}</mat-option>
+          <mat-option *ngIf="t.id === representative.id" [value]="t.id">{{t.lastName}}, {{t.firstName}}</mat-option>
+        </ng-container>
+      </mat-select>
+
+    </mat-form-field>
+
+    <div class="form-field-toggle">
+      <mat-slide-toggle  [(ngModel)]="isRepresentative" formControlName="isRepresentative" name="isRepresentative" color="primary">Is Representative</mat-slide-toggle>
+    </div>
+  </div>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onSaveClick()" [disabled]="representationForm.invalid">Save</button>
+  </mat-dialog-actions>
+</form>
