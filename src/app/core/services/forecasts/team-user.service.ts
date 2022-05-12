@@ -125,22 +125,6 @@ export class TeamUserService {
         this.pageState.hideSpinner();
       }
     );
-
-    // this.http.put(this.BO.setRepresentative(/*user.id)*/ user).subscribe(
-    //   (u: User) => {
-    //    // this.editUser(u);
-    //     this.snackBar.open("User successfully saved!", "OK", {
-    //       duration: 5000,
-    //     });
-    //     this.pageState.hideSpinner();
-    //   },
-    //   (e: any) => {
-    //     this.snackBar.open("User could not be saved!", "OK", {
-    //       duration: 10000,
-    //     });
-    //     this.pageState.hideSpinner();
-    //   }
-    // );
   }
   /**
    * Request PL-team data from server
