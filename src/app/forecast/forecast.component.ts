@@ -19,6 +19,7 @@ import {
 import { ExecutiveChartComponent } from "./components/executive-chart/executive-chart.component";
 import { ExecutiveChartPdlComponent } from "./components/executive-chart-pdl/executive-chart-pdl.component";
 import { ExecutiveChartPlComponent } from "./components/executive-chart-pl/executive-chart-pl.component";
+import { SetRepresentationDialog } from "./dialogs/set-representation/set-representation.dialog";
 import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart/subco-executive-chart.component";
 import { Month } from "../core/interfaces/month";
 import { TeamService } from "../core/services/admin/team.service";
@@ -188,6 +189,7 @@ export class ForecastComponent implements OnInit, OnDestroy {
       this.executiveService.initializeKpiValuesPDL(this.authService.getUserId()).then(() => {
         this.checkRequests("kpi");
       })
+      this.teamService.initializePDLs();
     }
     if (this.authService.getRoleId() == env.roles.pl){
       this.executiveService.initializeKpiValuesPL(this.authService.getUserId()).then(() => {
@@ -355,6 +357,18 @@ export class ForecastComponent implements OnInit, OnDestroy {
 
   isFinancialController(): boolean {
     return this.authService.hasRole(env.roles.fc);
+  }
+
+  openRepresentationDialog(): void {
+    let dialogRef = this.dialog.open(SetRepresentationDialog, {
+      height: 'auto',
+      width: '50vw',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
   }
 
   /**Open dialog for executive chart */

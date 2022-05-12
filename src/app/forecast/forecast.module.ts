@@ -29,6 +29,7 @@ import { PracticeComponent } from "./pages/practice/practice.component";
 import { ConfirmMessageDialog } from "./dialogs/confirm-message/confirm-message.dialog";
 import { ExportCsvDialog } from "./dialogs/export-csv/export-csv.dialog";
 import { ProjectRequestDialog } from "./dialogs/add-project/project-request.dialog";
+import { SetRepresentationDialog } from "./dialogs/set-representation/set-representation.dialog";
 import { AddSubcoDialogEm} from "./dialogs/add-subco-em/add-subco-em.dialog";
 import { ExecutiveComponent } from "./pages/executive/executive.component";
 import { ExecutiveDetailComponent } from "./components/executive-detail/executive-detail.component";
@@ -107,6 +108,7 @@ import { SubcoExecutiveChartComponent } from "./components/subco-executive-chart
     FinancialControllerOverviewComponent,
     PowerBi,
     SubcoExecutiveChartComponent,
+    SetRepresentationDialog,
   ],
   exports: [
   ]
