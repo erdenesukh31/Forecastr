@@ -9,6 +9,7 @@ import { environment as env } from '../../../../environments/environment';
 import { Team } from "../../interfaces/team";
 import { PageStateService } from '../../shared/page-state.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Representative } from "../../interfaces/representative";
 
 /**
  * team service for PDL (team) + PL (practice)
@@ -89,9 +90,8 @@ export class TeamUserService {
    let params = new HttpParams().set('personid', userId.toString());
 
     this.http.patch(this.BO.removeRepresentative(),{},{params:params}).subscribe(
-      (val) => {
-        console.log(val);
-         // this.editUser(u);
+      (val: Representative) => {
+        this.userService.editRepresentativeByUser(val);
           this.snackBar.open("Representative successfully removed!", "OK", {
             duration: 5000,
           });
@@ -111,8 +111,8 @@ export class TeamUserService {
     let params = new HttpParams().set('personid', userId.toString()).set('representativeId', representativeId.toString());
 
     this.http.patch(this.BO.setRepresentative(),{},{params: params}).subscribe(
-    (val) => {
-       // this.editUser(u);
+      (val: Representative) => {
+        this.userService.editRepresentativeByUser(val);
        this.snackBar.open("Representative successfully saved!", "OK", {
         duration: 5000,
       });
