@@ -481,6 +481,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
   }
 
   exportCSV(): void {
+    console.log("exportCSV");
     this.pageState.showSpinner();
 
     let lineEnding = "\r\n";
