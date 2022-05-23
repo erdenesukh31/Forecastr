@@ -30,11 +30,16 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
     */
   typeSubscription: Subscription;
 
+   /**
+    * subco types subscription
+    */
+    engagementManagerSubscription: Subscription;
   /**
     * list of user (for teamlead select)
    */
   subco: SubCoPreview[];
 
+  engagementManagers: User[];
   /**
      * list of types (for type select)
      */
@@ -74,6 +79,11 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
         .subscribe((types: SubCoType[]) => {
           this.types = types;   
         }); 
+
+        this.engagementManagerSubscription = this.subcoService.allEngagementManagers$
+        .subscribe((engagementManager: User[]) => {
+          this.engagementManagers = engagementManager;
+        }); 
   }
 
   /**
@@ -96,6 +106,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subcoSubscription.unsubscribe();
     this.typeSubscription.unsubscribe();
+    this.engagementManagerSubscription.unsubscribe();
   }
 
 }

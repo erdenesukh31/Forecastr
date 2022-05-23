@@ -394,6 +394,9 @@ export class BusinessOperationsService {
     return env.api + 'subcos' + '/' + 'totals' + '/' + startMonthId + '/' + endMonthId;
   }
 
+  getAllEngagementManager(){
+    return env.api + 'subcos' + '/' + 'engagement';
+  }
   getUserByRoleId(roleId: number): string{
     return env.api + 'users/byrole/'+ roleId;
   }

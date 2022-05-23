@@ -5,23 +5,23 @@ import { SubCoPreview } from '../interfaces/subCoPreview';
 import { SubCoType } from '../interfaces/subCoType';
 import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../shared/business-operations.service';
-import { SubcosComponent } from '../../forecast/pages/subcos/subcos.component';
 import { FcEntry } from '../interfaces/fcEntry';
-import { SummaryData } from '../interfaces/summaryData';
-import { UserService } from './user.service';
-import { AuthService } from '../security/auth.service';
 import { SubcoSummaryData } from '../interfaces/subcoSummaryData';
-import { FcProject } from '../interfaces/fcProject';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageStateService } from '../shared/page-state.service';
 import { SubCoTotals } from '../interfaces/subCoTotals';
 import { SubCoDetailTotals } from '../interfaces/subCoDetailTotals';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubCoService {
 
+    /**
+   * Observable which contains all engagementManager (for admins only)
+   */
+     allEngagementManagers$: BehaviorSubject<User[]>;
   // subCoPrev$: BehaviorSubject<subCoPreview>;
   // subCoDet$: BehaviorSubject<subCoDetails>;
 
@@ -57,9 +57,19 @@ export class SubCoService {
     this.subCoTotals$ = new BehaviorSubject(null);
     this.subCoDetailTotals$ = new BehaviorSubject([]);           //empty array or null?
     this.types$ = new BehaviorSubject([]);
+    this.allEngagementManagers$ = new BehaviorSubject([]);
 
   }
 
+  initializeAllEngagamentManager(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get<User[]>(this.BO.getAllEngagementManager())
+        .subscribe((users: User[]) => {
+          this.allEngagementManagers$.next(users.sort((a, b) => (a.lastName > b.lastName) ? 1 : -1));
+          resolve();
+        }, () => reject());
+    });
+  }
   /**
    * Loads the current subCo data from the server
    */
