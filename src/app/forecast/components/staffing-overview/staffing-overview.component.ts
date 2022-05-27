@@ -58,7 +58,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
 
     isPageReady: boolean = false;
 
-     isFinished: boolean = false;
+    isFinished: boolean = false;
     /**
      * constructor for staffing-overview component
      *  @param forecastService
@@ -285,8 +285,14 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     getGrade(gradeId: number): string {
-        return  this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
-      }
+
+        if (sessionStorage.getItem("grades")) {
+            var grades = JSON.parse(sessionStorage.getItem("grades")) as Grade[];
+            console.log(grades);
+            return grades.find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
+        }
+        return this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
+    }
     initStaffing(): void {
         this.projects = this.utilityService.getProjects();
         this.columnsToDisplay = [];
@@ -345,7 +351,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
             body += teams.get(team).map(u => u.lastName + ", " + u.firstName + ";" +
                 team + ";" +
                 u.globalId.toString() + ";" +
-                this.getGrade(u.gradeId)  + ";" +
+                this.getGrade(u.gradeId) + ";" +
                 this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 100, 4, 4) + ";" +
                     this.parseForCSV(this.getMonthFTEFromPerson(x, u), 1, 0)).join(";")).join(lineEnding);
             body += lineEnding + lineEnding;
@@ -365,7 +371,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         //For IE
         if (navigator.msSaveOrOpenBlob) {
             navigator.msSaveOrOpenBlob(blob, filename);
-        //For any other browser
+            //For any other browser
         } else {
             const url: string = window.URL.createObjectURL(blob);
 
@@ -386,7 +392,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         let n = parseFloat(toParse) / div;
-        return n.toLocaleString("de", { minimumFractionDigits: minPrecision, maximumFractionDigits: maxPrecision}).replace(".", "");
+        return n.toLocaleString("de", { minimumFractionDigits: minPrecision, maximumFractionDigits: maxPrecision }).replace(".", "");
     }
 
     getMonthFTEFromPerson(month: Month, user: User): string {

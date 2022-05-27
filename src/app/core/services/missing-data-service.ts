@@ -38,7 +38,6 @@ export class MissingDataService {
       this.http.get<MissingUserData>(this.BO.getMissingUserData(email))
         .subscribe((missingData: MissingUserData) => {
           this.missingUserData$.next(missingData);
-          console.log(missingData);
           resolve();
         }, () => reject());
     });
