@@ -25,7 +25,7 @@ export class LoginComponent {
   /**
    * Indicates to show the get started form without missing data
    */
-  showGetStarted : boolean = false;
+  showGetStarted: boolean = false;
   /**
    * Prevents showing get started on logout
    */
@@ -55,7 +55,7 @@ export class LoginComponent {
   /**
    * Subscription for missing user Data
    */
-  missingUserDataSubscribtion: Subscription;
+   missingUserDataSubscription: Subscription;
 
   missingUserData: MissingUserData;
 
@@ -81,34 +81,36 @@ export class LoginComponent {
 
     this.initializeLoginForm();
 
-    this.missingUserDataSubscribtion =  this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
+    this.missingUserDataSubscription = this.missingDataService.missingUserData$.subscribe((data: MissingUserData) => {
 
-      if (data != null  && data != undefined) {
+      if (data != null && data != undefined) {
         this.missingUserData = data;
-        if (data.isMissingEngagementManager != undefined &&(data.isMissingEngagementManager || data.isMissingProdUnitCode ||
+        if (data.isMissingEngagementManager != undefined && (data.isMissingEngagementManager || data.isMissingProdUnitCode ||
           data.isMissingStartDate || data.workingHours <= 0)) {
           if (this.firstTime) {
             this.openStepper();
             this.firstTime = false;
           }
         }
-        else if(data.isMissingEngagementManager != undefined && !data.isMissingEngagementManager && !data.isMissingProdUnitCode &&
+        else if (data.isMissingEngagementManager != undefined && !data.isMissingEngagementManager && !data.isMissingProdUnitCode &&
           !data.isMissingStartDate && data.workingHours != 0) {
-            if (this.firstTime) {
-              if (this.showGetStarted) {
-                 this.authService.setGetStarted(this.showGetStarted);
-              }
-              this.routeToHomePage();
-              this.showGetStarted = false;
-              this.firstTime = false;
+          if (this.firstTime) {
+            if (this.showGetStarted) {
+              this.authService.setGetStarted(this.showGetStarted);
             }
+            this.routeToHomePage();
+            this.showGetStarted = false;
+            this.firstTime = false;
+          }
         }
       }
     })
   }
 
   ngOnDestroy(): void {
-      this.missingUserDataSubscribtion.unsubscribe();
+    if (this.missingUserDataSubscription) {
+      this.missingUserDataSubscription.unsubscribe();
+    }
   }
 
 
@@ -131,7 +133,7 @@ export class LoginComponent {
           if (response) {
             this.firstTime = true;
             this.missingDataService.initializeMissingUserData(this.loginEmail.value);
-            if (typeof res.body.showGetStarted !== 'undefined'){
+            if (typeof res.body.showGetStarted !== 'undefined') {
               this.showGetStarted = res.body.showGetStarted
             }
           } else {
