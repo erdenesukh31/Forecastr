@@ -286,13 +286,9 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
 
     getGrade(gradeId: number): string {
 
-        if (sessionStorage.getItem("grades")) {
-            var grades = JSON.parse(sessionStorage.getItem("grades")) as Grade[];
-            console.log(grades);
-            return grades.find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
-        }
         return this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
     }
+    
     initStaffing(): void {
         this.projects = this.utilityService.getProjects();
         this.columnsToDisplay = [];
