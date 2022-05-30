@@ -95,14 +95,16 @@ export class UserService {
    * Requests grade data from server
    */
   initializeGrades(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http.get<Grade[]>(this.BO.getGrades())
-        .subscribe((grades: Grade[]) => {
-          sessionStorage.setItem("grades",JSON.stringify(grades));
-          this.grades$.next(grades);
-          resolve();
-        }, () => reject());
-    });
+    if(sessionStorage.getItem("grades") === null){
+      return new Promise<void>((resolve, reject) => {
+        this.http.get<Grade[]>(this.BO.getGrades())
+          .subscribe((grades: Grade[]) => {
+            sessionStorage.setItem("grades",JSON.stringify(grades));
+            this.grades$.next(grades);
+            resolve();
+          }, () => reject());
+      });
+    }
   }
 
   /**
