@@ -13,6 +13,7 @@ import { Subscription } from "rxjs";
 import { Project } from "../../../core/interfaces/project";
 import { UtilitiesService } from "../../../core/services/utilities.service";
 import { parseHostBindings } from "@angular/compiler";
+import { Grade } from "../../../core/interfaces/grade";
 
 class ProjectHelper {
     projectId: number;
@@ -57,7 +58,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
 
     isPageReady: boolean = false;
 
-     isFinished: boolean = false;
+    isFinished: boolean = false;
     /**
      * constructor for staffing-overview component
      *  @param forecastService
@@ -283,12 +284,18 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         return returnString;
     }
 
+    getGrade(gradeId: number): string {
+
+        return this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
+    }
+    
     initStaffing(): void {
         this.projects = this.utilityService.getProjects();
         this.columnsToDisplay = [];
         this.columnsToDisplay.push('name');
         this.columnsToDisplay.push('team');
         this.columnsToDisplay.push("corp");
+        this.columnsToDisplay.push("grade");
         this.columnsToDisplay.push("projects");
 
         for (let month of this.months) {
@@ -310,7 +317,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         this.pageState.showSpinner();
 
         let lineEnding = "\r\n";
-        let header: string = "Employee;Team;Corp Id;" + this.months.map(x => x.name + " ARVE;" + x.name + " FTE").join(";") + lineEnding;
+        let header: string = "Employee;Team;Corp Id;Grade;" + this.months.map(x => x.name + " ARVE;" + x.name + " FTE").join(";") + lineEnding;
 
         let body = "";
 
@@ -340,6 +347,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
             body += teams.get(team).map(u => u.lastName + ", " + u.firstName + ";" +
                 team + ";" +
                 u.globalId.toString() + ";" +
+                this.getGrade(u.gradeId) + ";" +
                 this.months.map(x => this.parseForCSV(this.getMonthARVEFromPerson(x, u), 100, 4, 4) + ";" +
                     this.parseForCSV(this.getMonthFTEFromPerson(x, u), 1, 0)).join(";")).join(lineEnding);
             body += lineEnding + lineEnding;
@@ -359,7 +367,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         //For IE
         if (navigator.msSaveOrOpenBlob) {
             navigator.msSaveOrOpenBlob(blob, filename);
-        //For any other browser
+            //For any other browser
         } else {
             const url: string = window.URL.createObjectURL(blob);
 
@@ -380,7 +388,7 @@ export class StaffingOverviewComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         let n = parseFloat(toParse) / div;
-        return n.toLocaleString("de", { minimumFractionDigits: minPrecision, maximumFractionDigits: maxPrecision}).replace(".", "");
+        return n.toLocaleString("de", { minimumFractionDigits: minPrecision, maximumFractionDigits: maxPrecision }).replace(".", "");
     }
 
     getMonthFTEFromPerson(month: Month, user: User): string {

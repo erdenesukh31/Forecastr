@@ -95,13 +95,18 @@ export class UserService {
    * Requests grade data from server
    */
   initializeGrades(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http.get<Grade[]>(this.BO.getGrades())
-        .subscribe((grades: Grade[]) => {
-          this.grades$.next(grades);
-          resolve();
-        }, () => reject());
-    });
+    if (sessionStorage.getItem("grades") === null) {
+      return new Promise<void>((resolve, reject) => {
+        this.http.get<Grade[]>(this.BO.getGrades())
+          .subscribe((grades: Grade[]) => {
+            sessionStorage.setItem("grades", JSON.stringify(grades));
+            this.grades$.next(grades);
+            resolve();
+          }, () => reject());
+      });
+    } else {
+      this.grades$.next(JSON.parse(sessionStorage.getItem("grades")) as Grade[]);
+    }
   }
 
   /**
@@ -136,12 +141,12 @@ export class UserService {
     users
       .filter((u: User) => u.id === representative.userId)
       .forEach((u: User) => {
-        if(representative.isRepresentedBy){
+        if (representative.isRepresentedBy) {
           u.isRepresentedBy = representative.isRepresentedBy;
-        } else{
+        } else {
           u.isRepresentedBy = null;
         }
-   
+
       });
     this.allUsers$.next(users);
   }

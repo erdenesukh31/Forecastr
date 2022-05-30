@@ -23,6 +23,7 @@ import { PageStateService } from "../../../core/shared/page-state.service";
 import { AuthService } from "../../../core/security/auth.service";
 import { environment } from "../../../../environments/environment";
 import { DatePipe } from "@angular/common";
+import { Grade } from "../../../core/interfaces/grade";
 
 /**
  * teamlead summary component
@@ -193,6 +194,9 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+    getGrade(gradeId: number): string { 
+      return  this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId) ? this.userService.getGrades().find((g: Grade) => g.gradeId === gradeId).name : '-';
+    }
 
   clickOnEdit(id: number, firstName: string, lastName: string) {
     if(this.isEditPermitted())
@@ -487,7 +491,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
     let lineEnding = "\r\n";
     let header: string = "Month;" + this.month.name + lineEnding
       + "Working Days;" + this.month.workingdays + lineEnding
-      + "Name;Global ID;Prod Unit Code;FTE;Paid Days;Project Days;Billable Days;Vacation Days;Business Development Days; Training Days;ARVE;URVE;Revenue;COR"
+      + "Name;Global ID;Grade;Prod Unit Code;FTE;Paid Days;Project Days;Billable Days;Vacation Days;Business Development Days; Training Days;ARVE;URVE;Revenue;COR"
       + lineEnding;
     
     let body = "";
@@ -503,6 +507,7 @@ export class ExecutiveDetailComponent implements OnInit, OnDestroy {
       
       let line = user.firstName + " " + user.lastName + ";" //Name
         + this.numberToString(user.globalId.toFixed(0)) + ";" //Global ID
+       + this.getGrade(user.gradeId)  + ";" 
         + user.prodUnitCode + ";" //Production Unit COde
         + this.numberToString(user.fte) + ";" //FTE
         + this.numberToString(user.fte * parseInt(this.month.workingdays)) + ";" //Paid Days
