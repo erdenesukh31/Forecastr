@@ -56,12 +56,14 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
           subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
+          country: fb.control(data.country)
         });
       } else {
         this.subcoForm = this.fb.group({
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
           subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
+          country: fb.control(data.country)
         });
       }
     }
@@ -97,6 +99,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
    * Called on 'Save' click
    */
   onSaveClick(): void {
+    console.log(this.subcoForm.getRawValue());
     this.dialogRef.close(this.subcoForm.getRawValue());
   }
 

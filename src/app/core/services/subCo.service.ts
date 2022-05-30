@@ -285,6 +285,7 @@ export class SubCoService {
         s.subcontractorTypeName = subco.subcontractorTypeName;
         s.resourceName = subco.resourceName;
         s.subcontractorEmId = subco.subcontractorEmId;
+        s.country = subco.country;
       });
 
     this.allSubCoPreviews$.next(subcos);
