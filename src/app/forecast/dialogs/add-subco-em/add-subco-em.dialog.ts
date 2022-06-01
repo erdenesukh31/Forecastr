@@ -51,11 +51,13 @@ export class AddSubcoDialogEm implements OnInit, OnDestroy {
           subcontractorId: fb.control(data.subcontractorId),
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
+          country: fb.control(data.country)
         });
       } else {
         this.subcoForm = this.fb.group({
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
+          country: fb.control(data.country)
         });
       }
     }
