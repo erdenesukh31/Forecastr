@@ -34,6 +34,7 @@ import { SubCoService } from "../../../core/services/subCo.service";
 import { SubCoDetailTotals } from "../../../core/interfaces/subCoDetailTotals";
 import { SubCoForecastService } from "../../../core/services/subCoForecast.service";
 import { SubCoDetails } from "../../../core/interfaces/subCoDetails";
+import { SubCoPreview } from "../../../core/interfaces/subCoPreview";
 /**
  * teamlead summary component
  */
@@ -186,7 +187,7 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     }
 
     this.subcoForecastService.initSubCoDetailsByMonth(this.month.id);
-
+    this.subcoService.initializeAllSubCoPreviews();
     this.subcoForecastService.subcoDetails$.subscribe(
       (details: SubCoDetails[]) =>{
         //only call this if all details have been submitted to the backend
@@ -203,9 +204,16 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
 
     this.subcoService.initializeSubcoDetailTotalsForMonthRange(this.month.id, this.month.id + 5);
     this.subcoFinancialControllerService.initSubCoOffshoreForMonth(this.month.id);
+
     this.getValues();
   }
 
+  getSubcoCountry(subcoId: number): String
+  {
+    let subcoP =  this.subcoService.getSubcoPreview(subcoId);
+    return subcoP ? subcoP.country : "-";
+  }
+  
   getValues() {
     switch (this.filter) {
       case 'external':
@@ -563,12 +571,14 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let cost = 0;
     let contribution = 0;
     let manday = 0;
+    if(typeof this.internalExternal !== 'undefined' && this.internalExternal.length > 0){
     this.internalExternal.forEach((ie: SubCoFcIntExt) => {
       manday += ie.manDay;
       revenue += ie.revenue;
       cost += ie.cost;
       contribution += ie.contribution;
     })
+  }
     this.totals = {
       manday: manday,
       revenue: revenue,
@@ -583,12 +593,14 @@ export class SubcoExecutiveDetailComponent implements OnInit, OnDestroy {
     let cost = 0;
     let contribution = 0;
     let manday = 0;
-    this.offshoreTotals.forEach((ie: SubCoFcOffshore) => {
-      manday += ie.totalManDays;
-      revenue += ie.totalRevenue;
-      cost += ie.totalCost;
-      contribution += ie.totalContribution;
-    })
+    if(typeof this.offshoreTotals !== 'undefined' && this.offshoreTotals.length > 0){
+      this.offshoreTotals.forEach((ie: SubCoFcOffshore) => {
+        manday += ie.totalManDays;
+        revenue += ie.totalRevenue;
+        cost += ie.totalCost;
+        contribution += ie.totalContribution;
+      })
+    }
     this.totalsOffshore = {
       manday: manday,
       revenue: revenue,
