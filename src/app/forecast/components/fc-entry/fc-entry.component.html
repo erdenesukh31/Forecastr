@@ -48,16 +48,19 @@
 
 <div class="button-row">
   <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()"
+    class="fc-entry-project-button"
     color="primary" (click)="addProjectToForecast()">
-    <mat-icon>playlist_add</mat-icon> Add Project
+    Add Project
   </button>
-  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked() && singleView"
+  <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked() && singleView" 
+    class="fc-entry-project-button"
     color="primary" (click)="addProjectToForecastHundredPercent()">
-    <mat-icon>playlist_add</mat-icon> Add Project 100%
+    Add Project 100%
   </button>
   <button mat-raised-button *ngIf="availableProjects.length > forecast.projects.length && !fcIsLocked()  && singleView && isUserFullTime()"
+    class="fc-entry-project-button"
     color="primary" (click)="addProjectToForecastFiveTenFifteen()">
-    <mat-icon>playlist_add</mat-icon> Add Project 5-10-15
+    Add Project 5-10-15
   </button>
   <button mat-stroked-button *ngIf="singleView && !fcIsLocked()" class="mat-primary-reversed align-right"
   (click)="copyData()">
