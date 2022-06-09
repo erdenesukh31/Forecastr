@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BusinessOperationsService } from '../shared/business-operations.service';
 import { Role } from '../interfaces/role';
 import { Grade } from '../interfaces/grade';
+import { Representative } from '../interfaces/representative';
 
 /**
  * user service
@@ -22,7 +23,7 @@ export class UserService {
    * Observable which contains all users (for admins only)
    */
   allUsers$: BehaviorSubject<User[]>;
-  
+
   /**
    * Observable which contains all possible roles
    */
@@ -83,10 +84,10 @@ export class UserService {
   initializeRoles(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http.get<any[]>(this.BO.getRoles())
-      .subscribe((roles: any[]) => {
-        this.roles$.next(roles);
-        resolve();
-      }, () => reject());
+        .subscribe((roles: any[]) => {
+          this.roles$.next(roles);
+          resolve();
+        }, () => reject());
     });
   }
 
@@ -94,13 +95,18 @@ export class UserService {
    * Requests grade data from server
    */
   initializeGrades(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      this.http.get<Grade[]>(this.BO.getGrades())
-        .subscribe((grades: Grade[]) => {
-          this.grades$.next(grades);
-          resolve();
-        }, () => reject());
-    });
+    if (sessionStorage.getItem("grades") === null) {
+      return new Promise<void>((resolve, reject) => {
+        this.http.get<Grade[]>(this.BO.getGrades())
+          .subscribe((grades: Grade[]) => {
+            sessionStorage.setItem("grades", JSON.stringify(grades));
+            this.grades$.next(grades);
+            resolve();
+          }, () => reject());
+      });
+    } else {
+      this.grades$.next(JSON.parse(sessionStorage.getItem("grades")) as Grade[]);
+    }
   }
 
   /**
@@ -130,6 +136,20 @@ export class UserService {
     this.allUsers$.next(users);
   }
 
+  editRepresentativeByUser(representative: Representative) {
+    let users: User[] = this.allUsers$.getValue();
+    users
+      .filter((u: User) => u.id === representative.userId)
+      .forEach((u: User) => {
+        if (representative.isRepresentedBy) {
+          u.isRepresentedBy = representative.isRepresentedBy;
+        } else {
+          u.isRepresentedBy = null;
+        }
+
+      });
+    this.allUsers$.next(users);
+  }
   getRoleName(rolePermission: number | boolean): string {
     if (rolePermission !== false && this.roles$.getValue().find((role: Role) => role.permissionType === rolePermission)) {
       return this.roles$.getValue().find((role: Role) => role.permissionType === rolePermission).shortcut;
@@ -148,5 +168,5 @@ export class UserService {
 
   getRole(roleId: number): Role {
     return this.roles$.getValue().find((role: Role) => role.roleId === roleId);
-    }
+  }
 }

@@ -4,6 +4,9 @@ export class SubCoPreview {
     subcontractorTypeId: number;
     subcontractorTypeName: string;
     resourceName: string;
+    subcontractorEngagementManager: string
+    country: string
+
 
 
     constructor() {
@@ -11,6 +14,8 @@ export class SubCoPreview {
         this.subcontractorTypeId = null;
         this.subcontractorEmId = null;
         this.subcontractorTypeName = '';
-	    this.resourceName = '';		
+	    this.resourceName = '';	
+        this.subcontractorEngagementManager = '';	
+        this.country = '';	
 	}
 }

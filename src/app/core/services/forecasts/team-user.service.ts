@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../../interfaces/user";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient,HttpHeaders,HttpParams  } from "@angular/common/http";
 import { BusinessOperationsService } from "../../shared/business-operations.service";
 import { UserService } from "../user.service";
 import { AuthService } from "../../security/auth.service";
 import { environment as env } from '../../../../environments/environment';
 import { Team } from "../../interfaces/team";
+import { PageStateService } from '../../shared/page-state.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Representative } from "../../interfaces/representative";
 
 /**
  * team service for PDL (team) + PL (practice)
@@ -24,6 +27,7 @@ export class TeamUserService {
    * pl team array
    */
   teamPL$: BehaviorSubject<User[]>;
+  pdls$: BehaviorSubject<User[]>;
 
   prTeams$: BehaviorSubject<Team[]>;
 
@@ -40,10 +44,13 @@ export class TeamUserService {
     private BO: BusinessOperationsService,
     private userService: UserService,
     private authService: AuthService,
+    private pageState: PageStateService,
+    private snackBar: MatSnackBar,
     ) {
     this.teamPDL$ = new BehaviorSubject([]);
     this.teamPL$ = new BehaviorSubject([]);
     this.prTeams$ = new BehaviorSubject([]);
+    this.pdls$ = new BehaviorSubject([]);
   }
 
   initializeTeams(): Promise<void> {
@@ -70,6 +77,55 @@ export class TeamUserService {
       });
   }
 
+  initializePDLs(): void {
+    //roleId 2 = PDLs
+    this.http.get<User[]>(this.BO.getUserByRoleId(2))
+    .subscribe((user: User[]) => {
+      this.pdls$.next(user.sort((a, b) => (a.lastName > b.lastName) ? 1 : -1));
+      this.userService.addUsers(user);
+    });
+  }
+
+  removeRepresentative(userId: number): void {
+   let params = new HttpParams().set('personid', userId.toString());
+
+    this.http.patch(this.BO.removeRepresentative(),{},{params:params}).subscribe(
+      (val: Representative) => {
+        this.userService.editRepresentativeByUser(val);
+          this.snackBar.open("Representative successfully removed!", "OK", {
+            duration: 5000,
+          });
+          this.pageState.hideSpinner();
+        },
+        (e: any) => {
+          console.log(e);
+          this.snackBar.open("Representative could not be removed!", "OK", {
+            duration: 5000,
+          });
+          this.pageState.hideSpinner();
+        }
+      );
+  }
+
+  setRepresentative(userId: number, representativeId: number): void {
+    let params = new HttpParams().set('personid', userId.toString()).set('representativeId', representativeId.toString());
+
+    this.http.patch(this.BO.setRepresentative(),{},{params: params}).subscribe(
+      (val: Representative) => {
+        this.userService.editRepresentativeByUser(val);
+       this.snackBar.open("Representative successfully saved!", "OK", {
+        duration: 5000,
+      });
+        this.pageState.hideSpinner();
+      },
+      (e: any) => {
+        this.snackBar.open("Representative could not be set!", "OK", {
+          duration: 5000,
+        });
+        this.pageState.hideSpinner();
+      }
+    );
+  }
   /**
    * Request PL-team data from server
    */

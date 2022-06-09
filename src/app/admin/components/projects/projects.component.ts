@@ -61,10 +61,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       .subscribe((projects: Project[]) => {
         this.projects = new MatTableDataSource(projects);
         this.projects.sort = this.sort;
+        this.projects.sortingDataAccessor = (data, attribute) => data[attribute];
         this.projects.filterPredicate = this.createFilter();
         this.applyFilter(this.filterValues.name);
       });
       this.fieldListener();
+
   }
 
   /**
@@ -155,7 +157,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
       let searchTerms = JSON.parse(filter);
 
-      console.log(searchTerms);
       if(searchTerms.name){
         return (project.code.toLowerCase() + project.name.toLowerCase()).split(' ').join('')
         .includes(searchTerms.name);

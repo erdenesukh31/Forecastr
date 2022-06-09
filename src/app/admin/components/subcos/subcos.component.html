@@ -9,11 +9,11 @@
 	  </mat-select>
 	</mat-form-field>
   <mat-form-field appearance="fill" class="no-label-field">
-	  <mat-label>Engement Manager</mat-label>
+	  <mat-label>Engement Manager Name</mat-label>
 	  <mat-select [formControl]="managerFilter" multiple>
-      <mat-option *ngFor="let id of engagementManagerIds" 
-              [value]="id">
-              {{id}}</mat-option>
+      <mat-option *ngFor="let name of engagementManagerName" 
+              [value]="name">
+              {{name}}</mat-option>
 	  </mat-select>
 	</mat-form-field>
 	<button mat-raised-button color="primary" (click)="clearFilter()">Clear Filter</button>
@@ -33,17 +33,22 @@
     </ng-container>
 
     <ng-container  matColumnDef="emId">
-      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Engagement Manager Id</th>
-      <td mat-cell  *matCellDef="let subco">{{ subco.subcontractorEmId }}</td> 
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Engagement Manager</th>
+      <td mat-cell  *matCellDef="let subco">{{ subco.subcontractorEngagementManager }}</td> 
     </ng-container>
-  
+
+    <ng-container  matColumnDef="country">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Country</th>
+      <td mat-cell  *matCellDef="let subco">{{ subco.country }}</td> 
+    </ng-container>
+
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef class="action-button"></th>
       <td mat-cell *matCellDef="let subco" class="action-button" (click)="openUserDialog(subco)"><mat-icon>edit</mat-icon></td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="[ 'name', 'type', 'emId', 'edit']"></tr>
-    <tr mat-row  *matRowDef="let row; columns: [ 'name', 'type', 'emId', 'edit'];" ></tr>
+    <tr mat-header-row *matHeaderRowDef="[ 'name', 'type', 'emId', 'country', 'edit']"></tr>
+    <tr mat-row  *matRowDef="let row; columns: [ 'name', 'type', 'emId', 'country', 'edit'];" ></tr>
 </table>
 
 <div class="button-row">

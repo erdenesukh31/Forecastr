@@ -30,11 +30,16 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
     */
   typeSubscription: Subscription;
 
+   /**
+    * subco types subscription
+    */
+    engagementManagerSubscription: Subscription;
   /**
     * list of user (for teamlead select)
    */
   subco: SubCoPreview[];
 
+  engagementManagers: User[];
   /**
      * list of types (for type select)
      */
@@ -51,12 +56,14 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
           subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
+          country: fb.control(data.country)
         });
       } else {
         this.subcoForm = this.fb.group({
           subcontractorTypeId: fb.control(data.subcontractorTypeId, Validators.required),
           resourceName: fb.control(data.resourceName, Validators.required),
           subcontractorEmId: fb.control(data.subcontractorEmId, Validators.required),
+          country: fb.control(data.country)
         });
       }
     }
@@ -74,6 +81,11 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
         .subscribe((types: SubCoType[]) => {
           this.types = types;   
         }); 
+
+        this.engagementManagerSubscription = this.subcoService.allEngagementManagers$
+        .subscribe((engagementManager: User[]) => {
+          this.engagementManagers = engagementManager;
+        }); 
   }
 
   /**
@@ -87,6 +99,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
    * Called on 'Save' click
    */
   onSaveClick(): void {
+    console.log(this.subcoForm.getRawValue());
     this.dialogRef.close(this.subcoForm.getRawValue());
   }
 
@@ -96,6 +109,7 @@ export class AddSubcoDialog implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subcoSubscription.unsubscribe();
     this.typeSubscription.unsubscribe();
+    this.engagementManagerSubscription.unsubscribe();
   }
 
 }

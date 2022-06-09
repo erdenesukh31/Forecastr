@@ -24,6 +24,10 @@
       <div *ngIf="!isExecutive()" class="role-header">
         <h1>Monthly Forecast</h1>
 
+        <button *ngIf="hasLeadRole()" mat-raised-button color="primary" class="dashboard-button"
+        (click)="openRepresentationDialog()">
+         <mat-icon>insert_chart</mat-icon>  Representation
+       </button>
         <div class="switch-role-toggle" *ngIf="hasLeadRole()">
           <button *ngIf="isPractice() && !isEm()" mat-raised-button class="dashboard-button"
             (click)="openDashboard()">

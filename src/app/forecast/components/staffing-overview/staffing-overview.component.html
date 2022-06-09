@@ -14,6 +14,10 @@
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Corp Id</th>
         <td mat-cell *matCellDef="let user">{{user.globalId > -1 ? user.globalId : ""}}</td>
     </ng-container>
+    <ng-container matColumnDef="grade">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Grade</th>
+        <td mat-cell *matCellDef="let user">{{getGrade(user.gradeId)}}</td>
+    </ng-container>
     <ng-container matColumnDef="projects">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>Projects</th>
         <td mat-cell *matCellDef="let user"><button class="tooltip" #tooltip="matTooltip"

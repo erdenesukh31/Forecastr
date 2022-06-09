@@ -7,7 +7,10 @@
       <mat-label>Name</mat-label>
         <input matInput formControlName="resourceName" type="text" required />
     </mat-form-field>
-
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+        <input matInput formControlName="country" type="text" />
+    </mat-form-field>
     <mat-form-field  appearance="outline">
       <mat-label>Choose a type</mat-label>   
       <mat-select formControlName="subcontractorTypeId" required>

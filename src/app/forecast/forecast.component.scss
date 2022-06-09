@@ -9,8 +9,8 @@
 
   h1 {
     line-height: 37px;
-    font-size: 1.8em;
     margin: 0;
+    font-size: 1.8em;
     margin-right: auto;
   }
 
@@ -18,6 +18,11 @@
     background-color: map-get($font-colors, white);
     font-size: 1.1em;
     border-radius: 4px;
+    @extend ubuntu-font;
+  }
+
+  .mat-button-toggle-label-content{
+    @extend ubuntu-font;
   }
 
   .mat-button-toggle {
@@ -25,6 +30,7 @@
     color: map-get($font-colors, blue);
     border-right: 1px solid #0070ad;
     width: 120px;
+    @extend ubuntu-font;
 
     .mat-icon {
       color: map-get($font-colors, blue);
@@ -175,4 +181,22 @@
     line-height: 1em;
     font-size: 2em;
   }
+}
+
+.mat-raised-button.mat-primary{
+	font-weight: 400;
+	font-size: 14px;
+}
+
+button {
+  @extend ubuntu-font;
+}
+
+ubuntu-font{
+  /* Ubuntu/Regular/14 */
+	font-family: 'Ubuntu';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
 }

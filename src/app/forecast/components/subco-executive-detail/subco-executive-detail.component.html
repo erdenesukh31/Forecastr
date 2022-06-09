@@ -39,6 +39,7 @@
 			<div *ngIf="filter === 'offshore'">Project Name</div>
 			<div>
 				<span>Engagement Manager</span>
+				<span>Country</span>
 				<span *ngIf="filter !== 'offshore'">Project Name</span>
 				<span *ngIf="filter !== 'offshore'">Customer</span>
 				<span *ngIf="filter === 'internal'">Eastern Europe(?)</span>
@@ -61,6 +62,7 @@
 							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
 							<span class="mat-cell"></span>
+							<span class="mat-cell"></span>
 							<span class="mat-cell" *ngIf="filter === 'internal'"></span>
 							<span class="mat-cell">{{totals.manday | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totals.revenue | number:'1.0-2':'de'}}</span>
@@ -78,6 +80,7 @@
 						</mat-panel-title>
 						<mat-panel-description>
 							<span class="mat-cell">{{subco.engagementManagerName}}</span>
+							<span class="mat-cell">{{getSubcoCountry(subco.subcontractorId)}}</span>
 							<span class="mat-cell">{{subco.projectName}}</span>
 							<span class="mat-cell">{{subco.customer}}</span>
 							<span class="mat-cell"
@@ -103,6 +106,7 @@
 						<mat-panel-title>Total</mat-panel-title>
 						<mat-panel-description>
 							<span class="mat-cell"></span>
+							<span class="mat-cell"></span>
 							<span class="mat-cell">{{totalsOffshore.manday | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalsOffshore.revenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalsOffshore.cost | number:'1.0-2':'de'}}</span>
@@ -119,6 +123,7 @@
 						</mat-panel-title>
 						<mat-panel-description>
 							<span class="mat-cell">{{totalProject.engagementManagerName}}</span>
+							<span class="mat-cell">{{getSubcoCountry(totalProject.subcontractorId)}}</span>
 							<span class="mat-cell">{{totalProject.totalManDays | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalProject.totalRevenue | number:'1.0-2':'de'}}</span>
 							<span class="mat-cell">{{totalProject.totalCost | number:'1.0-2':'de'}}</span>

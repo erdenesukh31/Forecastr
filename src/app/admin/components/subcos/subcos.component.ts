@@ -41,6 +41,7 @@ export class SubcosComponent implements OnInit {
     types: SubCoType[];
 
     engagementManagerIds: Number[];
+    engagementManagerName: String[];
 
     subCoTypeFilter = new FormControl('');
     managerFilter = new FormControl('');
@@ -59,11 +60,12 @@ export class SubcosComponent implements OnInit {
   ngOnInit(): void {
     this.subcoService.initializeAllSubCoPreviews();
     this.subcoService.initializeTypes();
+    this.subcoService.initializeAllEngagamentManager();
     //load all subcos
     this.subcoSubscription = this.subcoService.allSubCoPreviews$
       .subscribe((subco: SubCoPreview[]) => {
         this.subco = new MatTableDataSource(subco);
-        this.engagementManagerIds = [...new Set(subco.map(item => item.subcontractorEmId))];
+        this.engagementManagerName = [...new Set(subco.map(item => item.subcontractorEngagementManager))];
         this.subco.filterPredicate = this.createFilter();
         this.subco.sort = this.sort;
       });
@@ -156,7 +158,7 @@ export class SubcosComponent implements OnInit {
         if(searchTerms.enManager.length>0){
           searchTerms.enManager.forEach(element => {
             if(element)
-                matchManager = matchManager || subco.subcontractorEmId == element;
+                matchManager = matchManager || subco.subcontractorEngagementManager == element;
           });
          match = match && (matchManager);
         }
