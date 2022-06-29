@@ -46,6 +46,7 @@ export class ExecutiveSummaryComponent implements OnInit {
     this.calculationService.probabilitySummary$.subscribe((summ: ProbabilitySummary) => {
       if(!this.loaded) {
         this.loaded = true;
+        this.probabilitySummary = new ProbabilitySummary();
       } else {
         this.probabilitySummary = summ;
         this.probabilitySource = new MatTableDataSource(summ.probabilites);

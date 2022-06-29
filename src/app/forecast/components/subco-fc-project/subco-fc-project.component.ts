@@ -100,7 +100,7 @@ export class SubcoFcProjectComponent implements OnInit, OnDestroy, OnChanges  {
    * @param value
    */
   applyFilter(value: string): void {
-    const filteredValue: string = value.toLowerCase();
+    const filteredValue: string = value;
     this.filteredProjects = this.availableProjects.filter(
       (p: Project) =>
         p.active === true && p.name.toLowerCase().includes(filteredValue)

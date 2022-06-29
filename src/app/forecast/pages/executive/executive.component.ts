@@ -227,13 +227,14 @@ export class ExecutiveComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    let roleId = this.userService.getUser(userId).roleId;
+    let roleId = this.userService.getUser(userId) !== undefined ? this.userService.getUser(userId).roleId : undefined;
 
     if (roleId === undefined) {
       return false;
     }
 
-    let role = this.userService.getRole(roleId).shortcut;
+  
+    let role =   this.userService.getRole(roleId) !== undefined ? this.userService.getRole(roleId).shortcut : undefined;
 
     if (role === undefined) {
       return false;

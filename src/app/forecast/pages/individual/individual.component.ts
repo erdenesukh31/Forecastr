@@ -96,6 +96,7 @@ export class IndividualComponent implements OnInit, OnDestroy {
 				}
 
 				setTimeout(() => {
+					//FC failed to execute "getComputedStyle"
 					let shift: number = parseInt(window.getComputedStyle(document.querySelector('.mat-tab-label-container')).width) - parseInt(window.getComputedStyle(document.querySelector('.mat-tab-list')).width);
 					let pos: number = parseInt((document.querySelector('.mat-tab-label-active') as HTMLElement).getAttribute('aria-posinset'), 10);
 					if (shift < ((pos ? pos : 1) - 1) * -100) {

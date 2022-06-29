@@ -97,7 +97,7 @@ export class FcEntryComponent implements OnInit, OnDestroy, OnChanges {
       this.fcLoaded = true;
       this.loadingActive = true;
     }
-
+    this.forecast = new FcEntry()
     //only subscribe to forecasts if there is none
     //since changing of months in handeled in the ngOnChanges function
    // if (!this.forecast)
